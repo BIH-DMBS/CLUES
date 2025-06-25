@@ -1,0 +1,7 @@
+site_name: CLUES - A Comprehensive Workflow for Integrating Geospatial Data in Health Research
+nav:
+  - Home: datalist.md
+  - Getting Started: notebooks.md
+  - API: setup.md
+theme:
+  name: material
