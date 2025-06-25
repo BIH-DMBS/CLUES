@@ -41,15 +41,15 @@ There are several config files loacted in the folders *config* and *config_sourc
 ### General configs
 The folder config contains two files. *bbox.json* is a collection of different bounding boxes for different areas. *config.json* contains the information on what assets to download, where to store the data, where the secrets are located, and for which years, and for which area (here the bboxes listed in *bbox.json* are used) the geospatial features should be downloaded.
 ### Secrets
-To access cliamte and atmosphere data from copernicus the necessary credentials need to be place into the configs_assets_folder defined in the *config.json*. See here: https://cds.climate.copernicus.eu/how-to-api
-Create the two files *cdsapirc_atmo.sct* and *cdsapirc_climate.sct* and place the in the configs_assets_folder folder.
+To access climate and atmosphere data from Copernicus the necessary credentials need to be place into the configs_assets_folder defined in the *config.json*. See here: https://cds.climate.copernicus.eu/how-to-api
+Create the two files *cdsapirc_atmo.sct* and *cdsapirc_climate.sct* and place the ??? in the configs_assets_folder folder.
 
 To access NVDI and EVI data from NASA datapool the necessary credentials are required (https://www.earthdata.nasa.gov/). 
 Create the file *nasa.sct* that contains *token: your_nasa_token*. 
 
 ### Assets
-The geofeatures that will be downloaded are defined in the json files stored in the *config_sources* folder. For each of the data sources used there is on specific json file. 
-To customize check the files ti the foder and remove from the variable list contained in each file the varibles you do not want to download. 
+The geofeatures that will be downloaded are defined in the json files stored in the *config_sources* folder. For each of the data sources used, there is on specific json file. 
+To customize check the files to the folder and remove from the variable list contained in each file the variables you do not want to download. 
 
 # Run snakemake
 If all is setup run the workflow:
@@ -58,7 +58,7 @@ snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait
 
 # Anticipated result
 
-The workflow will download all request files into the folder defined in the config file. While the worrkflow runs for each of the files downloaded a logfile gets created. If the workflow fails, usually because the corresponding service is not available, one can check the logfile and the workflow needs to be restarted. Other errors like storage is full net to be addressed seperatly.   
+The workflow will download all request files into the folder defined in the config file. While the workflow runs for each of the files downloaded a logfile gets created. If the workflow fails, usually because the corresponding service is not available, one can check the logfile and the workflow needs to be restarted. Other errors like storage is full net to be addressed seperatly.   
 
 # Usage policies
 
