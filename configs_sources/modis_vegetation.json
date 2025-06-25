@@ -1,0 +1,18 @@
+{
+    "type": "MODIS Vegetation Index Products",
+    "start_year": "2000",
+    "end_year": "2025",
+    "format": "geoTIFF",
+    "variables":[
+        {
+            "name":"Vegetation_Indices_Monthly_L3_Global_1km",
+            "url":"https://e4ftl01.cr.usgs.gov/MOLT/MOD13A3.061/",
+            "elements": ["1 km monthly NDVI", "1 km monthly EVI"]
+        },
+        {
+            "name":"Vegetation_Indices_16-Day_L3_Global_250m",
+            "url":"https://e4ftl01.cr.usgs.gov/MOLT/MOD13Q1.061/",
+            "elements": ["250m 16 days NDVI", "250m 16 days EVI"]
+        }
+    ]
+}

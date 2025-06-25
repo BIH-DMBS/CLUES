@@ -1,0 +1,36 @@
+{
+    "type":"land_use",
+    "format": "geotTiff",
+    "variables":[
+        {
+            "name":"corine_landcover_2018",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/services/Corine/CLC2018_WM/MapServer/WMSServer",
+            "layer":"12",
+            "year":"2018"
+        },
+        {
+            "name":"corine_landcover_2012",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/services/Corine/CLC2012_WM/MapServer/WMSServer",
+            "layer":"Corine_Land_Cover_2012_raster59601",
+            "year":"2012"
+        },
+        {
+            "name":"corine_landcover_2006",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/services/Corine/CLC2006_WM/MapServer/WMSServer",
+            "layer":"Corine_Land_Cover_2006_raster43084",
+            "year":"2006"
+        },
+        {
+            "name":"corine_landcover_2000",
+            "url":"https://land.discomap.eea.europa.eu/arcgis/services/Land/CLC_accounting_layer_2000/ImageServer/WMSServer",
+            "layer":"CLC_accounting_layer_2000",
+            "year":"2000"
+        },
+        {
+            "name":"corine_landcover_1990",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/services/Corine/CLC1990_WM/MapServer/WMSServer",
+            "layer":"Corine_Land_Cover_1990_raster17001",
+            "year":"1990"
+        }
+    ]
+}

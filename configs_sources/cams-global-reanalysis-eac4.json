@@ -1,0 +1,91 @@
+{
+    "type":"atmosphere",
+    "source":"cams-global-reanalysis-eac4",
+    "file":"cams-global-reanalysis-eac4.json",
+    "link": "https://ads.atmosphere.copernicus.eu/cdsapp#!/dataset/cams-global-reanalysis-eac4?tab=form",
+    "citation":"Inness et al. (2019), http://www.atmos-chem-phys.net/19/3515/2019/",
+    "start_year": "2003",
+    "end_year": "2025",
+    "delta_t_in_h":"3",
+    "format": "netcdf",
+    "variables":[
+        {
+            "name":"black_carbon_aerosol_optical_depth_550nm"
+        },
+        {
+            "name":"dust_aerosol_optical_depth_550nm"
+        },
+        {
+            "name":"organic_matter_aerosol_optical_depth_550nm"
+        },
+        {
+            "name":"sea_salt_aerosol_optical_depth_550nm"
+        },
+        {
+            "name":"sulphate_aerosol_optical_depth_550nm"
+        },
+        {
+            "name":"total_aerosol_optical_depth_550nm"
+        },
+        {
+            "name":"total_column_carbon_monoxide"
+        },
+        {
+            "name":"total_column_formaldehyde"
+        },
+        {
+            "name":"total_column_ozone"
+        },
+        {
+            "name":"total_column_methane"
+        },
+        {
+            "name": "dust_aerosol_0.03-0.55um_mixing_ratio",
+            "model_level": "60"
+        },
+        {
+            "name":"dust_aerosol_0.55-0.9um_mixing_ratio",
+            "model_level": "60"
+        },
+        {
+            "name":"dust_aerosol_0.9-20um_mixing_ratio",
+            "model_level": "60"
+        },
+        {
+            "name":"hydrophilic_black_carbon_aerosol_mixing_ratio",
+            "model_level": "60"
+        },
+        {
+            "name":"hydrophilic_organic_matter_aerosol_mixing_ratio",
+            "model_level": "60"
+        },
+        {
+            "name":"hydrophobic_black_carbon_aerosol_mixing_ratio",
+            "model_level": "60"
+        },
+        {
+            "name":"hydrophobic_organic_matter_aerosol_mixing_ratio",
+            "model_level": "60"
+        },
+        {
+            "name":"sea_salt_aerosol_0.03-0.5um_mixing_ratio",
+            "model_level": "60"
+        },
+        {
+            "name":"sea_salt_aerosol_0.5-5um_mixing_ratio",
+            "model_level": "60"
+        },
+        {
+            "name":"sea_salt_aerosol_5-20um_mixing_ratio",
+            "model_level": "60"
+        },
+        {
+            "name":"sulphate_aerosol_mixing_ratio",
+            "model_level": "60"
+        },
+        {
+            "name":"sulphur_dioxide",
+            "model_level": "60"
+        } 
+    ]
+}

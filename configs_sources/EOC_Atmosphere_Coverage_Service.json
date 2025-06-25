@@ -1,0 +1,367 @@
+{
+    "type": "wms",
+    "source": "EOC-Atmosphere-Coverage-Service",
+    "file": "EOC_Atmosphere_Coverage_Service.json",
+    "link": "https://geoservice.dlr.de/eoc/atmosphere/wms",
+    "format": "image/geotiff",
+    "crs": "EPSG:4326",
+    "variables": [
+        {
+            "name": "ERS-2_GOME-1_DAILY_CF",
+            "abstract": "Daily GOME-1 Cloud Fraction (CF) Total Column Composite Layer (ERS-2)",
+            "temporal_dimension": "1995-06-27T00:00:00.000Z/2011-07-03T00:00:00.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "ERS-2_GOME-1_DAILY_COT",
+            "abstract": "Daily GOME-1 Cloud Optical Thickness (COT) Total Column Composite Layer (ERS-2)",
+            "temporal_dimension": "1995-06-27T00:00:00.000Z/2011-07-03T00:00:00.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "ERS-2_GOME-1_DAILY_CTP",
+            "abstract": "Daily GOME-1 Cloud Top Pressure (CTP) Total Column Composite Layer (ERS-2)",
+            "temporal_dimension": "1995-06-27T00:00:00.000Z/2011-07-03T00:00:00.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "ERS-2_GOME-1_DAILY_NO2",
+            "abstract": "Daily GOME-1 Total Column Nitrogen Dioxide (NO2) Composite Layer (ERS-2)",
+            "temporal_dimension": "1995-06-27T00:00:00.000Z/2011-07-03T00:00:00.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "ERS-2_GOME-1_DAILY_O3",
+            "abstract": "Daily GOME-1 Total Column Ozone (O3) Composite Layer (ERS-2)",
+            "temporal_dimension": "1995-06-27T00:00:00.000Z/2011-07-03T00:00:00.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-A_GOME-2_L3_TROPOSPHERIC_O3",
+            "abstract": "Offline (OL) Monthly GOME-2 Total Column Tropospheric Ozone Composite Layer (MetOp-A)",
+            "temporal_dimension": "2007-01-01T00:00:00.000Z/2020-01-01T00:00:00.000Z/P1M",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-B_GOME-2_L2C_P1D_BrO",
+            "abstract": "MetOp-B GOME-2 Total Column Bromine Monoxide (BrO) Composite Layer",
+            "temporal_dimension": "2012-12-13T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-B_GOME-2_L2C_P1D_CF",
+            "abstract": "MetOp-B GOME-2 Total Column Cloud Fraction (CF) Composite Layer",
+            "temporal_dimension": "2012-12-13T00:00:00.000Z/2024-08-18T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-B_GOME-2_L2C_P1D_COT",
+            "abstract": "MetOp-B GOME-2 Total Column Cloud Optical Thickness (COT) Composite Layer",
+            "temporal_dimension": "2012-12-13T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-B_GOME-2_L2C_P1D_CTP",
+            "abstract": "MetOp-B GOME-2 Total Column Cloud Top Pressure (CTP) Composite Layer",
+            "temporal_dimension": "2012-12-13T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-B_GOME-2_L2C_P1D_H2O",
+            "abstract": "MetOp-B GOME-2 Total Column Water Vapour (H2O) Composite Layer",
+            "temporal_dimension": "2012-12-13T00:00:00.000Z/2024-08-18T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-B_GOME-2_L2C_P1D_HCHO",
+            "abstract": "MetOp-B GOME-2 Total Column Formaldehyde (HCHO) Composite Layer",
+            "temporal_dimension": "2012-12-13T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-B_GOME-2_L2C_P1D_NO2",
+            "abstract": "MetOp-B GOME-2 Total Column Nitrogen Dioxide (NO2) Composite Layer",
+            "temporal_dimension": "2012-12-13T00:00:00.000Z/2024-08-18T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-B_GOME-2_L2C_P1D_NO2Tropo",
+            "abstract": "MetOp-B GOME-2 Total Column Tropospheric Nitrogen Dioxide (NO2Tropo) Composite Layer",
+            "temporal_dimension": "2012-12-13T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-B_GOME-2_L2C_P1D_O3",
+            "abstract": "MetOp-B GOME-2 Total Column Ozone (O3) Composite Layer",
+            "temporal_dimension": "2012-12-13T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-B_GOME-2_L2C_P1D_SO2",
+            "abstract": "MetOp-B GOME-2 Total Column Sulfur Dioxide (SO2) Composite Layer",
+            "temporal_dimension": "2012-12-13T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-B_GOME-2_L3_TROPOSPHERIC_O3",
+            "abstract": "Offline (OL) Monthly GOME-2 Total Column Tropospheric Ozone Composite Layer (MetOp-B)",
+            "temporal_dimension": "2013-01-01T00:00:00.000Z/2019-12-01T00:00:00.000Z/P1M",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-C_GOME-2_L2C_P1D_BrO",
+            "abstract": "MetOp-C GOME-2 Total Column Bromine Monoxide (BrO) Composite Layer",
+            "temporal_dimension": "2019-01-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-C_GOME-2_L2C_P1D_CF",
+            "abstract": "MetOp-C GOME-2 Total Column Cloud Fraction (CF) Composite Layer",
+            "temporal_dimension": "2019-01-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-C_GOME-2_L2C_P1D_COT",
+            "abstract": "MetOp-C GOME-2 Total Column Cloud Optical Thickness (COT) Composite Layer",
+            "temporal_dimension": "2019-01-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-C_GOME-2_L2C_P1D_CTP",
+            "abstract": "MetOp-C GOME-2 Total Column Cloud Top Pressure (CTP) Composite Layer",
+            "temporal_dimension": "2019-01-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-C_GOME-2_L2C_P1D_H2O",
+            "abstract": "MetOp-C GOME-2 Total Column Water Vapour (H2O) Composite Layer",
+            "temporal_dimension": "2019-01-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-C_GOME-2_L2C_P1D_HCHO",
+            "abstract": "MetOp-C GOME-2 Total Column Formaldehyde (HCHO) Composite Layer",
+            "temporal_dimension": "2019-01-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-C_GOME-2_L2C_P1D_NO2",
+            "abstract": "MetOp-C GOME-2 Total Column Nitrogen Dioxide (NO2) Composite Layer",
+            "temporal_dimension": "2019-01-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-C_GOME-2_L2C_P1D_NO2Tropo",
+            "abstract": "MetOp-C GOME-2 Total Column Tropospheric Nitrogen Dioxide (NO2Tropo) Composite Layer",
+            "temporal_dimension": "2019-01-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-C_GOME-2_L2C_P1D_O3",
+            "abstract": "MetOp-C GOME-2 Total Column Ozone (O3) Composite Layer",
+            "temporal_dimension": "2019-01-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-C_GOME-2_L2C_P1D_SO2",
+            "abstract": "MetOp-C GOME-2 Total Column Sulfur Dioxide (SO2) Composite Layer",
+            "temporal_dimension": "2019-01-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP_GOME-2_L2C_P1D_COMB_BrO",
+            "abstract": "MetOp GOME-2 Total Column Bromine Monoxide (BrO) Composite Layer",
+            "temporal_dimension": "2013-12-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP_GOME-2_L2C_P1D_COMB_CF",
+            "abstract": "MetOp GOME-2 Total Column Cloud Fraction (CF) Composite Layer",
+            "temporal_dimension": "2013-12-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP_GOME-2_L2C_P1D_COMB_COT",
+            "abstract": "MetOp GOME-2 Total Column Cloud Optical Thickness (COT) Composite Layer",
+            "temporal_dimension": "2013-12-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP_GOME-2_L2C_P1D_COMB_CTP",
+            "abstract": "MetOp GOME-2 Total Column Cloud Top Pressure (CTP) Composite Layer",
+            "temporal_dimension": "2013-12-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP_GOME-2_L2C_P1D_COMB_H2O",
+            "abstract": "MetOp GOME-2 Total Column Water Vapour (H2O) Composite Layer",
+            "temporal_dimension": "2013-12-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP_GOME-2_L2C_P1D_COMB_HCHO",
+            "abstract": "MetOp GOME-2 Total Column Formaldehyde (HCHO) Composite Layer",
+            "temporal_dimension": "2013-12-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP_GOME-2_L2C_P1D_COMB_NO2",
+            "abstract": "MetOp GOME-2 Total Column Nitrogen Dioxide (NO2) Composite Layer",
+            "temporal_dimension": "2013-12-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP_GOME-2_L2C_P1D_COMB_NO2Tropo",
+            "abstract": "MetOp GOME-2 Total Column Tropospheric Nitrogen Dioxide (NO2Tropo) Composite Layer",
+            "temporal_dimension": "2013-12-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP_GOME-2_L2C_P1D_COMB_O3",
+            "abstract": "MetOp GOME-2 Total Column Ozone (O3) Composite Layer",
+            "temporal_dimension": "2013-12-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP_GOME-2_L2C_P1D_COMB_SO2",
+            "abstract": "MetOp GOME-2 Total Column Sulfur Dioxide (SO2) Composite Layer",
+            "temporal_dimension": "2013-12-15T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "S5P_TROPOMI_L3_P1D_CF",
+            "abstract": "TROPOMI/S5P L3 data of radiometric cloud fraction",
+            "temporal_dimension": "2023-08-01T00:00:00.000Z/2024-07-26T00:00:00.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "S5P_TROPOMI_L3_P1D_COT",
+            "abstract": "Cloud Optical Thickness (COT) Composite Layer (S5P)",
+            "temporal_dimension": "2023-08-01T00:00:00.000Z/2024-07-26T00:00:00.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "S5P_TROPOMI_L3_P1D_CTH",
+            "abstract": "Cloud Top Height (CTH) Composite Layer (S5P)",
+            "temporal_dimension": "2023-08-01T00:00:00.000Z/2024-07-26T00:00:00.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "S5P_TROPOMI_L3_P1D_HCHO",
+            "abstract": "Formaldehyde (HCHO) Composite Layer (S5P)",
+            "temporal_dimension": "2023-08-01T00:00:00.000Z/2024-07-26T00:00:00.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "S5P_TROPOMI_L3_P1D_O3",
+            "abstract": "TROPOMI/S5P L3 data of ozone total column",
+            "temporal_dimension": "2023-08-01T00:00:00.000Z/2024-07-26T00:00:00.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "S5P_TROPOMI_L3_P1D_SO2",
+            "abstract": "Sulphur Dioxid (SO2) Composite Layer (S5P)",
+            "temporal_dimension": "2023-08-01T00:00:00.000Z/2024-07-26T00:00:00.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "S5P_TROPOMI_L4_P1D_NO2surf",
+            "abstract": "TROPOMI/S5P L4 data of Surface NO2 concentration at 15:00 UTC",
+            "temporal_dimension": "2023-01-25T15:00:00.000Z/2024-08-19T15:00:00.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "SVELD_MODIS_SLSTR_PM25SURF_P1M",
+            "abstract": "This data set contains monthly mean surface PM2.5 concentrations for Germany and parts of the surrounding countries derived from Aqua/MODIS and Sentinel-3A/SLSTR data.",
+            "temporal_dimension": "2018-01-01T00:00:00.000Z/2019-12-01T00:00:00.000Z/P1M",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "SVELD_S5P_CFSURF_P1D",
+            "abstract": "S-VELD S5P Surf. Cloud Fraction - Orbit",
+            "temporal_dimension": "2018-01-01T11:31:52.000Z/2020-12-30T11:48:45.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "SVELD_S5P_CF_P1D",
+            "abstract": "S-VELD S5P Cloud Fraction - Orbit",
+            "temporal_dimension": "2018-01-01T12:02:09.000Z/2020-12-30T11:47:50.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "SVELD_S5P_NO2SURF_P1D",
+            "abstract": "S-VELD S5P Surf. NO2 - Orbit",
+            "temporal_dimension": "2018-01-01T11:31:52.000Z/2020-12-30T11:48:45.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "SVELD_S5P_NO2SURF_P1M",
+            "abstract": "S-VELD S5P Surf. NO2 - Monthly",
+            "temporal_dimension": "2018-01-01T00:00:00.000Z/2020-12-01T00:00:00.000Z/P1M",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "SVELD_S5P_NO2TROPO_P1D",
+            "abstract": "S-VELD S5P Trop. NO2 column - Orbit",
+            "temporal_dimension": "2018-01-01T12:02:09.000Z/2020-12-30T11:47:50.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "SVELD_S5P_NO2TROPO_P1M",
+            "abstract": "S-VELD S5P Trop. NO2 column - Monthly",
+            "temporal_dimension": "2018-01-01T00:00:00.000Z/2020-12-01T00:00:00.000Z/P1M",
+            "width": 1000,
+            "height": 1000
+        }
+    ]
+}

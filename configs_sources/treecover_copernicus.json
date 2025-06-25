@@ -1,0 +1,51 @@
+{
+    "type": "treecover",
+    "format": "geotTiff",
+    "variables":[
+        {
+            "name":"Tree_Cover_Density_2012_100m46139",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/services/GioLandPublic/HRL_Tree_Cover_Density_2012/MapServer/WMSServer",
+            "layer":"Tree_Cover_Density_2012_100m46139",
+            "year":"2012"
+        },
+        {
+            "name":"1",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/services/GioLandPublic/HRL_TreeCoverDensity_2015/MapServer/WMSServer",
+            "layer":"1",
+            "year":"2015"
+        },
+        {
+            "name":"HRL_TreeCoverDensity_2018",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/services/GioLandPublic/HRL_TreeCoverDensity_2018/ImageServer/WMSServer",
+            "layer":"HRL_TreeCoverDensity_2018",
+            "year":"2018"
+        },
+        {
+            "name":"HRL_Forest_Type_2012_100m1103",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/services/GioLandPublic/HRL_Forest_Cover_Type_2012/MapServer/WMSServer",
+            "layer":"HRL_Forest_Type_2012_100m1103",
+            "year":"2012"
+        },
+        {
+            "name":"HRL_Forest_Type_2015_100m18936",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/services/GioLandPublic/HRL_ForestType_2015/MapServer/WMSServer",
+            "layer":"HRL_Forest_Type_2015_100m18936",
+            "year":"2015"
+        },
+        {
+            "name":"HRL_ForestType_2018",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/services/GioLandPublic/HRL_ForestType_2018/ImageServer/WMSServer",
+            "layer":"HRL_ForestType_2018",
+            "year":"2018"
+        }
+    ]
+}
+
+
+
+
+
+
+
+
+

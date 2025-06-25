@@ -1,0 +1,25 @@
+{
+    "type": "WordSettlementFootprint",
+    "format": "geoTIFF",
+    "variables":[
+        {
+            "name":"WSF_2015",
+            "url":"https://download.geoservice.dlr.de/WSF2015/files/",
+            "flagFile" : "WSF_2015.tif",
+            "year":"2015"
+            
+        },
+        {
+            "name":"WSF_2019",
+            "url":"https://download.geoservice.dlr.de/WSF2015/files/",
+            "flagFile" : "WSF_2019.tif",
+            "year":"2019"
+        },
+        {
+            "name":"WSF_Evo",
+            "url":"https://download.geoservice.dlr.de/WSF_EVO/files/",
+            "flagFile" : "WSF_Evo.tif",
+            "year":"2019"
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "type":"Copernicus_dynamic_land_cover",
+    "format": "geotTiff",
+    "lnk": "https://zenodo.org/records/4723924",
+    "variables":[
+        {
+            "name":"BuildUp_CoverFraction_2015",
+            "url":"https://zenodo.org/records/3939038/files/PROBAV_LC100_global_v3.0.1_2015-base_BuiltUp-CoverFraction-layer_EPSG-4326.tif?download=1",
+            "year":"2015"
+        },
+        {
+            "name":"BuildUp_CoverFraction_2016",
+            "url":"https://zenodo.org/records/3518026/files/PROBAV_LC100_global_v3.0.1_2016-conso_Bare-CoverFraction-layer_EPSG-4326.tif?download=1",
+            "year":"2016"
+        },
+        {
+            "name":"BuildUp_CoverFraction_2017",
+            "url":"https://zenodo.org/records/3518036/files/PROBAV_LC100_global_v3.0.1_2017-conso_BuiltUp-CoverFraction-layer_EPSG-4326.tif?download=1",
+            "year":"2017"
+        },
+        {
+            "name":"BuildUp_CoverFraction_2018",
+            "url":"https://zenodo.org/records/3518036/files/PROBAV_LC100_global_v3.0.1_2017-conso_BuiltUp-CoverFraction-layer_EPSG-4326.tif?download=1",
+            "year":"2018"
+        },
+        {
+            "name":"BuildUp_CoverFraction_2019",
+            "url":"https://zenodo.org/records/3939050/files/PROBAV_LC100_global_v3.0.1_2019-nrt_BuiltUp-CoverFraction-layer_EPSG-4326.tif?download=1",
+            "year":"2019"
+        }
+    ]
+}

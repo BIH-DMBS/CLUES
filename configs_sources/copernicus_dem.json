@@ -1,0 +1,26 @@
+{
+    "type":"DEM",
+    "format": "geotTiff",
+    "variables":[
+        {
+            "name":"Digital_Geospatial_Elevation_Data_30m",
+            "url":"https://prism-dem-open.copernicus.eu/pd-desk-open-access/publicDemURLs",
+            "resolution":"DEM1_SAR_DGE_30",
+            "neighborhood":{
+                "mean":[500,1000],
+                "std":[500,1000],
+                "zevenbergen_thorne":"the existance of the key is sufficent to trigger the filter"
+            }
+        },
+        {
+            "name":"Digital_Geospatial_Elevation_Data_90m",
+            "url":"https://prism-dem-open.copernicus.eu/pd-desk-open-access/publicDemURLs",
+            "resolution":"DEM1_SAR_DGE_90",
+            "neighborhood":{
+                "mean":[500,1000],
+                "std":[500,1000],
+                "zevenbergen_thorne":"the existance of the key is sufficent to trigger the filter"
+            }
+        }
+    ]
+}

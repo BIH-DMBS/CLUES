@@ -1,0 +1,69 @@
+{
+    "type":"climate",
+    "source":"reanalysis-era5-single-levels",
+    "file":"creanalysis-era5-single-levels.json",
+    "link":"https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=form",
+    "time zone":"coordinated universal time",
+    "start_year": "1940",
+    "end_year": "2025",
+    "delta_t_in_h":"1",
+    "product_type": "reanalysis",
+    "format": "netcdf",
+    "variables":[
+        {
+            "name":"2m_dewpoint_temperature"
+        },
+        {
+            "name":"2m_temperature"
+        },
+        {
+            "name":  "high_vegetation_cover"
+        },
+        {
+            "name":"low_vegetation_cover"
+        },
+        {
+            "name":"snowfall"
+        },
+        {
+            "name":"soil_temperature_level_1"
+        },
+        {
+            "name":"total_cloud_cover"
+        },
+        {
+            "name": "total_precipitation"
+        },
+        {
+            "name": "type_of_high_vegetation"
+        },
+        {
+            "name":"type_of_low_vegetation"
+        },
+        {
+            "name":"surface_pressure"
+        },
+        {
+            "name":"10m_u_component_of_wind"
+        },
+        {
+            "name":"10m_v_component_of_wind"
+        },
+        {
+            "name":"100m_u_component_of_wind"
+        },
+        {
+            "name":"100m_v_component_of_wind"
+        },
+        {
+            "name":"downward_uv_radiation_at_the_surface"
+        },
+        {
+            "name":"total_cloud_cover"
+        },
+        {
+            "name":"snow_depth"
+        } 
+
+    ]
+}
