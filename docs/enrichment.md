@@ -4,7 +4,7 @@ The framework includes scripts to enrich location data.
 
 ## Simple point data
 
-The simplest situation is havein a csv files that contains the loaction and some ID.
+The simplest situation is to have a csv files that contains the loaction and some ID.
 <pre>
 latitude,longitude,subjectid
 51.876259173091015,14.24452287575035,7858
