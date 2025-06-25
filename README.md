@@ -10,7 +10,7 @@ CLUES addresses these needs by enabling selection and automated download of geos
 
 CLUES adheres to FAIR (Findable, Accessible, Interoperable, Reusable) data and GDPR (General Data Protection Regulation) principles. 
 
-![Diagram](doc/CLUES_schema.png)
+![Diagram](docs/CLUES_schema.png)
 
 ## Deployment
 
