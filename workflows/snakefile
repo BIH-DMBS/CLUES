@@ -1,0 +1,386 @@
+'''
+import subprocess
+import sys
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+# Example usage
+install('beautifulsoup4')
+'''
+
+import os
+import json
+import re
+from datetime import datetime, timedelta, time
+from snakemake.io import expand
+import requests
+from bs4 import BeautifulSoup
+
+config_file = os.path.join(os.getcwd(), 'config', 'config.json')
+
+# Assuming 'data.json' is your JSON file
+with open(config_file, 'r') as file:
+    data = json.load(file)
+print(data)
+download_folder = data['download_folder']
+years = data['years']
+update_years = data["update_years"]
+espon_filename_length = data["espon_filename_length"]
+
+def sanitize_filename(filename):
+    # Define the valid characters for a filename with whitespace
+    valid_chars = re.compile(r'[^a-zA-Z0-9. _-]')
+    # Remove invalid characters
+    sanitized_filename = valid_chars.sub('', filename)
+    # Define the valid characters for a filename withou whitespace
+    valid_chars = re.compile(r'[^a-zA-Z0-9._-]')
+    # Replace whitespaces with an underscore
+    sanitized_filename = valid_chars.sub('_', sanitized_filename)  
+    return sanitized_filename
+
+# for modis vegetation index
+def get_links(url, years):
+    # Regular expression pattern for dates in YYYY.MM.DD/ format
+    date_pattern = re.compile(r"(\d{4}\.\d{2}\.\d{2})/$")
+    # Send a GET request
+    response = requests.get(url)
+    # Check if the request was successful
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, "html.parser")
+        # Find all links in the page
+        links = [a["href"] for a in soup.find_all("a", href=True)]
+        # Create a dictionary with date objects as keys and full URLs as values
+        date_links_dict = {
+            datetime.strptime(match.group(1), "%Y.%m.%d").date(): url + link
+            for link in links if (match := date_pattern.match(link))
+        }
+    date_links =  {date: link for date, link in date_links_dict.items() if date.year in [int(y) for y in years]}
+    result = {}
+    for k in date_links.keys():
+        if k.year not in result:
+            result[k.year] = [k]
+        else:
+            result[k.year].append(k)
+    return result
+
+configs_assets_folder = data["configs_assets_folder"]
+
+
+files = {
+    'cams':os.path.join(configs_assets_folder, 'cams-global-reanalysis-eac4.json'),
+    'era5':os.path.join(configs_assets_folder, 'reanalysis-era5-single-levels.json'),
+    'espon':os.path.join(configs_assets_folder, 'espon.json'),
+    'EOC_Atmosphere':os.path.join(configs_assets_folder, 'EOC_Atmosphere_Coverage_Service.json'),
+    'EOC_WSF3D':os.path.join(configs_assets_folder, 'EOC_WSF3D.json'),
+    'EOC_WSF':os.path.join(configs_assets_folder, 'EOC_WSF.json'),
+    'treecover_copernicus':os.path.join(configs_assets_folder, 'treecover_copernicus.json'),
+    'corine_copernicus':os.path.join(configs_assets_folder, 'corine_copernicus.json'),
+    'spei':os.path.join(configs_assets_folder, 'spei.json'),
+    'copernicus_dem':os.path.join(configs_assets_folder, 'copernicus_dem.json'),
+    'ntl':os.path.join(configs_assets_folder, 'ntl.json'),
+    'glwd':os.path.join(configs_assets_folder, 'hydrosheds_GLWD.json'),
+    'clms':os.path.join(configs_assets_folder, 'copernicus_dynamic_land_cover.json'),
+    'modis_vi':os.path.join(configs_assets_folder, 'modis_vegetation.json')
+}
+
+parameters = {}
+for key, file in files.items():
+    with open(file, 'r') as f:
+        parameters[key] = json.load(f)
+
+variables = {}
+for key, p in parameters.items():
+    variables[key] = [v for v in p['variables']]
+
+
+# some of the years may be requested to be updated with the current data available
+# gather a list of the files that need to be removed therefore
+# not all assets are continously updated with new data
+remove = []
+#(1) - EOC_Atmosphere
+for v in variables['EOC_Atmosphere']:
+    start_year = v['temporal_dimension'][:4]
+    end_year = v['temporal_dimension'][25:29]
+    year_list = [str(year) for year in range(int(start_year), int(end_year) + 1)]
+    year_list = list(set(year_list) & set(update_years))
+    remove = remove + expand(os.path.join(download_folder, parameters['EOC_Atmosphere']['source'],v['name'], '{year}.nc'), 
+        year=year_list)
+
+#(2) - cams
+for v in variables['cams']:
+    year_list = [str(year) for year in range(int(parameters['cams']["start_year"]), int(parameters['cams']["end_year"]) + 1)]
+    year_list = list(set(year_list) & set(update_years))
+    remove = remove + expand(os.path.join(download_folder, parameters['cams']['source'], v['name'], '{year}.nc'), 
+        year=year_list)
+
+#(3) - era5
+for v in variables['era5']:
+    year_list = [str(year) for year in range(int(parameters['era5']["start_year"]), int(parameters['era5']["end_year"]) + 1)]
+    year_list = list(set(year_list) & set(update_years))
+    remove = remove + expand(os.path.join(download_folder, parameters['era5']['source'], v['name'], '{year}.nc'), 
+        year=year_list)
+
+# Iterate through the remove list and delete each file if it exists
+for file_path in remove:
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        print(f"Deleted: {file_path}")
+    else:
+        print(f"File not found: {file_path}")
+
+##### Data repository #####
+# create the list of files that will be part of the geospatial data repository
+input = []
+
+# (1) 'cams'
+for v in variables['cams']:
+    year_list = [str(year) for year in range(int(parameters['cams']["start_year"]), int(parameters['cams']["end_year"]) + 1)]
+    year_list = list(set(year_list) & set(years))
+    input = input + expand(os.path.join(download_folder, parameters['cams']['source'], v['name'], '{year}.nc'), 
+        year=year_list)
+# (2) 'era5'
+for v in variables['era5']:
+    year_list = [str(year) for year in range(int(parameters['era5']["start_year"]), int(parameters['era5']["end_year"]) + 1)]
+    year_list = list(set(year_list) & set(years))
+    input = input + expand(os.path.join(download_folder, parameters['era5']['source'], v['name'], '{year}.nc'), 
+        year=year_list)
+# (3) 'espon'
+for v in variables['espon']:
+    d = sanitize_filename(str(v['dimension']))
+    d = d[0:80] #max folder length names
+    for features in v['features']: 
+        input = input + expand(os.path.join(download_folder, parameters['espon']['source'], d, '{variable}.csv'), 
+            variable=[sanitize_filename(features['name'])[0:espon_filename_length]])
+# (4) 'EOC_Atmosphere'
+for v in variables['EOC_Atmosphere']:
+    start_year = v['temporal_dimension'][:4]
+    end_year = v['temporal_dimension'][25:29]
+    year_list = [str(year) for year in range(int(start_year), int(end_year) + 1)]
+    year_list = list(set(year_list) & set(years))
+    input = input + expand(os.path.join(download_folder, parameters['EOC_Atmosphere']['source'],v['name'], '{year}.nc'), 
+    year=year_list)
+# (5) WSF3D
+for v in variables['EOC_WSF3D']:
+    input = input + [os.path.join(download_folder, parameters['EOC_WSF3D']['type'], v['flagFile'])]
+# (6) WSF
+for v in variables['EOC_WSF']:
+    input = input + [os.path.join(download_folder, parameters['EOC_WSF']['type'], v['flagFile'])]
+# (7) treecover_copernicus
+for v in variables['treecover_copernicus']:
+    input = input + [os.path.join(download_folder, parameters['treecover_copernicus']['type'], v['name']+'.tif')]
+# (8) corine_copernicus
+for v in variables['corine_copernicus']:
+    if v['year'] in years:
+        input = input + [os.path.join(download_folder, parameters['corine_copernicus']['type'], v['name']+'.tif')]
+# (9) spei
+for v in variables['spei']:
+    time_scales = parameters['spei']['time_scales']
+    input = input + expand(os.path.join(download_folder, parameters['spei']['type'], '{time_scale}.nc'), 
+        time_scale=time_scales)
+# (10) copernicus_dem
+for v in variables['copernicus_dem']:
+    input = input + [os.path.join(download_folder, parameters['copernicus_dem']['type'], v['name'], 'done.txt')]
+# (11) ntl
+for v in variables['ntl']:
+    input = input + [os.path.join(download_folder, parameters['ntl']['type'], v['flagFile'])]
+# (12) glwd
+for v in variables['glwd']:
+    input = input + [os.path.join(download_folder, parameters['glwd']['type'], v['flagFile'])]
+# (13) clms
+for v in variables['clms']:
+    input = input + [os.path.join(download_folder, parameters['clms']['type'], v['name']+'.tif')]
+# (14) Modis vegetation index
+for vrbs in variables['modis_vi']:
+    year_list = [str(year) for year in range(int(parameters['modis_vi']["start_year"]), int(parameters['modis_vi']["end_year"]) + 1)]
+    year_list = list(set(year_list) & set(years))
+    file_lists = get_links(vrbs['url'], year_list)
+    for k,v in file_lists.items():
+        for file in v:
+            input = input + [os.path.join(download_folder, parameters['modis_vi']['type'], vrbs['name'], 'ndvi', str(k), str(file)+'.tif')]
+
+neighborhood = []
+# (11) copernicus_dem
+for v in variables['copernicus_dem']:
+    for fltr, radius in v['neighborhood'].items():
+        if fltr == 'zevenbergen_thorne':
+            neighborhood = neighborhood + [os.path.join(download_folder, 'neigborhoods', parameters['copernicus_dem']['type'], v['name'],fltr,'done.txt')]
+        else:
+            for r in radius:
+                neighborhood = neighborhood + [os.path.join(download_folder, 'neigborhoods', parameters['copernicus_dem']['type'], v['name'],fltr+'_radius_'+str(r),'done.txt')]
+        
+
+input = input + neighborhood
+print(input)
+
+
+# Define a single rule all that includes inputs
+rule all:
+    input:
+        input
+
+# Define rule cams atmosphere
+rule get_cams: #cams
+    output:
+        os.path.join(download_folder, parameters['cams']['source'], '{variable}', '{year}.nc')
+    params:
+        var="{variable}",
+        file=files['cams'],
+        year="{year}"
+    shell:
+        "python workflows/cams.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1"
+
+# Define rule era5 climate
+rule get_era5: #era5
+    output:
+        os.path.join(download_folder, parameters['era5']['source'], '{variable}', '{year}.nc')
+    params:
+        var="{variable}",
+        file=files['era5'],
+        year="{year}"
+    shell:
+        "python workflows/era5.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1"
+
+# Define rule get_asset_C
+rule get_espon: #espon
+    output:
+       os.path.join(download_folder, parameters['espon']['source'], '{dim}', '{variable}.csv')
+    params:
+        var="{variable}",
+        file=files['espon'],
+        dim='{dim}'
+    shell:
+        "python workflows/espon_download.py {params.file} {params.var} {params.dim} > log_{params.var}_{params.dim}.log 2>&1"
+
+# Define rule EOC_Atmosphere
+rule get_eoc_atmosphere: #EOC_Atmosphere
+    output:
+        os.path.join(download_folder, parameters['EOC_Atmosphere']['source'],'{variable}', '{year}.nc')
+    params:
+        var="{variable}",
+        file=files['EOC_Atmosphere'],
+        year="{year}"
+    shell:
+        "python workflows/wms_timeresolved.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1"
+
+# Define WSF3D
+rule get_WSF3D: 
+    output:
+        os.path.join(download_folder, parameters['EOC_WSF3D']['type'], '{name}.tif')
+    params:
+        file=files['EOC_WSF3D'],
+        name = "{name}"
+    shell:
+        "python workflows/simple_download_tif.py {params.file} {params.name} > log_{params.name}.log 2>&1"
+
+# Define WSF
+rule get_WSF: 
+    output:
+        os.path.join(download_folder, parameters['EOC_WSF']['type'], '{name}.tif')
+    params:
+        file=files['EOC_WSF'],
+        name = "{name}"
+    shell:
+        "python workflows/wsf_download.py {params.file} {params.name} > log_{params.name}.log 2>&1"
+
+# Define rule Copernicus treecover
+rule copernicus_land: #Copernicus treecover
+    output:
+        os.path.join(download_folder, parameters['treecover_copernicus']['type'], '{variable}.tif')
+    params:
+        var="{variable}",
+        file=files['treecover_copernicus']
+    shell:
+        "python workflows/copernicus_corine.py {params.file} {params.var} > log_{params.var}.log 2>&1"
+
+# Define rule Copernicus corine
+rule get_copernicus_corine: #Copernicus corine
+    output:
+        os.path.join(download_folder, parameters['corine_copernicus']['type'], '{variable}.tif')
+    params:
+        var="{variable}",
+        file=files['corine_copernicus']
+    shell:
+        "python workflows/copernicus_corine.py {params.file} {params.var} > log_{params.var}.log 2>&1"
+
+# Define rule spei drought index
+rule get_spei_idx: 
+    output:
+        os.path.join(download_folder, parameters['spei']['type'], '{time_scale}.nc')
+    params:
+        asset_type = 'spei',
+        year="{time_scale}",
+        file=files['spei']
+    shell:
+        "python workflows/spei_drought_idx.py {params.file} {params.year} > log_{params.year}.log 2>&1"
+
+# Define rule odata copernicus
+rule get_copernicus_odata: #DEM
+    output:
+        os.path.join(download_folder, parameters['copernicus_dem']['type'], '{resolution}','done.txt')
+    params:
+        file=files['copernicus_dem'],
+        resolution = "{resolution}"
+    shell:
+        "python workflows/copernicus_odata.py {params.file} {params.resolution} > log_{params.resolution}.log 2>&1"
+
+# Define rule night time lights
+rule get_ntl: 
+    output:
+        os.path.join(download_folder, parameters['ntl']['type'], '{name}.tif')
+    params:
+        file=files['ntl'],
+        name = "{name}"
+    shell:
+        "python workflows/simple_download_zip.py {params.file} > log_{params.name}.log 2>&1"
+
+# Define rule Global Lakes and Wetlands Database
+rule get_glwd: 
+    output:
+        os.path.join(download_folder, parameters['glwd']['type'], '{name}.pdf')
+    params:
+        file=files['glwd'],
+        name = "{name}"
+    shell:
+        "python workflows/simple_download_zip.py {params.file} > log_{params.name}.log 2>&1"
+
+# Define rule Gcopernicus_dynamic_land_cover
+rule get_clms: 
+    output:
+        os.path.join(download_folder, parameters['clms']['type'], '{name}.tif')
+    params:
+        file=files['clms'],
+        name = "{name}"
+    shell:
+        "python workflows/simple_download_tif.py {params.file} {params.name} > log_{params.name}.log 2>&1"
+
+# Define rule MODIS Vegetation Index Products (NDVI and EVI)
+rule get_modis_vi: 
+    output:
+        os.path.join(download_folder, parameters['modis_vi']['type'],'{name}','{vi}','{year}', '{datum}.tif')
+    params:
+        file=files['modis_vi'],
+        name = "{name}", 
+        vi = "{vi}",
+        year = "{year}",
+        datum = "{datum}"
+    shell:
+        "python workflows/modis_vi.py {params.file} {params.name} {params.datum} > log_{params.name}_{params.vi}_{params.datum}.log 2>&1"
+
+# Define rule Neighborhood
+ruleorder: get_copernicus_odata > get_neighborhood
+
+rule get_neighborhood: 
+    input:
+        os.path.join(download_folder, parameters['copernicus_dem']['type'], '{variable}', 'done.txt')
+    output:
+        os.path.join(download_folder, 'neigborhoods', parameters['copernicus_dem']['type'], '{variable}','{mode}','done.txt')
+    params:
+        mode="{mode}",
+        var="{variable}",
+        file=files['copernicus_dem']
+    shell:
+        "python workflows/neighborhood.py {params.file} {params.var} {params.mode} > log_{params.var}_{params.mode}.log 2>&1"
+
+
+
