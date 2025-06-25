@@ -1,0 +1,13 @@
+secrets/*.sct
+degdbEnv/
+data/
+playground/
+configs_sources_test/
+*.pyc
+**/__pycache__
+.snakemake
+*.log
+*.mp4
+*.gif
+*.pdf
+*.tar
