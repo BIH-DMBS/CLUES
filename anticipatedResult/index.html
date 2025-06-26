@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../geospatial_data/">
+        <link rel="prev" href="../3rdPartyAccounts/">
       
       
-        <link rel="next" href="../notebooks/">
+        <link rel="next" href="../datalist/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Enrichment - CLUES - A Comprehensive Workflow for Integrating Geospatial Data in Health Research</title>
+        <title>Anticipated result - CLUES - A Comprehensive Workflow for Integrating Geospatial Data in Health Research</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#enrichment-of-geolaoction-data" class="md-skip">
+        <a href="#anticipated-result" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Enrichment
+              Anticipated result
             
           </span>
         </div>
@@ -257,10 +257,19 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../anticipatedResult/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -271,6 +280,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -345,32 +355,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Enrichment
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../enrichment/" class="md-nav__link">
         
   
   
@@ -381,44 +369,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#simple-point-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      Simple point data
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#link-areas" class="md-nav__link">
-    <span class="md-ellipsis">
-      Link areas
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -465,32 +415,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#simple-point-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      Simple point data
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#link-areas" class="md-nav__link">
-    <span class="md-ellipsis">
-      Link areas
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -505,23 +429,8 @@
 
 
 
-<h1 id="enrichment-of-geolaoction-data">Enrichment of geolaoction data</h1>
-<p>The framework includes scripts to enrich location data. </p>
-<h2 id="simple-point-data">Simple point data</h2>
-<p>The simplest situation is to have a csv files that contains the loaction and some ID.</p>
-<pre>
-latitude,longitude,subjectid
-51.876259173091015,14.24452287575035,7858
-52.09913944097461,13.654840491247233,3406
-53.424305699033326,13.453464611332228,8017
-</pre>
-
-<p>The script <em>/scripts/link_loactions.py</em> processes netCDF and GeoTIFF files located in the input folder, linking the locations specified in the location.csv file to the corresponding features. </p>
-<pre>python link_locations.py locations.csv input_folder output_folder</pre>
-
-<p>The location.csv file should contain at least three columns: longitude, latitude, and subject ID. The results of this enrichment process are saved in the output folder, with JSON files for features available as netCDF and CSV files for GeoTIFF features.</p>
-<h2 id="link-areas">Link areas</h2>
-<p>tdDo</p>
+<h1 id="anticipated-result">Anticipated result</h1>
+<p>The workflow will download all request files into the folder defined in the config file. While the workflow runs for each of the files downloaded a logfile gets created. If the workflow fails, usually because the corresponding service is not available, one can check the logfile and the workflow needs to be restarted. Other errors like storage is full net to be addressed seperatly.   </p>
 
 
 
