@@ -10,7 +10,7 @@ CLUES addresses these needs by enabling selection and automated download of geos
 
 CLUES adheres to FAIR (Findable, Accessible, Interoperable, Reusable) data and GDPR (General Data Protection Regulation) principles. 
 
-![Diagram](docs/CLUES_schema.png)
+![Diagram](CLUES_schema.png)
 
 ## Deployment
 
@@ -36,30 +36,33 @@ snakemake must be installed seperatly
 
 *pip install snakemake *
 
-# Config 
-There are several config files loacted in the folders *config* and *config_sources*.
-### General configs
-The folder config contains two files. *bbox.json* is a collection of different bounding boxes for different areas. *config.json* contains the information on what assets to download, where to store the data, where the secrets are located, and for which years, and for which area (here the bboxes listed in *bbox.json* are used) the geospatial features should be downloaded.
-### Secrets
-To access climate and atmosphere data from Copernicus the necessary credentials need to be place into the configs_assets_folder defined in the *config.json*. See here: https://cds.climate.copernicus.eu/how-to-api
-Create the two files *cdsapirc_atmo.sct* and *cdsapirc_climate.sct* and place the ??? in the configs_assets_folder folder.
-
-To access NVDI and EVI data from NASA datapool the necessary credentials are required (https://www.earthdata.nasa.gov/). 
-Create the file *nasa.sct* that contains *token: your_nasa_token*. 
-
-### Assets
-The geofeatures that will be downloaded are defined in the json files stored in the *config_sources* folder. For each of the data sources used, there is on specific json file. 
-To customize check the files to the folder and remove from the variable list contained in each file the variables you do not want to download. 
-
-# Run snakemake
+#### Run snakemake
 If all is setup run the workflow:
 
 snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60
 
-# Anticipated result
+## Config 
 
-The workflow will download all request files into the folder defined in the config file. While the workflow runs for each of the files downloaded a logfile gets created. If the workflow fails, usually because the corresponding service is not available, one can check the logfile and the workflow needs to be restarted. Other errors like storage is full net to be addressed seperatly.   
+There are several config files loacted in the folders *config* and *config_sources*.
 
-# Usage policies
+The folder config contains two files. *bbox.json* is a collection of different bounding boxes for different areas. *config.json* contains the information on what 
+assets to download, where to store the data, where the secrets are located, and for which years, and for which area (here the bboxes listed in *bbox.json* are used) the geospatial features should be downloaded.
 
-When utilizing data from the CLUES, it is imperative that users adhere to the terms of use associated with the various primary data sources. Each dataset within the CLUES is governed by specific usage policies, and compliance with these terms ensures the ethical and legal use of the data. Users are encouraged to review  and understand the terms of use for each primary data source before downloading and employing the data in their research.
+#### [For mor detail on the Config files. ](setup.md)
+
+
+## Secrets
+To access climate and atmosphere data from Copernicus the necessary credentials need to be place into the configs_assets_folder defined in the *config.json*. See here: https://cds.climate.copernicus.eu/how-to-api
+Create the two files *cdsapirc_atmo.sct* and *cdsapirc_climate.sct* and place the ??? in the configs_assets_folder folder.
+
+Create the file *nasa.sct* that contains *token: your_nasa_token*. 
+
+#### [For mor detail on the necessary 3rd party accounts. ](3rdPartyAccounts.md)
+
+
+## Assets
+The geofeatures that will be downloaded are defined in the json files stored in the *config_sources* folder. For each of the data sources used, there is on specific json file. 
+To customize check the files to the folder and remove from the variable list contained in each file the variables you do not want to download. 
+
+#### [For an overview on the geospatila assets. ](datalist.md)
+#### [For an overview used sources. ](geospatial_data.md)
