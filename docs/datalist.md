@@ -116,190 +116,190 @@
 |                                                              | total_cloud_cover | 0.25° x 0.25° | Global | 1940-present | hourly | yes |  |
 |                                                              | snow_depth | 0.25° x 0.25° | Global | 1940-present | hourly | yes |  |
 | Global SPEI database                                         | spei_drought_index | 0.5° x 0.5° | Global | 1901-present | montly | yes |  |
-| espon                                                        | Deaths by age groups and gender | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Deaths by age groups | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Life expectancy by age and sex | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Life expectancy by age | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Population (total) by gender and broad age group | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Population on 1 January (total) by age group and sex | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Population on 1 January (total) by age group | FUTS | Europe |   | yearly | yes |  |
-|                                                              | no parent | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Ageing index by gender | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Proportion of gender groups in the total population by gender | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Old-age-dependency ratio by sex | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Unemployment (total) by sex, age group | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Unemployment (total) by age group | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment rate by age and gender (%) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment rate by age group (%) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment (total) by gender and broad age group | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment (total) by broad age groups | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment (total) by NACE rev.2 economic section (Labour Force Survey) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Educational attainment level by age group and sex | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Educational attainment level by age group | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Participation rate in education and training (last 4 weeks) by sex | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Early leavers from education and training by sex | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Unemployment (rate) by sex | FUTS | Europe |   | yearly | yes |  |
-|                                                              | FDI projects (total deal value) by origin | FUTS | Europe |   | yearly | yes |  |
-|                                                              | FDI projects (total deal value) by type | FUTS | Europe |   | yearly | yes |  |
-|                                                              | FDI projects (total deal value) by sector | FUTS | Europe |   | yearly | yes |  |
-|                                                              | FDI projects (total number) by origin | FUTS | Europe |   | yearly | yes |  |
-|                                                              | FDI projects (total number) by type | FUTS | Europe |   | yearly | yes |  |
-|                                                              | FDI projects (total number) by period | FUTS | Europe |   | yearly | yes |  |
-|                                                              | FDI projects (total number) by sector | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Domestic material consumption (DMC) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Gender gap by age group | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment by economic sector | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Sex ratio by age group | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Presence of North Sea Region Programme energy projects | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Energy projects (total) - by theme | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Energy projects (total) - by cluster class | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Economic resilience by type of resilience | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Photovoltaic energy | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Aggregate impact of climate change on regions | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Potential economic impact of climate change | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Potential physical impact of climate change | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Potential social impact of climate change | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Potential cultural impact of climate change | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Potential environmental impact of climate change | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Corine Land Cover 2006 - 1st level (share) by use | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Corine Land Cover 2006 - 2nd level (share) by use | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Corine Land Cover 2006 - 3rd level (total) by use | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Corine Land Cover 2006 - 1st level (share) by use | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Corine Land Cover 2006 - 1st level (total) by use | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Corine Land Cover 2006 - 2nd level (total) by use | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Territorial impact of Common Agricultural Policy (CAP) by type of impact | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment (total) by NACE rev.2 economic section (Structural Business Statistics) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment by economic sections C, F and I and divisions for sections C and F at NUTS2 | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Protected areas (total surface) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Natura 2000 sites | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Renewable energy input for district heat production (share of) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment (total) by size of enterprises | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Population on 1 January (total) by age group | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Final energy consumption of petroleum products in the road transport sector | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Share of regions overlaid by Inner Peripheries (IP) according to high travel times to regional centres | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Inner Peripheries according to high travel times to regional centres (grid) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Share of regions overlaid by Inner Peripheries (IP) according to access to Services of General Interest (SGIs) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Delineations by SGI | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Share of regions overlaid IP by SGI | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Unemployment (rate) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Gross Domestic Product (GDP) per capita - disintegration scenario 2031 | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment (total) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment (total) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Rejected asylum applications per country (%) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Country location index for rejected asylum applications (index) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Country of previous residence of immigrants - by country | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Area of statistical regions | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Electricity generation by wind onshore technology | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Population | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Foreign residents (total) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment (total) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Population change (%) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Green infrastructure - spatial distribution (grid data) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Green infrastructure - multifunctionality (grid data) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | [Forecast] GDP in M€ prediction scenario 1: Stable recovery from the crisis scenario | FUTS | Europe |   | yearly | yes |  |
-|                                                              | [Forecast] Population prediction 2 : Economically integrated scenario | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Tabulated data on FEIs situation 170331 | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Project categorisation data by five dimensions | FUTS | Europe |   | yearly | yes |  |
-|                                                              | loan investment for energy in buildings | FUTS | Europe |   | yearly | yes |  |
-|                                                              | loan investment for energy in buildings | FUTS | Europe |   | yearly | yes |  |
-|                                                              | OP contributions EU amount committed to FIs 2007-2013 | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Population (total) by broad age group | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment (share) by broad economic sector | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Housing survey: is it easy to find good housing in your city? - by answer | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Total number of material cultural heritage objects | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Trademark applications in the relevant sectors | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Inversed annual seasonality of tourism | FUTS | Europe |   | yearly | yes |  |
-|                                                              | People employed in highly knowledge intensive sectors | FUTS | Europe |   | yearly | yes |  |
-|                                                              | SMEs innovating in-house | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Difficulties in accessing financing for circular economy activities | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Potential accessibility by main transport modes | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Live births (total) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Death (total) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Population - age group 25-64 - with educational attainment level 5-8 (%) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Long-term unemployment (12 months and more) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | People at risk of poverty or social exclusion (% of total population) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | 4.0 patents by sector | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Regional specialisation by groups of sectors | FUTS | Europe |   | yearly | yes |  |
-|                                                              | 4.0 patents | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Population using online services by type of services |  FUTS | Europe |   | yearly | yes |  |
-|                                                              | Risk of job automation | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Robot adoption by sector | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Online sales adoption by sector | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Specialisation in induced manufacturing sectors | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Taxonomy of technological transformations | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Regional creation and displacement of low-skill jobs | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Population on 1 January (total) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Quality of Life indicators | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Territorial Quality of Life Index - Life Flourishing dimension | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Territorial susceptibility to natural hazards | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Economic damage due to earthquakes, average of yearly impacts | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Economic damage due to four natural hazard types (yearly impacts) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Landslide susceptibility | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Simulated scenario-based GDP - by type of scenario | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Untapped potentials for economic growth in Central Europe - by type | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Project partnership (total number) - by type | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Population living in vulnerable territories | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Population living in vulnerable territories (share of) - by level of vulnerability | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Flows in Central Europe - cluster analyses - by sector | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Digital maturity | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Innovative technologies | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Scaling up | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Proneness to change | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Innovation governance | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Context empowerment | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Societal engagement | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Open Data | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Social Media Presence | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Skills | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Trade of goods regional connectivity | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Climate change aggregated risk - by climate scenario and by exposure type | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Road freight regional send-receive balance | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Migration regional balance | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Tourism regional weighted intensity | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Labour regional intensity (inflows) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Rail passenger regional intensity | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Maritime passenger regional connectivity | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Air passenger regional external Influence | FUTS | Europe |   | yearly | yes |  |
-|                                                              | FDI regional send-receive balance (incoming) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | FDI regional network selectivity (outgoing) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Remittances regional weighted intensity (incoming) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Remittances regional intensity (outgoing) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Erasmus regional external Influence (inflows) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | H2020 regional external Influence (outflows) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Patents regional network selectivity (outflows) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Trade of services regional intensity | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Goods, services and capital Balance Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | People Balance  Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Knowledge Balance  Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | All flows Balance Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Goods, services and capital Concentration Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | People Concentration  Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Knowledge Concentration  Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | All flows Weighted intensity  Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Goods, services and capital Average Distance Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | People Average Distance  Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Knowledge Average Distance  Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | All flows Average Distance Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | All flows Weighted intensity  Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | All flows Concentration Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | All flows Balance Index | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Rail freight regional connectivity | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Maritime freight regional external Influence | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Air freight regional connectivity | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Climate change risk - by impact chain, by climate scenario and by exposur |  FUTS | Europe |   | yearly | yes |  |
-|                                                              | Climate change vulnerability - by impact chain | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Climate change sensitivity - by impact chain | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Climate change exposure - by impact chain and by exposure type | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Climate change hazard - by impact chain and by climate scenario | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Tourism regional weighted intensity | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Tourism regional weighted intensity | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Migration regional concentration per area | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Migration regional average distance | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Gross Value Added (GVA) by economic sectors at basic prices | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Employment by economic sectors | FUTS | Europe |   | yearly | yes |  |
-|                                                              | COVID19 cases daily (total) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Excess Mortality weekly (total) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Broadband access rate (% households) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Crude rate of natural change | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Renewable energy input for district heat production (share of) | FUTS | Europe |   | yearly | yes |  |
-|                                                              | Renewable energy input for electricity production (share of) | FUTS | Europe |   | yearly | yes |  |
+| espon                                                        | Deaths by age groups and gender | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Deaths by age groups | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Life expectancy by age and sex | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Life expectancy by age | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Population (total) by gender and broad age group | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Population on 1 January (total) by age group and sex | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Population on 1 January (total) by age group | NUTS | Europe |   | yearly | yes |  |
+|                                                              | no parent | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Ageing index by gender | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Proportion of gender groups in the total population by gender | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Old-age-dependency ratio by sex | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Unemployment (total) by sex, age group | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Unemployment (total) by age group | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment rate by age and gender (%) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment rate by age group (%) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment (total) by gender and broad age group | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment (total) by broad age groups | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment (total) by NACE rev.2 economic section (Labour Force Survey) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Educational attainment level by age group and sex | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Educational attainment level by age group | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Participation rate in education and training (last 4 weeks) by sex | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Early leavers from education and training by sex | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Unemployment (rate) by sex | NUTS | Europe |   | yearly | yes |  |
+|                                                              | FDI projects (total deal value) by origin | NUTS | Europe |   | yearly | yes |  |
+|                                                              | FDI projects (total deal value) by type | NUTS | Europe |   | yearly | yes |  |
+|                                                              | FDI projects (total deal value) by sector | NUTS | Europe |   | yearly | yes |  |
+|                                                              | FDI projects (total number) by origin | NUTS | Europe |   | yearly | yes |  |
+|                                                              | FDI projects (total number) by type | NUTS | Europe |   | yearly | yes |  |
+|                                                              | FDI projects (total number) by period | NUTS | Europe |   | yearly | yes |  |
+|                                                              | FDI projects (total number) by sector | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Domestic material consumption (DMC) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Gender gap by age group | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment by economic sector | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Sex ratio by age group | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Presence of North Sea Region Programme energy projects | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Energy projects (total) - by theme | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Energy projects (total) - by cluster class | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Economic resilience by type of resilience | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Photovoltaic energy | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Aggregate impact of climate change on regions | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Potential economic impact of climate change | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Potential physical impact of climate change | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Potential social impact of climate change | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Potential cultural impact of climate change | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Potential environmental impact of climate change | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Corine Land Cover 2006 - 1st level (share) by use | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Corine Land Cover 2006 - 2nd level (share) by use | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Corine Land Cover 2006 - 3rd level (total) by use | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Corine Land Cover 2006 - 1st level (share) by use | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Corine Land Cover 2006 - 1st level (total) by use | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Corine Land Cover 2006 - 2nd level (total) by use | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Territorial impact of Common Agricultural Policy (CAP) by type of impact | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment (total) by NACE rev.2 economic section (Structural Business Statistics) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment by economic sections C, F and I and divisions for sections C and F at NUTS2 | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Protected areas (total surface) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Natura 2000 sites | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Renewable energy input for district heat production (share of) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment (total) by size of enterprises | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Population on 1 January (total) by age group | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Final energy consumption of petroleum products in the road transport sector | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Share of regions overlaid by Inner Peripheries (IP) according to high travel times to regional centres | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Inner Peripheries according to high travel times to regional centres (grid) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Share of regions overlaid by Inner Peripheries (IP) according to access to Services of General Interest (SGIs) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Delineations by SGI | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Share of regions overlaid IP by SGI | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Unemployment (rate) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Gross Domestic Product (GDP) per capita - disintegration scenario 2031 | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment (total) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment (total) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Rejected asylum applications per country (%) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Country location index for rejected asylum applications (index) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Country of previous residence of immigrants - by country | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Area of statistical regions | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Electricity generation by wind onshore technology | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Population | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Foreign residents (total) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment (total) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Population change (%) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Green infrastructure - spatial distribution (grid data) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Green infrastructure - multifunctionality (grid data) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | [Forecast] GDP in M€ prediction scenario 1: Stable recovery from the crisis scenario | NUTS | Europe |   | yearly | yes |  |
+|                                                              | [Forecast] Population prediction 2 : Economically integrated scenario | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Tabulated data on FEIs situation 170331 | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Project categorisation data by five dimensions | NUTS | Europe |   | yearly | yes |  |
+|                                                              | loan investment for energy in buildings | NUTS | Europe |   | yearly | yes |  |
+|                                                              | loan investment for energy in buildings | NUTS | Europe |   | yearly | yes |  |
+|                                                              | OP contributions EU amount committed to FIs 2007-2013 | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Population (total) by broad age group | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment (share) by broad economic sector | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Housing survey: is it easy to find good housing in your city? - by answer | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Total number of material cultural heritage objects | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Trademark applications in the relevant sectors | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Inversed annual seasonality of tourism | NUTS | Europe |   | yearly | yes |  |
+|                                                              | People employed in highly knowledge intensive sectors | NUTS | Europe |   | yearly | yes |  |
+|                                                              | SMEs innovating in-house | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Difficulties in accessing financing for circular economy activities | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Potential accessibility by main transport modes | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Live births (total) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Death (total) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Population - age group 25-64 - with educational attainment level 5-8 (%) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Long-term unemployment (12 months and more) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | People at risk of poverty or social exclusion (% of total population) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | 4.0 patents by sector | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Regional specialisation by groups of sectors | NUTS | Europe |   | yearly | yes |  |
+|                                                              | 4.0 patents | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Population using online services by type of services |  NUTS | Europe |   | yearly | yes |  |
+|                                                              | Risk of job automation | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Robot adoption by sector | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Online sales adoption by sector | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Specialisation in induced manufacturing sectors | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Taxonomy of technological transformations | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Regional creation and displacement of low-skill jobs | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Population on 1 January (total) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Quality of Life indicators | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Territorial Quality of Life Index - Life Flourishing dimension | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Territorial susceptibility to natural hazards | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Economic damage due to earthquakes, average of yearly impacts | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Economic damage due to four natural hazard types (yearly impacts) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Landslide susceptibility | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Simulated scenario-based GDP - by type of scenario | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Untapped potentials for economic growth in Central Europe - by type | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Project partnership (total number) - by type | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Population living in vulnerable territories | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Population living in vulnerable territories (share of) - by level of vulnerability | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Flows in Central Europe - cluster analyses - by sector | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Digital maturity | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Innovative technologies | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Scaling up | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Proneness to change | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Innovation governance | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Context empowerment | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Societal engagement | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Open Data | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Social Media Presence | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Skills | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Trade of goods regional connectivity | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Climate change aggregated risk - by climate scenario and by exposure type | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Road freight regional send-receive balance | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Migration regional balance | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Tourism regional weighted intensity | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Labour regional intensity (inflows) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Rail passenger regional intensity | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Maritime passenger regional connectivity | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Air passenger regional external Influence | NUTS | Europe |   | yearly | yes |  |
+|                                                              | FDI regional send-receive balance (incoming) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | FDI regional network selectivity (outgoing) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Remittances regional weighted intensity (incoming) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Remittances regional intensity (outgoing) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Erasmus regional external Influence (inflows) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | H2020 regional external Influence (outflows) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Patents regional network selectivity (outflows) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Trade of services regional intensity | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Goods, services and capital Balance Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | People Balance  Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Knowledge Balance  Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | All flows Balance Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Goods, services and capital Concentration Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | People Concentration  Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Knowledge Concentration  Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | All flows Weighted intensity  Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Goods, services and capital Average Distance Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | People Average Distance  Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Knowledge Average Distance  Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | All flows Average Distance Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | All flows Weighted intensity  Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | All flows Concentration Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | All flows Balance Index | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Rail freight regional connectivity | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Maritime freight regional external Influence | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Air freight regional connectivity | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Climate change risk - by impact chain, by climate scenario and by exposur |  NUTS | Europe |   | yearly | yes |  |
+|                                                              | Climate change vulnerability - by impact chain | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Climate change sensitivity - by impact chain | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Climate change exposure - by impact chain and by exposure type | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Climate change hazard - by impact chain and by climate scenario | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Tourism regional weighted intensity | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Tourism regional weighted intensity | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Migration regional concentration per area | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Migration regional average distance | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Gross Value Added (GVA) by economic sectors at basic prices | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Employment by economic sectors | NUTS | Europe |   | yearly | yes |  |
+|                                                              | COVID19 cases daily (total) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Excess Mortality weekly (total) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Broadband access rate (% households) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Crude rate of natural change | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Renewable energy input for district heat production (share of) | NUTS | Europe |   | yearly | yes |  |
+|                                                              | Renewable energy input for electricity production (share of) | NUTS | Europe |   | yearly | yes |  |
