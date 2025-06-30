@@ -12,7 +12,7 @@
         <link rel="prev" href="../setup/">
       
       
-        <link rel="next" href="../anticipatedResult/">
+        <link rel="next" href="../geospatial_data/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -216,12 +216,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../gettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../setup/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Configuratiom
+    Configuration
     
   </span>
   
@@ -243,6 +265,8 @@
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
+      
+        
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
@@ -276,6 +300,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -284,11 +310,35 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#third-party-accounts" class="md-nav__link">
+  <a href="#cds-api" class="md-nav__link">
     <span class="md-ellipsis">
-      Third party accounts
+      CDS API
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#earthdata" class="md-nav__link">
+    <span class="md-ellipsis">
+      EarthData
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="EarthData">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#for-an-overview-on-the-configs-go-to" class="md-nav__link">
+    <span class="md-ellipsis">
+      For an overview on the configs go to.
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -307,12 +357,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../anticipatedResult/" class="md-nav__link">
+      <a href="../geospatial_data/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Anticipated result
+    Data Sources
     
   </span>
   
@@ -334,7 +384,7 @@
   
   
   <span class="md-ellipsis">
-    Data
+    Overview on Data
     
   </span>
   
@@ -373,12 +423,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../geospatial_data/" class="md-nav__link">
+      <a href="../anticipatedResult/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Data Sources
+    Anticipated Result
     
   </span>
   
@@ -449,6 +499,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -457,11 +509,35 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#third-party-accounts" class="md-nav__link">
+  <a href="#cds-api" class="md-nav__link">
     <span class="md-ellipsis">
-      Third party accounts
+      CDS API
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#earthdata" class="md-nav__link">
+    <span class="md-ellipsis">
+      EarthData
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="EarthData">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#for-an-overview-on-the-configs-go-to" class="md-nav__link">
+    <span class="md-ellipsis">
+      For an overview on the configs go to.
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -481,11 +557,10 @@
 
 
 
-  <h1>3rd Party Accounts</h1>
-
-<h2 id="third-party-accounts">Third party accounts</h2>
+<h1 id="third-party-accounts">Third party accounts</h1>
 <p>To enable the framework to work some of the primary data sources require the user to have an account to get data access. </p>
 <p>For data associated to Copernicus a European Centre for Medium-Range Weather Forecasts (ECMWF) account is necessary to create a personal access token for access to atmosphere data store and climate data. </p>
+<h3 id="cds-api">CDS API</h3>
 <p>Go to https://www.ecmwf.int/ and create account. For both services a CDS API personized access token must be generated. To do so visit Climate Data Store: https://cds.climate.copernicus.eu/how-to-api and Atmosphere Data Store: https://ads.atmosphere.copernicus.eu/how-to-api. </p>
 <p>The tokens need to be saved in the following files: <em>cdsapirc_climate.sct, cdsapirc_atmo.sct</em>.</p>
 <p>The content of the files hast to look like this:</p>
@@ -499,11 +574,13 @@ key: place your token here</pre>
 
 key: place your token here</pre>
 
+<h3 id="earthdata">EarthData</h3>
 <p>To access data associated with NASA earthdata (https://www.earthdata.nasa.gov/) credentials are required. Go to the webpage and create your account and the token you need. The <em>nasa.sct</em> file looks a little differnt:</p>
 <p><em>nasa.sct</em></p>
 <pre>token: place your token here</pre>
 
 <p>The location of the credential <em>.sct files is defined in the config.json under the key: </em>configs_assets_folder*.</p>
+<h4 id="for-an-overview-on-the-configs-go-to"><a href="../setup/">For an overview on the configs go to. </a></h4>
 
 
 

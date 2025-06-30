@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../geospatial_data/">
+        <link rel="prev" href="../anticipatedResult/">
       
       
         <link rel="next" href="../notebooks/">
@@ -216,12 +216,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../gettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../setup/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Configuratiom
+    Configuration
     
   </span>
   
@@ -260,12 +282,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../anticipatedResult/" class="md-nav__link">
+      <a href="../geospatial_data/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Anticipated result
+    Data Sources
     
   </span>
   
@@ -287,7 +309,7 @@
   
   
   <span class="md-ellipsis">
-    Data
+    Overview on Data
     
   </span>
   
@@ -326,12 +348,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../geospatial_data/" class="md-nav__link">
+      <a href="../anticipatedResult/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Data Sources
+    Anticipated Result
     
   </span>
   
@@ -507,7 +529,7 @@
 
 <h1 id="enrichment-of-geolaoction-data">Enrichment of geolaoction data</h1>
 <p>The framework includes scripts to enrich location data. </p>
-<h2 id="simple-point-data">Simple point data</h2>
+<h3 id="simple-point-data">Simple point data</h3>
 <p>The simplest situation is to have a csv files that contains the loaction and some ID.</p>
 <pre>
 latitude,longitude,subjectid
@@ -520,7 +542,7 @@ latitude,longitude,subjectid
 <pre>python link_locations.py locations.csv input_folder output_folder</pre>
 
 <p>The location.csv file should contain at least three columns: longitude, latitude, and subject ID. The results of this enrichment process are saved in the output folder, with JSON files for features available as netCDF and CSV files for GeoTIFF features.</p>
-<h2 id="link-areas">Link areas</h2>
+<h3 id="link-areas">Link areas</h3>
 <p>tdDo</p>
 
 
