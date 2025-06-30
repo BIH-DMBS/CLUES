@@ -1,6 +1,10 @@
+# Overview on the data 
+
+Thet table below summarizes the primary data sources and the datasets retrieved by the workflow under its default configuration.
+
 | Source                                                       | Feature                                                              | Spatial Resolution | Area covered      | Temporal coverage | Temporal resolution | CLUES | environMAP | 
 |--------------------------------------------------------------|----------------------------------------------------------------------|--------------------|-------------------|-------------------|---------------------|-------|------------|
-| CAMS global reanalysis (EAC4)                                | black_carbon_aerosol_optical_depth_550nm                             | 0.75°x0.75°        | Global            | 2003 - 2024       | 3-hourly            | yes   |            |
+| **CAMS global reanalysis (EAC4)**                            | black_carbon_aerosol_optical_depth_550nm                             | 0.75°x0.75°        | Global            | 2003 - 2024       | 3-hourly            | yes   |            |
 |                                                              | black_carbon_aerosol_optical_depth_550nm                             | 0.75°x0.75°        | Global            | 2003 - 2024       | 3-hourly            | yes   |            |
 |                                                              | organic_matter_aerosol_optical_depth_550nm                           | 0.75°x0.75°        | Global            | 2003 - 2024       | 3-hourly            | yes   |            |
 |                                                              | sea_salt_aerosol_optical_depth_550nm                                 | 0.75°x0.75°        | Global            | 2003 - 2024       | 3-hourly            | yes   |            |
@@ -22,14 +26,14 @@
 |                                                              | sea_salt_aerosol_5-20um_mixing_ratio                                 | 0.75°x0.75°        | Global            | 2003 - 2024       | 3-hourly            | yes   |            |
 |                                                              | sulphate_aerosol_mixing_ratio                                        | 0.75°x0.75°        | Global            | 2003 - 2024       | 3-hourly            | yes   |            |
 |                                                              | sulphur_dioxide                                                      | 0.75°x0.75°        | Global            | 2003 - 2024       | 3-hourly            | yes   |            |
-| Copernicus DEM - Global and European Digital Elevation Model | Digital_Geospatial_Elevation_Data_30m                                | 30mx30m            | Global            |                   |                     | yes   |            |
+| **Copernicus DEM - Global and European Digital Elevation Model** | Digital_Geospatial_Elevation_Data_30m                                | 30mx30m            | Global            |                   |                     | yes   |            |
 |                                                              | Digital_Geospatial_Elevation_Data_90m                                | 90mx90m            | Global            |                   |                     | yes   |            |
-| Copernicus Global Dynamic Land Cover                         | BuildUp_CoverFraction_2015                                           | 100mx100m          | Global            | 2015              | yearly              | yes   |            |
+| **Copernicus Global Dynamic Land Cover**                     | BuildUp_CoverFraction_2015                                           | 100mx100m          | Global            | 2015              | yearly              | yes   |            |
 |                                                              | BuildUp_CoverFraction_2016                                           | 100mx100m          | Global            | 2016              | yearly              | yes   |            |
 |                                                              | BuildUp_CoverFraction_2017                                           | 100mx100m          | Global            | 2017              | yearly              | yes   |            |
 |                                                              | BuildUp_CoverFraction_2018                                           | 100mx100m          | Global            | 2018              | yearly              | yes   |            |
 |                                                              | BuildUp_CoverFraction_2019                                           | 100mx100m          | Global            | 2019              | yearly              | yes   |            |
-| Copernicus Land Monitoring Service (CLMS)                    | corine_landcover_2018                                                | 100mx100m          | Europe            | 2018              | yearly              | yes   |            |
+| **Copernicus Land Monitoring Service (CLMS)**                | corine_landcover_2018                                                | 100mx100m          | Europe            | 2018              | yearly              | yes   |            |
 |                                                              | corine_landcover_2012                                                | 100mx100m          | Europe            | 2012              | yearly              | yes   |            |
 |                                                              | corine_landcover_2006                                                | 100mx100m          | Europe            | 2006              | yearly              | yes   |            |
 |                                                              | corine_landcover_2000                                                | 100mx100m          | Europe            | 2000              | yearly              | yes   |            |
@@ -40,7 +44,7 @@
 |                                                              | HRL_Forest_Type_2012_100m                                            | 100mx100m          | Global            | 2012              | yearly              | yes   |            |
 |                                                              | HRL_Forest_Type_2015_100m                                            | 100mx100m          | Global            | 2015              | yearly              | yes   |            |
 |                                                              | HRL_ForestType_2018_100m                                             | 100mx100m          | Global            | 2018              | yearly              | yes   |            |
-| EOC-Atmosphere-Coverage-Service                              | Daily GOME-1 Cloud Fraction (CF) Total Column Composite Layer (ERS-2) |  | Global |1995 - 2011 | daily | yes |  |
+| **EOC-Atmosphere-Coverage-Service**                          | Daily GOME-1 Cloud Fraction (CF) Total Column Composite Layer (ERS-2) |  | Global |1995 - 2011 | daily | yes |  |
 |                                                              | Daily GOME-1 Cloud Optical Thickness (COT) Total Column Composite Layer (ERS-2) |  | Global |1995 - 2011 | daily | yes |  |
 |                                                              | Daily GOME-1 Cloud Top Pressure (CTP) Total Column Composite Layer (ERS-2) |  | Global |1995 - 2011 | daily | yes |  |
 |                                                              | Daily GOME-1 Total Column Nitrogen Dioxide (NO2) Composite Layer (ERS-2) |  | Global |1995 - 2011 | daily | yes |  |
@@ -52,7 +56,7 @@
 |                                                              | MetOp-B GOME-2 Total Column Cloud Top Pressure (CTP) Composite Layer |  | Global |2012 - 2024 | daily | yes |  |
 |                                                              | MetOp-B GOME-2 Total Column Water Vapour (H2O) Composite Layer |  | Global |2012 - 2024 | daily | yes |  |
 |                                                              | MetOp-B GOME-2 Total Column Formaldehyde (HCHO) Composite Layer |  | Global |2012 - 2024 | daily | yes |  |
-|                                                             | MetOp-B GOME-2 Total Column Nitrogen Dioxide (NO2) Composite Layer |  | Global |2012 - 2024 | daily | yes |  |
+|                                                              | MetOp-B GOME-2 Total Column Nitrogen Dioxide (NO2) Composite Layer |  | Global |2012 - 2024 | daily | yes |  |
 |                                                              | MetOp-B GOME-2 Total Column Tropospheric Nitrogen Dioxide (NO2Tropo) Composite Layer |  | Global |2012 - 2024 | daily | yes |  |
 |                                                              | MetOp-B GOME-2 Total Column Ozone (O3) Composite Layer |  | Global |2012 - 2024 | daily | yes |  |
 |                                                              | MetOp-B GOME-2 Total Column Sulfur Dioxide (SO2) Composite Layer |  | Global |2012 - 2024 | daily | yes |  |
@@ -91,13 +95,13 @@
 |                                                              | S-VELD S5P Surf. NO2 - Monthly |  | Global |2018 - 2020 | monthly | yes |  |
 |                                                              | S-VELD S5P Trop. NO2 column - Orbit |  | Global |2018 - 2020 | daily | yes |  |
 |                                                              | S-VELD S5P Trop. NO2 column - Monthly |  | Global |2018 - 2020 | monthly | yes |  |
-| Hydrosheds                                                   | Global_Lakes_and_Wetlands_Database_(GLWD) |  | Global |  |  | yes |  |
-| MODIS Vegetation Index Products                              | normalized difference vegetation index (NDVI) | 1kmx1km | Global |  2000 - 2025  | 16-day  | yes |  |
+| **Hydrosheds**                                               | Global_Lakes_and_Wetlands_Database_(GLWD) |  | Global |  |  | yes |  |
+| **MODIS Vegetation Index Products**                          | normalized difference vegetation index (NDVI) | 1kmx1km | Global |  2000 - 2025  | 16-day  | yes |  |
 |                                                              | normalized difference vegetation index (NDVI) | 250mx250m | Global |  2000 - 2025  | monthly | yes |  |
 |                                                              | enhanced vegetation index (EVI) | 1kmx1km | Global |  2000 - 2025  | 16-day  | yes |  |
 |                                                              | enhanced vegetation index (EVI) | 250mx250m | Global |  2000 - 2025  | monthly | yes |  |
-| Harmonization of DMSP and VIIRS nighttime light data from 1992-2021 | Night_Time_Lights_(NTL) |  1kmx1km | Global |  1992 - 2021  | yearly  | yes |  |
-| Copernicus ERA5                                              | 2m_dewpoint_temperature | 0.25° x 0.25° | Global | 1940-present | hourly | yes |  |
+| **Harmonization of DMSP and VIIRS nighttime light data from 1992-2021** | Night_Time_Lights_(NTL) |  1kmx1km | Global |  1992 - 2021  | yearly  | yes |  |
+| **Copernicus ERA5**                                          | 2m_dewpoint_temperature | 0.25° x 0.25° | Global | 1940-present | hourly | yes |  |
 |                                                              | 2m_temperature | 0.25° x 0.25° | Global | 1940-present | hourly | yes |  |
 |                                                              | high_vegetation_cover | 0.25° x 0.25° | Global | 1940-present | hourly | yes |  |
 |                                                              | low_vegetation_cover | 0.25° x 0.25° | Global | 1940-present | hourly | yes |  |
@@ -115,8 +119,8 @@
 |                                                              | downward_uv_radiation_at_the_surface | 0.25° x 0.25° | Global | 1940-present | hourly | yes |  |
 |                                                              | total_cloud_cover | 0.25° x 0.25° | Global | 1940-present | hourly | yes |  |
 |                                                              | snow_depth | 0.25° x 0.25° | Global | 1940-present | hourly | yes |  |
-| Global SPEI database                                         | spei_drought_index | 0.5° x 0.5° | Global | 1901-present | montly | yes |  |
-| espon                                                        | Deaths by age groups and gender | FUTS | Europe |   | yearly | yes |  |
+| **Global SPEI database**                                     | spei_drought_index | 0.5° x 0.5° | Global | 1901-present | montly | yes |  |
+| **espon**                                                    | Deaths by age groups and gender | FUTS | Europe |   | yearly | yes |  |
 |                                                              | Deaths by age groups | FUTS | Europe |   | yearly | yes |  |
 |                                                              | Life expectancy by age and sex | FUTS | Europe |   | yearly | yes |  |
 |                                                              | Life expectancy by age | FUTS | Europe |   | yearly | yes |  |

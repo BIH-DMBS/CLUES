@@ -20,3 +20,4 @@ h5netcdf
 rasterstats
 glob2
 bs4
+snakemake

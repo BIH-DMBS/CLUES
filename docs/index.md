@@ -1,4 +1,4 @@
-# CLUES: A Comprehensive Workflow for Integrating Geospatial Data in Health Research
+# CLUES: Integrating Geospatial Data in Research
 
 ## About
 
@@ -8,38 +8,21 @@ The expanding ecosystem of open-access geospatial data offers unprecedented oppo
 
 CLUES addresses these needs by enabling selection and automated download of geospatial data from multiple sources, along with the harmonisation of datasets, standardising file formats, spatial and temporal coverage, and map projections to ensure interoperability and consistency across data layers. The CLUES database contains key environmental domains, characterising the built and natural environment, climate and extreme weather, air pollution, and regional socioeconomic conditions. Its framework is designed to be extensible, enabling addition of new environmental variables and ongoing integration of emerging datasets over time. 
 
+CLUES provides a reproducible workflow to build and harmonize a geospatial database of environmental products from multiple open-access sources (e.g., NASA, Copernicus, DLR). 
+
+It allows users to:
+- Collect and organize environmental data from diverse APIs and file formats.
+- Harmonize spatial and temporal characteristics across datasets.
+- Link geodata to participant locations for epidemiological, clinical or social studies.
+- Generate descriptive statistics and visualizations.
+
+The workflow is modular, configurable, and designed for scalability across projects and regions.
+
 CLUES adheres to FAIR (Findable, Accessible, Interoperable, Reusable) data and GDPR (General Data Protection Regulation) principles. 
+
 
 ![Diagram](CLUES_schema.png)
 
-## Deployment
-
-#### Set up a virtual python environment:
-
-*python -m venv cluesEnv*
-
-#### Activate virtual environment:
-
-Linux:
-
-*source cluesEnv/bin/activate*
-
-Windows:
-
-*cluesEnv\Scripts\activate*
-
-#### Install dependicies:
-
-*pip install -r requirements.txt*
-
-snakemake must be installed seperatly  
-
-*pip install snakemake *
-
-#### Run snakemake
-If all is setup run the workflow:
-
-snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60
 
 ## Config 
 

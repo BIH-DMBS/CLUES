@@ -1,8 +1,10 @@
 # Workflow config file
 
-CLUES framework is customized by altering the *workflows\config\config.json*.
+CLUES framework is customized by a set of configuartion files. The primary configuration file, *workflows\config\config.json*., manages the general setup of workflow. In addition each data soure comes with it's own configuration file aand there is a file that manages the available bounding boxes.
 
-Most key-value pairs in the file should be self-explanatory:
+### Genaral config file
+
+The file file, *workflows\config\config.json* can be used to customize the behaviour of the framework. Most key-value pairs in the file should be self-explanatory:
 
 example: *config.json*
 <pre>
@@ -12,16 +14,18 @@ example: *config.json*
     "configs_assets_folder":"/clues/configs_sources_test",
     "config_folder":"/clues/config",
     "secrets_folder":"/clues/secrets",
-    "years": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022","2023","2024","2025],
-    "update_years":[2025],
+    "years": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022","2023","2024","2025"],
+    "update_years":["2025"],
     "area":"Europe",
     "espon_filename_length":80
 }
 </pre>
 
+"update_years" sets the years that will be updated if the workflow reruns on a already established database. This is especially of interest for data with high temporal resoultion like climate and antmospheric data.
+"area" refers to items listed in *workflows\config\bbox.json*. see next section.
 The key "espon_filename_length" is not that self-explanatory, the integer values set here is used to limit the filename lengths used while downloading the espon data. The filemname is generated from the naming and dimension of the differnt assets (https://database.espon.eu/api/). As single file cannot exceed 255 characters the limit is necessary. 
 
-# Bounding boxes
+### Bounding boxes
 
 CLUES framework comes with a predefined set of boundingboxes found in *workflows\config\bbox.json*. Custom bbox must also placed in this file. For example, the bounding box for Europe is represented as "Europe": [72, -15, 30, 42.5]. Here, 72 is the minimum longitude, -15 is the minimum latitude, 30 is the maximum longitude, and 42.5 is the maximum latitude. 
 
@@ -37,7 +41,7 @@ example: *bbox.json*
 }
 </pre>
 
-# Source configuration files
+### Source configuration files
 
 Each of the primary data sources used by CLUES is utilized and custmized on the basis of a distinct config files. The base as curated by CLUES is located in the folder *workflows\config_sources*. The location of the used *configs_assets_folder* can be customized in the *config.json*. This files contain metadata on the primary sources. Each of the source config files loacted in the the folder *workflows\config_sources* contains a key *variables* that is linked to a list of the assets to download. To change what assets to download from the different sources removing items from the list is the way.
 

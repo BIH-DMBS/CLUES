@@ -2,7 +2,7 @@
 
 The framework includes scripts to enrich location data. 
 
-## Simple point data
+### Simple point data
 
 The simplest situation is to have a csv files that contains the loaction and some ID.
 <pre>
@@ -18,6 +18,6 @@ The script */scripts/link_loactions.py* processes netCDF and GeoTIFF files locat
 
 The location.csv file should contain at least three columns: longitude, latitude, and subject ID. The results of this enrichment process are saved in the output folder, with JSON files for features available as netCDF and CSV files for GeoTIFF features.
 
-## Link areas
+### Link areas
 
 tdDo

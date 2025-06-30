@@ -1,12 +1,13 @@
 site_name: CLUES - A Comprehensive Workflow for Integrating Geospatial Data in Health Research
 nav:
   - Home: index.md
-  - Configuratiom: setup.md
+  - Getting Started: gettingStarted.md
+  - Configuration: setup.md
   - 3rd Party Accounts: 3rdPartyAccounts.md
-  - Anticipated result: anticipatedResult.md
-  - Data: datalist.md
-  - Data Usage: data_usage.md
   - Data Sources: geospatial_data.md
+  - Overview on Data: datalist.md
+  - Data Usage: data_usage.md
+  - Anticipated Result: anticipatedResult.md
   - Enrichment: enrichment.md
   - Notebooks: notebooks.md
   
