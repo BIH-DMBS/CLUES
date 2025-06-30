@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../3rdPartyAccounts/">
+        <link rel="prev" href="../data_usage/">
       
       
-        <link rel="next" href="../datalist/">
+        <link rel="next" href="../enrichment/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Anticipated result - CLUES - A Comprehensive Workflow for Integrating Geospatial Data in Health Research</title>
+        <title>Anticipated Result - CLUES - A Comprehensive Workflow for Integrating Geospatial Data in Health Research</title>
       
     
     
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Anticipated result
+              Anticipated Result
             
           </span>
         </div>
@@ -216,12 +216,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../gettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../setup/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Configuratiom
+    Configuration
     
   </span>
   
@@ -257,30 +279,20 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../geospatial_data/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Anticipated result
+    Data Sources
     
   </span>
   
 
       </a>
-      
     </li>
   
 
@@ -297,7 +309,7 @@
   
   
   <span class="md-ellipsis">
-    Data
+    Overview on Data
     
   </span>
   
@@ -333,20 +345,30 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../geospatial_data/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    Data Sources
+    Anticipated Result
     
   </span>
   
 
       </a>
+      
     </li>
   
 
@@ -430,7 +452,8 @@
 
 
 <h1 id="anticipated-result">Anticipated result</h1>
-<p>The workflow will download all request files into the folder defined in the config file. While the workflow runs for each of the files downloaded a logfile gets created. If the workflow fails, usually because the corresponding service is not available, one can check the logfile and the workflow needs to be restarted. Other errors like storage is full net to be addressed seperatly.   </p>
+<p>The workflow automatically downloads all required files into the directory specified in the configuration file. For each file retrieved, a corresponding log file is generated during execution, providing detailed information about the download process. These log files serve as essential diagnostic tools for monitoring workflow progress and identifying potential issues.</p>
+<p>In cases where the workflow fails—most commonly due to temporary unavailability of external data services—users should consult the relevant log files to determine the cause of the failure. Once the issue is resolved, the workflow can be safely restarted to resume processing. It is important to note that certain failures, such as insufficient storage space or network interruptions, must be addressed independently, as they fall outside the scope of automated recovery within the workflow.</p>
 
 
 

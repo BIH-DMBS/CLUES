@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../gettingStarted/">
       
       
         <link rel="next" href="../3rdPartyAccounts/">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Configuratiom - CLUES - A Comprehensive Workflow for Integrating Geospatial Data in Health Research</title>
+        <title>Configuration - CLUES - A Comprehensive Workflow for Integrating Geospatial Data in Health Research</title>
       
     
     
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Configuratiom
+              Configuration
             
           </span>
         </div>
@@ -213,6 +213,28 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../gettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -225,17 +247,76 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    Configuratiom
+    Configuration
     
   </span>
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#genaral-config-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Genaral config file
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bounding-boxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bounding boxes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source configuration files
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -270,12 +351,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../anticipatedResult/" class="md-nav__link">
+      <a href="../geospatial_data/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Anticipated result
+    Data Sources
     
   </span>
   
@@ -297,7 +378,7 @@
   
   
   <span class="md-ellipsis">
-    Data
+    Overview on Data
     
   </span>
   
@@ -336,12 +417,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../geospatial_data/" class="md-nav__link">
+      <a href="../anticipatedResult/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Data Sources
+    Anticipated Result
     
   </span>
   
@@ -415,6 +496,41 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#genaral-config-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Genaral config file
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bounding-boxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bounding boxes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source configuration files
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -430,8 +546,9 @@
 
 
 <h1 id="workflow-config-file">Workflow config file</h1>
-<p>CLUES framework is customized by altering the <em>workflows\config\config.json</em>.</p>
-<p>Most key-value pairs in the file should be self-explanatory:</p>
+<p>CLUES framework is customized by a set of configuartion files. The primary configuration file, <em>workflows\config\config.json</em>., manages the general setup of workflow. In addition each data soure comes with it's own configuration file aand there is a file that manages the available bounding boxes.</p>
+<h3 id="genaral-config-file">Genaral config file</h3>
+<p>The file file, <em>workflows\config\config.json</em> can be used to customize the behaviour of the framework. Most key-value pairs in the file should be self-explanatory:</p>
 <p>example: <em>config.json</em></p>
 <pre>
 {
@@ -440,15 +557,17 @@
     "configs_assets_folder":"/clues/configs_sources_test",
     "config_folder":"/clues/config",
     "secrets_folder":"/clues/secrets",
-    "years": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022","2023","2024","2025],
-    "update_years":[2025],
+    "years": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022","2023","2024","2025"],
+    "update_years":["2025"],
     "area":"Europe",
     "espon_filename_length":80
 }
 </pre>
 
-<p>The key "espon_filename_length" is not that self-explanatory, the integer values set here is used to limit the filename lengths used while downloading the espon data. The filemname is generated from the naming and dimension of the differnt assets (https://database.espon.eu/api/). As single file cannot exceed 255 characters the limit is necessary. </p>
-<h1 id="bounding-boxes">Bounding boxes</h1>
+<p>"update_years" sets the years that will be updated if the workflow reruns on a already established database. This is especially of interest for data with high temporal resoultion like climate and antmospheric data.
+"area" refers to items listed in <em>workflows\config\bbox.json</em>. see next section.
+The key "espon_filename_length" is not that self-explanatory, the integer values set here is used to limit the filename lengths used while downloading the espon data. The filemname is generated from the naming and dimension of the differnt assets (https://database.espon.eu/api/). As single file cannot exceed 255 characters the limit is necessary. </p>
+<h3 id="bounding-boxes">Bounding boxes</h3>
 <p>CLUES framework comes with a predefined set of boundingboxes found in <em>workflows\config\bbox.json</em>. Custom bbox must also placed in this file. For example, the bounding box for Europe is represented as "Europe": [72, -15, 30, 42.5]. Here, 72 is the minimum longitude, -15 is the minimum latitude, 30 is the maximum longitude, and 42.5 is the maximum latitude. </p>
 <p>example: <em>bbox.json</em></p>
 <pre>
@@ -462,7 +581,7 @@
 }
 </pre>
 
-<h1 id="source-configuration-files">Source configuration files</h1>
+<h3 id="source-configuration-files">Source configuration files</h3>
 <p>Each of the primary data sources used by CLUES is utilized and custmized on the basis of a distinct config files. The base as curated by CLUES is located in the folder <em>workflows\config_sources</em>. The location of the used <em>configs_assets_folder</em> can be customized in the <em>config.json</em>. This files contain metadata on the primary sources. Each of the source config files loacted in the the folder <em>workflows\config_sources</em> contains a key <em>variables</em> that is linked to a list of the assets to download. To change what assets to download from the different sources removing items from the list is the way.</p>
 <p><em>cams-global-reanalysis-eac4.json</em></p>
 <pre>
