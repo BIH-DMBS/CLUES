@@ -110,7 +110,7 @@ To link the downloaded environmental data to the geographic locations of study p
 
 # Usage policies
 
-All data sources integrated by CLUES are open-access and publicly available. However, users must comply with the usage terms of each primary data source. Each dataset is subject to its own licensing and access policies. Please ensure you review and follow these terms before using the data in research.
+All data integrated by CLUES are open-access and publicly available. However, users must comply with the usage terms of each primary data source. Each dataset is subject to its own licensing and access policies. Please ensure you review and follow these terms before using the data in research.
 
 For more details, see the [Data usage](docs/data_usage.md) guide.
 
