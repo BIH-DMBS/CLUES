@@ -39,6 +39,6 @@ Create the following file:
 <pre>token: place your token here</pre>
 
 ## Notes
-The location of the credential *.sct files is defined in the main workflow configuration file **config.json** under the key: *configs_assets_folder*.
+The location of the credential *.sct files is defined in the general workflow configuration file **config.json** under the key: *configs_assets_folder*.
 
 #### [For more details on the configuration files go to. ](setup.md)
