@@ -40,5 +40,4 @@ Create the following file:
 
 ## Notes
 The location of the credential *.sct files is defined in the general workflow configuration file **config.json** under the key: *configs_assets_folder*.
-
-#### [For more details on the configuration files go to. ](setup.md)
+#### [For more details, see the Configuration Files guide.](docs/setup.md)
