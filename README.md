@@ -2,17 +2,18 @@
 
 ## About
 
-The Climate, Urbanicity, Environment and Society (CLUES) framework is a toolkit for generating a harmonised, geospatial environmental database that integrates diverse environmental exposures with health research data at the individual-level. 
+CLUES (Climate, Urbanicity, Environment and Society) is a modular workflow that enables researchers to systematically integrate open-access geospatial environmental data with health research datasets at the individual-level. It automates the download, harmonisation, and management of data across climate, built/natural environment, air pollution, and regional socioeconomic conditions.
 
-The expanding ecosystem of open-access geospatial data offers unprecedented opportunities for synergistic data linkage, yet also presents challenges related to fragmentation, heterogeneity, and technical complexity. Given the growing recognition of the environment as a key determinant of physical and mental health, there is increasing need for scalable tools that enable the systematic integration of environmental data in biomedical research. 
-
-CLUES addresses these needs by enabling selection and automated download of geospatial data from multiple sources, along with the harmonisation of datasets, standardising file formats, spatial and temporal coverage, and map projections to ensure interoperability and consistency across data layers. The CLUES database contains key environmental domains, characterising the built and natural environment, climate and extreme weather, air pollution, and regional socioeconomic conditions. Its framework is designed to be extensible, enabling addition of new environmental variables and ongoing integration of emerging datasets over time. 
-
-CLUES adheres to FAIR (Findable, Accessible, Interoperable, Reusable) data and GDPR (General Data Protection Regulation) principles. 
+**Key Features**
+•	Automated data retrieval from multiple open-access geospatial sources
+•	Standardised harmonisation of spatial/temporal coverage, projections, and file types
+•	Modular integration with health cohort datasets at the individual level
+•	Extensible architecture for adding new environmental variables over time
+•	Adherence to FAIR (Findable, Accessible, Interoperable, Reusable) and data protection principles
 
 ![Diagram](docs/CLUES_schema.png)
 
-## Deployment
+## Getting started
 
 #### Set up a virtual python environment:
 
@@ -28,38 +29,71 @@ Windows:
 
 *cluesEnv\Scripts\activate*
 
-#### Install dependicies:
+#### Install dependecies:
 
 *pip install -r requirements.txt*
 
-snakemake must be installed seperatly  
+Note: snakemake must be installed separately  
 
 *pip install snakemake *
 
-# Config 
-There are several config files loacted in the folders *config* and *config_sources*.
-### General configs
-The folder config contains two files. *bbox.json* is a collection of different bounding boxes for different areas. *config.json* contains the information on what assets to download, where to store the data, where the secrets are located, and for which years, and for which area (here the bboxes listed in *bbox.json* are used) the geospatial features should be downloaded.
-### Secrets
-To access climate and atmosphere data from Copernicus the necessary credentials need to be place into the configs_assets_folder defined in the *config.json*. See here: https://cds.climate.copernicus.eu/how-to-api
-Create the two files *cdsapirc_atmo.sct* and *cdsapirc_climate.sct* and place the ??? in the configs_assets_folder folder.
+## Configuration Management
 
-To access NVDI and EVI data from NASA datapool the necessary credentials are required (https://www.earthdata.nasa.gov/). 
+The CLUES workflow operates with a modular configuration system that defines how the geospatial database is generated, updated, and customised. It is structured around:
+•	A general workflow configuration file
+•	Multiple source-specific configuration files
+Together, these configurations ensure accurate data acquisition, seamless integration, and reproducible processing.
+
+The configuration files are stored in the *config* and *config_sources* folders.
+
+### General workflow configuration
+Stored in the config/ folder, this file (*config.json*) defines:
+•	Where to store the downloaded database
+•	The spatial and temporal coverage of interest (e.g., bounding boxes and time periods)
+•	Which environmental data to download
+•	Rules for updating or extending existing databases
+
+The config/ folder also contains the *bbox.json* file, which is a collection of different bounding boxes for different areas.
+
+### Source-Specific Configuration Files
+Each environmental data source has its own configuration file stored in the config_sources/ folder. These files are modular and self-contained, making it easy to:
+•	Specify which datasets and variables to download from each source
+•	Define source-specific metadata (e.g., URLs, file structure, variable names)
+•	Choose whether to apply neighbourhood-level processing, and if so:
+	•	Select the processing type: mean, std, or Zevenbergen-Thorne
+	•	Set the radius of the neighbourhood (in meters)
+
+You can add or modify environmental data sources by simply adjusting the relevant config file, without affecting the rest of the system.
+
+### Credentials (Secrets)
+Some sources require API credentials:
+
+•	Copernicus (Climate/Atmosphere data):
+  •	Register and obtain credentials: https://cds.climate.copernicus.eu/how-to-api
+	•	Create two files in the path specified by configs_assets_folder in config.json:
+	•	cdsapirc_atmo.sct
+	•	cdsapirc_climate.sct
+	•	Replace ??? with your actual credentials in the configs_assets_folder folder defined in the *config.json*.
+
+•	NASA (Normalized Difference Vegetation Index (NDVI)/Enhanced Vegetation Index) (EVI) data:
+Register at: https://www.earthdata.nasa.gov/
 Create the file *nasa.sct* that contains *token: your_nasa_token*. 
 
-### Assets
-The geofeatures that will be downloaded are defined in the json files stored in the *config_sources* folder. For each of the data sources used, there is on specific json file. 
-To customize check the files to the folder and remove from the variable list contained in each file the variables you do not want to download. 
+### Assets (Geospatial Features)
+The geospatial features to be downloaded are defined in individual JSON files in the config_sources/ folder.
+Each file corresponds to a specific data source. You can customise the downloaded variables by editing the relevant JSON file and removing variables you do not want.
 
-# Run snakemake
-If all is setup run the workflow:
+A complete list of all available geospatial products, including their source and characteristics is provided in the assets/ folder. This serves as a reference for users to understand what data is included in the CLUES framework and to guide customisation of the source-specific configuration files.
 
+# Running the Workflow
+Once the setup and configuration is complete, run the workflow using:
 snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60
 
 # Anticipated result
+Downloaded files are stored in the location specified in the *config.json* file. Log files will be created for each download task. If the workflow fails, (e.g., due to a temporary server issue), review the corresponding log files. The workflow needs to be restarted. Common issues such as storage limitations need to be resolved manually before re-running the workflow.
 
-The workflow will download all request files into the folder defined in the config file. While the workflow runs for each of the files downloaded a logfile gets created. If the workflow fails, usually because the corresponding service is not available, one can check the logfile and the workflow needs to be restarted. Other errors like storage is full net to be addressed seperatly.   
+To link the downloaded environmental data to the geographic locations of study participants, run the scripts provided in the enrichment/ folder.
 
 # Usage policies
 
-When utilizing data from the CLUES, it is imperative that users adhere to the terms of use associated with the various primary data sources. Each dataset within the CLUES is governed by specific usage policies, and compliance with these terms ensures the ethical and legal use of the data. Users are encouraged to review  and understand the terms of use for each primary data source before downloading and employing the data in their research.
+All data sources integrated by CLUES are open-access and publicly available. However, users must comply with the usage terms of each primary data source. Each dataset is subject to its own licensing and access policies. Please ensure you review and follow these terms before using the data in research.
