@@ -87,6 +87,7 @@ A complete list of all available geospatial products, including their source and
 
 # Running the Workflow
 Once the setup and configuration is complete, run the workflow using:
+
 snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60
 
 # Anticipated result
