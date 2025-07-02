@@ -43,6 +43,7 @@ Note: snakemake must be installed separately
 The CLUES workflow operates with a modular configuration system that defines how the geospatial database is generated, updated, and customised. It is structured around:
 - A general workflow configuration file
 - Multiple source-specific configuration files
+
 Together, these configurations ensure accurate data acquisition, seamless integration, and reproducible processing.
 
 The configuration files are stored in the *config* and *config_sources* folders.
