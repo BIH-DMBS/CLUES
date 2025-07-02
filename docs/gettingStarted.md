@@ -1,29 +1,26 @@
 # Getting Started
 
-This guide will help you set up the environment and run the Snakemake workflow for this project.
+This guide walks you through setting up your environment and running the CLUES data processing workflow using Snakemake, a workflow management system that automates the execution of data analysis pipelines.
 
 ## Prerequisites
 
-Before you begin, make sure you have the following installed:
+Before getting started, ensure the following tools are installed:
 
 - Python 3.8 or higher
 - `pip` (Python package manager)
 - Git
 - [Snakemake](https://snakemake.readthedocs.io/en/stable/)
-- (Optional) `conda` — recommended for reproducible environments
+- (Optional but recommended) `conda` — for reproducible environments
 
-## Deployment
+## Setup Instructions
 
 ### Clone the Repository
 
-Clone this repository to your local machine:
-Navigate to the target working directory
-
+Navigate to your preferred working directory and clone the CLUES repository:
 
 <pre>
 git clone https://gitlab.com/bih_dmbs/CLUES/workflows.git
 </pre>
-
 
 ### Set up a virtual python environment:
 
@@ -31,7 +28,7 @@ git clone https://gitlab.com/bih_dmbs/CLUES/workflows.git
 python -m venv cluesEnv*
 </pre>
 
-**Activate virtual environment**
+**Activate the virtual environment**
 
 Linux/macOS:
 
@@ -44,21 +41,22 @@ Windows:
 *cluesEnv\Scripts\activate*
 </pre>
 
-#### Install dependicies:
+#### Install dependencies:
+Install the required Python packages:
 
 <pre>
 pip install -r requirements.txt
 </pre>
 
 
-#### Run snakemake workflow
-If all is setup run the workflow:
+#### Run the Workflow
+Once everything is set up, you can run the CLUES workflow using Snakemake:
 
 <pre>
 snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60
 </pre>
 
-Options Explained:
+Command Options Explained:
 
 - -s workflows/snakefile specifies the Snakefile path
 
@@ -69,3 +67,5 @@ Options Explained:
 - --rerun-incomplete reruns any jobs that were not completed
 
 - --latency-wait 60 waits up to 60 seconds for output files (useful on shared filesystems)
+
+Once completed, the required data will be downloaded and stored as specified in your general workflow configuration file (config/config.json). You can then proceed to link environmental data to participant locations using the [Data Linkage scripts](enrichment.md).
