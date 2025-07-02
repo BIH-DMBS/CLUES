@@ -59,7 +59,7 @@ Stored in the config/ folder, this file (*config.json*) defines:
 
 The config/ folder also contains the *bbox.json* file, which is a collection of different bounding boxes for different areas.
 
-**### Source-Specific Configuration Files**
+### **Source-Specific Configuration Files**
 Each environmental data source has its own configuration file stored in the config_sources/ folder. These files are modular and self-contained, making it easy to:
 - Specify which datasets and variables to download from each source
 - Define source-specific metadata (e.g., URLs, file structure, variable names)
