@@ -38,6 +38,8 @@ Note: snakemake must be installed separately
 
 *pip install snakemake *
 
+For more details, see the [Getting Started](docs/gettingStarted.md) guide.
+
 ## Configuration Management
 
 The CLUES workflow operates with a modular configuration system that defines how the geospatial database is generated, updated, and customised. It is structured around:
@@ -79,13 +81,15 @@ Some sources require API credentials:
 
 - NASA (Normalized Difference Vegetation Index (NDVI)/Enhanced Vegetation Index) (EVI) data:
   - Register at: https://www.earthdata.nasa.gov/
-  - Create the file *nasa.sct* that contains *token: your_nasa_token*. 
+  - Create the file *nasa.sct* that contains *token: your_nasa_token*.
+
+For more details, see the [Third Party Accounts](docs/3rdPartyAccounts.md) guide.
 
 ### Assets (Geospatial Features)
 The geospatial features to be downloaded are defined in individual JSON files in the config_sources/ folder.
 Each file corresponds to a specific data source. You can customise the downloaded variables by editing the relevant JSON file and removing variables you do not want.
 
-A complete list of all available geospatial products, including their source and characteristics is provided in the assets/ folder. This serves as a reference for users to understand what data is included in the CLUES framework and to guide customisation of the source-specific configuration files.
+A complete list of all available geospatial products, including their source and characteristics is provided in the docs/datalist.md. This serves as a reference for users to understand what data is included in the CLUES framework and to guide customisation of the source-specific configuration files.
 
 # Running the Workflow
 Once the setup and configuration is complete, run the workflow using:
@@ -94,17 +98,20 @@ snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait
 
 # Anticipated result
 Downloaded files are stored in the location specified in the *config.json* file. Log files will be created for each download task. If the workflow fails, (e.g., due to a temporary server issue), review the corresponding log files. The workflow needs to be restarted. Common issues such as storage limitations need to be resolved manually before re-running the workflow.
+For more details, see the [Anticipated Results](docs/anticipatedResult.md) guide.
 
-To link the downloaded environmental data to the geographic locations of study participants, run the scripts provided in the enrichment/ folder.
+To link the downloaded environmental data to the geographic locations of study participants, run the scripts as described in in the docs/enrichment.
+
 
 # Usage policies
 
 All data sources integrated by CLUES are open-access and publicly available. However, users must comply with the usage terms of each primary data source. Each dataset is subject to its own licensing and access policies. Please ensure you review and follow these terms before using the data in research.
+For more details, see the [Data usage](docs/data_usage.md) guide.
 
 # License and Citation 
 
 ## License
-Free commons ...
+For more details, see License(workflows/LICENSE).
 
 ## Citation 
 If you use CLUES in your work, please cite: 
