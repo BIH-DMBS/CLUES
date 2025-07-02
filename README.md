@@ -76,8 +76,8 @@ Some sources require API credentials:
   - Replace ??? with your actual credentials in the configs_assets_folder folder defined in the *config.json*.
 
 - NASA (Normalized Difference Vegetation Index (NDVI)/Enhanced Vegetation Index) (EVI) data:
-Register at: https://www.earthdata.nasa.gov/
-Create the file *nasa.sct* that contains *token: your_nasa_token*. 
+  - Register at: https://www.earthdata.nasa.gov/
+  - Create the file *nasa.sct* that contains *token: your_nasa_token*. 
 
 ### Assets (Geospatial Features)
 The geospatial features to be downloaded are defined in individual JSON files in the config_sources/ folder.
