@@ -50,7 +50,7 @@ Together, these configurations ensure accurate data acquisition, seamless integr
 
 The configuration files are stored in the *config* and *config_sources* folders.
 
-**### General workflow configuration**
+### **General workflow configuration**
 Stored in the config/ folder, this file (*config.json*) defines:
 - Where to store the downloaded database
 - The spatial and temporal coverage of interest (e.g., bounding boxes and time periods)
@@ -71,7 +71,7 @@ You can add or modify environmental data sources by simply adjusting the relevan
 
 For more details, see the [Configuration Files](docs/setup.md) guide.
 
-**### Credentials for Third Party Accounts**
+### **Credentials for Third Party Accounts**
 Some sources require API credentials:
 
 - Copernicus (Climate/Atmosphere data):
@@ -87,7 +87,7 @@ Some sources require API credentials:
 
 For more details, see the [Third Party Accounts](docs/3rdPartyAccounts.md) guide.
 
-### Assets (Geospatial Features)
+### **Assets (Geospatial Features)**
 The geospatial features to be downloaded are defined in individual JSON files in the config_sources/ folder.
 Each file corresponds to a specific data source. You can customise the downloaded variables by editing the relevant JSON file and removing variables you do not want.
 
