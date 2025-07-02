@@ -67,7 +67,7 @@ Each environmental data source has its own configuration file stored in the conf
 
 You can add or modify environmental data sources by simply adjusting the relevant config file, without affecting the rest of the system.
 
-### Credentials (Secrets)
+### Credentials (Secrets) for Third Party Accounts
 Some sources require API credentials:
 
 - Copernicus (Climate/Atmosphere data):
