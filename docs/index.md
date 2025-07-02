@@ -105,7 +105,7 @@ Downloaded files are stored in the location specified in the *config.json* file.
 
 For more details, see the [Anticipated Results](docs/anticipatedResult.md) guide.
 
-To link the downloaded environmental data to the geographic locations of study participants, run the scripts as described in the docs/enrichment.
+To link the downloaded environmental data to the geographic locations of study participants, run the scripts as described in the [Data Linkage scripts](docs/enrichment).
 
 
 # Usage policies
