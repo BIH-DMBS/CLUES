@@ -40,42 +40,42 @@ Note: snakemake must be installed separately
 ## Configuration Management
 
 The CLUES workflow operates with a modular configuration system that defines how the geospatial database is generated, updated, and customised. It is structured around:
-•	A general workflow configuration file
-•	Multiple source-specific configuration files
+- A general workflow configuration file
+- Multiple source-specific configuration files
 Together, these configurations ensure accurate data acquisition, seamless integration, and reproducible processing.
 
 The configuration files are stored in the *config* and *config_sources* folders.
 
 ### General workflow configuration
 Stored in the config/ folder, this file (*config.json*) defines:
-•	Where to store the downloaded database
-•	The spatial and temporal coverage of interest (e.g., bounding boxes and time periods)
-•	Which environmental data to download
-•	Rules for updating or extending existing databases
+- Where to store the downloaded database
+- The spatial and temporal coverage of interest (e.g., bounding boxes and time periods)
+- Which environmental data to download
+- Rules for updating or extending existing databases
 
 The config/ folder also contains the *bbox.json* file, which is a collection of different bounding boxes for different areas.
 
 ### Source-Specific Configuration Files
 Each environmental data source has its own configuration file stored in the config_sources/ folder. These files are modular and self-contained, making it easy to:
-•	Specify which datasets and variables to download from each source
-•	Define source-specific metadata (e.g., URLs, file structure, variable names)
-•	Choose whether to apply neighbourhood-level processing, and if so:
-	•	Select the processing type: mean, std, or Zevenbergen-Thorne
-	•	Set the radius of the neighbourhood (in meters)
+- Specify which datasets and variables to download from each source
+- Define source-specific metadata (e.g., URLs, file structure, variable names)
+- Choose whether to apply neighbourhood-level processing, and if so:
+  - Select the processing type: mean, std, or Zevenbergen-Thorne
+  - Set the radius of the neighbourhood (in meters)
 
 You can add or modify environmental data sources by simply adjusting the relevant config file, without affecting the rest of the system.
 
 ### Credentials (Secrets)
 Some sources require API credentials:
 
-•	Copernicus (Climate/Atmosphere data):
-  •	Register and obtain credentials: https://cds.climate.copernicus.eu/how-to-api
-	•	Create two files in the path specified by configs_assets_folder in config.json:
-	•	cdsapirc_atmo.sct
-	•	cdsapirc_climate.sct
-	•	Replace ??? with your actual credentials in the configs_assets_folder folder defined in the *config.json*.
+- Copernicus (Climate/Atmosphere data):
+  - Register and obtain credentials: https://cds.climate.copernicus.eu/how-to-api
+  - Create two files in the path specified by configs_assets_folder in config.json:
+  - cdsapirc_atmo.sct
+  - cdsapirc_climate.sct
+  - Replace ??? with your actual credentials in the configs_assets_folder folder defined in the *config.json*.
 
-•	NASA (Normalized Difference Vegetation Index (NDVI)/Enhanced Vegetation Index) (EVI) data:
+- NASA (Normalized Difference Vegetation Index (NDVI)/Enhanced Vegetation Index) (EVI) data:
 Register at: https://www.earthdata.nasa.gov/
 Create the file *nasa.sct* that contains *token: your_nasa_token*. 
 
@@ -97,3 +97,13 @@ To link the downloaded environmental data to the geographic locations of study p
 # Usage policies
 
 All data sources integrated by CLUES are open-access and publicly available. However, users must comply with the usage terms of each primary data source. Each dataset is subject to its own licensing and access policies. Please ensure you review and follow these terms before using the data in research.
+
+# License and Citation 
+
+## License
+Free commons ...
+
+## Citation 
+If you use CLUES in your work, please cite: 
+Jentsch M, et al. (2025). CLUES: …
+
