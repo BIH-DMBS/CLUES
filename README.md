@@ -10,6 +10,7 @@ CLUES (Climate, Urbanicity, Environment and Society) is a modular workflow that 
 - Modular integration with health cohort datasets at the individual level
 - Extensible architecture for adding new environmental variables over time
 - Adherence to FAIR (Findable, Accessible, Interoperable, Reusable) and data protection principles
+  
 
 ![Diagram](docs/CLUES_schema.png)
 
