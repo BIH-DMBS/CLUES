@@ -6,4 +6,4 @@ Compliance with these terms is not only a legal requirement, but also a matter o
 
 This includes ensuring proper citation, understanding redistribution rights, and respecting any restrictions on commercial or derivative use. Failure to comply may lead to legal or ethical consequences, especially when publishing or sharing derived results.
 
-A summary of the main data sources and the datasets retrieved under the default workflow configuration is available in the [Table](datalist.md). This overview helps clarify the origin and scope of the data and highlights the importance of proper data governance throughout the research process.
+A summary of the main data sources and the datasets retrieved under the default workflow configuration is available in the [Table](datalist.md) here. This overview helps clarify the origin and scope of the data and highlights the importance of proper data governance throughout the research process.
