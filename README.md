@@ -50,7 +50,7 @@ Together, these configurations ensure accurate data acquisition, seamless integr
 
 The configuration files are stored in the *config* and *config_sources* folders.
 
-### General workflow configuration
+**### General workflow configuration**
 Stored in the config/ folder, this file (*config.json*) defines:
 - Where to store the downloaded database
 - The spatial and temporal coverage of interest (e.g., bounding boxes and time periods)
@@ -59,7 +59,7 @@ Stored in the config/ folder, this file (*config.json*) defines:
 
 The config/ folder also contains the *bbox.json* file, which is a collection of different bounding boxes for different areas.
 
-### Source-Specific Configuration Files
+**### Source-Specific Configuration Files**
 Each environmental data source has its own configuration file stored in the config_sources/ folder. These files are modular and self-contained, making it easy to:
 - Specify which datasets and variables to download from each source
 - Define source-specific metadata (e.g., URLs, file structure, variable names)
@@ -71,7 +71,7 @@ You can add or modify environmental data sources by simply adjusting the relevan
 
 For more details, see the [Configuration Files](docs/setup.md) guide.
 
-### Credentials for Third Party Accounts
+**### Credentials for Third Party Accounts**
 Some sources require API credentials:
 
 - Copernicus (Climate/Atmosphere data):
@@ -91,7 +91,7 @@ For more details, see the [Third Party Accounts](docs/3rdPartyAccounts.md) guide
 The geospatial features to be downloaded are defined in individual JSON files in the config_sources/ folder.
 Each file corresponds to a specific data source. You can customise the downloaded variables by editing the relevant JSON file and removing variables you do not want.
 
-A complete list of all available geospatial products, including their source and characteristics is provided in the docs/datalist.md. This serves as a reference for users to understand what data is included in the CLUES framework and to guide customisation of the source-specific configuration files.
+A [complete list](docs/datalist.md) of all available geospatial products, including their source and characteristics is provided. This serves as a reference for users to understand what data is included in the CLUES framework and to guide customisation of the source-specific configuration files.
 
 For more details, see the [Geospatial Data](docs/geospatial_data.md) guide.
 
@@ -117,7 +117,9 @@ For more details, see the [Data usage](docs/data_usage.md) guide.
 # License and Citation 
 
 ## License
-MIT 
+MIT License
+Copyright (c) 2025 BIH-DMBS 
+
 For more details, see License(workflows/LICENSE).
 
 ## Citation 
