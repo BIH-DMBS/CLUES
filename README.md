@@ -69,7 +69,9 @@ Each environmental data source has its own configuration file stored in the conf
 
 You can add or modify environmental data sources by simply adjusting the relevant config file, without affecting the rest of the system.
 
-### Credentials (Secrets) for Third Party Accounts
+For more details, see the [Configuration Files](docs/setup.md) guide.
+
+### Credentials for Third Party Accounts
 Some sources require API credentials:
 
 - Copernicus (Climate/Atmosphere data):
@@ -91,6 +93,8 @@ Each file corresponds to a specific data source. You can customise the downloade
 
 A complete list of all available geospatial products, including their source and characteristics is provided in the docs/datalist.md. This serves as a reference for users to understand what data is included in the CLUES framework and to guide customisation of the source-specific configuration files.
 
+For more details, see the [Geospatial Data](docs/geospatial_data.md) guide.
+
 # Running the Workflow
 Once the setup and configuration is complete, run the workflow using:
 
@@ -98,6 +102,7 @@ snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait
 
 # Anticipated result
 Downloaded files are stored in the location specified in the *config.json* file. Log files will be created for each download task. If the workflow fails, (e.g., due to a temporary server issue), review the corresponding log files. The workflow needs to be restarted. Common issues such as storage limitations need to be resolved manually before re-running the workflow.
+
 For more details, see the [Anticipated Results](docs/anticipatedResult.md) guide.
 
 To link the downloaded environmental data to the geographic locations of study participants, run the scripts as described in in the docs/enrichment.
@@ -106,11 +111,13 @@ To link the downloaded environmental data to the geographic locations of study p
 # Usage policies
 
 All data sources integrated by CLUES are open-access and publicly available. However, users must comply with the usage terms of each primary data source. Each dataset is subject to its own licensing and access policies. Please ensure you review and follow these terms before using the data in research.
+
 For more details, see the [Data usage](docs/data_usage.md) guide.
 
 # License and Citation 
 
 ## License
+MIT 
 For more details, see License(workflows/LICENSE).
 
 ## Citation 
