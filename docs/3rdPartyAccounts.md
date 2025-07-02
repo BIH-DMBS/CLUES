@@ -36,6 +36,7 @@ Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s Earthdata platform 
 
 ### Token Storage
 Create the following file:
+
 *nasa.sct*
 <pre>token: place your token here</pre>
 
