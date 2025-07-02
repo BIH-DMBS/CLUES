@@ -1,6 +1,6 @@
 #	Usage policies
 
-When using data provided by the CLUES framework, it is essential that users follow the terms of use associated with each primary data source. While the datasets are open source, every dataset included in CLUES is governed by specific licensing conditions and usage policies, which may vary depending on the provider.
+When using data provided by the CLUES framework, it is essential that users follow the terms of use associated with each primary data source. All datasets included in CLUES are open-access and publicly available. However, every dataset is governed by specific licensing conditions and usage policies, which may vary depending on the provider.
 
 Compliance with these terms is not only a legal requirement, but also a matter of research integrity and responsible data stewardship. Users are strongly encouraged to review and understand the terms of use for each data source before downloading or using the data in their research.
 
