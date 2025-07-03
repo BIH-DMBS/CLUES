@@ -1,10 +1,13 @@
 # Configuration Management
 
-CLUES framework is customized by a set of configuartion files. The general workflow configuration file, *workflows\config\config.json*, manages the general setup of the workflow. In addition, each data soure comes with its own configuration file (available in *configs_sources* folder) and there is a file that manages the available bounding boxes (config/bbox.json).
+The CLUES framework is customized through a set of configuration files that define the structure and behavior of the workflow. These include:
+- A general workflow configuration file: <pre> workflows/config/config.json </pre>
+- Source-specific configuration files for each data provider: <pre> workflows/config_sources/ </pre>
+- A file for predefined bounding boxes: <pre> workflows/config/bbox.json </pre>
 
 ### General workflow configuration file
 
-The file, *workflows\config\config.json* can be used to customize the behaviour of the framework. Most "key":"value" pairs in the file should be self-explanatory:
+The file  <pre> workflows\config\config.json </pre> can be used to customize the behaviour of the framework. Most "key":"value" pairs in the file should be self-explanatory:
 
 example: *config.json*
 <pre>
