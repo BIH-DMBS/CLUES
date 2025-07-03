@@ -5,3 +5,5 @@ The workflow automatically downloads all required geospatial data files into the
 In cases where the workflow fails — most commonly due to temporary unavailability of external data services — users should consult the relevant log files to identify the source of the problem. Once resolved, the workflow can be safely restarted, and it will resume from where it left off.
 
 Note that certain issues, such as insufficient storage space or network connectivity problems, must be resolved manually. These fall outside the scope of automated recovery and require user intervention before the workflow can continue successfully.
+
+![Diagram](docs/filesystem.png)

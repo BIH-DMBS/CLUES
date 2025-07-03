@@ -103,7 +103,7 @@ Each file corresponds to a specific data source. You can customise the downloade
 
 A [complete list](docs/datalist.md) of all available geospatial products, including their source and characteristics is provided. This serves as a reference for users to understand what data is included in the CLUES framework and to guide customisation of the source-specific configuration files.
 
-For more details, see the [Geospatial Data](docs/geospatial_data.md) guide.
+For more details, see the [Geospatial Data](geospatial_data.md) guide.
 
 # Running the Workflow
 Once the setup and configuration is complete, run the workflow using:
