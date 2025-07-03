@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#workflow-config-file" class="md-skip">
+        <a href="#configuration-management" class="md-skip">
           Skip to content
         </a>
       
@@ -288,9 +288,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#genaral-config-file" class="md-nav__link">
+  <a href="#general-workflow-configuration-file" class="md-nav__link">
     <span class="md-ellipsis">
-      Genaral config file
+      General workflow configuration file
     </span>
   </a>
   
@@ -503,9 +503,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#genaral-config-file" class="md-nav__link">
+  <a href="#general-workflow-configuration-file" class="md-nav__link">
     <span class="md-ellipsis">
-      Genaral config file
+      General workflow configuration file
     </span>
   </a>
   
@@ -545,11 +545,13 @@
 
 
 
-<h1 id="workflow-config-file">Workflow config file</h1>
-<p>CLUES framework is customized by a set of configuartion files. The primary configuration file, <em>workflows\config\config.json</em>., manages the general setup of workflow. In addition each data soure comes with it's own configuration file aand there is a file that manages the available bounding boxes.</p>
-<h3 id="genaral-config-file">Genaral config file</h3>
-<p>The file file, <em>workflows\config\config.json</em> can be used to customize the behaviour of the framework. Most key-value pairs in the file should be self-explanatory:</p>
-<p>example: <em>config.json</em></p>
+<h1 id="configuration-management">Configuration Management</h1>
+<p>The CLUES framework is customized through a set of configuration files that define the structure and behavior of the workflow. These include:
+- A general workflow configuration file: 'workflows/config/config.json'
+- Source-specific configuration files for each data provider: 'workflows/config_sources/'
+- A file for predefined bounding boxes: 'workflows/config/bbox.json'</p>
+<h3 id="general-workflow-configuration-file">General workflow configuration file</h3>
+<p>The file 'workflows\config\config.json' defines the core settings for how CLUES operates. It allows full control over what the workflow does, where data is stored, and how different components behave. Below an example of 'config.json':</p>
 <pre>
 {
     "download_folder":"/clues/data",
