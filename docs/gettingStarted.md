@@ -38,7 +38,7 @@ source cluesEnv/bin/activate
 
 Windows:
 <pre>
-*cluesEnv\Scripts\activate*
+cluesEnv\Scripts\activate
 </pre>
 
 #### Install dependencies:
