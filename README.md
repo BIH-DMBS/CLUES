@@ -131,8 +131,6 @@ MIT License
 
 Copyright (c) 2025 BIH-DMBS 
 
-For more details, see License(workflows/LICENSE).
-
 ## Citation 
 If you use CLUES in your work, please cite: 
 Jentsch M, et al. (2025). CLUES: …
