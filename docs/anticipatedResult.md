@@ -6,4 +6,4 @@ In cases where the workflow fails — most commonly due to temporary unavailabil
 
 Note that certain issues, such as insufficient storage space or network connectivity problems, must be resolved manually. These fall outside the scope of automated recovery and require user intervention before the workflow can continue successfully.
 
-![Diagram](docs/filesystem.png)
+![Diagram](filesystem.png)

@@ -12,7 +12,7 @@ CLUES (Climate, Urbanicity, Environment and Society) is a modular workflow that 
 - Adherence to FAIR (Findable, Accessible, Interoperable, Reusable) and data protection principles
   
 
-![Diagram](docs/CLUES_schema.png)
+![Diagram](CLUES_schema.png)
 
 ## Getting started
 
