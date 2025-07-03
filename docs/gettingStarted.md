@@ -25,7 +25,7 @@ git clone https://gitlab.com/bih_dmbs/CLUES/workflows.git
 ### Set up a virtual python environment:
 
 <pre>
-python -m venv cluesEnv*
+python -m venv cluesEnv
 </pre>
 
 **Activate the virtual environment**
