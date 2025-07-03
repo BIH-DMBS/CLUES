@@ -715,7 +715,7 @@
 <p><em>pip install -r requirements.txt</em></p>
 <p>Note: snakemake must be installed separately  </p>
 <p>*pip install snakemake *</p>
-<p>For more details, see the <a href="docs/gettingStarted.md">Getting Started</a> guide.</p>
+<p>For more details, see the <a href="gettingStarted/">Getting Started</a> guide.</p>
 <h2 id="configuration-management">Configuration Management</h2>
 <p>The CLUES workflow operates with a modular configuration system that defines how the geospatial database is generated, updated, and customised. It is structured around:
 - A general workflow configuration file
@@ -737,7 +737,7 @@
   - Select the processing type: mean, std, or Zevenbergen-Thorne
   - Set the radius of the neighbourhood (in meters)</p>
 <p>You can add or modify environmental data sources by simply adjusting the relevant config file, without affecting the rest of the system.</p>
-<p>For more details, see the <a href="docs/setup.md">Configuration Files</a> guide.</p>
+<p>For more details, see the <a href="setup/">Configuration Files</a> guide.</p>
 <h3 id="credentials-for-third-party-accounts"><strong>Credentials for Third Party Accounts</strong></h3>
 <p>Some sources require API credentials:</p>
 <ul>
@@ -755,22 +755,22 @@
 <li>Register at: https://www.earthdata.nasa.gov/</li>
 <li>Create the file <em>nasa.sct</em> that contains <em>token: your_nasa_token</em>.</li>
 </ul>
-<p>For more details, see the <a href="docs/3rdPartyAccounts.md">Third Party Accounts</a> guide.</p>
+<p>For more details, see the <a href="3rdPartyAccounts/">Third Party Accounts</a> guide.</p>
 <h3 id="assets-geospatial-features"><strong>Assets (Geospatial Features)</strong></h3>
 <p>The geospatial features to be downloaded are defined in individual JSON files in the config_sources/ folder.
 Each file corresponds to a specific data source. You can customise the downloaded variables by editing the relevant JSON file and removing variables you do not want.</p>
 <p>A <a href="docs/datalist.md">complete list</a> of all available geospatial products, including their source and characteristics is provided. This serves as a reference for users to understand what data is included in the CLUES framework and to guide customisation of the source-specific configuration files.</p>
-<p>For more details, see the <a href="docs/geospatial_data.md">Geospatial Data</a> guide.</p>
+<p>For more details, see the <a href="geospatial_data/">Geospatial Data</a> guide.</p>
 <h1 id="running-the-workflow">Running the Workflow</h1>
 <p>Once the setup and configuration is complete, run the workflow using:</p>
 <p>snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60</p>
 <h1 id="anticipated-result">Anticipated result</h1>
 <p>Downloaded files are stored in the location specified in the <em>config.json</em> file. Log files will be created for each download task. If the workflow fails, (e.g., due to a temporary server issue), review the corresponding log files. The workflow needs to be restarted. Common issues such as storage limitations need to be resolved manually before re-running the workflow.</p>
-<p>For more details, see the <a href="docs/anticipatedResult.md">Anticipated Results</a> guide.</p>
-<p>To link the downloaded environmental data to the geographic locations of study participants, run the scripts as described in the <a href="docs/enrichment">Data Linkage scripts</a>.</p>
+<p>For more details, see the <a href="anticipatedResult/">Anticipated Results</a> guide.</p>
+<p>To link the downloaded environmental data to the geographic locations of study participants, run the scripts as described in the <a href="enrichment">Data Linkage scripts</a>.</p>
 <h1 id="usage-policies">Usage policies</h1>
 <p>All data integrated by CLUES are open-access and publicly available. However, users must comply with the usage terms of each primary data source. Each dataset is subject to its own licensing and access policies. Please ensure you review and follow these terms before using the data in research.</p>
-<p>For more details, see the <a href="docs/data_usage.md">Data usage</a> guide.</p>
+<p>For more details, see the <a href="data_usage/">Data usage</a> guide.</p>
 <h1 id="license-and-citation">License and Citation</h1>
 <h2 id="license">License</h2>
 <p>MIT License
