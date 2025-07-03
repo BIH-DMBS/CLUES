@@ -275,13 +275,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deployment" class="md-nav__link">
+  <a href="#setup-instructions" class="md-nav__link">
     <span class="md-ellipsis">
-      Deployment
+      Setup Instructions
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Deployment">
+    <nav class="md-nav" aria-label="Setup Instructions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -304,18 +304,23 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-dependicies" class="md-nav__link">
+  <a href="#install-dependencies" class="md-nav__link">
     <span class="md-ellipsis">
-      Install dependicies:
+      Install dependencies:
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#run-snakemake-workflow" class="md-nav__link">
+  <a href="#run-the-workflow" class="md-nav__link">
     <span class="md-ellipsis">
-      Run snakemake workflow
+      Run the workflow
     </span>
   </a>
   
@@ -325,9 +330,13 @@
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#next-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next step
+    </span>
+  </a>
   
 </li>
       
@@ -551,13 +560,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deployment" class="md-nav__link">
+  <a href="#setup-instructions" class="md-nav__link">
     <span class="md-ellipsis">
-      Deployment
+      Setup Instructions
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Deployment">
+    <nav class="md-nav" aria-label="Setup Instructions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -580,18 +589,23 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-dependicies" class="md-nav__link">
+  <a href="#install-dependencies" class="md-nav__link">
     <span class="md-ellipsis">
-      Install dependicies:
+      Install dependencies:
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#run-snakemake-workflow" class="md-nav__link">
+  <a href="#run-the-workflow" class="md-nav__link">
     <span class="md-ellipsis">
-      Run snakemake workflow
+      Run the workflow
     </span>
   </a>
   
@@ -601,9 +615,13 @@
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#next-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next step
+    </span>
+  </a>
   
 </li>
       
@@ -624,30 +642,29 @@
 
 
 <h1 id="getting-started">Getting Started</h1>
-<p>This guide will help you set up the environment and run the Snakemake workflow for this project.</p>
+<p>This guide walks you through setting up your environment and running the CLUES data processing workflow using Snakemake, a workflow management system that automates the execution of data analysis pipelines.</p>
 <h2 id="prerequisites">Prerequisites</h2>
-<p>Before you begin, make sure you have the following installed:</p>
+<p>Before getting started, ensure the following tools are installed:</p>
 <ul>
 <li>Python 3.8 or higher</li>
 <li><code>pip</code> (Python package manager)</li>
 <li>Git</li>
 <li><a href="https://snakemake.readthedocs.io/en/stable/">Snakemake</a></li>
-<li>(Optional) <code>conda</code> — recommended for reproducible environments</li>
+<li>(Optional but recommended) <code>conda</code> — for reproducible environments</li>
 </ul>
-<h2 id="deployment">Deployment</h2>
+<h2 id="setup-instructions">Setup Instructions</h2>
 <h3 id="clone-the-repository">Clone the Repository</h3>
-<p>Clone this repository to your local machine:
-Navigate to the target working directory</p>
+<p>Navigate to your preferred working directory and clone the CLUES repository:</p>
 <pre>
 git clone https://gitlab.com/bih_dmbs/CLUES/workflows.git
 </pre>
 
 <h3 id="set-up-a-virtual-python-environment">Set up a virtual python environment:</h3>
 <pre>
-python -m venv cluesEnv*
+python -m venv cluesEnv
 </pre>
 
-<p><strong>Activate virtual environment</strong></p>
+<p><strong>Activate the virtual environment</strong></p>
 <p>Linux/macOS:</p>
 <pre>
 source cluesEnv/bin/activate
@@ -655,21 +672,22 @@ source cluesEnv/bin/activate
 
 <p>Windows:</p>
 <pre>
-*cluesEnv\Scripts\activate*
+cluesEnv\Scripts\activate
 </pre>
 
-<h4 id="install-dependicies">Install dependicies:</h4>
+<h4 id="install-dependencies">Install dependencies:</h4>
+<p>Install the required Python packages:</p>
 <pre>
 pip install -r requirements.txt
 </pre>
 
-<h4 id="run-snakemake-workflow">Run snakemake workflow</h4>
-<p>If all is setup run the workflow:</p>
+<h3 id="run-the-workflow">Run the workflow</h3>
+<p>Once everything is set up, <a href="../3rdPartyAccounts/">third-party accounts</a> are configured, and the <a href="../setup/">configuration files</a> are customized, you can run the CLUES workflow using Snakemake:</p>
 <pre>
 snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60
 </pre>
 
-<p>Options Explained:</p>
+<p>Command Options Explained:</p>
 <ul>
 <li>
 <p>-s workflows/snakefile specifies the Snakefile path</p>
@@ -687,6 +705,8 @@ snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait
 <p>--latency-wait 60 waits up to 60 seconds for output files (useful on shared filesystems)</p>
 </li>
 </ul>
+<h2 id="next-step">Next step</h2>
+<p>Once completed, the required data will be downloaded and stored as specified in your general workflow configuration file (config/config.json). You can then proceed to link environmental data to participant locations using the <a href="../enrichment/">data linkage scripts</a>.</p>
 
 
 
