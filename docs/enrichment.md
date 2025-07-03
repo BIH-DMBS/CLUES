@@ -1,4 +1,4 @@
-# Enrichment of geolaoction data
+# Enrichment of geolocation data
 
 The framework includes scripts to enrich location data. 
 
