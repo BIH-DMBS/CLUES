@@ -69,4 +69,4 @@ Command Options Explained:
 - --latency-wait 60 waits up to 60 seconds for output files (useful on shared filesystems)
 
 ## Next step
-Once completed, the required data will be downloaded and stored as specified in your general workflow configuration file (config/config.json). You can then proceed to link environmental data to participant locations using the [Data Linkage Scripts](enrichment.md).
+Once completed, the required data will be downloaded and stored as specified in your general workflow configuration file (config/config.json). You can then proceed to link environmental data to participant locations using the [data linkage scripts](enrichment.md).
