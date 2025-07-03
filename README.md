@@ -19,7 +19,7 @@ CLUES (Climate, Urbanicity, Environment and Society) is a modular workflow that 
 #### Set up a virtual python environment:
 
 <pre>
-*python -m venv cluesEnv*
+python -m venv cluesEnv
 </pre>
 
 #### Activate virtual environment:
@@ -27,25 +27,25 @@ CLUES (Climate, Urbanicity, Environment and Society) is a modular workflow that 
 Linux:
 
 <pre>
-*source cluesEnv/bin/activate*
+source cluesEnv/bin/activate
 </pre>
 
 Windows:
 
 <pre>
-*cluesEnv\Scripts\activate*
+cluesEnv\Scripts\activate
 </pre>
 
 #### Install dependecies:
 
 <pre>
-*pip install -r requirements.txt*
+pip install -r requirements.txt
 </pre>
 
 Note: snakemake must be installed separately  
 
 <pre>
-*pip install snakemake *
+pip install snakemake
 </pre>
 
 For more details, see the [Getting Started](docs/gettingStarted.md) guide.
