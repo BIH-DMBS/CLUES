@@ -49,8 +49,8 @@ pip install -r requirements.txt
 </pre>
 
 
-#### Run the workflow
-Once everything is set up, you can run the CLUES workflow using Snakemake:
+### Run the workflow
+Once everything is set up and the [third party accounts](docs/3rdPartyAccounts.md) are created, you can run the CLUES workflow using Snakemake:
 
 <pre>
 snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60
