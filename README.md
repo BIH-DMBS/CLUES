@@ -118,6 +118,7 @@ For more details, see the [Data usage](docs/data_usage.md) guide.
 
 ## License
 MIT License
+
 Copyright (c) 2025 BIH-DMBS 
 
 For more details, see License(workflows/LICENSE).
