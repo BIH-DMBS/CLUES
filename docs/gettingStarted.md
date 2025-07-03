@@ -50,7 +50,7 @@ pip install -r requirements.txt
 
 
 ### Run the workflow
-Once everything is set up and the [third party accounts](docs/3rdPartyAccounts.md) are created, you can run the CLUES workflow using Snakemake:
+Once everything is set up and the [Third Party Accounts](3rdPartyAccounts.md) are created, you can run the CLUES workflow using Snakemake:
 
 <pre>
 snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60
@@ -69,4 +69,4 @@ Command Options Explained:
 - --latency-wait 60 waits up to 60 seconds for output files (useful on shared filesystems)
 
 ## Next step
-Once completed, the required data will be downloaded and stored as specified in your general workflow configuration file (config/config.json). You can then proceed to link environmental data to participant locations using the [Data Linkage scripts](enrichment.md).
+Once completed, the required data will be downloaded and stored as specified in your general workflow configuration file (config/config.json). You can then proceed to link environmental data to participant locations using the [Data Linkage Scripts](enrichment.md).
