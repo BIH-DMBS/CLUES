@@ -2,7 +2,7 @@ site_name: CLUES - A Comprehensive Workflow for Integrating Geospatial Data in H
 nav:
   - Home: index.md
   - Geospatial Catalog: dataCatalog.md
-  - User Guide: gettingStarted.md
+  - User Guide: UserGuide.md
   - Examples: examples.md
   - Configuration: setup.md
   - 3rd Party Accounts: 3rdPartyAccounts.md
