@@ -43,7 +43,6 @@ Rasterio provides a NumPy-based Python API to read and write GeoTIFF and similar
 NumPy is a Python library that provides fast, efficient support for numerical computing with powerful multi-dimensional array and matrix operations.
 
 N-dimensional arrays and GeoJSON
-
 pandas
 geopandas
 shapely
