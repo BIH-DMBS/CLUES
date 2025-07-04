@@ -32,16 +32,17 @@ Jentsch M., et al., CLUES: A Comprehensive Workflow for Integrating Geospatial D
 The CLUES maintainers are:
 - Marcel Jentsch (lead maintainer)
 - Sven Twardziok
-- 
 
 ## Software resources
 [Rasterio](https://rasterio.readthedocs.io/en/latest/index.html)
 
 Rasterio provides a NumPy-based Python API to read and write GeoTIFF and similar formats.
 
-N-dimensional arrays and GeoJSON
+[NumPy](https://numpy.org)
 
-numpy
+NumPy is a Python library that provides fast, efficient support for numerical computing with powerful multi-dimensional array and matrix operations.
+
+N-dimensional arrays and GeoJSON
 
 pandas
 
