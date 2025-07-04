@@ -75,7 +75,7 @@ A Python library for image processing, analysis and manipulation using a collect
 
 A Python library for parsing HTML and XML documents, commonly used for web scraping.
 
-bs4
+`bs4`
 
 A Python library that provides BeautifulSoup for parsing and navigating HTML and XML documents.
 
