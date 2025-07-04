@@ -45,47 +45,26 @@ NumPy is a Python library that provides fast, efficient support for numerical co
 N-dimensional arrays and GeoJSON
 
 pandas
-
 geopandas
-
 shapely
-
 cdsapi
-
 xarray
-
 rioxarray
-
 netCDF4
-
 owslib
-
 ipykernel
-
 ipywidgets 
-
 matplotlib
-
 djangorestframework
-
 filelock
-
 seaborn
-
 scikit-image
-
 beautifulsoup4
-
 h5netcdf
-
 rasterstats
-
 glob2
-
 bs4
-
 snakemake
-
 
 ## Usage policies
 
