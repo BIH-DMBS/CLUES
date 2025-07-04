@@ -1,11 +1,11 @@
 ## Software resources
-[`Rasterio`](https://pypi.org/project/rasterio/)
-
-Rasterio provides a NumPy-based Python API to read and write GeoTIFF and similar formats.
-
 [`NumPy`](https://pypi.org/project/numpy/)
 
-NumPy is a Python library that provides fast, efficient support for numerical computing with powerful multi-dimensional array and matrix operations.
+A Python library that provides fast, efficient support for numerical computing with powerful multi-dimensional array and matrix operations.
+
+[`Rasterio`](https://pypi.org/project/rasterio/)
+
+A NumPy-based Python API to read and write GeoTIFF and similar formats.
 
 [`Geojson`](https://pypi.org/project/geojson/)
 
