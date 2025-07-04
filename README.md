@@ -16,8 +16,8 @@ CLUES (Climate, Urbanicity, Environment and Society) is a modular workflow that 
 
 
 ## Getting started
-- To understand the scientific foundation of CLUES and understand what CLUES can do for you, please read our publication (**link**).
-- To get an overview of the geospatial data (assets) and data sources used in CLUES, see the [Data List](datalist.md). For more detailed infomation, visit the [Geospatial Data Guide](geospatial_data.md).
+- To understand the scientific foundation of CLUES, please read our publication (**link**).
+- To get an overview of the geospatial data (assets) and data sources used in CLUES, see the [Data List](datalist.md). For more infomation, visit the [Geospatial Data Guide](geospatial_data.md).
 - To learn how to use the CLUES framework, follow the [User Guide](gettingStarted.md) and explore the Examples (**link**).
 
 ## Citation
@@ -35,31 +35,55 @@ The CLUES maintainers are:
 
 ## Software resources
 [Rasterio](https://rasterio.readthedocs.io/en/latest/index.html)
+
 Rasterio provides a NumPy-based Python API to read and write GeoTIFF and similar formats.
 
-N-dimensional arrays and GeoJSON.
+N-dimensional arrays and GeoJSON
+
 numpy
+
 pandas
+
 geopandas
+
 shapely
+
 cdsapi
+
 xarray
+
 rioxarray
+
 netCDF4
+
 owslib
+
 ipykernel
+
 ipywidgets 
+
 matplotlib
+
 djangorestframework
+
 filelock
+
 seaborn
+
 scikit-image
+
 beautifulsoup4
+
 h5netcdf
+
 rasterstats
+
 glob2
+
 bs4
+
 snakemake
+
 
 ## Usage policies
 
