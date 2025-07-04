@@ -1,6 +1,5 @@
 ## Software resources
 [`Rasterio`](https://pypi.org/project/rasterio/)
-
 Rasterio provides a NumPy-based Python API to read and write GeoTIFF and similar formats.
 
 [NumPy](https://pypi.org/project/numpy/)
