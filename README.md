@@ -14,124 +14,58 @@ CLUES (Climate, Urbanicity, Environment and Society) is a modular workflow that 
 
 ![Diagram](docs/CLUES_schema.png)
 
+
 ## Getting started
+- To understand the scientific foundation of CLUES and understand what CLUES can do for you, please read our publication (**link**).
+- To get an overview of the geospatial data (assets) and data sources used in CLUES, see the [Data List](datalist.md). For more detailed infomation, visit the [Geospatial Data Guide](geospatial_data.md).
+- To learn how to use the CLUES framework, follow the [User Guide](gettingStarted.md) and explore the Examples (**link**).
 
-#### Set up a virtual python environment:
+## Citation
+When using CLUES in your work, please cite our paper
 
-<pre>
-python -m venv cluesEnv
-</pre>
-
-#### Activate virtual environment:
-
-Linux:
-
-<pre>
-source cluesEnv/bin/activate
-</pre>
-
-Windows:
-
-<pre>
-cluesEnv\Scripts\activate
-</pre>
-
-#### Install dependecies:
-
-<pre>
-pip install -r requirements.txt
-</pre>
-
-Note: snakemake must be installed separately  
-
-<pre>
-pip install snakemake
-</pre>
-
-For more details, see the [Getting Started](docs/gettingStarted.md) guide.
-
-## Configuration Management
-
-The CLUES workflow operates with a modular configuration system that defines how the geospatial database is generated, updated, and customised. It is structured around:
-- A general workflow configuration file
-- Multiple source-specific configuration files
-
-Together, these configurations ensure accurate data acquisition, seamless integration, and reproducible processing.
-
-The configuration files are stored in the *config* and *config_sources* folders.
-
-### **General workflow configuration**
-Stored in the config/ folder, this file (*config.json*) defines:
-- Where to store the downloaded database
-- The spatial and temporal coverage of interest (e.g., bounding boxes and time periods)
-- Which environmental data to download
-- Rules for updating or extending existing databases
-
-The config/ folder also contains the *bbox.json* file, which is a collection of different bounding boxes for different areas.
-
-### **Source-Specific Configuration Files**
-Each environmental data source has its own configuration file stored in the config_sources/ folder. These files are modular and self-contained, making it easy to:
-- Specify which datasets and variables to download from each source
-- Define source-specific metadata (e.g., URLs, file structure, variable names)
-- Choose whether to apply neighbourhood-level processing, and if so:
-  - Select the processing type: mean, std, or Zevenbergen-Thorne
-  - Set the radius of the neighbourhood (in meters)
-
-You can add or modify environmental data sources by simply adjusting the relevant config file, without affecting the rest of the system.
-
-For more details, see the [Configuration Files](docs/setup.md) guide.
-
-### **Credentials for Third Party Accounts**
-Some sources require API credentials:
-
-- Copernicus (Climate/Atmosphere data):
-  - Register and obtain credentials: https://cds.climate.copernicus.eu/how-to-api
-  - Create two files in the path specified by configs_assets_folder in config.json:
-  - cdsapirc_atmo.sct
-  - cdsapirc_climate.sct
-  - Replace ??? with your actual credentials in the configs_assets_folder folder defined in the *config.json*.
-
-- NASA (Normalized Difference Vegetation Index (NDVI)/Enhanced Vegetation Index) (EVI) data:
-  - Register at: https://www.earthdata.nasa.gov/
-  - Create the file *nasa.sct* that contains *token: your_nasa_token*.
-
-For more details, see the [Third Party Accounts](docs/3rdPartyAccounts.md) guide.
-
-### **Assets (Geospatial Features)**
-The geospatial features to be downloaded are defined in individual JSON files in the config_sources/ folder.
-Each file corresponds to a specific data source. You can customise the downloaded variables by editing the relevant JSON file and removing variables you do not want.
-
-A [complete list](docs/datalist.md) of all available geospatial products, including their source and characteristics is provided. This serves as a reference for users to understand what data is included in the CLUES framework and to guide customisation of the source-specific configuration files.
-
-For more details, see the [Geospatial Data](geospatial_data.md) guide.
-
-# Running the Workflow
-Once the setup and configuration is complete, run the workflow using:
-
-snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60
-
-# Anticipated result
-Downloaded files are stored in the location specified in the *config.json* file. Log files will be created for each download task. If the workflow fails, (e.g., due to a temporary server issue), review the corresponding log files. The workflow needs to be restarted. Common issues such as storage limitations need to be resolved manually before re-running the workflow.
-
-For more details, see the [Anticipated Results](docs/anticipatedResult.md) guide.
-
-To link the downloaded environmental data to the geographic locations of study participants, run the scripts as described in the [Data Linkage scripts](docs/enrichment).
+Jentsch M., et al., CLUES: A Comprehensive Workflow for Integrating Geospatial Data in Biomedical Research. Best Journal on Earth, 2025. **6**(44). 
 
 
-# Usage policies
+## Maintainers
+
+The CLUES maintainers are:
+- Marcel Jentsch (lead maintainer)
+- Sven Twardziok
+- 
+
+## Software resources
+[Rasterio](https://rasterio.readthedocs.io/en/latest/index.html)
+Rasterio provides a NumPy-based Python API to read and write GeoTIFF and similar formats.
+
+N-dimensional arrays and GeoJSON.
+numpy
+pandas
+geopandas
+shapely
+cdsapi
+xarray
+rioxarray
+netCDF4
+owslib
+ipykernel
+ipywidgets 
+matplotlib
+djangorestframework
+filelock
+seaborn
+scikit-image
+beautifulsoup4
+h5netcdf
+rasterstats
+glob2
+bs4
+snakemake
+
+## Usage policies
 
 All data integrated by CLUES are open-access and publicly available. However, users must comply with the usage terms of each primary data source. Each dataset is subject to its own licensing and access policies. Please ensure you review and follow these terms before using the data in research.
-
-For more details, see the [Data usage](docs/data_usage.md) guide.
-
-# License and Citation 
 
 ## License
 MIT License
 
 Copyright (c) 2025 BIH-DMBS 
-
-## Citation 
-If you use CLUES in your work, please cite: 
-Jentsch M, et al. (2025). CLUES: …
-
