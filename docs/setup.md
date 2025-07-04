@@ -1,13 +1,13 @@
 # Configuration Management
 
 The CLUES framework is customized through a set of configuration files that define the structure and behavior of the workflow. These include:
-- A general workflow configuration file: 'workflows/config/config.json'
-- Source-specific configuration files for each data provider: 'workflows/config_sources/'
-- A file for predefined bounding boxes: 'workflows/config/bbox.json'
+- A general workflow configuration file: `workflows/config/config.json`
+- Source-specific configuration files for each data provider: `workflows/config_sources/`
+- A file for predefined bounding boxes: `workflows/config/bbox.json`
 
-### General workflow configuration file
+## General workflow configuration file
 
-The file 'workflows\config\config.json' defines the core settings for how CLUES operates. It allows full control over what the workflow does, where data is stored, and how different components behave. Below an example of 'config.json':
+The file `workflows\config\config.json` defines the core parameters for how CLUES operates. It allows full control over what the workflow does, where data is stored, and how different components behave. Below an example of `config.json`:
 
 <pre>
 {
@@ -23,8 +23,16 @@ The file 'workflows\config\config.json' defines the core settings for how CLUES 
 }
 </pre>
 
-"update_years" sets the years that will be updated if the workflow reruns on a already established database. This is especially of interest for data with high temporal resoultion like climate and antmospheric data.
-"area" refers to items listed in *workflows\config\bbox.json*. see next section.
+**Key Parameters Explained**
+- download_folder: Path to where all output files will be stored
+- tmp_folder: Folder used for temporary intermediate files
+- configs_assets_folder: Folder that holds the source-specific configuration files
+- secrets_folder: Path where access credentials, e.g., .sct files, are located
+- years: List of years for which data should be downloaded
+- update_years: Years to be refreshed if the workflow is rerun on an existing database. This is especially of interest for data with high temporal resoultion like climate and antmospheric data.
+- area: Refers to predefined region from workflows/config/bbox.json (see next section)
+- espon_filename_length: Limits the length of filenames for ESPON downloads to prevent exceeding system file length restrictions. 
+
 The key "espon_filename_length" is not that self-explanatory, the integer values set here is used to limit the filename lengths used while downloading the espon data. The filemname is generated from the naming and dimension of the differnt assets (https://database.espon.eu/api/). As single file cannot exceed 255 characters the limit is necessary. 
 
 ### Bounding boxes
