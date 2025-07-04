@@ -33,13 +33,13 @@ The file `workflows\config\config.json` defines the core parameters for how CLUE
 - area: Refers to predefined region from workflows/config/bbox.json (see next section)
 - espon_filename_length: Limits the length of filenames for ESPON downloads to prevent exceeding system file length restrictions. 
 
-The key "espon_filename_length" is not that self-explanatory, the integer values set here is used to limit the filename lengths used while downloading the espon data. The filemname is generated from the naming and dimension of the differnt assets (https://database.espon.eu/api/). As single file cannot exceed 255 characters the limit is necessary. 
+Note: The key "espon_filename_length" is an integer value to limit the filename lengths used while downloading the espon data. The filename is generated from the naming and dimension of the different assets (https://database.espon.eu/api/). As single filename cannot exceed 255 characters, therefore, the limit is necessary. 
 
 ### Bounding boxes
 
-CLUES framework comes with a predefined set of boundingboxes found in *workflows\config\bbox.json*. Custom bbox must also placed in this file. For example, the bounding box for Europe is represented as "Europe": [72, -15, 30, 42.5]. Here, 72 is the minimum longitude, -15 is the minimum latitude, 30 is the maximum longitude, and 42.5 is the maximum latitude. 
+CLUES framework comes with a predefined set of bounding boxes found in `workflows\config\bbox.json`. Custom bbox must also placed in this file. For example, the bounding box for Europe is represented as "Europe": [72, -15, 30, 42.5]. Here, 72 is the minimum longitude, -15 is the minimum latitude, 30 is the maximum longitude, and 42.5 is the maximum latitude. 
 
-example: *bbox.json*
+example: 'bbox.json'
 <pre>
 {
     "Europe":[72, -15, 30, 42.5],
@@ -51,11 +51,11 @@ example: *bbox.json*
 }
 </pre>
 
-### Source configuration files
+### Source-specific configuration files
 
-Each of the primary data sources used by CLUES is utilized and custmized on the basis of a distinct config files. The base as curated by CLUES is located in the folder *workflows\config_sources*. The location of the used *configs_assets_folder* can be customized in the *config.json*. This files contain metadata on the primary sources. Each of the source config files loacted in the the folder *workflows\config_sources* contains a key *variables* that is linked to a list of the assets to download. To change what assets to download from the different sources removing items from the list is the way.
+Each of the primary data sources used by CLUES is utilized and customized on the basis of a distinct configuration file. The base as curated by CLUES is located in the folder `workflows\config_sources`. The location of the used *configs_assets_folder* can be customized in the *config.json*. These files contain metadata on the primary sources. Each of the source-specific configuration file located in the folder `workflows\config_sources` contains the key `"variables"` that is linked to a list of assets to be downloaded. To change what assets to download from the different sources simply remove items from the list.
 
-*cams-global-reanalysis-eac4.json*
+Example of source-specific configuration file `cams-global-reanalysis-eac4.json`
 <pre>
 {
     "type":"atmosphere",
