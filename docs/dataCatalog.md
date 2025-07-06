@@ -31,7 +31,7 @@ Each section below provides a brief overview of the data source, key specificati
 - Config: `espon.json` via `espon.generate_espon_json()`
 - [More Info](https://database.espon.eu)
 
-**ask marcel: about format and that i used different link, check Config, resolution and years**
+>> **ask marcel: about format and that i used different link, check Config, resolution and years**
 
 ### EOC Map & Coverage Services (DLR)
 - Atmosphere:
@@ -45,7 +45,7 @@ Each section below provides a brief overview of the data source, key specificati
     - Format: `(GeoTIFF)`
 - Access: [DLR GeoServices](https://geoservice.dlr.de/web/services)
 
-**ask marcel: which are these data to add resolution and coverage, are they global, needs maybe a more informative link? also config files for elvation and land dont exist in the configs_sources**
+>> **ask marcel: which are these data to add resolution and coverage, are they global, needs maybe a more informative link? also config files for elvation and land dont exist in the configs_sources**
 
 ### Copernicus DEM (Global and European Digital Elevation model)
 - Description: Digital surface model (DSM) based on TanDEM-X mission that represents the surface of the Earth including buildings, infrastructure and vegetation. 
@@ -56,7 +56,7 @@ Each section below provides a brief overview of the data source, key specificati
 - Config: `copernicus_dem.json`
 - [More Info](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM)
 
-**ask marcel about resolution and DTED DGED**
+>> **ask marcel about resolution and DTED DGED**
 
 ### CORINE Land Cover
 - Description: European land cover classification and monitoring with 44 thematic classes, ranging from broad forested areas to individual vineyards.
@@ -66,7 +66,7 @@ Each section below provides a brief overview of the data source, key specificati
 - Config: `corine_copernicus.json`
 - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)
 
-**ask marcel about the resolution**
+>> **ask marcel about the resolution**
 
 ### Land Copernicus (Tree Cover Density)
 - Description: Global tree cover density
@@ -75,7 +75,7 @@ Each section below provides a brief overview of the data source, key specificati
 - Config: `treecover_copernicus.json`
 - [More Info]([https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
 
-**ask marcel about the temporal coverage and if they are global, i changed the configuration file name because the one that was there before doesnt exist**
+>> **ask marcel about the temporal coverage and if they are global, i changed the configuration file name because the one that was there before doesnt exist**
 
 ### SPEI (Standardized Precipitation-Evapotranspiration Index)
 - Description: Global drought index based on precipitation and evapotranspiration
@@ -85,7 +85,7 @@ Each section below provides a brief overview of the data source, key specificati
 - Config: `spei.json`
 - [More Info](https://spei.csic.es)
 
-**ask marcel about the temporal resoltution**
+>> **ask marcel about the temporal resoltution**
 
 ### Hydrosheds GLWD version 2
 - Description: Global inland surface waters distinguished into 33 waterbody and wetland types
@@ -94,7 +94,7 @@ Each section below provides a brief overview of the data source, key specificati
 - Config: `hydrosheds_GLWD.json`
 - [More Info](https://www.hydrosheds.org/products/glwd)
 
-**ask marcel: temporal coverage and resolution**
+>> **ask marcel: temporal coverage and resolution**
 
 ### Night-Time Lights (DMSP–VIIRS Harmonized)
 - Description: Global nighttime light intensity from satellites, harmonized across sensors
@@ -104,4 +104,4 @@ Each section below provides a brief overview of the data source, key specificati
 - Config: `ntl.json`
 - [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/8)
 
-**Configuration files not added here: EOC_WSF.json, EOC_WSF3D.json, copernicus_dynamic_land_cover.json, modis_vegetation.json**
+>> **Configuration files not added here: EOC_WSF.json, EOC_WSF3D.json, copernicus_dynamic_land_cover.json, modis_vegetation.json**
