@@ -55,14 +55,14 @@ Note: The location of the credential (.sct) files is defined in the general work
 ### Copernicus (ECMWF)
 Data from the Copernicus Climate Data Store (CDS) and the Atmosphere Data Store (ADS) requires a free account with the European Centre for Medium-Range Weather Forecasts (ECMWF).
 
-> Steps
+**Steps**
 1. Create an ECMWF account at ecmwf.int
 2. Visit:
   - CDS API instructions at https://cds.climate.copernicus.eu/how-to-api
   - ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api
 3. Generate personalized API tokens from both platforms.
 
-> Token Storage
+**Token Storage**
 Save the tokens in two separate files:
 
 *cdsapirc_atmo.sct*
@@ -77,11 +77,11 @@ key: place your token here</pre>
 
 Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s Earthdata platform also requires registration.
 
-> Steps
+**Steps**
 1. Register at [earthdata.nasa.gov](https://www.earthdata.nasa.gov/) 
 2. Create a personal access token
 
-> Token Storage
+**Token Storage**
 Create the following file:
 
 *nasa.sct*
