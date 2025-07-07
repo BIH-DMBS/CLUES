@@ -50,8 +50,7 @@ pip install -r requirements.txt
 
 ### Third party accounts
 To enable the CLUES framework to access certain geospatial datasets, users must register with specific data providers and generate personal access tokens. 
-Note: The location of the credential (.sct) files is defined in the general workflow configuration file **config.json** under the key: *configs_assets_folder*.
-#### For more details, see the section below "Configuration Management"
+Note: The location of the credential (.sct) files is defined in the general workflow configuration file **config.json** under the key: *configs_assets_folder*. For more details on configuration management, see the section Configuration Management. 
 
 #### Copernicus (ECMWF)
 Data from the Copernicus Climate Data Store (CDS) and the Atmosphere Data Store (ADS) requires a free account with the European Centre for Medium-Range Weather Forecasts (ECMWF).
