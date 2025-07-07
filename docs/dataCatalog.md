@@ -1,5 +1,5 @@
 # CLUES Geospatial Data Catalog
-This page describes the geospatial data sources and datasets integrated into the CLUES workflow. For each data source, we provide a short description, configuration files, spatial and temporal resolution, and download format.
+This page describes the geospatial data sources and datasets integrated into the CLUES workflow. For each data source, a short description, configuration files, spatial and temporal resolution, and download format is provided.
 
 ## Data Source Details
 Here, a brief overview of the data sources, dataset specifications, source-specific configuration file (config), and reference links are provided. A summary table with all geospatial datasets is provided below section. 
