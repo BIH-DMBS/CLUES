@@ -3,7 +3,7 @@ This page describes the geospatial data sources and datasets integrated into the
 
 ## Data Source Details
 
-### CAMS Global Reanalysis (EAC4)
+### Copernicus CAMS Global Reanalysis (EAC4)
 - Description: Global atmospheric composition reanalysis by ECMWF using data assimilation.
 - Years: 2003–present
 - Resolution: 0.75° × 0.75°, 3-hourly
@@ -11,7 +11,7 @@ This page describes the geospatial data sources and datasets integrated into the
 - Config: `cams-global-reanalysis-eac4.json`
 - [More Info](https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=overview)
 
-### ERA5
+### Copernicus ERA5
 - Description: Global climate reanalysis by ECMWF using data assimilation.
 - Years: 1940–present
 - Resolution: 0.25° × 0.25°, hourly
@@ -127,8 +127,8 @@ This page describes the geospatial data sources and datasets integrated into the
 | **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_5-20um_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
 | **CAMS global reanalysis (EAC4)** | sulphate_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
 | **CAMS global reanalysis (EAC4)** | sulphur_dioxide | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **Copernicus DEM - Global and European Digital Elevation Model** | Digital_Geospatial_Elevation_Data_30m | 30mx30m | Global |  |  | GeoTIFF |
-| **Copernicus DEM - Global and European Digital Elevation Model** | Digital_Geospatial_Elevation_Data_90m | 90mx90m | Global |  |  | GeoTIFF |
+| **Copernicus DEM - Global and European Digital Elevation Model** | Digital_Geospatial_Elevation_Data_30m | 30mx30m | Global | Static | NA | GeoTIFF |
+| **Copernicus DEM - Global and European Digital Elevation Model** | Digital_Geospatial_Elevation_Data_90m | 90mx90m | Global | Static | NA | GeoTIFF |
 | **Copernicus Global Dynamic Land Cover** | BuildUp_CoverFraction_2015 | 100mx100m | Global | 2015 - 2019 | yearly | GeoTIFF |
 | **Copernicus Land Monitoring Service (CLMS)** | corine_landcover_2018 | 100mx100m | Europe | 1990, 2000, 2006, 2012, 2018 | yearly | GeoTIFF |
 | **Copernicus Land Monitoring Service (CLMS)** | Tree Cover Density 2012 | 100mx100m | Global | 2012, 2015, 2018 | yearly | GeoTIFF |
