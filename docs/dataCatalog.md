@@ -2,7 +2,7 @@
 This page describes the geospatial data sources and datasets integrated into the CLUES workflow. For each data source, we provide a short description, configuration files, spatial/temporal resolution, and download format.
 
 ## Data Source Details
-Each subsection below provides a brief overview of the data source, dataset specifications, source-specific configuration file (config), and reference link. A summary table is provided below the Data Source Details section. 
+Here, a brief overview of the data sources, dataset specifications, source-specific configuration file (config), and reference links are provided. A summary table with all geospatial datasets is provided below section. 
 
 ### CAMS Global Reanalysis (EAC4)
 - Description: Global atmospheric composition reanalysis by ECMWF using data assimilation.
