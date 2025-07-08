@@ -144,7 +144,7 @@ example: 'bbox.json'
 
 Each of the primary data sources used by CLUES is utilized and customized on the basis of a distinct configuration file. The base as curated by CLUES is located in the folder `workflows\config_sources`. The location of the used *configs_assets_folder* can be customized in the *config.json*. These files contain metadata on the primary sources. Each of the source-specific configuration file located in the folder `workflows\config_sources` contains the key `"variables"` that is linked to a list of assets to be downloaded. To change what assets to download from the different sources simply remove items from the list.
 
-Example of source-specific configuration file `cams-global-reanalysis-eac4.json`
+Example of the source-specific configuration file `cams-global-reanalysis-eac4.json`
 <pre>
 {
     "type":"atmosphere",
@@ -171,6 +171,30 @@ Example of source-specific configuration file `cams-global-reanalysis-eac4.json`
         },
         ...
     ]
+}
+</pre>
+
+
+**Neighbourhood-level processing**
+
+CLUES supports neighbourhood-level operations to enhance spatial analysis. These include filters such as mean, standard deviation, or terrain-based Zevenbergen-Thorne metrics, applied over circular areas with configurable radii. Smaller radii emphasize local variation, while larger ones capture broader spatial context.
+
+Source-specific configuration files determine whether such processing is applied to a given product, specify the filter type, and define the radii. Default configurations are provided but can be easily adapted to fit specific analytical needs.
+
+Example of the source-specific configuration file `copenicus_dem.json`
+<pre>
+  {
+    "type":"DEM",
+    "format": "geotTiff",
+    "variables":[
+        {   "name":"Digital_Geospatial_Elevation_Data_30m",
+            "url":"https://prism-dem-open.copernicus.eu ...",
+            "resolution":"30",
+            "neighborhood":{
+                "mean":[500,1000],
+                "std":[500,1000],
+                "zevenbergen_thorne: "yes"}
+]
 }
 </pre>
 
