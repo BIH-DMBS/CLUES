@@ -53,7 +53,9 @@ Data from the Copernicus Climate Data Store (CDS) and the Atmosphere Data Store 
 2. Visit:  
     - CDS API instructions at https://cds.climate.copernicus.eu/how-to-api  
     - ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api  
-3. Generate personalized API tokens from both platforms  
+3. Generate personalized API tokens from both platforms
+
+---  
 
 **Token Storage**
 
@@ -72,6 +74,8 @@ Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s Earthdata platform 
 **Steps**  
 1. Register at [earthdata.nasa.gov](https://www.earthdata.nasa.gov/)  
 2. Create a personal access token  
+
+---
 
 **Token Storage**  
 
