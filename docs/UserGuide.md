@@ -37,11 +37,13 @@ Windows:
 cluesEnv\Scripts\activate
 </pre>
 
-#### Install dependencies:  
+### Install dependencies:  
 Install the required Python packages:  
 <pre>
 pip install -r requirements.txt
 </pre>
+
+---
 
 ## Third party accounts
 To enable the CLUES framework to access certain geospatial datasets, users must register with specific data providers and generate personal access tokens.  
