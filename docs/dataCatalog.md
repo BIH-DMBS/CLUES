@@ -255,20 +255,20 @@ This page describes the geospatial data sources and datasets integrated into the
 | **ESPON** | Potential social impact of climate change | NUTS3 | Europe | 2071-2100 | yearly | CSV |
 | **ESPON** | Potential cultural impact of climate change | NUTS3 | Europe | 2071-2100 | yearly | CSV |
 | **ESPON** | Potential environmental impact of climate change | NUTS3 | Europe | 2071-2100 | yearly | CSV |
-| **ESPON** | ?Corine Land Cover 2006 - 1st level (share) by use | 100m and 250m | Europe |  | yearly | CSV |
-| **ESPON** | ?Corine Land Cover 2006 - 2nd level (share) by use | 100m and 250m | Europe |  | yearly | CSV |
-| **ESPON** | ?Corine Land Cover 2006 - 3rd level (total) by use | 100m and 250m | Europe |  | yearly | CSV |
-| **ESPON** | ?Corine Land Cover 2006 - 1st level (share) by use | 100m and 250m | Europe |  | yearly | CSV |
-| **ESPON** | ?Corine Land Cover 2006 - 1st level (total) by use | 100m and 250m | Europe |  | yearly | CSV |
-| **ESPON** | ?Corine Land Cover 2006 - 2nd level (total) by use | 100m and 250m | Europe |  | yearly | CSV |
+| **ESPON** | Corine Land Cover 2006 - 1st level (share) by use | 100m and 250m | Europe | -- | yearly | CSV |
+| **ESPON** | Corine Land Cover 2006 - 2nd level (share) by use | 100m and 250m | Europe | -- | yearly | CSV |
+| **ESPON** | Corine Land Cover 2006 - 3rd level (total) by use | 100m and 250m | Europe | -- | yearly | CSV |
+| **ESPON** | Corine Land Cover 2006 - 1st level (share) by use | 100m and 250m | Europe | -- | yearly | CSV |
+| **ESPON** | Corine Land Cover 2006 - 1st level (total) by use | 100m and 250m | Europe | -- | yearly | CSV |
+| **ESPON** | Corine Land Cover 2006 - 2nd level (total) by use | 100m and 250m | Europe | -- | yearly | CSV |
 | **ESPON** | Territorial impact of Common Agricultural Policy (CAP) by type of impact | NUTS2 | Europe | 2009 | yearly | CSV |
 | **ESPON** | Employment (total) by NACE rev.2 economic section (Structural Business Statistics) | -- | Europe | -- | yearly | CSV |
 | **ESPON** | Employment by economic sections C, F and I and divisions for sections C and F at NUTS2 | NUTS2 | Europe | 2005-2017 | yearly | CSV |
 | **ESPON** | Protected areas (total surface) | NUTS3 | Europe | 2017 | yearly | CSV |
 | **ESPON** | Natura 2000 sites | NUTS3 | Europe | 2015 | yearly | CSV |
 | **ESPON** | Renewable energy input for district heat production (share of) | -- | Europe | -- | yearly | CSV |
-| **ESPON** | Employment (total) by size of enterprises | NUTS2, NUTS3 | Europe |  | yearly | CSV |
-| **ESPON** | Population on 1 January (total) by age group | NUTS | Europe | 2008, 2014 | yearly | CSV |
+| **ESPON** | Employment (total) by size of enterprises | NUTS2, NUTS3 | Europe | 2008, 2014 | yearly | CSV |
+| **ESPON** | Population on 1 January (total) by age group | NUTS | Europe |  | yearly | CSV |
 | **ESPON** | Final energy consumption of petroleum products in the road transport sector | -- | Europe | -- | yearly | CSV |
 | **ESPON** | Share of regions overlaid by Inner Peripheries (IP) according to high travel times to regional centres | NUTS | Europe |  | yearly | CSV |
 | **ESPON** | Inner Peripheries according to high travel times to regional centres (grid) | NUTS | Europe |  | yearly | CSV |
