@@ -210,66 +210,66 @@ This page describes the geospatial data sources and datasets integrated into the
 | **Copernicus ERA5** | total_cloud_cover | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
 | **Copernicus ERA5** | snow_depth | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
 | **Global SPEI database** | spei_drought_index | 0.5° x 0.5° | Global | 1901-present | monthly | NetCDF |
-| **ESPON** | Deaths by age groups and gender | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Deaths by age groups | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Life expectancy by age and sex | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Life expectancy by age | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Population (total) by gender and broad age group | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Population on 1 January (total) by age group and sex | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Population on 1 January (total) by age group | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | no parent | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Ageing index by gender | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Proportion of gender groups in the total population by gender | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Old-age-dependency ratio by sex | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Unemployment (total) by sex, age group | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Unemployment (total) by age group | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Employment rate by age and gender (%) | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Employment rate by age group (%) | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Employment (total) by gender and broad age group | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Employment (total) by broad age groups | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Employment (total) by NACE rev.2 economic section (Labour Force Survey) | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Educational attainment level by age group and sex | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Educational attainment level by age group | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Participation rate in education and training (last 4 weeks) by sex | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Early leavers from education and training by sex | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Unemployment (rate) by sex | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | FDI projects (total deal value) by origin | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | FDI projects (total deal value) by type | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | FDI projects (total deal value) by sector | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | FDI projects (total number) by origin | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | FDI projects (total number) by type | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | FDI projects (total number) by period | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | FDI projects (total number) by sector | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Domestic material consumption (DMC) | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Gender gap by age group | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Employment by economic sector | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Sex ratio by age group | NUTS | Europe |  | yearly | CSV |
+| **ESPON** | Deaths by age groups and gender | NUTS0-NUTS3 | Europe | 2013-2015 | yearly | CSV |
+| **ESPON** | Deaths by age groups | NUTS0-NUTS2 | Europe | 1990-2017 | yearly | CSV |
+| **ESPON** | Life expectancy by age and sex | NUTS | Europe | 2002-2017 | yearly | CSV |
+| **ESPON** | Life expectancy by age | NUTS0-NUTS2 | Europe | 2002-2017 | yearly | CSV |
+| **ESPON** | Population (total) by gender and broad age group | -- | Europe | -- | yearly | CSV |
+| **ESPON** | Population on 1 January (total) by age group and sex | NUTS0-NUTS2 | Europe | 1990-2020 | yearly | CSV |
+| **ESPON** | Population on 1 January (total) by age group | NUTS0-NUTS2 | Europe | 1990-2020 | yearly | CSV |
+| **ESPON** | No parent | -- | Europe | -- | yearly | CSV |
+| **ESPON** | Ageing index by gender | NUTS0-NUTS2 | Europe | 1990-2018 | yearly | CSV |
+| **ESPON** | Proportion of gender groups in the total population by gender | -- | Europe | -- | yearly | CSV |
+| **ESPON** | Old-age-dependency ratio by sex | NUTS0-NUTS3 | Europe | 1990-2018 | yearly | CSV |
+| **ESPON** | Unemployment (total) by sex, age group | NUTS0-NUTS2 | Europe | 1999-2020 | yearly | CSV |
+| **ESPON** | Unemployment (total) by age group | NUTS0-NUTS2 | Europe | 1999-2020 | yearly | CSV |
+| **ESPON** | Employment rate by age and gender (%) | NUTS0-NUTS2 | Europe | 1990-2018 | yearly | CSV |
+| **ESPON** | Employment rate by age group (%) | NUTS0-NUTS2 | Europe | 1990-2018 | yearly | CSV |
+| **ESPON** | Employment (total) by gender and broad age group | NUTS0-NUTS2 | Europe | 2005-2020 | yearly | CSV |
+| **ESPON** | Employment (total) by broad age groups | NUTS0-NUTS2 | Europe | 2005-2020 | yearly | CSV |
+| **ESPON** | Employment (total) by NACE rev.2 economic section (Labour Force Survey) | NUTS0-NUTS2 | Europe | 2005-2020 | yearly | CSV |
+| **ESPON** | Educational attainment level by age group and sex | NUTS0-NUTS2 | Europe | 2000-2020 | yearly | CSV |
+| **ESPON** | Educational attainment level by age group | NUTS0-NUTS2 | Europe | 2000-2020 | yearly | CSV |
+| **ESPON** | Participation rate in education and training (last 4 weeks) by sex | NUTS0-NUTS2 | Europe | 2000-2020 | yearly | CSV |
+| **ESPON** | Early leavers from education and training by sex | NUTS0-NUTS2 | Europe | 2000-2020 | yearly | CSV |
+| **ESPON** | Unemployment (rate) by sex | NUTS0-NUTS2 | Europe | 1999-2020 | yearly | CSV |
+| **ESPON** | FDI projects (total deal value) by origin | NUTS3 | Europe | 2003-2015 | yearly | CSV |
+| **ESPON** | FDI projects (total deal value) by type | NUTS3 | Europe |  | yearly | CSV |
+| **ESPON** | FDI projects (total deal value) by sector | NUTS3 | Europe | 2003-2015 | yearly | CSV |
+| **ESPON** | FDI projects (total number) by origin | NUTS3 | Europe | 2003-2015 | yearly | CSV |
+| **ESPON** | FDI projects (total number) by type | NUTS3 | Europe | 2003-2015 | yearly | CSV |
+| **ESPON** | FDI projects (total number) by period | NUTS3 | Europe | 2003-2015 | yearly | CSV |
+| **ESPON** | FDI projects (total number) by sector | NUTS3 | Europe | 2003-2015 | yearly | CSV |
+| **ESPON** | Domestic material consumption (DMC) | NUTS0 | Europe | 2014 | yearly | CSV |
+| **ESPON** | Gender gap by age group | NUTS2 | Europe |  | yearly | CSV |
+| **ESPON** | Employment by economic sector | NUTS | Europe | 2009 | yearly | CSV |
+| **ESPON** | Sex ratio by age group | NUTS2, NUTS3 | Europe | 2008 | yearly | CSV |
 | **ESPON** | Presence of North Sea Region Programme energy projects | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Energy projects (total) - by theme | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Energy projects (total) - by cluster class | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Economic resilience by type of resilience | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Photovoltaic energy | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Aggregate impact of climate change on regions | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Potential economic impact of climate change | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Potential physical impact of climate change | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Potential social impact of climate change | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Potential cultural impact of climate change | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Potential environmental impact of climate change | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Corine Land Cover 2006 - 1st level (share) by use | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Corine Land Cover 2006 - 2nd level (share) by use | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Corine Land Cover 2006 - 3rd level (total) by use | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Corine Land Cover 2006 - 1st level (share) by use | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Corine Land Cover 2006 - 1st level (total) by use | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Corine Land Cover 2006 - 2nd level (total) by use | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Territorial impact of Common Agricultural Policy (CAP) by type of impact | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Employment (total) by NACE rev.2 economic section (Structural Business Statistics) | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Employment by economic sections C, F and I and divisions for sections C and F at NUTS2 | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Protected areas (total surface) | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Natura 2000 sites | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Renewable energy input for district heat production (share of) | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Employment (total) by size of enterprises | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Population on 1 January (total) by age group | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Final energy consumption of petroleum products in the road transport sector | NUTS | Europe |  | yearly | CSV |
+| **ESPON** | Energy projects (total) - by theme | NUTS2 | Europe | 2013 | yearly | CSV |
+| **ESPON** | Energy projects (total) - by cluster class | NUTS2 | Europe | 2013 | yearly | CSV |
+| **ESPON** | Economic resilience by type of resilience | NUTS0, NUTS2, NUTS3 | Europe | 1985-2011 | yearly | CSV |
+| **ESPON** | Photovoltaic energy | -- | Europe | -- | yearly | CSV |
+| **ESPON** | Aggregate impact of climate change on regions | NUTS3 | Europe | 2071-2100 | yearly | CSV |
+| **ESPON** | Potential economic impact of climate change | NUTS3 | Europe | 2071-2100 | yearly | CSV |
+| **ESPON** | Potential physical impact of climate change | NUTS3 | Europe | 2071-2100 | yearly | CSV |
+| **ESPON** | Potential social impact of climate change | NUTS3 | Europe | 2071-2100 | yearly | CSV |
+| **ESPON** | Potential cultural impact of climate change | NUTS3 | Europe | 2071-2100 | yearly | CSV |
+| **ESPON** | Potential environmental impact of climate change | NUTS3 | Europe | 2071-2100 | yearly | CSV |
+| **ESPON** | ?Corine Land Cover 2006 - 1st level (share) by use | 100m and 250m | Europe |  | yearly | CSV |
+| **ESPON** | ?Corine Land Cover 2006 - 2nd level (share) by use | 100m and 250m | Europe |  | yearly | CSV |
+| **ESPON** | ?Corine Land Cover 2006 - 3rd level (total) by use | 100m and 250m | Europe |  | yearly | CSV |
+| **ESPON** | ?Corine Land Cover 2006 - 1st level (share) by use | 100m and 250m | Europe |  | yearly | CSV |
+| **ESPON** | ?Corine Land Cover 2006 - 1st level (total) by use | 100m and 250m | Europe |  | yearly | CSV |
+| **ESPON** | ?Corine Land Cover 2006 - 2nd level (total) by use | 100m and 250m | Europe |  | yearly | CSV |
+| **ESPON** | Territorial impact of Common Agricultural Policy (CAP) by type of impact | NUTS2 | Europe | 2009 | yearly | CSV |
+| **ESPON** | Employment (total) by NACE rev.2 economic section (Structural Business Statistics) | -- | Europe | -- | yearly | CSV |
+| **ESPON** | Employment by economic sections C, F and I and divisions for sections C and F at NUTS2 | NUTS2 | Europe | 2005-2017 | yearly | CSV |
+| **ESPON** | Protected areas (total surface) | NUTS3 | Europe | 2017 | yearly | CSV |
+| **ESPON** | Natura 2000 sites | NUTS3 | Europe | 2015 | yearly | CSV |
+| **ESPON** | Renewable energy input for district heat production (share of) | -- | Europe | -- | yearly | CSV |
+| **ESPON** | Employment (total) by size of enterprises | NUTS2, NUTS3 | Europe |  | yearly | CSV |
+| **ESPON** | Population on 1 January (total) by age group | NUTS | Europe | 2008, 2014 | yearly | CSV |
+| **ESPON** | Final energy consumption of petroleum products in the road transport sector | -- | Europe | -- | yearly | CSV |
 | **ESPON** | Share of regions overlaid by Inner Peripheries (IP) according to high travel times to regional centres | NUTS | Europe |  | yearly | CSV |
 | **ESPON** | Inner Peripheries according to high travel times to regional centres (grid) | NUTS | Europe |  | yearly | CSV |
 | **ESPON** | Share of regions overlaid by Inner Peripheries (IP) according to access to Services of General Interest (SGIs) | NUTS | Europe |  | yearly | CSV |
