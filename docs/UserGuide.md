@@ -66,9 +66,9 @@ Data from the Copernicus Climate Data Store (CDS) and the Atmosphere Data Store 
    
 2. Visit:
    
-  - CDS API instructions at https://cds.climate.copernicus.eu/how-to-api
+    - CDS API instructions at https://cds.climate.copernicus.eu/how-to-api
     
-  - ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api
+    - ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api
     
 3. Generate personalized API tokens from both platforms.
 
