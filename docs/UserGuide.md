@@ -7,10 +7,15 @@ This guide walks you through setting up your environment and running the CLUES d
 Before getting started, ensure the following tools are installed:
 
 - Python 3.8 or higher
+  
 - `pip` (Python package manager)
+  
 - Git
+  
 - [Snakemake](https://snakemake.readthedocs.io/en/stable/)
+  
 - (Optional but recommended) `conda` — for reproducible environments
+  
 
 ## Setup Instructions
 
@@ -56,10 +61,15 @@ Note: The location of the credential (.sct) files is defined in the general work
 Data from the Copernicus Climate Data Store (CDS) and the Atmosphere Data Store (ADS) requires a free account with the European Centre for Medium-Range Weather Forecasts (ECMWF).
 
 **Steps**
+
 1. Create an ECMWF account at ecmwf.int
+   
 2. Visit:
+   
   - CDS API instructions at https://cds.climate.copernicus.eu/how-to-api
+    
   - ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api
+    
 3. Generate personalized API tokens from both platforms.
 
 **Token Storage**
@@ -78,7 +88,9 @@ key: place your token here</pre>
 Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s Earthdata platform also requires registration.
 
 **Steps**
-1. Register at [earthdata.nasa.gov](https://www.earthdata.nasa.gov/) 
+
+1. Register at [earthdata.nasa.gov](https://www.earthdata.nasa.gov/)
+   
 2. Create a personal access token
 
 **Token Storage**
@@ -90,8 +102,11 @@ Create the following file:
 ## Configuration Management
 
 The CLUES framework is customized through a set of configuration files that define the structure and behavior of the workflow. These include:
+
 - A general workflow configuration file: `workflows/config/config.json`
+  
 - Source-specific configuration files for each data provider: `workflows/config_sources/`
+  
 - A file for predefined bounding boxes: `workflows/config/bbox.json`
 
 ### General workflow configuration file
@@ -113,13 +128,21 @@ The file `workflows\config\config.json` defines the core parameters for how CLUE
 </pre>
 
 **Key Parameters Explained**
+
 - download_folder: Path to where all output files will be stored
+  
 - tmp_folder: Folder used for temporary intermediate files
+  
 - configs_assets_folder: Folder that holds the source-specific configuration files
+  
 - secrets_folder: Path where access credentials, e.g., .sct files, are located
+  
 - years: List of years for which data should be downloaded
-- update_years: Years to be refreshed if the workflow is rerun on an existing database. This is especially of interest for data with high temporal resoultion like climate and antmospheric data.
+  
+- update_years: Years to be refreshed if the workflow is rerun on an existing database. This is especially of interest for data with high temporal resoultion like climate and antmospheric data
+  
 - area: Refers to predefined region from workflows/config/bbox.json (see next section)
+  
 - espon_filename_length: Limits the length of filenames for ESPON downloads to prevent exceeding system file length restrictions. 
 
 Note: The key "espon_filename_length" is an integer value to limit the filename lengths used while downloading the espon data. The filename is generated from the naming and dimension of the different assets (https://database.espon.eu/api/). As single filename cannot exceed 255 characters, therefore, the limit is necessary. 
@@ -257,4 +280,7 @@ The results of this enrichment process are saved in the output folder. The outpu
 
 > coming soon
 
+## Next Steps: Try It Out
+
+To help you get started, we provide simple [usage examples](link_coming_soon). In addition, [scripts](scripts) for enriching a dummy location dataset and [Python notebooks](notebooks) that allow to interact with and visualize geospatial outputs using a test dataset are provided.
 
