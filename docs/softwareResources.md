@@ -55,10 +55,6 @@ A Python library that enables interactive widgets in Jupyter notebook and the IP
 
 A Python library for creating static, animated, and interactive visualizations.
 
-[`DjangoRestFramework`](https://pypi.org/project/djangorestframework/)
-
-A Python toolkit for building Web APIs.
-
 [`FileLock`](https://pypi.org/project/filelock/)
 
 A Python library for safely locking files when multiple processes use them at the same time.
@@ -70,14 +66,6 @@ A Python library for making attractive and statistical graphics.
 [`Scikit-image`](https://pypi.org/project/scikit-image/)
 
 A Python library for image processing, analysis and manipulation using a collection of algorithms.
-
-[`BeautifulSoup4`](https://pypi.org/project/beautifulsoup4/)
-
-A Python library for parsing HTML and XML documents, commonly used for web scraping.
-
-`bs4`
-
-A Python library that provides BeautifulSoup for parsing and navigating HTML and XML documents.
 
 [`H5Netcdf`](https://pypi.org/project/h5netcdf/)
 
