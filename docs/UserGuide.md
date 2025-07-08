@@ -282,5 +282,5 @@ The results of this enrichment process are saved in the output folder. The outpu
 
 ## Next Steps: Try It Out
 
-To help you get started, we provide simple [usage examples](link_coming_soon). In addition, [scripts](scripts) for enriching a dummy location dataset and [Python notebooks](notebooks) that allow to interact with and visualize geospatial outputs using a test dataset are provided.
+To help you get started, we provide simple [applied examples](link_coming_soon). In addition, [scripts](scripts) for enriching a dummy location dataset and [Python notebooks](notebooks) that allow to interact with and visualize geospatial outputs using a test dataset are provided.
 
