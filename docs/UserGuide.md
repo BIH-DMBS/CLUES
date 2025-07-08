@@ -276,9 +276,11 @@ The results of this enrichment process are saved in the output folder. The outpu
 - JSON files with extracted values from NetCDF features.
 - CSV files with extracted values from GeoTIFF features.
 
-### Enrichment for Areas
+### Enrichment for Geographic Areas
+In addition to point-based enrichment, CLUES supports linking environmental data to geographic areas, such as predefined administrative boundaries (e.g., postal codes or districts).
+This allows for aggregation of environmental features across regions rather than individual coordinates, enabling analysis when precise locations are unavailable or when regional exposures are more relevant.
 
-> coming soon
+> Scripts for area-based enrichment will be available soon.
 
 ## Next Steps: Try It Out
 
