@@ -72,7 +72,7 @@ Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s Earthdata platform 
 1. Register at [earthdata.nasa.gov](https://www.earthdata.nasa.gov/)  
 2. Create a personal access token  
 
-**Token Storage**
+**Token Storage**  
 Create the following file:  
 *nasa.sct*  
 <pre>token: place your token here</pre>
