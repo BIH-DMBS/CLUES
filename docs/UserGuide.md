@@ -183,7 +183,7 @@ Source-specific configuration files determine whether such processing is applied
 
 Example of the source-specific configuration file `copenicus_dem.json`
 <pre>
-  {
+{
     "type":"DEM",
     "format": "geotTiff",
     "variables":[
@@ -194,7 +194,7 @@ Example of the source-specific configuration file `copenicus_dem.json`
                 "mean":[500,1000],
                 "std":[500,1000],
                 "zevenbergen_thorne: "yes"}
-]
+  ]
 }
 </pre>
 
