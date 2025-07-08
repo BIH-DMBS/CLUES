@@ -1,7 +1,7 @@
 # CLUES Geospatial Data Catalog
 This page describes the geospatial data sources and datasets integrated into the CLUES workflow. For each data source, a short description, source-specific configuration file (config), spatial and temporal resolution, download format and reference link are provided. A summary table with all geospatial datasets is provided below the Data Source Details section. 
 
-## Data Source Details
+## Geospatial Data Sources
 
 ### Copernicus CAMS Global Reanalysis (EAC4)
 - Description: Global atmospheric composition reanalysis by ECMWF using data assimilation.
@@ -23,11 +23,9 @@ This page describes the geospatial data sources and datasets integrated into the
 - Description: European socioeconomic data at NUTS (Nomenclature of Territorial Units for Statistics) level. NUTS is a hierarchical system developed by the European Union to divide its member states into standardized territorial units for collecting and analyzing regional statistics. It consists of three levels — NUTS 1 (major regions), NUTS 2 (basic regions for policy implementation), and NUTS 3 (small regions for detailed analysis) — with additional subdivisions at the LAU (Local Administrative Unit) level for finer granularity.
 - Years: Varies by product
 - Resolution: Varies by NUTS level
-- Format: CSV + shapefile
+- Format: CSV
 - Config: `espon.json` via `espon.generate_espon_json()`
 - [More Info](https://database.espon.eu)
-
->> **ask marcel: about format and that i used different link, check Config, resolution and years**
 
 ### EOC Map & Coverage Services (DLR)
 - Atmosphere:
