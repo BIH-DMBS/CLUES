@@ -42,8 +42,11 @@ Jentsch M., et al., CLUES: A Comprehensive Workflow for Integrating Geospatial D
 ## Maintainers
 
 The CLUES maintainers are:
+
 - Marcel Jentsch (lead maintainer)
+  
 - Sven Twardziok
+  
 - Elli Polemiti
 
 
