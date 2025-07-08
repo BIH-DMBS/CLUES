@@ -10,6 +10,8 @@ Before getting started, ensure the following tools are installed:
 - [Snakemake](https://snakemake.readthedocs.io/en/stable/)  
 - (Optional but recommended) `conda` — for reproducible environments  
 
+---
+
 ## Setup Instructions
 
 ### Clone the Repository  
@@ -55,7 +57,6 @@ Data from the Copernicus Climate Data Store (CDS) and the Atmosphere Data Store 
     - ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api  
 3. Generate personalized API tokens from both platforms
 
----  
 
 **Token Storage**
 
@@ -75,13 +76,14 @@ Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s Earthdata platform 
 1. Register at [earthdata.nasa.gov](https://www.earthdata.nasa.gov/)  
 2. Create a personal access token  
 
----
 
 **Token Storage**  
 
 Create the following file:  
 *nasa.sct*  
 <pre>token: place your token here</pre>
+
+---
 
 ## Configuration Management  
 The CLUES framework is customized through a set of configuration files that define the structure and behavior of the workflow. These include:  
@@ -191,6 +193,7 @@ Example of the source-specific configuration file `copenicus_dem.json`
 }
 </pre>
 
+---
 
 ## Run the workflow
 Once everything is set up, third-party accounts are configured, and the configuration files are customized, you can run the CLUES workflow using Snakemake:
@@ -206,6 +209,8 @@ Command Options Explained:
 - --rerun-incomplete reruns any jobs that were not completed  
 - --latency-wait 60 waits up to 60 seconds for output files (useful on shared filesystems)  
 
+---
+
 ## Anticipated results  
 The workflow automatically downloads all required geospatial data files into the directory specified in the general configuration file `config/config.json`. For each file retrieved, a corresponding log file is generated during execution, providing detailed information about the download process. These log files are essential for monitoring progress and diagnosing potential issues.
 
@@ -217,6 +222,7 @@ Below is an example of the folder structure of downloaded geospatial data for Eu
 
 ![Diagram](filesystem.png)
 
+---
 
 ## Data enrichment
 After running the workflow, the required datasets will be downloaded and stored according to the general configuration specified in `config/config.json`. You can then enrich your data by linking environmental exposures to participant locations.
@@ -245,6 +251,8 @@ In addition to point-based enrichment, CLUES supports linking environmental data
 This allows for aggregation of environmental features across regions rather than individual coordinates, enabling analysis when precise locations are unavailable or when regional exposures are more relevant.
 
 > Scripts for area-based enrichment will be available soon.
+
+---
 
 ## Next Steps: Try It Out  
 To help you get started, we provide simple [applied examples](link_coming_soon). In addition, [scripts](scripts) are available for enriching a dummy location dataset, and [python notebooks](notebooks) demonstrate how to interact with and visualize geospatial outputs using a test dataset. These resources offer hands-on guidance, showcasing how different data types and formats can be processed and analyzed within the CLUES environment.
