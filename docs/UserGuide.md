@@ -219,7 +219,7 @@ latitude,longitude,subjectid
 53.424305699033326,13.453464611332228,8017
 </pre>
 
-To link environmental features to these locations, use the script `/scripts/link_locations.py`. This script processes all NetCDF and GeoTIFF files in the input folder and extracts values at the specified coordinates.
+To link environmental data to these locations, use the script `/scripts/link_locations.py`. This script processes all NetCDF and GeoTIFF files in the input folder and extracts values at the specified coordinates.
 
 <pre>
   python link_locations.py locations.csv input_folder output_folder
@@ -229,8 +229,8 @@ The results of this enrichment process are saved in the output folder. The outpu
 - JSON files with extracted values from NetCDF features.
 - CSV files with extracted values from GeoTIFF features.
 
-### Enrichnebt for areas
+### Enrichment for Areas
 
-tdDo
+> coming soon
 
 
