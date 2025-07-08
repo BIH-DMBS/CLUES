@@ -56,7 +56,7 @@ This page describes the geospatial data sources and datasets integrated into the
 
 ### CORINE Land Cover
 - Description: European land cover classification and monitoring with 44 thematic classes, ranging from broad forested areas to individual vineyards.
-- Years: 2000, 2006, 2012, and 2018
+- Years: 2000, 2006, 2012, 2018 and 2022
 - Resolution: 100m × 100m, yearly
 - Format: GeoTIFF
 - Config: `corine_copernicus.json`
@@ -66,7 +66,7 @@ This page describes the geospatial data sources and datasets integrated into the
 
 ### Land Copernicus (Tree Cover Density)
 - Description: Global tree cover density
-- Years: 2012, 2015, and annually from 2018 - 2021
+- Years: 2012, 2015, and 2018
 - Resolution: 100m × 100m, yearly
 - Config: `treecover_copernicus.json`
 - [More Info]([https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
@@ -85,6 +85,7 @@ This page describes the geospatial data sources and datasets integrated into the
 
 ### Hydrosheds GLWD version 2
 - Description: Global inland surface waters distinguished into 33 waterbody and wetland types
+- Years: Static
 - Resolution: ~500m × 500m (15 arc-seconds)
 - Format: GeoTIFF
 - Config: `hydrosheds_GLWD.json`
