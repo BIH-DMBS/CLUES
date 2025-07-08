@@ -96,7 +96,8 @@ Below an example of `config.json`:
     "configs_assets_folder":"/clues/configs_sources_test",
     "config_folder":"/clues/config",
     "secrets_folder":"/clues/secrets",
-    "years": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022","2023","2024","2025"],
+    "years": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", 
+                "2022","2023","2024","2025"],
     "update_years":["2025"],
     "area":"Europe",
     "espon_filename_length":80
