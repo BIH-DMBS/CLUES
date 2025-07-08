@@ -20,7 +20,7 @@ This page describes the geospatial data sources and datasets integrated into the
 - [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)
 
 ### ESPON
-- Description: European socioeconomic data at NUTS (Nomenclature of Territorial Units for Statistics) level. NUTS is a hierarchical system developed by the European Union to divide its member states into standardized territorial units for collecting and analyzing regional statistics. It consists of three levels—NUTS 1 (major regions), NUTS 2 (basic regions for policy implementation), and NUTS 3 (small regions for detailed analysis)—with additional subdivisions at the LAU (Local Administrative Unit) level for finer granularity.
+- Description: European socioeconomic data at NUTS (Nomenclature of Territorial Units for Statistics) level. NUTS is a hierarchical system developed by the European Union to divide its member states into standardized territorial units for collecting and analyzing regional statistics. It consists of three levels — NUTS 1 (major regions), NUTS 2 (basic regions for policy implementation), and NUTS 3 (small regions for detailed analysis) — with additional subdivisions at the LAU (Local Administrative Unit) level for finer granularity.
 - Years: Varies by product
 - Resolution: Varies by NUTS level
 - Format: CSV + shapefile
