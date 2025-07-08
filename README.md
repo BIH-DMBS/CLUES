@@ -8,7 +8,7 @@ CLUES (Climate, Urbanicity, Environment and Society) is a modular workflow that 
 
 - Automated data retrieval from multiple open-access geospatial sources
   
-- Standardised harmonisation of spatial/temporal coverage, projections, and file types
+- Standardised harmonisation of spatial/ temporal coverage, projections, and file types
   
 - Modular integration with health cohort datasets at the individual level
   
