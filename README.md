@@ -28,7 +28,7 @@ CLUES (Climate, Urbanicity, Environment and Society) is a modular workflow that 
 
 - To learn how to use the CLUES framework, follow the [User Guide](docs/UserGuide.md) and explore the Examples (**link coming soon**).
   
-- [Scripts](scripts) for integrating the geospatial database to location data and [python notebooks](notebooks) for using and interacting with the database are available.
+- [Scripts](scripts) for integrating the geospatial database to location data and [python notebooks](notebooks) for interacting and visualise the geospatial data are available.
   
 - For more information on software resources, see [here](docs/softwareResources.md).
 
