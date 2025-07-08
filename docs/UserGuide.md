@@ -23,7 +23,8 @@ git clone https://gitlab.com/bih_dmbs/CLUES/workflows.git
 python -m venv cluesEnv
 </pre>
 
-**Activate the virtual environment**  
+**Activate the virtual environment**
+
 Linux/macOS:  
 <pre>
 source cluesEnv/bin/activate
