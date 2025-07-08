@@ -241,7 +241,7 @@ Command Options Explained:
 
 - --latency-wait 60 waits up to 60 seconds for output files (useful on shared filesystems)
 
-## Anticipated result
+## Anticipated results
 
 The workflow automatically downloads all required geospatial data files into the directory specified in the general configuration file `config/config.json`. For each file retrieved, a corresponding log file is generated during execution, providing detailed information about the download process. These log files are essential for monitoring progress and diagnosing potential issues.
 
