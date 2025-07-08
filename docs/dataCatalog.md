@@ -270,8 +270,8 @@ This page describes the geospatial data sources and datasets integrated into the
 | **ESPON** | Employment (total) by size of enterprises | NUTS2, NUTS3 | Europe | 2008, 2014 | yearly | CSV |
 | **ESPON** | Population on 1 January (total) by age group | NUTS | Europe |  | yearly | CSV |
 | **ESPON** | Final energy consumption of petroleum products in the road transport sector | -- | Europe | -- | yearly | CSV |
-| **ESPON** | Share of regions overlaid by Inner Peripheries (IP) according to high travel times to regional centres | NUTS | Europe |  | yearly | CSV |
-| **ESPON** | Inner Peripheries according to high travel times to regional centres (grid) | NUTS | Europe |  | yearly | CSV |
+| **ESPON** | Share of regions overlaid by Inner Peripheries (IP) according to high travel times to regional centres | NUTS3 | Europe | 2017 | yearly | CSV |
+| **ESPON** | Inner Peripheries according to high travel times to regional centres (grid) | NUTS3 | Europe | 2017 | yearly | CSV |
 | **ESPON** | Share of regions overlaid by Inner Peripheries (IP) according to access to Services of General Interest (SGIs) | NUTS | Europe |  | yearly | CSV |
 | **ESPON** | Delineations by SGI | NUTS | Europe |  | yearly | CSV |
 | **ESPON** | Share of regions overlaid IP by SGI | NUTS | Europe |  | yearly | CSV |
