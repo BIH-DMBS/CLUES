@@ -41,7 +41,7 @@ This page describes the geospatial data sources and datasets integrated into the
     - Resolution: 10m × 10m (WSF); 30m × 30m (WSF-Evo)  
     - Format: GeoTIFF  
     - Config: `EOC_WSF.json`  
-    - More info [here](https://www.dlr.de/en/eoc/research-transfer/projects-missions/world-settlement-footprint-wsf-r)  
+    - [More info](https://www.dlr.de/en/eoc/research-transfer/projects-missions/world-settlement-footprint-wsf-r)  
 - WSF3D:  
     - Description: A global dataset of the average height, total volume, total area and the fraction of buildings, capturing 3D urban structure  
     - Years: Static  
