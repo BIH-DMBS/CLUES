@@ -9,7 +9,7 @@
             "neighborhood":{
                 "mean":[500,1000],
                 "std":[500,1000],
-                "zevenbergen_thorne":"the existance of the key is sufficent to trigger the filter"
+                "zevenbergen_thorne":"Any value activates the filter; if missing, the filter won’t run."
             }
         },
         {
@@ -19,7 +19,7 @@
             "neighborhood":{
                 "mean":[500,1000],
                 "std":[500,1000],
-                "zevenbergen_thorne":"the existance of the key is sufficent to trigger the filter"
+                "zevenbergen_thorne":"Any value activates the filter; if missing, the filter won’t run."
             }
         }
     ]
