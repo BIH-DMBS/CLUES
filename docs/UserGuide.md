@@ -176,9 +176,11 @@ Example of the source-specific configuration file `cams-global-reanalysis-eac4.j
 
 
 **Neighbourhood-level processing**  
-CLUES supports neighbourhood-level operations to enhance spatial analysis. These include filters such as mean, standard deviation, or terrain-based Zevenbergen-Thorne metrics, applied over circular areas with configurable radii. Smaller radii emphasize local variation, while larger ones capture broader spatial context.
+CLUES supports neighbourhood-based operations to enhance spatial analysis by incorporating local spatial context. These operations apply filters, such as mean, standard deviation, or terrain-based Zevenbergen–Thorne metrics, within neighbourhood zones, which are circular areas around each pixel defined by a specified radius. The Zevenbergen-Thorne algorithm is utilized on digital elevation models (DEMs) to derive topographic features such as slope (terrain steepness) and aspect (direction the slope faces). 
 
-Source-specific configuration files determine whether such processing is applied to a given product, specify the filter type, and define the radii. Default configurations are provided but can be easily adapted to fit specific analytical needs.
+Neighbourhood zones represent the spatial extent used to calculate local statistics around a point. Smaller zones focus on immediate surroundings and fine-scale variation, while larger zones capture broader spatial trends and context.
+
+Whether and how this processing is applied is defined in the source-specific configuration files, which specify the filter type and the radius of the neighbourhood zone. Default configurations are provided, but users can easily adapt them to meet specific analytical needs.
 
 Example of the source-specific configuration file `copenicus_dem.json`
 <pre>
