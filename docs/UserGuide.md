@@ -148,8 +148,10 @@ Example of the source-specific configuration file `cams-global-reanalysis-eac4.j
     "type":"atmosphere",
     "source":"cams-global-reanalysis-eac4",
     "file":"cams-global-reanalysis-eac4.json",
-    "link": "https://ads.atmosphere.copernicus.eu/cdsapp#!/dataset/cams-global-reanalysis-eac4?tab=form",
-    "citation":"Inness et al. (2019), http://www.atmos-chem-phys.net/19/3515/2019/",
+    "link": "https://ads.atmosphere.copernicus.eu/cdsapp#!/dataset/
+                cams-global-reanalysis-eac4?tab=form",
+    "citation":"Inness et al. (2019), 
+                http://www.atmos-chem-phys.net/19/3515/2019/",
     "start_year": "2003",
     "end_year": "2025",
     "delta_t_in_h":"3",
