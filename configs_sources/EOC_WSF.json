@@ -16,10 +16,10 @@
             "year":"2019"
         },
         {
-            "name":"WSF_Evo",
+            "name":"WSF_Evo_1985_2015",
             "url":"https://download.geoservice.dlr.de/WSF_EVO/files/",
             "flagFile" : "WSF_Evo.tif",
-            "year":"2019"
+            "year":"2015"
         }
     ]
 }
