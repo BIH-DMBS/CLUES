@@ -51,7 +51,6 @@ This page describes the geospatial data sources and datasets integrated into the
     - [More info](https://geoservice.dlr.de/web/datasets/wsf_3d)  
 
 >> **ask marcel: At atmosphere: height 1000, width 1000 what is the spatial resolutiom?
->> ask marcel: years for WSF-Evo
 
 ### Copernicus DEM (Global Digital Elevation model)  
 - Description: Digital surface model (DSM) based on TanDEM-X mission that represents the surface of the Earth including buildings, infrastructure and vegetation.  
@@ -59,8 +58,6 @@ This page describes the geospatial data sources and datasets integrated into the
 - Format: GeoTIFF  
 - Config: `copernicus_dem.json`  
 - [More Info](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM)  
-
->> **ask marcel: config file: "zevenbergen_thorne":"the existance of the key is sufficent to trigger the filter"
 
 ### Copernicus Land Monitoring Service - CORINE Land Cover dataset
 - Description: European land cover classification and monitoring with 44 thematic classes, ranging from broad forested areas to individual vineyards.  
