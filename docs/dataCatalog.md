@@ -31,7 +31,7 @@ This page describes the geospatial data sources and datasets integrated into the
 - Atmosphere:  
     - Description: A collection of satellite-derived global atmospheric composition and cloud property layers provided as composite images via WMS, covering global daily or monthly observations from missions like GOME, GOME-2, and TROPOMI.  
     - Years: Varies by product  
-    - Resolution: varies  
+    - Resolution: Varies by product  
     - Format: GeoTIFF  
     - Config: `EOC_Atmosphere_Coverage_Service.json`  
     - More Info [here](https://atmos.caf.dlr.de/app/missions/gome) and [here](https://geoservice.dlr.de/web/datasets?t=atmosphere)  
