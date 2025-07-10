@@ -6,7 +6,7 @@ This page describes the geospatial data sources and datasets integrated into the
 ### Copernicus Atmosphere Monitoring Service (CAMS) Global Reanalysis (EAC4)
 - Description: Global atmospheric composition reanalysis implemented by ECMWF, using data assimilation of satellite and in-situ observations.  
 - Years: 2003–present  
-- Resolution: 0.75° × 0.75°, 3-hourly  
+- Resolution: 0.75°×0.75°, 3-hourly  
 - Format: NetCDF  
 - Config: `cams-global-reanalysis-eac4.json`  
 - [More Info](https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=overview)  
@@ -14,7 +14,7 @@ This page describes the geospatial data sources and datasets integrated into the
 ### Copernicus Climate Change Service (C3S)
 - Description: Global climate reanalysis (ERA5) implemented by ECMWF, using data assimilation of satellite and in-situ observations.  
 - Years: 1940–present  
-- Resolution: 0.25° × 0.25°, hourly  
+- Resolution: 0.25°×0.25°, hourly  
 - Format: NetCDF  
 - Config: `reanalysis-era5-single-levels.json`  
 - [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)  
@@ -37,15 +37,15 @@ This page describes the geospatial data sources and datasets integrated into the
     - More Info [here](https://atmos.caf.dlr.de/app/missions/gome) and [here](https://geoservice.dlr.de/web/datasets?t=atmosphere)  
 - World Settlement Footprint (WSF):  
     - Description: Global maps outlining the extent of human settlements. Includes static products for specific years and the WSF Evolution (WSF-Evo) dataset showing annual changes.  
-    - Years: 2015, 2019 (WSF), yearly; 1985–2015 (WSF-Evo), yearly  
-    - Resolution: 10m × 10m (WSF); 30m × 30m (WSF-Evo)  
+    - Years: 2015, 2019 (WSF); 1985–2015 (WSF-Evo)    
+    - Resolution: 10m×10m (WSF), yearly; 30m×30m (WSF-Evo), yearly  
     - Format: GeoTIFF  
     - Config: `EOC_WSF.json`  
     - [More info](https://www.dlr.de/en/eoc/research-transfer/projects-missions/world-settlement-footprint-wsf-r)  
 - WSF3D:  
     - Description: A global dataset of the average height, total volume, total area and the fraction of buildings, capturing 3D urban structure  
     - Years: Static  
-    - Resolution: 90m × 90m  
+    - Resolution: 90m×90m  
     - Format: GeoTIFF  
     - Config: `EOC_WSF3D.json`  
     - [More info](https://geoservice.dlr.de/web/datasets/wsf_3d)  
@@ -54,7 +54,7 @@ This page describes the geospatial data sources and datasets integrated into the
 
 ### Copernicus Global Digital Elevation model (DEM) 
 - Description: Digital surface model (DSM) based on TanDEM-X mission that represents the surface of the Earth including buildings, infrastructure and vegetation.  
-- Resolution: 30m × 30m and 90m × 90m, static for years 2011 - 2015  
+- Resolution: 30m×30m and 90m×90m, static for years 2011 - 2015  
 - Format: GeoTIFF  
 - Config: `copernicus_dem.json`  
 - [More Info](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM)  
@@ -62,7 +62,7 @@ This page describes the geospatial data sources and datasets integrated into the
 ### Copernicus Land Monitoring Service - CORINE Land Cover dataset
 - Description: European land cover classification and monitoring with 44 thematic classes, ranging from broad forested areas to individual vineyards.  
 - Years: 1990, 2000, 2006, 2012, and 2018  
-- Resolution: 100m × 100m, yearly  
+- Resolution: 100m×100m, yearly  
 - Format: GeoTIFF  
 - Config: `corine_copernicus.json`  
 - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)  
@@ -70,21 +70,21 @@ This page describes the geospatial data sources and datasets integrated into the
 ### Land Copernicus - Tree Cover Density
 - Description: Global tree cover density  
 - Years: 2012, 2015, and 2018  
-- Resolution: 100m × 100m, yearly  
+- Resolution: 100m×100m, yearly  
 - Config: `treecover_copernicus.json`  
 - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
 
 ### Moderate Resolution Imagining Spectroradiometer (MODIS)
 - Description: Global Vegetation Index Products - NDVI and EVI  
 - Years: 2000-2023  
-- Resolution: 100m × 100m, 16-day  
+- Resolution: 250m×250m, 16-day; 1km×1km, montly  
 - Config: `modis_vegetation.json`  
 - [More Info](https://modis.gsfc.nasa.gov/data/dataprod/mod13.php)  
 
 ### SPEI (Standardized Precipitation-Evapotranspiration Index)
 - Description: Global drought index based on precipitation and evapotranspiration  
 - Years: 1901–present  
-- Resolution: 0.5° × 0.5°, monthly  
+- Resolution: 0.5°×0.5°, monthly  
 - Format: NetCDF  
 - Config: `spei.json`  
 - [More Info](https://spei.csic.es)  
@@ -92,7 +92,7 @@ This page describes the geospatial data sources and datasets integrated into the
 ### Hydrosheds - Global Lakes and Wetlands Database (GLWD) version 2
 - Description: Global inland surface waters distinguished into 33 waterbody and wetland types  
 - Years: Static  
-- Resolution: ~500m × 500m  
+- Resolution: 500m×500m  
 - Format: GeoTIFF  
 - Config: `hydrosheds_GLWD.json`  
 - [More Info](https://www.hydrosheds.org/products/glwd)  
@@ -100,12 +100,12 @@ This page describes the geospatial data sources and datasets integrated into the
 ### DMSP–VIIRS - Harmonized Night-Time Lights
 - Description: Global nighttime light intensity from satellites, harmonized across sensors  
 - Years: 1992–2021  
-- Resolution: ~1km × 1km, yearly  
+- Resolution: 1km×1km, yearly  
 - Format: GeoTIFF  
 - Config: `ntl.json`  
 - [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/8)  
 
->> **Configuration files not added here: copernicus_dynamic_land_cover.json, **
+>> **Configuration file not added here: copernicus_dynamic_land_cover.json, **
 
 ## Summary Table
 
