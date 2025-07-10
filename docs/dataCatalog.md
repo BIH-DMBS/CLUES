@@ -1,5 +1,5 @@
 # CLUES Geospatial Data Catalog
-This page describes the geospatial data sources and datasets integrated into the CLUES workflow. For each data source, a short description, source-specific configuration file (config), spatial and temporal resolution, download format and reference link are provided. A summary table with all geospatial datasets is provided below the Data Source Details section. 
+This page describes the geospatial data sources and datasets integrated into the CLUES workflow. For each data source, a short description, source-specific configuration file (config), spatial and temporal resolution, download format and reference link are provided. A summary table with all geospatial datasets is provided below the Geospatial Data Sources section. 
 
 ## Geospatial Data Sources
 
@@ -136,10 +136,10 @@ This page describes the geospatial data sources and datasets integrated into the
 | **Copernicus DEM - Global Digital Elevation Model** | Digital_Geospatial_Elevation_Data_30m | 30mx30m | Global | Static | NA | GeoTIFF |
 | **Copernicus DEM - Global Digital Elevation Model** | Digital_Geospatial_Elevation_Data_90m | 90mx90m | Global | Static | NA | GeoTIFF |
 | **Copernicus Global Dynamic Land Cover** | ??? | 100mx100m | Global | 2015 - 2019 | yearly | GeoTIFF |
-| **Copernicus Land Monitoring Service (CLMS)** | corine_landcover | 100mx100m | Europe | 1990, 2000, 2006, 2012, 2018 | yearly | GeoTIFF |
+| **Copernicus Land Monitoring Service (CLMS)** | corine_landcover | 100mx100m | Europe | 2000, 2006, 2012, 2018 | yearly | GeoTIFF |
 | **Copernicus Land Monitoring Service (CLMS)** | Tree Cover Density | 100mx100m | Global | 2012, 2015, 2018 | yearly | GeoTIFF |
-|! **Copernicus Land Monitoring Service (CLMS)** | HRL_Forest_Type | 100mx100m | Global | 2012, 2015, 2018 | yearly | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | Daily GOME-1 Cloud Fraction (CF) Total Column Composite Layer (ERS-2) |  | Global | 1995 - 2011 | daily | GeoTIFF |
+| **Copernicus Land Monitoring Service (CLMS)** | ??? HRL_Forest_Type ??? | 100mx100m | Global | 2012, 2015, 2018 | yearly | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | Daily GOME-1 Cloud Fraction (CF) Total Column Composite Layer (ERS-2) |  | Global | 2000-2011 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Daily GOME-1 Cloud Optical Thickness (COT) Total Column Composite Layer (ERS-2) |  | Global | 1995 - 2011 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Daily GOME-1 Cloud Top Pressure (CTP) Total Column Composite Layer (ERS-2) |  | Global | 1995 - 2011 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Daily GOME-1 Total Column Nitrogen Dioxide (NO2) Composite Layer (ERS-2) |  | Global | 1995 - 2011 | daily | GeoTIFF |
