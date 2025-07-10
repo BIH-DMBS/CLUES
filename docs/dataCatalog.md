@@ -27,8 +27,6 @@ This page describes the geospatial data sources and datasets integrated into the
 - Config: `espon.json`  
 - [More Info](https://database.espon.eu)
 
->> need to fix: via `espon.generate_espon_json()`
-
 ### DLR Earth Observation Center (EOC) Geoservice
 - Atmosphere:  
     - Description: A collection of satellite-derived global atmospheric composition and cloud property layers provided as composite images via WMS, covering global daily or monthly observations from missions like GOME, GOME-2, and TROPOMI.  
