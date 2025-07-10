@@ -24,8 +24,10 @@ This page describes the geospatial data sources and datasets integrated into the
 - Years: Varies by product  
 - Resolution: Varies by product  
 - Format: CSV  
-- Config: `espon.json` via `espon.generate_espon_json()`  
-- [More Info](https://database.espon.eu)  
+- Config: `espon.json`  
+- [More Info](https://database.espon.eu)
+
+>> need to fix: via `espon.generate_espon_json()`
 
 ### DLR Earth Observation Center (EOC) Geoservice
 - Atmosphere:  
@@ -50,9 +52,9 @@ This page describes the geospatial data sources and datasets integrated into the
     - Config: `EOC_WSF3D.json`  
     - [More info](https://geoservice.dlr.de/web/datasets/wsf_3d)  
 
->> **ask marcel: At atmosphere: height 1000, width 1000 what is the spatial resolutiom?
+>> need to fix: At atmosphere: height 1000, width 1000 what is the spatial resolutiom?
 
-### Copernicus DEM (Global Digital Elevation model)  
+### Copernicus Global Digital Elevation model (DEM) 
 - Description: Digital surface model (DSM) based on TanDEM-X mission that represents the surface of the Earth including buildings, infrastructure and vegetation.  
 - Resolution: 30m × 30m and 90m × 90m, static for years 2011 - 2015  
 - Format: GeoTIFF  
@@ -67,14 +69,19 @@ This page describes the geospatial data sources and datasets integrated into the
 - Config: `corine_copernicus.json`  
 - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)  
 
-### Land Copernicus (Tree Cover Density)
+### Land Copernicus - Tree Cover Density
 - Description: Global tree cover density  
 - Years: 2012, 2015, and 2018  
 - Resolution: 100m × 100m, yearly  
 - Config: `treecover_copernicus.json`  
-- [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)  
+- [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
 
->> **ask marcel about the temporal coverage and if they are global, i changed the configuration file name because the one that was there before doesnt exist**
+### Moderate Resolution Imagining Spectroradiometer (MODIS)
+- Description: Global Vegetation Index Products - NDVI and EVI  
+- Years: 2000-2023  
+- Resolution: 100m × 100m, 16-day  
+- Config: `modis_vegetation.json`  
+- [More Info](https://modis.gsfc.nasa.gov/data/dataprod/mod13.php)  
 
 ### SPEI (Standardized Precipitation-Evapotranspiration Index)
 - Description: Global drought index based on precipitation and evapotranspiration  
@@ -84,27 +91,23 @@ This page describes the geospatial data sources and datasets integrated into the
 - Config: `spei.json`  
 - [More Info](https://spei.csic.es)  
 
->> **ask marcel about the temporal resoltution**
-
-### Hydrosheds GLWD version 2
+### Hydrosheds - Global Lakes and Wetlands Database (GLWD) version 2
 - Description: Global inland surface waters distinguished into 33 waterbody and wetland types  
 - Years: Static  
-- Resolution: ~500m × 500m (15 arc-seconds)  
+- Resolution: ~500m × 500m  
 - Format: GeoTIFF  
 - Config: `hydrosheds_GLWD.json`  
 - [More Info](https://www.hydrosheds.org/products/glwd)  
 
->> **ask marcel: temporal coverage and resolution**
-
-### Night-Time Lights (DMSP–VIIRS Harmonized)
+### DMSP–VIIRS - Harmonized Night-Time Lights
 - Description: Global nighttime light intensity from satellites, harmonized across sensors  
 - Years: 1992–2021  
-- Resolution: ~1km × 1km (30 arc-seconds), yearly  
+- Resolution: ~1km × 1km, yearly  
 - Format: GeoTIFF  
 - Config: `ntl.json`  
 - [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/8)  
 
->> **Configuration files not added here: EOC_WSF.json, EOC_WSF3D.json, copernicus_dynamic_land_cover.json, modis_vegetation.json**
+>> **Configuration files not added here: copernicus_dynamic_land_cover.json, **
 
 ## Summary Table
 
