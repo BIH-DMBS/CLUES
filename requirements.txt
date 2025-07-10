@@ -21,3 +21,5 @@ rasterstats
 glob2
 bs4
 snakemake
+pyarrow
+fastparquet
