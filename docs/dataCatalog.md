@@ -108,6 +108,7 @@ This page describes the geospatial data sources and datasets integrated into the
 >> **Configuration file not added here: copernicus_dynamic_land_cover.json, **
 
 ## Summary Table
+**last update July 2025**
 
 | Source | Feature | Spatial Resolution | Area Covered | Temporal Coverage | Temporal Resolution | Format |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -132,12 +133,12 @@ This page describes the geospatial data sources and datasets integrated into the
 | **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_5-20um_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
 | **CAMS global reanalysis (EAC4)** | sulphate_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
 | **CAMS global reanalysis (EAC4)** | sulphur_dioxide | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **Copernicus DEM - Global and European Digital Elevation Model** | Digital_Geospatial_Elevation_Data_30m | 30mx30m | Global | Static | NA | GeoTIFF |
-| **Copernicus DEM - Global and European Digital Elevation Model** | Digital_Geospatial_Elevation_Data_90m | 90mx90m | Global | Static | NA | GeoTIFF |
-| **Copernicus Global Dynamic Land Cover** | BuildUp_CoverFraction_2015 | 100mx100m | Global | 2015 - 2019 | yearly | GeoTIFF |
-| **Copernicus Land Monitoring Service (CLMS)** | corine_landcover_2018 | 100mx100m | Europe | 1990, 2000, 2006, 2012, 2018 | yearly | GeoTIFF |
-| **Copernicus Land Monitoring Service (CLMS)** | Tree Cover Density 2012 | 100mx100m | Global | 2012, 2015, 2018 | yearly | GeoTIFF |
-| **Copernicus Land Monitoring Service (CLMS)** | HRL_Forest_Type_2012_100m | 100mx100m | Global | 2012, 2015, 2018 | yearly | GeoTIFF |
+| **Copernicus DEM - Global Digital Elevation Model** | Digital_Geospatial_Elevation_Data_30m | 30mx30m | Global | Static | NA | GeoTIFF |
+| **Copernicus DEM - Global Digital Elevation Model** | Digital_Geospatial_Elevation_Data_90m | 90mx90m | Global | Static | NA | GeoTIFF |
+| **Copernicus Global Dynamic Land Cover** | ??? | 100mx100m | Global | 2015 - 2019 | yearly | GeoTIFF |
+| **Copernicus Land Monitoring Service (CLMS)** | corine_landcover | 100mx100m | Europe | 1990, 2000, 2006, 2012, 2018 | yearly | GeoTIFF |
+| **Copernicus Land Monitoring Service (CLMS)** | Tree Cover Density | 100mx100m | Global | 2012, 2015, 2018 | yearly | GeoTIFF |
+|| **Copernicus Land Monitoring Service (CLMS)** | HRL_Forest_Type | 100mx100m | Global | 2012, 2015, 2018 | yearly | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Daily GOME-1 Cloud Fraction (CF) Total Column Composite Layer (ERS-2) |  | Global | 1995 - 2011 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Daily GOME-1 Cloud Optical Thickness (COT) Total Column Composite Layer (ERS-2) |  | Global | 1995 - 2011 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Daily GOME-1 Cloud Top Pressure (CTP) Total Column Composite Layer (ERS-2) |  | Global | 1995 - 2011 | daily | GeoTIFF |
