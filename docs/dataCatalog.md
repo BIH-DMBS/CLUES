@@ -108,7 +108,9 @@ This page describes the geospatial data sources and datasets integrated into the
 >> **Configuration file not added here: copernicus_dynamic_land_cover.json, **
 
 ## Summary Table
-**last update July 2025**
+This table provides an overview of all geospatial datasets integrated into the CLUES framework. It reflects the datasets retrieved using the default workflow settings.  
+> Note: The default CLUES configuration downloads data for 2000–2025, though some sources offer longer coverage.   
+> Last update: July 2025  
 
 | Source | Feature | Spatial Resolution | Area Covered | Temporal Coverage | Temporal Resolution | Format |
 | --- | --- | --- | --- | --- | --- | --- |
