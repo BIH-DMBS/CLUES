@@ -177,7 +177,7 @@ This table provides an overview of all geospatial datasets integrated into the C
 | **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Tropospheric Nitrogen Dioxide (NO2Tropo) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Ozone (O3) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Sulfur Dioxide (SO2) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L3 data of radiometric cloud fraction |  | Global | 2023-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L3 data of radiometric cloud fraction | 5.5x3.5 km2 | Global | 2023-2024 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Cloud Optical Thickness (COT) Composite Layer (S5P) |  | Global | 2023-2024 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Cloud Top Height (CTH) Composite Layer (S5P) |  | Global | 2023-2024 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Formaldehyde (HCHO) Composite Layer (S5P) |  | Global | 2023-2024 | daily | GeoTIFF |
