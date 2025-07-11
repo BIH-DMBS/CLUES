@@ -67,7 +67,7 @@ This page describes the geospatial data sources and datasets integrated into the
 - Config: `copernicus_dynamic_land_cover.json`  
 - [More Info](https://zenodo.org/records/4723924)  
 
-### Copernicus Land Monitoring Service - CORINE Land Cover dataset
+### Copernicus Land Monitoring Service
 - Corine Land Cover dataset  
     - Description: European land cover classification and monitoring with 44 thematic classes, ranging from broad forested areas to individual vineyards.  
     - Years: 1990, 2000, 2006, 2012, and 2018  
@@ -157,8 +157,8 @@ This table provides an overview of all geospatial datasets integrated into the C
 | **CAMS global reanalysis (EAC4)** | sulphur_dioxide | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
 | **Copernicus DEM** | Elevation | 30mx30m | Global | Static | NA | GeoTIFF |
 | **Copernicus DEM** | Elevation | 90mx90m | Global | Static | NA | GeoTIFF |
-| **Copernicus Global Dynamic Land Cover** | ??? | 100mx100m | Global | 2015-2019 | yearly | GeoTIFF |
-| **Copernicus Land Monitoring Service (CLMS)** | corine_landcover | 100mx100m | Europe | 1990, 2000, 2006, 2012, 2018 | yearly | GeoTIFF |
+| **Copernicus Global Land Service** | Landcover | 100mx100m | Global | 2015-2019 | yearly | GeoTIFF |
+| **Copernicus Land Monitoring Service (CLMS)** | Corine landcover | 100mx100m | Europe | 1990, 2000, 2006, 2012, 2018 | yearly | GeoTIFF |
 | **Copernicus Land Monitoring Service (CLMS)** | Tree Cover Density | 100mx100m | Europe | 2012, 2015, 2018-2021 | yearly | GeoTIFF |
 | **Copernicus Land Monitoring Service (CLMS)** | HRL Forest_Type | 100mx100m | Europe | 2012, 2015, 2018 | yearly | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | GOME-1 Cloud Fraction (CF) Total Column Composite Layer (ERS-2) |  | Global | 1995-2011 | daily | GeoTIFF |
