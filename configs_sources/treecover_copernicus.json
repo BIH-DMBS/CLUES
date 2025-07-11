@@ -9,9 +9,9 @@
             "year":"2012"
         },
         {
-            "name":"1",
+            "name":"HRL_TreeCoverDensity_2015",
             "url":"https://image.discomap.eea.europa.eu/arcgis/services/GioLandPublic/HRL_TreeCoverDensity_2015/MapServer/WMSServer",
-            "layer":"1",
+            "layer":"HRL_TreeCoverDensity_2015",
             "year":"2015"
         },
         {
