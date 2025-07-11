@@ -107,7 +107,7 @@ This page describes the geospatial data sources and datasets integrated into the
 
 
 ## Summary Table
-This table provides an overview of all geospatial datasets integrated into the CLUES framework. It reflects the datasets retrieved using the default workflow settings.  
+This table provides an overview of all geospatial datasets integrated into the CLUES framework. It reflects the list of datasets retrieved using the default workflow settings.  
 > Note: The default CLUES configuration downloads data for 2000–2025, though some sources offer longer coverage.   
 > Last update: July 2025  
 
