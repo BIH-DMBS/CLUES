@@ -28,7 +28,6 @@ This page describes the geospatial data sources and datasets integrated into the
 - Format: CSV  
 - Config: `espon.json`  
 - [More Info](https://database.espon.eu)
-- Note: Default CLUES dataset includes years 2000-2025  
 
 ### DLR Earth Observation Center (EOC) Geoservice
 - Atmosphere:  
@@ -45,7 +44,6 @@ This page describes the geospatial data sources and datasets integrated into the
     - Format: GeoTIFF  
     - Config: `EOC_WSF.json`  
     - [More info](https://www.dlr.de/en/eoc/research-transfer/projects-missions/world-settlement-footprint-wsf-r)
-    - Note: Default CLUES dataset includes years 2000-2025
 
 - WSF3D:  
     - Description: A global dataset of the average height, total volume, total area and the fraction of buildings, capturing 3D urban structure  
@@ -71,7 +69,6 @@ This page describes the geospatial data sources and datasets integrated into the
     - Config: `corine_copernicus.json`  
     - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)
     - Note: Default CLUES dataset includes years 2000, 2006, 2012, and 2018
-
 - Tree Cover Density
     - Description: European tree cover density  
     - Years: 2012, 2015, and annually from 2018 to 2021  
@@ -88,7 +85,6 @@ This page describes the geospatial data sources and datasets integrated into the
     - Config: `treecover_copernicus.json`  
     - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
     - Note: Default CLUES dataset includes years 2012, 2015, and 2018
-
   
 ### Moderate Resolution Imagining Spectroradiometer (MODIS)
 - Description: Global Vegetation Index Products - NDVI and EVI  
@@ -104,7 +100,8 @@ This page describes the geospatial data sources and datasets integrated into the
 - Resolution: 0.5°×0.5°, monthly  
 - Format: NetCDF  
 - Config: `spei.json`  
-- [More Info](https://spei.csic.es)  
+- [More Info](https://spei.csic.es)
+- Note: Default CLUES dataset includes years 2000-2025
 
 ### Hydrosheds - Global Lakes and Wetlands Database (GLWD) version 2
 - Description: Global inland surface waters distinguished into 33 waterbody and wetland types  
@@ -120,9 +117,9 @@ This page describes the geospatial data sources and datasets integrated into the
 - Resolution: 1km×1km, yearly  
 - Format: GeoTIFF  
 - Config: `ntl.json`  
-- [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/8)  
-
-
+- [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/8)
+- Default CLUES dataset includes years 2000-2025
+---- 
 ## Summary Table
 This table provides an overview of all geospatial datasets integrated into the CLUES framework. It reflects the list of datasets retrieved using the default workflow settings.  
 > Note: The default CLUES configuration downloads data for 2000–2025, though some sources offer longer coverage.   
