@@ -3,9 +3,9 @@
     "format": "geotTiff",
     "variables":[
         {
-            "name":"Tree_Cover_Density_2012_100m46139",
+            "name":"Tree_Cover_Density_2012",
             "url":"https://image.discomap.eea.europa.eu/arcgis/services/GioLandPublic/HRL_Tree_Cover_Density_2012/MapServer/WMSServer",
-            "layer":"Tree_Cover_Density_2012_100m46139",
+            "layer":"Tree_Cover_Density_2012",
             "year":"2012"
         },
         {
