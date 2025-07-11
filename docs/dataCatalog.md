@@ -105,7 +105,6 @@ This page describes the geospatial data sources and datasets integrated into the
 - Config: `ntl.json`  
 - [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/8)  
 
->> **Configuration file not added here: copernicus_dynamic_land_cover.json, **
 
 ## Summary Table
 This table provides an overview of all geospatial datasets integrated into the CLUES framework. It reflects the datasets retrieved using the default workflow settings.  
