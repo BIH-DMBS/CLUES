@@ -44,7 +44,6 @@ This page describes the geospatial data sources and datasets integrated into the
     - Format: GeoTIFF  
     - Config: `EOC_WSF.json`  
     - [More info](https://www.dlr.de/en/eoc/research-transfer/projects-missions/world-settlement-footprint-wsf-r)
-
 - WSF3D:  
     - Description: A global dataset of the average height, total volume, total area and the fraction of buildings, capturing 3D urban structure  
     - Years: Static  
@@ -60,37 +59,45 @@ This page describes the geospatial data sources and datasets integrated into the
 - Config: `copernicus_dem.json`  
 - [More Info](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM)  
 
+### Copernicus Global Land Service
+- Description: Global land cover classification with 23 classes aligned with UN-FAO's Land Cover Classification
+- Years: 2015-2019
+- Resolution: 100m×100m   
+- Format: GeoTIFF  
+- Config: `copernicus_dynamic_land_cover.json`  
+- [More Info](https://zenodo.org/records/4723924)  
+
 ### Copernicus Land Monitoring Service - CORINE Land Cover dataset
-- Corine Land Cover dataset
+- Corine Land Cover dataset  
     - Description: European land cover classification and monitoring with 44 thematic classes, ranging from broad forested areas to individual vineyards.  
     - Years: 1990, 2000, 2006, 2012, and 2018  
     - Resolution: 100m×100m, yearly  
     - Format: GeoTIFF  
     - Config: `corine_copernicus.json`  
-    - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)
-    - Note: Default CLUES dataset includes years 2000, 2006, 2012, and 2018
-- Tree Cover Density
+    - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)  
+    - Note: Default CLUES dataset includes years 2000, 2006, 2012, and 2018  
+- Tree Cover Density  
     - Description: European tree cover density  
     - Years: 2012, 2015, and annually from 2018 to 2021  
-    - Resolution: 100m×100m, yearly
+    - Resolution: 100m×100m, yearly  
     - Format: GeoTIFF  
     - Config: `treecover_copernicus.json`  
-    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
+    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)  
     - Note: Default CLUES dataset includes years 2012, 2015, and 2018  
-- Forest type
+- Forest type  
    - Description: The European Forest Type layers provide information on the presence of forest and its dominant leaf type  
     - Years: 2012, 2015, 2018, 2021  
-    - Resolution: 100m×100m, yearly
+    - Resolution: 100m×100m, yearly  
     - Format: GeoTIFF  
     - Config: `treecover_copernicus.json`  
-    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
-    - Note: Default CLUES dataset includes years 2012, 2015, and 2018
+    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)  
+    - Note: Default CLUES dataset includes years 2012, 2015, and 2018  
   
 ### Moderate Resolution Imagining Spectroradiometer (MODIS)
 - Description: Global Vegetation Index Products - NDVI and EVI  
 - Years: 2000-2023  
-- Resolution: 250m×250m, 16-day; 1km×1km, monthly
-- Format: GeoTIFF    
+- Resolution: 250m×250m, 16-day; 1km×1km, monthly  
+- Format: GeoTIFF  
 - Config: `modis_vegetation.json`  
 - [More Info](https://modis.gsfc.nasa.gov/data/dataprod/mod13.php)  
 
