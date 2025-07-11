@@ -148,12 +148,12 @@ This table provides an overview of all geospatial datasets integrated into the C
 | **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_5-20um_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
 | **CAMS global reanalysis (EAC4)** | sulphate_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
 | **CAMS global reanalysis (EAC4)** | sulphur_dioxide | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **Copernicus DEM - Global Digital Elevation Model** | Digital_Geospatial_Elevation_Data_30m | 30mx30m | Global | Static | NA | GeoTIFF |
-| **Copernicus DEM - Global Digital Elevation Model** | Digital_Geospatial_Elevation_Data_90m | 90mx90m | Global | Static | NA | GeoTIFF |
-| **Copernicus Global Dynamic Land Cover** | ??? | 100mx100m | Global | 2015 - 2019 | yearly | GeoTIFF |
+| **Copernicus DEM** | Elevation | 30mx30m | Global | Static | NA | GeoTIFF |
+| **Copernicus DEM** | Elevation | 90mx90m | Global | Static | NA | GeoTIFF |
+| **Copernicus Global Dynamic Land Cover** | ??? | 100mx100m | Global | 2015-2019 | yearly | GeoTIFF |
 | **Copernicus Land Monitoring Service (CLMS)** | corine_landcover | 100mx100m | Europe | 1990, 2000, 2006, 2012, 2018 | yearly | GeoTIFF |
-| **Copernicus Land Monitoring Service (CLMS)** | Tree Cover Density | 100mx100m | Global | 2012, 2015, 2018-2021 | yearly | GeoTIFF |
-| **Copernicus Land Monitoring Service (CLMS)** | ??? HRL_Forest_Type ??? | 100mx100m | Global | 2012, 2015, 2018 | yearly | GeoTIFF |
+| **Copernicus Land Monitoring Service (CLMS)** | Tree Cover Density | 100mx100m | Europe | 2012, 2015, 2018-2021 | yearly | GeoTIFF |
+| **Copernicus Land Monitoring Service (CLMS)** | HRL Forest_Type | 100mx100m | Europe | 2012, 2015, 2018 | yearly | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | GOME-1 Cloud Fraction (CF) Total Column Composite Layer (ERS-2) |  | Global | 1995-2011 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | GOME-1 Cloud Optical Thickness (COT) Total Column Composite Layer (ERS-2) |  | Global | 1995-2011 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | GOME-1 Cloud Top Pressure (CTP) Total Column Composite Layer (ERS-2) |  | Global | 1995-2011 | daily | GeoTIFF |
