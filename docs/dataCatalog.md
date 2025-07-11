@@ -58,21 +58,29 @@ This page describes the geospatial data sources and datasets integrated into the
 - [More Info](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM)  
 
 ### Copernicus Land Monitoring Service - CORINE Land Cover dataset
-- Description: European land cover classification and monitoring with 44 thematic classes, ranging from broad forested areas to individual vineyards.  
-- Years: 1990, 2000, 2006, 2012, and 2018  
-- Resolution: 100m×100m, yearly  
-- Format: GeoTIFF  
-- Config: `corine_copernicus.json`  
-- [More Info](https://land.copernicus.eu/en/products/corine-land-cover)  
-
-### Land Copernicus - Tree Cover Density
-- Description: Global tree cover density  
-- Years: 2012, 2015, and annually from 2018 to 2021  
-- Resolution: 100m×100m, yearly
-- Format: GeoTIFF  
-- Config: `treecover_copernicus.json`  
-- [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
-
+- Corine Land Cover dataset
+    - Description: European land cover classification and monitoring with 44 thematic classes, ranging from broad forested areas to individual vineyards.  
+    - Years: 1990, 2000, 2006, 2012, and 2018  
+    - Resolution: 100m×100m, yearly  
+    - Format: GeoTIFF  
+    - Config: `corine_copernicus.json`  
+    - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)  
+- Tree Cover Density
+    - Description: Global tree cover density  
+    - Years: 2012, 2015, and annually from 2018 to 2021  
+    - Resolution: 100m×100m, yearly
+    - Format: GeoTIFF  
+    - Config: `treecover_copernicus.json`  
+    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
+    - Note: Default CLUES dataset includes years 2012, 2015, and 2018
+- Forest type
+   - Description: The Forest Type layers provide information on the presence of forest and its dominant leaf type  
+    - Years: 2012, 2015, 2018, 2021  
+    - Resolution: 100m×100m, yearly
+    - Format: GeoTIFF  
+    - Config: `treecover_copernicus.json`  
+    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
+  
 ### Moderate Resolution Imagining Spectroradiometer (MODIS)
 - Description: Global Vegetation Index Products - NDVI and EVI  
 - Years: 2000-2023  
