@@ -50,8 +50,6 @@ This page describes the geospatial data sources and datasets integrated into the
     - Config: `EOC_WSF3D.json`  
     - [More info](https://geoservice.dlr.de/web/datasets/wsf_3d)  
 
->> need to fix: At atmosphere: height 1000, width 1000 what is the spatial resolutiom?
-
 ### Copernicus Global Digital Elevation model (DEM) 
 - Description: Digital surface model (DSM) based on TanDEM-X mission that represents the surface of the Earth including buildings, infrastructure and vegetation.  
 - Resolution: 30m×30m and 90m×90m, static for years 2011 - 2015  
@@ -140,85 +138,85 @@ This table provides an overview of all geospatial datasets integrated into the C
 | **Copernicus DEM - Global Digital Elevation Model** | Digital_Geospatial_Elevation_Data_30m | 30mx30m | Global | Static | NA | GeoTIFF |
 | **Copernicus DEM - Global Digital Elevation Model** | Digital_Geospatial_Elevation_Data_90m | 90mx90m | Global | Static | NA | GeoTIFF |
 | **Copernicus Global Dynamic Land Cover** | ??? | 100mx100m | Global | 2015 - 2019 | yearly | GeoTIFF |
-| **Copernicus Land Monitoring Service (CLMS)** | corine_landcover | 100mx100m | Europe | 2000, 2006, 2012, 2018 | yearly | GeoTIFF |
-| **Copernicus Land Monitoring Service (CLMS)** | Tree Cover Density | 100mx100m | Global | 2012, 2015, 2018 | yearly | GeoTIFF |
+| **Copernicus Land Monitoring Service (CLMS)** | corine_landcover | 100mx100m | Europe | 1990, 2000, 2006, 2012, 2018 | yearly | GeoTIFF |
+| **Copernicus Land Monitoring Service (CLMS)** | Tree Cover Density | 100mx100m | Global | 2012, 2015, 2018-2021 | yearly | GeoTIFF |
 | **Copernicus Land Monitoring Service (CLMS)** | ??? HRL_Forest_Type ??? | 100mx100m | Global | 2012, 2015, 2018 | yearly | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | GOME-1 Cloud Fraction (CF) Total Column Composite Layer (ERS-2) |  | Global | 2000 - 2011 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | GOME-1 Cloud Optical Thickness (COT) Total Column Composite Layer (ERS-2) |  | Global | 2000 - 2011 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | GOME-1 Cloud Top Pressure (CTP) Total Column Composite Layer (ERS-2) |  | Global | 2000 - 2011 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | GOME-1 Total Column Nitrogen Dioxide (NO2) Composite Layer (ERS-2) |  | Global | 2000 - 2011 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | GOME-1 Total Column Ozone (O3) Composite Layer (ERS-2) |  | Global | 2000 - 2011 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | GOME-2 Total Column Tropospheric Ozone Composite Layer (MetOp-A) |  | Global | 2007 - 2020 | monthly | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Bromine Monoxide (BrO) Composite Layer |  | Global | 2012 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Cloud Fraction (CF) Composite Layer |  | Global | 2012 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Cloud Optical Thickness (COT) Composite Layer |  | Global | 2012 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Cloud Top Pressure (CTP) Composite Layer |  | Global | 2012 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Water Vapour (H2O) Composite Layer |  | Global | 2012 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Formaldehyde (HCHO) Composite Layer |  | Global | 2012 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Nitrogen Dioxide (NO2) Composite Layer |  | Global | 2012 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Tropospheric Nitrogen Dioxide (NO2Tropo) Composite Layer |  | Global | 2012 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Ozone (O3) Composite Layer |  | Global | 2012 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Sulfur Dioxide (SO2) Composite Layer |  | Global | 2012 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | GOME-2 Total Column Tropospheric Ozone Composite Layer (MetOp-B) |  | Global | 2013 - 2019 | monthly | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Bromine Monoxide (BrO) Composite Layer |  | Global | 2019 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Cloud Fraction (CF) Composite Layer |  | Global | 2019 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Cloud Optical Thickness (COT) Composite Layer |  | Global | 2019 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Cloud Top Pressure (CTP) Composite Layer |  | Global | 2019 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Water Vapour (H2O) Composite Layer |  | Global | 2019 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Formaldehyde (HCHO) Composite Layer |  | Global | 2019 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Nitrogen Dioxide (NO2) Composite Layer |  | Global | 2019 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Tropospheric Nitrogen Dioxide (NO2Tropo) Composite Layer |  | Global | 2019 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Ozone (O3) Composite Layer |  | Global | 2019 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Sulfur Dioxide (SO2) Composite Layer |  | Global | 2019 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Bromine Monoxide (BrO) Composite Layer |  | Global | 2013 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Cloud Fraction (CF) Composite Layer |  | Global | 2013 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Cloud Optical Thickness (COT) Composite Layer |  | Global | 2013 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Cloud Top Pressure (CTP) Composite Layer |  | Global | 2013 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Water Vapour (H2O) Composite Layer |  | Global | 2013 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Formaldehyde (HCHO) Composite Layer |  | Global | 2013 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Nitrogen Dioxide (NO2) Composite Layer |  | Global | 2013 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Tropospheric Nitrogen Dioxide (NO2Tropo) Composite Layer |  | Global | 2013 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Ozone (O3) Composite Layer |  | Global | 2013 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Sulfur Dioxide (SO2) Composite Layer |  | Global | 2013 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L3 data of radiometric cloud fraction |  | Global | 2023 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | Cloud Optical Thickness (COT) Composite Layer (S5P) |  | Global | 2023 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | Cloud Top Height (CTH) Composite Layer (S5P) |  | Global | 2023 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | Formaldehyde (HCHO) Composite Layer (S5P) |  | Global | 2023 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L3 data of ozone total column |  | Global | 2023 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | Sulphur Dioxid (SO2) Composite Layer (S5P) |  | Global | 2023 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L4 data of Surface NO2 concentration |  | Global | 2023 - 2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | Surface PM2.5 concentrations for Germany and parts of the surrounding countries from Aqua/MODIS and Sentinel-3A/SLSTR |  | Global | 2018 - 2019 | monthly | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Surf. Cloud Fraction |  | Global | 2018 - 2020 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Cloud Fraction |  | Global | 2018 - 2020 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Surf. NO2 |  | Global | 2018 - 2020 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Surf. NO2 |  | Global | 2018 - 2020 | monthly | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Trop. NO2 column |  | Global | 2018 - 2020 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Trop. NO2 column |  | Global | 2018 - 2020 | monthly | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | GOME-1 Cloud Fraction (CF) Total Column Composite Layer (ERS-2) |  | Global | 1995-2011 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | GOME-1 Cloud Optical Thickness (COT) Total Column Composite Layer (ERS-2) |  | Global | 1995-2011 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | GOME-1 Cloud Top Pressure (CTP) Total Column Composite Layer (ERS-2) |  | Global | 1995-2011 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | GOME-1 Total Column Nitrogen Dioxide (NO2) Composite Layer (ERS-2) |  | Global | 1995-2011 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | GOME-1 Total Column Ozone (O3) Composite Layer (ERS-2) |  | Global | 1995-2011 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | GOME-2 Total Column Tropospheric Ozone Composite Layer (MetOp-A) |  | Global | 2007-2020 | monthly | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Bromine Monoxide (BrO) Composite Layer |  | Global | 2012-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Cloud Fraction (CF) Composite Layer |  | Global | 2012-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Cloud Optical Thickness (COT) Composite Layer |  | Global | 2012-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Cloud Top Pressure (CTP) Composite Layer |  | Global | 2012-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Water Vapour (H2O) Composite Layer |  | Global | 2012-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Formaldehyde (HCHO) Composite Layer |  | Global | 2012-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Nitrogen Dioxide (NO2) Composite Layer |  | Global | 2012-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Tropospheric Nitrogen Dioxide (NO2Tropo) Composite Layer |  | Global | 2012-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Ozone (O3) Composite Layer |  | Global | 2012-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-B GOME-2 Total Column Sulfur Dioxide (SO2) Composite Layer |  | Global | 2012-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | GOME-2 Total Column Tropospheric Ozone Composite Layer (MetOp-B) |  | Global | 2013-2019 | monthly | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Bromine Monoxide (BrO) Composite Layer |  | Global | 2019-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Cloud Fraction (CF) Composite Layer |  | Global | 2019-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Cloud Optical Thickness (COT) Composite Layer |  | Global | 2019-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Cloud Top Pressure (CTP) Composite Layer |  | Global | 2019-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Water Vapour (H2O) Composite Layer |  | Global | 2019-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Formaldehyde (HCHO) Composite Layer |  | Global | 2019-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Nitrogen Dioxide (NO2) Composite Layer |  | Global | 2019-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Tropospheric Nitrogen Dioxide (NO2Tropo) Composite Layer |  | Global | 2019-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Ozone (O3) Composite Layer |  | Global | 2019-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp-C GOME-2 Total Column Sulfur Dioxide (SO2) Composite Layer |  | Global | 2019-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Bromine Monoxide (BrO) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Cloud Fraction (CF) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Cloud Optical Thickness (COT) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Cloud Top Pressure (CTP) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Water Vapour (H2O) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Formaldehyde (HCHO) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Nitrogen Dioxide (NO2) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Tropospheric Nitrogen Dioxide (NO2Tropo) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Ozone (O3) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Sulfur Dioxide (SO2) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L3 data of radiometric cloud fraction |  | Global | 2023-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | Cloud Optical Thickness (COT) Composite Layer (S5P) |  | Global | 2023-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | Cloud Top Height (CTH) Composite Layer (S5P) |  | Global | 2023-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | Formaldehyde (HCHO) Composite Layer (S5P) |  | Global | 2023-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L3 data of ozone total column |  | Global | 2023-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | Sulphur Dioxid (SO2) Composite Layer (S5P) |  | Global | 2023-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L4 data of Surface NO2 concentration |  | Global | 2023-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | Surface PM2.5 concentrations for Germany and parts of the surrounding countries from Aqua/MODIS and Sentinel-3A/SLSTR |  | Global | 2018-2019 | monthly | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Surf. Cloud Fraction |  | Global | 2018-2020 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Cloud Fraction |  | Global | 2018-2020 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Surf. NO2 |  | Global | 2018-2020 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Surf. NO2 |  | Global | 2018-2020 | monthly | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Trop. NO2 column |  | Global | 2018-2020 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Trop. NO2 column |  | Global | 2018-2020 | monthly | GeoTIFF |
 | **Hydrosheds** | Global_Lakes_and_Wetlands_Database_(GLWD) | 500mx500m | Global | Static | NA | GeoTIFF |
-| **MODIS Vegetation Index Products** | normalized difference vegetation index (NDVI) | 1kmx1km | Global | 2000 - 2025 | monthly | GeoTIFF |
-| **MODIS Vegetation Index Products** | normalized difference vegetation index (NDVI) | 250mx250m | Global | 2000 - 2025 | 16-day | GeoTIFF |
-| **MODIS Vegetation Index Products** | enhanced vegetation index (EVI) | 1kmx1km | Global | 2000 - 2025 | monthly | GeoTIFF |
-| **MODIS Vegetation Index Products** | enhanced vegetation index (EVI) | 250mx250m | Global | 2000 - 2025 | 16-day | GeoTIFF |
-| **DMSP and VIIRS** | Night_Time_Lights_(NTL) | 1kmx1km | Global | 2000 - 2021 | yearly | GeoTIFF |
-| **Copernicus ERA5** | 2m_dewpoint_temperature | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | 2m_temperature | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | high_vegetation_cover | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | low_vegetation_cover | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | snowfall | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | soil_temperature_level_1 | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | total_cloud_cover | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | total_precipitation | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | type_of_high_vegetation | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | type_of_low_vegetation | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | surface_pressure | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | 10m_u_component_of_wind | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | 10m_v_component_of_wind | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | 100m_u_component_of_wind | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | 100m_v_component_of_wind | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | downward_uv_radiation_at_the_surface | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | total_cloud_cover | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Copernicus ERA5** | snow_depth | 0.25° x 0.25° | Global | 2000-present | hourly | NetCDF |
-| **Global SPEI database** | spei_drought_index | 0.5° x 0.5° | Global | 2000-present | monthly | NetCDF |
+| **MODIS Vegetation Index Products** | normalized difference vegetation index (NDVI) | 1kmx1km | Global | 2000-2023 | monthly | GeoTIFF |
+| **MODIS Vegetation Index Products** | normalized difference vegetation index (NDVI) | 250mx250m | Global | 2000 - 2023 | 16-day | GeoTIFF |
+| **MODIS Vegetation Index Products** | enhanced vegetation index (EVI) | 1kmx1km | Global | 2000 - 2023 | monthly | GeoTIFF |
+| **MODIS Vegetation Index Products** | enhanced vegetation index (EVI) | 250mx250m | Global | 2000 - 2035 | 16-day | GeoTIFF |
+| **DMSP and VIIRS** | Night_Time_Lights_(NTL) | 1kmx1km | Global | 1992 - 2021 | yearly | GeoTIFF |
+| **Copernicus ERA5** | 2m_dewpoint_temperature | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | 2m_temperature | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | high_vegetation_cover | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | low_vegetation_cover | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | snowfall | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | soil_temperature_level_1 | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | total_cloud_cover | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | total_precipitation | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | type_of_high_vegetation | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | type_of_low_vegetation | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | surface_pressure | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | 10m_u_component_of_wind | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | 10m_v_component_of_wind | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | 100m_u_component_of_wind | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | 100m_v_component_of_wind | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | downward_uv_radiation_at_the_surface | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | total_cloud_cover | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | snow_depth | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
+| **Global SPEI database** | spei_drought_index | 0.5° x 0.5° | Global | 1901-present | monthly | NetCDF |
 | **ESPON** | Deaths by age groups and gender | NUTS0-NUTS3 | Europe | 2013-2015 | yearly | CSV |
 | **ESPON** | Deaths by age groups | NUTS0-NUTS2 | Europe | 1990-2017 | yearly | CSV |
 | **ESPON** | Life expectancy by age and sex | NUTS | Europe | 2002-2017 | yearly | CSV |
