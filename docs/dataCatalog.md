@@ -69,7 +69,7 @@ This page describes the geospatial data sources and datasets integrated into the
 
 ### Land Copernicus - Tree Cover Density
 - Description: Global tree cover density  
-- Years: 2012, 2015, and 2018  
+- Years: 2012, 2015, and annually from 2018 to 2021  
 - Resolution: 100m×100m, yearly
 - Format: GeoTIFF  
 - Config: `treecover_copernicus.json`  
