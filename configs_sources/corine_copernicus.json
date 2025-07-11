@@ -9,6 +9,12 @@
             "year":"2018"
         },
         {
+            "name":"corine_landcover_2015",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/services/Corine/CLC2015_WM/MapServer/WMSServer",
+            "layer":"12",
+            "year":"2015"
+        },
+        {
             "name":"corine_landcover_2012",
             "url":"https://image.discomap.eea.europa.eu/arcgis/services/Corine/CLC2012_WM/MapServer/WMSServer",
             "layer":"Corine_Land_Cover_2012_raster59601",
