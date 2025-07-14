@@ -33,7 +33,7 @@ The CLUES maintainers are:
 ## Usage policies
 All datasets used in CLUES are open-access and publicly available, but each comes with its own licensing terms and conditions. We encourage users to review the terms of use for each of them to ensure proper citation and responsible use.  
 This includes understanding any limits on redistribution, commercial use, or derivative works.  
-You can find an overview of the main data sources and datasets included in the default workflow [here](datalist.md), which can help users identify the relevant licenses to consult as needed.
+You can find an overview of the main data sources and datasets included in the default workflow [here](docs/datalist.md), which can help users identify the relevant licenses to consult as needed.
 
 ## License
 [MIT License](workflows/LICENSE)  
