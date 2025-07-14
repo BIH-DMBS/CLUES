@@ -265,4 +265,4 @@ This allows for aggregation of environmental features across regions rather than
 ---
 
 ## Next Steps: Try It Out  
-To help you get started, we provide simple [applied examples](Examples.md). In addition, [scripts](scripts) are available for enriching a dummy location dataset, and [python notebooks](notebooks) demonstrate how to interact with and visualize geospatial outputs using a test dataset. These resources offer hands-on guidance, showcasing how different data types and formats can be processed and analyzed within the CLUES environment.
+To help you get started, we provide simple [applied examples](Examples.md). In addition, [scripts](https://github.com/BIH-DMBS/CLUES/tree/main/scripts) are available for enriching a dummy location dataset, and [python notebooks](notebooks) demonstrate how to interact with and visualize geospatial outputs using a test dataset. These resources offer hands-on guidance, showcasing how different data types and formats can be processed and analyzed within the CLUES environment.
