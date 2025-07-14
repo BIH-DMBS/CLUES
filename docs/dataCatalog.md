@@ -84,8 +84,8 @@ This page describes the geospatial data sources and datasets integrated into the
     - Config: `treecover_copernicus.json`  
     - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)  
     - Note: Default CLUES dataset includes years 2012, 2015, and 2018  
-- Forest type  
-   - Description: The European Forest Type layers provide information on the presence of forest and its dominant leaf type  
+- Forest type
+    - Description: The European Forest Type layers provide information on the presence of forest and its dominant leaf type  
     - Years: 2012, 2015, 2018, 2021  
     - Resolution: 100m×100m, yearly  
     - Format: GeoTIFF  
