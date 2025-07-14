@@ -37,5 +37,5 @@ This includes understanding any limits on redistribution, commercial use, or der
 You can find an overview of the main data sources and datasets included in the default workflow [here](datalist.md), which can help users identify the relevant licenses to consult as needed.  
 
 ## License
-[MIT License](workflows/LICENSE)  
+[MIT License](https://github.com/BIH-DMBS/CLUES/blob/main/LICENSE)  
 Copyright (c) 2025 BIH-DMBS  
