@@ -12,11 +12,11 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
     
     
       
-        <title>Getting Started - CLUES - A Comprehensive Workflow for Integrating Geospatial Data in Health Research</title>
+        <title>JupyterHub instance - CLUES - A Comprehensive Workflow for Integrating Geospatial Data in Health Research</title>
       
     
     
@@ -58,7 +58,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#getting-started" class="md-skip">
+        <a href="#jupyterhub-instance" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +94,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Getting Started
+              JupyterHub instance
             
           </span>
         </div>
@@ -256,7 +256,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../examples.md" class="md-nav__link">
+      <a href="../examples/" class="md-nav__link">
         
   
   
@@ -298,75 +298,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#access" class="md-nav__link">
     <span class="md-ellipsis">
-      Prerequisites
+      Access
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#setup-instructions" class="md-nav__link">
+  <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
-      Setup Instructions
+      Usage
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Setup Instructions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#clone-the-repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      Clone the Repository
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#set-up-a-virtual-python-environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      Set up a virtual python environment:
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Set up a virtual python environment:">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install-dependencies" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install dependencies:
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#run-the-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Run the workflow
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#next-step" class="md-nav__link">
+  <a href="#data-provided" class="md-nav__link">
     <span class="md-ellipsis">
-      Next step
+      Data provided
     </span>
   </a>
   
@@ -388,72 +340,13 @@
 
 
 
-<h1 id="getting-started">Getting Started</h1>
-<p>This guide walks you through setting up your environment and running the CLUES data processing workflow using Snakemake, a workflow management system that automates the execution of data analysis pipelines.</p>
-<h2 id="prerequisites">Prerequisites</h2>
-<p>Before getting started, ensure the following tools are installed:</p>
-<ul>
-<li>Python 3.8 or higher</li>
-<li><code>pip</code> (Python package manager)</li>
-<li>Git</li>
-<li><a href="https://snakemake.readthedocs.io/en/stable/">Snakemake</a></li>
-<li>(Optional but recommended) <code>conda</code> — for reproducible environments</li>
-</ul>
-<h2 id="setup-instructions">Setup Instructions</h2>
-<h3 id="clone-the-repository">Clone the Repository</h3>
-<p>Navigate to your preferred working directory and clone the CLUES repository:</p>
-<pre>
-git clone https://gitlab.com/bih_dmbs/CLUES/workflows.git
-</pre>
-
-<h3 id="set-up-a-virtual-python-environment">Set up a virtual python environment:</h3>
-<pre>
-python -m venv cluesEnv
-</pre>
-
-<p><strong>Activate the virtual environment</strong></p>
-<p>Linux/macOS:</p>
-<pre>
-source cluesEnv/bin/activate
-</pre>
-
-<p>Windows:</p>
-<pre>
-cluesEnv\Scripts\activate
-</pre>
-
-<h4 id="install-dependencies">Install dependencies:</h4>
-<p>Install the required Python packages:</p>
-<pre>
-pip install -r requirements.txt
-</pre>
-
-<h3 id="run-the-workflow">Run the workflow</h3>
-<p>Once everything is set up, <a href="../3rdPartyAccounts/">third-party accounts</a> are configured, and the <a href="../setup/">configuration files</a> are customized, you can run the CLUES workflow using Snakemake:</p>
-<pre>
-snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60
-</pre>
-
-<p>Command Options Explained:</p>
-<ul>
-<li>
-<p>-s workflows/snakefile specifies the Snakefile path</p>
-</li>
-<li>
-<p>--cores 16 uses 16 cores for parallel execution</p>
-</li>
-<li>
-<p>-p prints out shell commands being executed</p>
-</li>
-<li>
-<p>--rerun-incomplete reruns any jobs that were not completed</p>
-</li>
-<li>
-<p>--latency-wait 60 waits up to 60 seconds for output files (useful on shared filesystems)</p>
-</li>
-</ul>
-<h2 id="next-step">Next step</h2>
-<p>Once completed, the required data will be downloaded and stored as specified in your general workflow configuration file (config/config.json). You can then proceed to link environmental data to participant locations using the <a href="../enrichment/">data linkage scripts</a>.</p>
+<h1 id="jupyterhub-instance">JupyterHub instance</h1>
+<p>CLUES is designed for scalable, reproducible, and user-friendly deployment. To support dissemination, interactive and collaborative use, we have deployed a database created using CLUES within a JupyterHub (https://jupyterhub.readthedocs.io/) with pre-configured notebooks for, analysing, summarising and visualising the generated environmental data. </p>
+<h3 id="access">Access</h3>
+<p>This setup promotes hands-on learning, lowers the technical barrier for new users, and accelerates integration of CLUES into existing analytical pipelines. You need a To access the JupyterHub send an email from your  institutional email address to required to confirm your academic or research affiliation with you github username to: dmbs@bih-charite.de. Once your account has been activated, you will receive a confirmation email. Processing your email may take several days.</p>
+<h3 id="usage">Usage</h3>
+<h3 id="data-provided">Data provided</h3>
+<p>To test CLUES the jupyter hub provides environmental data for the Scandinavian Peninsula for 2003 to 2024.</p>
 
 
 
@@ -505,7 +398,7 @@ snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait
       <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
       
     
   </body>
