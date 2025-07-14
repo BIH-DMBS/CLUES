@@ -4,6 +4,7 @@
 CLUES (Climate, Urbanicity, Environment and Society) is a modular workflow that enables researchers to systematically integrate open-access geospatial environmental data with health research datasets at the individual-level. It automates the download, harmonisation, and management of data across climate, built/ natural environment, air pollution, and regional socioeconomic conditions.
 
 **Key Features**  
+
 - Automated data retrieval from multiple open-access geospatial sources  
 - Standardised harmonisation of spatial/ temporal coverage, projections, and file types  
 - Modular integration with health cohort datasets at the individual level  
@@ -24,6 +25,7 @@ When using CLUES in your work, please cite our paper
 (**info coming soon**)
 
 ## Maintainers
+
 The CLUES maintainers are:  
 - Marcel Jentsch (lead maintainer)  
 - Sven Twardziok  
