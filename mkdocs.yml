@@ -5,5 +5,10 @@ nav:
   - Geospatial Data Catalog: dataCatalog.md
   - Applied Examples: examples.md
   
+markdown_extensions:
+  - pymdownx.snippets
+
 theme:
   name: material
+
+
