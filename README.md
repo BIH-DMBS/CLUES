@@ -23,8 +23,9 @@ CLUES (Climate, Urbanicity, Environment and Society) is a modular workflow that 
 When using CLUES in your work, please cite our paper  
 (**info coming soon**)
 
-## Maintainers
+## Maintainers 
 The CLUES maintainers are:  
+
 - Marcel Jentsch (lead maintainer)  
 - Sven Twardziok  
 - Elli Polemiti  
