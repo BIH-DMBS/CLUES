@@ -21,7 +21,7 @@ CLUES (Climate, Urbanicity, Environment and Society) is a modular workflow that 
 
 ## Citation
 When using CLUES in your work, please cite our paper  
-Jentsch M., et al., CLUES: A Comprehensive Workflow for Integrating Geospatial Data in Biomedical Research. Best Journal on Earth, 2025. **6**(44). 
+(**info coming soon**)
 
 ## Maintainers
 The CLUES maintainers are:  
