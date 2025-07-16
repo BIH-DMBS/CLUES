@@ -69,26 +69,6 @@ print(gdf_grunnkretser.crs)
 print(gdf_grunnkretser.head)
 
 
-######################################################
-
-# helper functions
-def multiply_values(row, weight_name, values_name):
-    if not isinstance(row[values_name], list):
-        return row[values_name] * row[weight_name] 
-    else:
-        return [x * row[weight_name] for x in row[values_name]]
-
-def make_tile(p,width,height):
-    polygon = Polygon([
-        p,
-        (p.x + width, p.y),
-        (p.x + width, p.y + height),
-        (p.x, p.y + height),
-        p  # Closing the polygon
-    ])
-    return polygon
-
-######################################################
 # linking stuff 
 
 def linkVariable(dataset, name, value, lang, breit, asset_name):
@@ -168,7 +148,6 @@ def getOI(dataset, lang, breit, asset_name):
     for name, value in variablesOI.items():
         gdf, name_variable = linkVariable(dataset, name, value, lang, breit, asset_name)   
         if result_tmp.empty:
-            gdf['geometry'] = gdf['geometry'].apply(lambda geom: make_tile(geom, np.abs(breit[0,0]-breit[1,0]), np.abs(lang[0,0]-lang[0,1])))
             result_tmp = gdf
         else:
             result_tmp = pd.concat([result_tmp, gdf[name_variable]], axis=1)  #checked this keeps the order
@@ -196,6 +175,7 @@ def worker(folderOI, exclude_flag, result_folder):
     filename = result_folder + filename
     result = pd.DataFrame()
     weight = []
+    geometries = []
 
     if os.path.exists(filename):
             print('result already exists ' + filename)
@@ -218,6 +198,14 @@ def worker(folderOI, exclude_flag, result_folder):
             columns_of_interest =  list(gdf.columns.difference(['geometry', 'latitude', 'longitude']))
 
             if result.empty:
+                b = np.abs(breit[0,0]-breit[1,0])
+                l = np.abs(lang[0,0]-lang[0,1])
+                x = gdf.geometry.x
+                y = gdf.geometry.y
+
+                # make tiles
+                geometries = [box(x0, y0, x0 + b, y0 + l) for x0, y0 in zip(x, y)]
+                gdf['geometry'] = geometries
                 gdf = gpd.overlay(gdf_grunnkretser[['grunnkretsnummer', 'area_grunnkrets','geometry']], gdf, how='intersection')
                 #sys.exit()
                 # Compute the area of each intersection
@@ -246,6 +234,7 @@ def worker(folderOI, exclude_flag, result_folder):
                 print('#####21121212#######')
                 print(result.empty)
             else:
+                gdf['geometry'] = geometries
                 # apply results from first iteration
                 gdf = gpd.overlay(gdf_grunnkretser[['grunnkretsnummer', 'area_grunnkrets','geometry']], gdf, how='intersection')
                 gdf['weight'] = weight
