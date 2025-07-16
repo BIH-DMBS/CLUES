@@ -734,12 +734,14 @@
 <h1 id="user-guide">User Guide</h1>
 <p>This guide walks you through setting up your environment and running the CLUES data processing workflow using Snakemake - a workflow management system that automates the execution of data analysis pipelines.</p>
 <h2 id="prerequisites">Prerequisites</h2>
-<p>Before getting started, ensure the following tools are installed:<br />
-- Python 3.8 or higher<br />
-- <code>pip</code> (Python package manager)<br />
-- Git<br />
-- <a href="https://snakemake.readthedocs.io/en/stable/">Snakemake</a><br />
-- (Optional but recommended) <code>conda</code> — for reproducible environments  </p>
+<p>Before getting started, ensure the following tools are installed:  </p>
+<ul>
+<li>Python 3.8 or higher  </li>
+<li><code>pip</code> (Python package manager)  </li>
+<li>Git  </li>
+<li><a href="https://snakemake.readthedocs.io/en/stable/">Snakemake</a>  </li>
+<li>(Optional but recommended) <code>conda</code> — for reproducible environments  </li>
+</ul>
 <hr />
 <h2 id="setup-instructions">Setup Instructions</h2>
 <h3 id="clone-the-repository">Clone the Repository</h3>
@@ -778,12 +780,15 @@ Note: The location of the credential (.sct) files is defined in the general work
 <p>Data from the Copernicus Climate Data Store (CDS) and the Atmosphere Data Store (ADS) requires a free account with the European Centre for Medium-Range Weather Forecasts (ECMWF).</p>
 <p><strong><em>Steps</em></strong><br />
 1. Create an ECMWF account at ecmwf.int<br />
-2. Visit:<br />
-    - CDS API instructions at https://cds.climate.copernicus.eu/how-to-api<br />
-    - ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api<br />
-3. Generate personalized API tokens from both platforms</p>
-<p><strong><em>Token Storage</em></strong></p>
-<p>Save the tokens in two separate files:<br />
+2. Visit:  </p>
+<pre><code>- CDS API instructions at https://cds.climate.copernicus.eu/how-to-api  
+- ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api
+</code></pre>
+<ol>
+<li>Generate personalized API tokens from both platforms</li>
+</ol>
+<p><strong><em>Token Storage</em></strong><br />
+Save the tokens in two separate files:<br />
 <em>cdsapirc_atmo.sct</em></p>
 <pre>url: https://ads.atmosphere.copernicus.eu/api
 key: place your token here</pre>
@@ -797,17 +802,19 @@ key: place your token here</pre>
 <p><strong><em>Steps</em></strong><br />
 1. Register at <a href="https://www.earthdata.nasa.gov/">earthdata.nasa.gov</a><br />
 2. Create a personal access token  </p>
-<p><strong><em>Token Storage</em></strong>  </p>
-<p>Create the following file:<br />
+<p><strong><em>Token Storage</em></strong><br />
+Create the following file:<br />
 <em>nasa.sct</em>  </p>
 <pre>token: place your token here</pre>
 
 <hr />
 <h2 id="configuration-management">Configuration Management</h2>
-<p>The CLUES framework is customized through a set of configuration files that define the structure and behavior of the workflow. These include:<br />
-- A general workflow configuration file: <code>workflows/config/config.json</code><br />
-- Source-specific configuration files for each data provider: <code>workflows/config_sources/</code><br />
-- A file for predefined bounding boxes: <code>workflows/config/bbox.json</code>  </p>
+<p>The CLUES framework is customized through a set of configuration files that define the structure and behavior of the workflow. These include:  </p>
+<ul>
+<li>A general workflow configuration file: <code>workflows/config/config.json</code>  </li>
+<li>Source-specific configuration files for each data provider: <code>workflows/config_sources/</code>  </li>
+<li>A file for predefined bounding boxes: <code>workflows/config/bbox.json</code>  </li>
+</ul>
 <h3 id="general-workflow-configuration-file">General workflow configuration file</h3>
 <p>The file <code>workflows\config\config.json</code> defines the core parameters for how CLUES operates. It allows full control over what the workflow does, where data is stored, and how different components behave.<br />
 Below an example of <code>config.json</code>:  </p>
@@ -826,18 +833,20 @@ Below an example of <code>config.json</code>:  </p>
 }
 </pre>
 
-<p><strong>Key Parameters Explained</strong><br />
-- download_folder: Path to where all output files will be stored<br />
-- tmp_folder: Folder used for temporary intermediate files<br />
-- configs_assets_folder: Folder that holds the source-specific configuration files<br />
-- secrets_folder: Path where access credentials, e.g., .sct files, are located<br />
-- years: List of years for which data should be downloaded<br />
-- update_years: Years to be refreshed if the workflow is rerun on an existing database. This is especially of interest for data with high temporal resoultion like climate and antmospheric data<br />
-- area: Refers to predefined region from workflows/config/bbox.json (see next section)<br />
-- espon_filename_length: Limits the length of filenames for ESPON downloads to prevent exceeding system file length restrictions.   </p>
-<p>Note: The key "espon_filename_length" is an integer value to limit the filename lengths used while downloading the espon data. The filename is generated from the naming and dimension of the different assets (https://database.espon.eu/api/). As single filename cannot exceed 255 characters, therefore, the limit is necessary. </p>
+<p><strong>Key Parameters Explained</strong>  </p>
+<ul>
+<li>download_folder: Path to where all output files will be stored  </li>
+<li>tmp_folder: Folder used for temporary intermediate files  </li>
+<li>configs_assets_folder: Folder that holds the source-specific configuration files  </li>
+<li>secrets_folder: Path where access credentials, e.g., .sct files, are located  </li>
+<li>years: List of years for which data should be downloaded  </li>
+<li>update_years: Years to be refreshed if the workflow is rerun on an existing database. This is especially of interest for data with high temporal resoultion like climate and antmospheric data  </li>
+<li>area: Refers to predefined region from workflows/config/bbox.json (see next section)  </li>
+<li>espon_filename_length: Limits the length of filenames for ESPON downloads to prevent exceeding system file length restrictions.   </li>
+</ul>
+<p>Note: The key "espon_filename_length" is an integer value to limit the filename lengths used while downloading the espon data. The filename is generated from the naming and dimension of the different assets (https://database.espon.eu/api/). As single filename cannot exceed 255 characters, therefore, the limit is necessary.  </p>
 <h3 id="bounding-boxes">Bounding boxes</h3>
-<p>CLUES framework comes with a predefined set of bounding boxes found in <code>workflows\config\bbox.json</code>. Custom bbox must also placed in this file. For example, the bounding box for Europe is represented as "Europe": [72, -15, 30, 42.5]. Here, 72 is the minimum longitude, -15 is the minimum latitude, 30 is the maximum longitude, and 42.5 is the maximum latitude. </p>
+<p>CLUES framework comes with a predefined set of bounding boxes found in <code>workflows\config\bbox.json</code>. Custom bbox must also placed in this file. For example, the bounding box for Europe is represented as "Europe": [72, -15, 30, 42.5]. Here, 72 is the minimum longitude, -15 is the minimum latitude, 30 is the maximum longitude, and 42.5 is the maximum latitude.  </p>
 <p>example: 'bbox.json'</p>
 <pre>
 {
@@ -851,8 +860,8 @@ Below an example of <code>config.json</code>:  </p>
 </pre>
 
 <h3 id="source-specific-configuration-files">Source-specific configuration files</h3>
-<p>Each of the primary data sources used by CLUES is utilized and customized on the basis of a distinct configuration file. The base as curated by CLUES is located in the folder <code>workflows\config_sources</code>. The location of the used <em>configs_assets_folder</em> can be customized in the <em>config.json</em>. These files contain metadata on the primary sources. Each of the source-specific configuration file located in the folder <code>workflows\config_sources</code> contains the key <code>"variables"</code> that is linked to a list of assets to be downloaded. To change what assets to download from the different sources simply remove items from the list.</p>
-<p>Example of the source-specific configuration file <code>cams-global-reanalysis-eac4.json</code></p>
+<p>Each of the primary data sources used by CLUES is utilized and customized on the basis of a distinct configuration file. The base as curated by CLUES is located in the folder <code>workflows\config_sources</code>. The location of the used <em>configs_assets_folder</em> can be customized in the <em>config.json</em>. These files contain metadata on the primary sources. Each of the source-specific configuration file located in the folder <code>workflows\config_sources</code> contains the key <code>"variables"</code> that is linked to a list of assets to be downloaded. To change what assets to download from the different sources simply remove items from the list.  </p>
+<p>Example of the source-specific configuration file <code>cams-global-reanalysis-eac4.json</code>  </p>
 <pre>
 {
     "type":"atmosphere",
@@ -885,10 +894,10 @@ Below an example of <code>config.json</code>:  </p>
 </pre>
 
 <p><strong>Neighbourhood-level processing</strong><br />
-CLUES supports neighbourhood-based operations to enhance spatial analysis by incorporating local spatial context. These operations apply filters, such as mean, standard deviation, or terrain-based Zevenbergen–Thorne metrics, within neighbourhood zones, which are circular areas around each pixel defined by a specified radius. The Zevenbergen-Thorne algorithm is utilized on digital elevation models (DEMs) to derive topographic features such as slope (terrain steepness) and aspect (direction the slope faces). </p>
-<p>Neighbourhood zones represent the spatial extent used to calculate local statistics around a point. Smaller zones focus on immediate surroundings and fine-scale variation, while larger zones capture broader spatial trends and context.</p>
-<p>Whether and how this processing is applied is defined in the source-specific configuration files, which specify the filter type and the radius of the neighbourhood zone. Default configurations are provided, but users can easily adapt them to meet specific analytical needs.</p>
-<p>Example of the source-specific configuration file <code>copenicus_dem.json</code></p>
+CLUES supports neighbourhood-based operations to enhance spatial analysis by incorporating local spatial context. These operations apply filters, such as mean, standard deviation, or terrain-based Zevenbergen–Thorne metrics, within neighbourhood zones, which are circular areas around each pixel defined by a specified radius. The Zevenbergen-Thorne algorithm is utilized on digital elevation models (DEMs) to derive topographic features such as slope (terrain steepness) and aspect (direction the slope faces).  </p>
+<p>Neighbourhood zones represent the spatial extent used to calculate local statistics around a point. Smaller zones focus on immediate surroundings and fine-scale variation, while larger zones capture broader spatial trends and context.  </p>
+<p>Whether and how this processing is applied is defined in the source-specific configuration files, which specify the filter type and the radius of the neighbourhood zone. Default configurations are provided, but users can easily adapt them to meet specific analytical needs.  </p>
+<p>Example of the source-specific configuration file <code>copenicus_dem.json</code>  </p>
 <pre>
 {
     "type":"DEM",
@@ -907,29 +916,31 @@ CLUES supports neighbourhood-based operations to enhance spatial analysis by inc
 
 <hr />
 <h2 id="run-the-workflow">Run the workflow</h2>
-<p>Once everything is set up, third-party accounts are configured, and the configuration files are customized, you can run the CLUES workflow using Snakemake:</p>
+<p>Once everything is set up, third-party accounts are configured, and the configuration files are customized, you can run the CLUES workflow using Snakemake:  </p>
 <pre>
 snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60
 </pre>
 
-<p>Command Options Explained:<br />
-- -s workflows/snakefile specifies the Snakefile path<br />
-- --cores 16 uses 16 cores for parallel execution<br />
-- -p prints out shell commands being executed<br />
-- --rerun-incomplete reruns any jobs that were not completed<br />
-- --latency-wait 60 waits up to 60 seconds for output files (useful on shared filesystems)  </p>
+<p>Command Options Explained:  </p>
+<ul>
+<li>-s workflows/snakefile specifies the Snakefile path  </li>
+<li>--cores 16 uses 16 cores for parallel execution  </li>
+<li>-p prints out shell commands being executed  </li>
+<li>--rerun-incomplete reruns any jobs that were not completed  </li>
+<li>--latency-wait 60 waits up to 60 seconds for output files (useful on shared filesystems)  </li>
+</ul>
 <hr />
 <h2 id="anticipated-results">Anticipated results</h2>
-<p>The workflow automatically downloads all required geospatial data files into the directory specified in the general configuration file <code>config/config.json</code>. For each file retrieved, a corresponding log file is generated during execution, providing detailed information about the download process. These log files are essential for monitoring progress and diagnosing potential issues.</p>
-<p>In cases where the workflow fails — most commonly due to temporary unavailability of external data services — users should consult the relevant log files to identify the source of the problem. Once resolved, the workflow can be safely restarted, and it will resume from where it left off.</p>
-<p>Note that certain issues, such as insufficient storage space or network connectivity problems, must be resolved manually. These fall outside the scope of automated recovery and require user intervention before the workflow can continue successfully.</p>
-<p>Below is an example of the folder structure of downloaded geospatial data for Europe and Norway</p>
+<p>The workflow automatically downloads all required geospatial data files into the directory specified in the general configuration file <code>config/config.json</code>. For each file retrieved, a corresponding log file is generated during execution, providing detailed information about the download process. These log files are essential for monitoring progress and diagnosing potential issues.  </p>
+<p>In cases where the workflow fails — most commonly due to temporary unavailability of external data services — users should consult the relevant log files to identify the source of the problem. Once resolved, the workflow can be safely restarted, and it will resume from where it left off.  </p>
+<p>Note that certain issues, such as insufficient storage space or network connectivity problems, must be resolved manually. These fall outside the scope of automated recovery and require user intervention before the workflow can continue successfully.  </p>
+<p>Below is an example of the folder structure of downloaded geospatial data for Europe and Norway  </p>
 <p><img alt="Diagram" src="../filesystem.png" /></p>
 <hr />
 <h2 id="data-enrichment">Data enrichment</h2>
-<p>After running the workflow, the required datasets will be downloaded and stored according to the general configuration specified in <code>config/config.json</code>. You can then enrich your data by linking environmental exposures to participant locations.</p>
+<p>After running the workflow, the required datasets will be downloaded and stored according to the general configuration specified in <code>config/config.json</code>. You can then enrich your data by linking environmental exposures to participant locations.  </p>
 <h3 id="enrichment-for-point-locations">Enrichment for Point Locations</h3>
-<p>In the simplest case, your data may consist of a CSV file with geocoordinates (latitude, longitude) and a participant ID, as shown below:</p>
+<p>In the simplest case, your data may consist of a CSV file with geocoordinates (latitude, longitude) and a participant ID, as shown below:  </p>
 <pre>
 latitude,longitude,subjectid
 51.876259173091015,14.24452287575035,7858
@@ -937,23 +948,25 @@ latitude,longitude,subjectid
 53.424305699033326,13.453464611332228,8017
 </pre>
 
-<p>To link environmental data to these locations, use the script <code>/scripts/link_locations.py</code>. This script processes all NetCDF and GeoTIFF files in the input folder and extracts values at the specified coordinates.</p>
+<p>To link environmental data to these locations, use the script <code>/scripts/link_locations.py</code>. This script processes all NetCDF and GeoTIFF files in the input folder and extracts values at the specified coordinates.  </p>
 <pre>
   python link_locations.py locations.csv input_folder output_folder
 </pre>
 
-<p>The results of this enrichment process are saved in the output folder. The output includes:<br />
-- JSON files with extracted values from NetCDF features.<br />
-- CSV files with extracted values from GeoTIFF features.  </p>
+<p>The results of this enrichment process are saved in the output folder. The output includes:  </p>
+<ul>
+<li>JSON files with extracted values from NetCDF features.  </li>
+<li>CSV files with extracted values from GeoTIFF features.  </li>
+</ul>
 <h3 id="enrichment-for-geographic-areas">Enrichment for Geographic Areas</h3>
 <p>In addition to point-based enrichment, CLUES supports linking environmental data to geographic areas, such as predefined administrative boundaries (e.g., postal codes or districts).
 This allows for aggregation of environmental features across regions rather than individual coordinates, enabling analysis when precise locations are unavailable or when regional exposures are more relevant.</p>
 <blockquote>
-<p>Scripts for area-based enrichment will be available soon.</p>
+<p>Scripts for area-based enrichment will be available soon.  </p>
 </blockquote>
 <hr />
 <h2 id="next-steps-try-it-out">Next Steps: Try It Out</h2>
-<p>To help you get started, we provide simple <a href="link_coming_soon">applied examples</a>. In addition, <a href="scripts">scripts</a> are available for enriching a dummy location dataset, and <a href="notebooks">python notebooks</a> demonstrate how to interact with and visualize geospatial outputs using a test dataset. These resources offer hands-on guidance, showcasing how different data types and formats can be processed and analyzed within the CLUES environment.</p>
+<p>To help you get started, we provide simple <a href="Examples.md">applied examples</a>. In addition, <a href="https://github.com/BIH-DMBS/CLUES/tree/main/scripts">scripts</a> are available for enriching a dummy location dataset, and <a href="https://github.com/BIH-DMBS/CLUES/tree/main/notebooks">python notebooks</a> demonstrate how to interact with and visualize geospatial outputs using a test dataset. These resources offer hands-on guidance, showcasing how different data types and formats can be processed and analyzed within the CLUES environment.</p>
 
 
 

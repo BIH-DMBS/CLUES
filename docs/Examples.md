@@ -25,3 +25,5 @@ After selecting your preferred server, you will have access to a suite of tools 
 #### Test data provided
 
 To test CLUES the jupyter hub provides environmental data for the Scandinavian Peninsula for 2003 to 2024.
+
+![Diagram](norway.png)
