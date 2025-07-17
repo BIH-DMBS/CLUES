@@ -48,7 +48,8 @@ pip install -r requirements.txt
 
 ## Third party accounts
 To enable the CLUES framework to access certain geospatial datasets, users must register with specific data providers and generate personal access tokens.  
-[!NOTE] The location of the credential (.sct) files is defined in the general workflow configuration file **config.json** under the key: `configs_assets_folder`. For more details on configuration management, see the section Configuration Management. 
+[!NOTE] 
+The location of the credential (.sct) files is defined in the general workflow configuration file **config.json** under the key: `configs_assets_folder`. For more details on configuration management, see the section Configuration Management. 
 
 ### Copernicus (ECMWF)
 Data from the Copernicus Climate Data Store (CDS) and the Atmosphere Data Store (ADS) requires a free account with the European Centre for Medium-Range Weather Forecasts (ECMWF).
@@ -124,7 +125,8 @@ Below an example of `config.json`:
 - area: Refers to predefined region from workflows/config/bbox.json (see next section)  
 - espon_filename_length: Limits the length of filenames for ESPON downloads to prevent exceeding system file length restrictions.   
 
-[!NOTE] The key "espon_filename_length" is an integer value to limit the filename lengths used while downloading the espon data. The filename is generated from the naming and dimension of the different assets (https://database.espon.eu/api/). As single filename cannot exceed 255 characters, therefore, the limit is necessary.  
+[!NOTE] 
+The key "espon_filename_length" is an integer value to limit the filename lengths used while downloading the espon data. The filename is generated from the naming and dimension of the different assets (https://database.espon.eu/api/). As single filename cannot exceed 255 characters, therefore, the limit is necessary.  
 
 ### Bounding boxes  
 CLUES framework comes with a predefined set of bounding boxes found in `workflows\config\bbox.json`. Custom bbox must also placed in this file. For example, the bounding box for Europe is represented as "Europe": [72, -15, 30, 42.5]. Here, 72 is the minimum longitude, -15 is the minimum latitude, 30 is the maximum longitude, and 42.5 is the maximum latitude.  
