@@ -775,7 +775,8 @@ pip install -r requirements.txt
 <hr />
 <h2 id="third-party-accounts">Third party accounts</h2>
 <p>To enable the CLUES framework to access certain geospatial datasets, users must register with specific data providers and generate personal access tokens.<br />
-[!NOTE] The location of the credential (.sct) files is defined in the general workflow configuration file <strong>config.json</strong> under the key: <code>configs_assets_folder</code>. For more details on configuration management, see the section Configuration Management. </p>
+[!NOTE] 
+The location of the credential (.sct) files is defined in the general workflow configuration file <strong>config.json</strong> under the key: <code>configs_assets_folder</code>. For more details on configuration management, see the section Configuration Management. </p>
 <h3 id="copernicus-ecmwf">Copernicus (ECMWF)</h3>
 <p>Data from the Copernicus Climate Data Store (CDS) and the Atmosphere Data Store (ADS) requires a free account with the European Centre for Medium-Range Weather Forecasts (ECMWF).</p>
 <p><strong><em>Steps</em></strong><br />
@@ -844,7 +845,8 @@ Below an example of <code>config.json</code>:  </p>
 <li>area: Refers to predefined region from workflows/config/bbox.json (see next section)  </li>
 <li>espon_filename_length: Limits the length of filenames for ESPON downloads to prevent exceeding system file length restrictions.   </li>
 </ul>
-<p>[!NOTE] The key "espon_filename_length" is an integer value to limit the filename lengths used while downloading the espon data. The filename is generated from the naming and dimension of the different assets (https://database.espon.eu/api/). As single filename cannot exceed 255 characters, therefore, the limit is necessary.  </p>
+<p>[!NOTE]<br />
+The key "espon_filename_length" is an integer value to limit the filename lengths used while downloading the espon data. The filename is generated from the naming and dimension of the different assets (https://database.espon.eu/api/). As single filename cannot exceed 255 characters, therefore, the limit is necessary.  </p>
 <h3 id="bounding-boxes">Bounding boxes</h3>
 <p>CLUES framework comes with a predefined set of bounding boxes found in <code>workflows\config\bbox.json</code>. Custom bbox must also placed in this file. For example, the bounding box for Europe is represented as "Europe": [72, -15, 30, 42.5]. Here, 72 is the minimum longitude, -15 is the minimum latitude, 30 is the maximum longitude, and 42.5 is the maximum latitude.  </p>
 <p>example: 'bbox.json'</p>
@@ -966,7 +968,7 @@ This allows for aggregation of environmental features across regions rather than
 </blockquote>
 <hr />
 <h2 id="next-steps-try-it-out">Next Steps: Try It Out</h2>
-<p>To help you get started, we provide simple <a href="Examples.md">applied examples</a>. In addition, <a href="https://github.com/BIH-DMBS/CLUES/tree/main/scripts">scripts</a> are available for enriching a dummy location dataset, and <a href="https://github.com/BIH-DMBS/CLUES/tree/main/notebooks">python notebooks</a> demonstrate how to interact with and visualize geospatial outputs using a test dataset. These resources offer hands-on guidance, showcasing how different data types and formats can be processed and analyzed within the CLUES environment.</p>
+<p>To help you get started, we provide simple <a href="https://github.com/BIH-DMBS/CLUES/blob/main/docs/Examples.md">applied examples</a>. In addition, <a href="https://github.com/BIH-DMBS/CLUES/tree/main/scripts">scripts</a> are available for enriching a dummy location dataset, and <a href="https://github.com/BIH-DMBS/CLUES/tree/main/notebooks">python notebooks</a> demonstrate how to interact with and visualize geospatial outputs using a test dataset. These resources offer hands-on guidance, showcasing how different data types and formats can be processed and analyzed within the CLUES environment.</p>
 
 
 
