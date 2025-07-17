@@ -625,7 +625,7 @@
 <li>Format: NetCDF  </li>
 <li>Config: <code>reanalysis-era5-single-levels.json</code>  </li>
 <li><a href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview">More Info</a></li>
-<li>Note: Default CLUES dataset includes years 2000-2025</li>
+<li>[!NOTE] Default CLUES dataset includes years 2000-2025</li>
 </ul>
 <h3 id="espon">ESPON</h3>
 <ul>
@@ -657,7 +657,7 @@
 </ul>
 </li>
 <li>WSF3D:  <ul>
-<li>Description: A global dataset of the average height, total volume, total area and the fraction of buildings, capturing 3D urban structure  </li>
+<li>Description: A global dataset of the average height, total volume, total area and the fraction of buildings, capturing 3D urban structure.  </li>
 <li>Years: Static  </li>
 <li>Resolution: 90m×90m  </li>
 <li>Format: GeoTIFF  </li>
@@ -668,7 +668,7 @@
 </ul>
 <h3 id="copernicus-global-digital-elevation-model-dem">Copernicus Global Digital Elevation model (DEM)</h3>
 <ul>
-<li>Description: Digital surface model (DSM) based on TanDEM-X mission that represents the surface of the Earth including buildings, infrastructure and vegetation.  </li>
+<li>Description: Global elevation data representing Earth's surface. </li>
 <li>Resolution: 30m×30m and 90m×90m, static for years 2011 - 2015  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>copernicus_dem.json</code>  </li>
@@ -676,9 +676,9 @@
 </ul>
 <h3 id="copernicus-global-land-service">Copernicus Global Land Service</h3>
 <ul>
-<li>Description: Global land cover classification with 23 classes aligned with UN-FAO's Land Cover Classification</li>
+<li>Description: Global land cover classification with 23 classes aligned with UN-FAO's Land Cover Classification.  </li>
 <li>Years: 2015-2019</li>
-<li>Resolution: 100m×100m   </li>
+<li>Resolution: 100m×100m, yearly  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>copernicus_dynamic_land_cover.json</code>  </li>
 <li><a href="https://zenodo.org/records/4723924">More Info</a>  </li>
@@ -692,34 +692,34 @@
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>corine_copernicus.json</code>  </li>
 <li><a href="https://land.copernicus.eu/en/products/corine-land-cover">More Info</a>  </li>
-<li>Note: Default CLUES dataset includes years 2000, 2006, 2012, and 2018  </li>
+<li>[!NOTE] Default CLUES dataset includes years 2000, 2006, 2012, and 2018  </li>
 </ul>
 </li>
 <li>Tree Cover Density  <ul>
-<li>Description: European tree cover density  </li>
+<li>Description: European tree cover density.  </li>
 <li>Years: 2012, 2015, and annually from 2018 to 2021  </li>
 <li>Resolution: 100m×100m, yearly  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>treecover_copernicus.json</code>  </li>
 <li><a href="https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density">More Info</a>  </li>
-<li>Note: Default CLUES dataset includes years 2012, 2015, and 2018  </li>
+<li>[!NOTE] Default CLUES dataset includes years 2012, 2015, and 2018  </li>
 </ul>
 </li>
 <li>Forest type<ul>
-<li>Description: The European Forest Type layers provide information on the presence of forest and its dominant leaf type  </li>
+<li>Description: The European Forest Type layers provide information on the presence of forest and its dominant leaf type.  </li>
 <li>Years: 2012, 2015, 2018, 2021  </li>
 <li>Resolution: 100m×100m, yearly  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>treecover_copernicus.json</code>  </li>
 <li><a href="https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density">More Info</a>  </li>
-<li>Note: Default CLUES dataset includes years 2012, 2015, and 2018  </li>
+<li>[!NOTE] Default CLUES dataset includes years 2012, 2015, and 2018  </li>
 </ul>
 </li>
 </ul>
 <h3 id="moderate-resolution-imagining-spectroradiometer-modis">Moderate Resolution Imagining Spectroradiometer (MODIS)</h3>
 <ul>
-<li>Description: Global Vegetation Index Products - NDVI and EVI  </li>
-<li>Years: 2000-2023  </li>
+<li>Description: Global Vegetation Index Products - NDVI (Normalized Difference Vegetation Index) and EVI (Enhanced Vegetation Index).  </li>
+<li>Years: 2000-2025  </li>
 <li>Resolution: 250m×250m, 16-day; 1km×1km, monthly  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>modis_vegetation.json</code>  </li>
@@ -727,17 +727,17 @@
 </ul>
 <h3 id="spei-standardized-precipitation-evapotranspiration-index">SPEI (Standardized Precipitation-Evapotranspiration Index)</h3>
 <ul>
-<li>Description: Global drought index based on precipitation and evapotranspiration  </li>
+<li>Description: Global drought index based on precipitation and evapotranspiration.  </li>
 <li>Years: 1901–present  </li>
 <li>Resolution: 0.5°×0.5°, monthly  </li>
 <li>Format: NetCDF  </li>
 <li>Config: <code>spei.json</code>  </li>
 <li><a href="https://spei.csic.es">More Info</a></li>
-<li>Note: Default CLUES dataset includes years 2000-2025</li>
+<li>[!NOTE] Default CLUES dataset includes years 2000-2025</li>
 </ul>
 <h3 id="hydrosheds-global-lakes-and-wetlands-database-glwd-version-2">Hydrosheds - Global Lakes and Wetlands Database (GLWD) version 2</h3>
 <ul>
-<li>Description: Global inland surface waters distinguished into 33 waterbody and wetland types  </li>
+<li>Description: Global inland surface waters distinguished into 33 waterbody and wetland types.  </li>
 <li>Years: Static  </li>
 <li>Resolution: 500m×500m  </li>
 <li>Format: GeoTIFF  </li>
@@ -746,19 +746,19 @@
 </ul>
 <h3 id="dmspviirs-harmonized-night-time-lights">DMSP–VIIRS - Harmonized Night-Time Lights</h3>
 <ul>
-<li>Description: Global nighttime light intensity from satellites, harmonized across sensors  </li>
+<li>Description: Global nighttime light intensity from satellites, harmonized across sensors.  </li>
 <li>Years: 1992–2021  </li>
 <li>Resolution: 1km×1km, yearly  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>ntl.json</code>  </li>
 <li><a href="https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/8">More Info</a></li>
-<li>Default CLUES dataset includes years 2000-2025</li>
+<li>[!NOTE] Default CLUES dataset includes years 2000-2025</li>
 </ul>
 <hr />
 <h2 id="summary-table">Summary Table</h2>
 <p>This table provides an overview of all geospatial datasets integrated into the CLUES framework. It reflects the list of datasets retrieved using the default workflow settings.  </p>
 <blockquote>
-<p>Note: The default CLUES configuration downloads data for 2000–2025, though some sources offer longer coverage. <br />
+<p>[!NOTE] The default CLUES configuration downloads data for 2000–2025, though some sources offer longer coverage. <br />
 Last update: July 2025  </p>
 </blockquote>
 <table>
@@ -779,7 +779,7 @@ Last update: July 2025  </p>
 <td>black_carbon_aerosol_optical_depth_550nm</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -788,7 +788,7 @@ Last update: July 2025  </p>
 <td>organic_matter_aerosol_optical_depth_550nm</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -797,7 +797,7 @@ Last update: July 2025  </p>
 <td>sea_salt_aerosol_optical_depth_550nm</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -806,7 +806,7 @@ Last update: July 2025  </p>
 <td>sulphate_aerosol_optical_depth_550nm</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -815,7 +815,7 @@ Last update: July 2025  </p>
 <td>total_aerosol_optical_depth_550nm</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -824,7 +824,7 @@ Last update: July 2025  </p>
 <td>total_column_carbon_monoxide</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -833,7 +833,7 @@ Last update: July 2025  </p>
 <td>total_column_formaldehyde</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -842,7 +842,7 @@ Last update: July 2025  </p>
 <td>total_column_ozone</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -851,7 +851,7 @@ Last update: July 2025  </p>
 <td>total_column_methane</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -860,7 +860,7 @@ Last update: July 2025  </p>
 <td>dust_aerosol_0.03-0.55um_mixing_ratio</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -869,7 +869,7 @@ Last update: July 2025  </p>
 <td>dust_aerosol_0.55-0.9um_mixing_ratio</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -878,7 +878,7 @@ Last update: July 2025  </p>
 <td>dust_aerosol_0.9-20um_mixing_ratio</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -887,7 +887,7 @@ Last update: July 2025  </p>
 <td>hydrophilic_black_carbon_aerosol_mixing_ratio</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -896,7 +896,7 @@ Last update: July 2025  </p>
 <td>hydrophilic_organic_matter_aerosol_mixing_ratio</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -905,7 +905,7 @@ Last update: July 2025  </p>
 <td>hydrophobic_black_carbon_aerosol_mixing_ratio</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -914,7 +914,7 @@ Last update: July 2025  </p>
 <td>hydrophobic_organic_matter_aerosol_mixing_ratio</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -923,7 +923,7 @@ Last update: July 2025  </p>
 <td>sea_salt_aerosol_0.03-0.5um_mixing_ratio</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -932,7 +932,7 @@ Last update: July 2025  </p>
 <td>sea_salt_aerosol_0.5-5um_mixing_ratio</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -941,7 +941,7 @@ Last update: July 2025  </p>
 <td>sea_salt_aerosol_5-20um_mixing_ratio</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -950,7 +950,7 @@ Last update: July 2025  </p>
 <td>sulphate_aerosol_mixing_ratio</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -959,7 +959,7 @@ Last update: July 2025  </p>
 <td>sulphur_dioxide</td>
 <td>0.75°x0.75°</td>
 <td>Global</td>
-<td>2003 - 2024</td>
+<td>2003-2024</td>
 <td>3-hourly</td>
 <td>NetCDF</td>
 </tr>
@@ -1353,7 +1353,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>EOC-Atmosphere-Coverage-Service</strong></td>
 <td>TROPOMI/S5P L3 data of radiometric cloud fraction</td>
-<td>5.5x3.5 km2</td>
+<td>5.5kmx3.5km</td>
 <td>Global</td>
 <td>2023-2024</td>
 <td>daily</td>
@@ -1389,7 +1389,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>EOC-Atmosphere-Coverage-Service</strong></td>
 <td>TROPOMI/S5P L3 data of ozone total column</td>
-<td></td>
+<td>5.5kmx3.5km</td>
 <td>Global</td>
 <td>2023-2024</td>
 <td>daily</td>
@@ -1407,7 +1407,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>EOC-Atmosphere-Coverage-Service</strong></td>
 <td>TROPOMI/S5P L4 data of Surface NO2 concentration</td>
-<td></td>
+<td>5.5kmx3.5km</td>
 <td>Global</td>
 <td>2023-2024</td>
 <td>daily</td>
@@ -1499,7 +1499,7 @@ Last update: July 2025  </p>
 <td>normalized difference vegetation index (NDVI)</td>
 <td>250mx250m</td>
 <td>Global</td>
-<td>2000 - 2023</td>
+<td>2000-2023</td>
 <td>16-day</td>
 <td>GeoTIFF</td>
 </tr>
@@ -1508,7 +1508,7 @@ Last update: July 2025  </p>
 <td>enhanced vegetation index (EVI)</td>
 <td>1kmx1km</td>
 <td>Global</td>
-<td>2000 - 2023</td>
+<td>2000-2023</td>
 <td>monthly</td>
 <td>GeoTIFF</td>
 </tr>
@@ -1517,7 +1517,7 @@ Last update: July 2025  </p>
 <td>enhanced vegetation index (EVI)</td>
 <td>250mx250m</td>
 <td>Global</td>
-<td>2000 - 2035</td>
+<td>2000-2023</td>
 <td>16-day</td>
 <td>GeoTIFF</td>
 </tr>
@@ -1526,14 +1526,14 @@ Last update: July 2025  </p>
 <td>Night_Time_Lights_(NTL)</td>
 <td>1kmx1km</td>
 <td>Global</td>
-<td>1992 - 2021</td>
+<td>1992-2021</td>
 <td>yearly</td>
 <td>GeoTIFF</td>
 </tr>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>2m_dewpoint_temperature</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1542,7 +1542,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>2m_temperature</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1551,7 +1551,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>high_vegetation_cover</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1560,7 +1560,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>low_vegetation_cover</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1569,7 +1569,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>snowfall</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1578,7 +1578,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>soil_temperature_level_1</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1587,7 +1587,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>total_cloud_cover</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1596,7 +1596,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>total_precipitation</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1605,7 +1605,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>type_of_high_vegetation</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1614,7 +1614,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>type_of_low_vegetation</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1623,7 +1623,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>surface_pressure</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1632,7 +1632,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>10m_u_component_of_wind</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1641,7 +1641,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>10m_v_component_of_wind</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1650,7 +1650,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>100m_u_component_of_wind</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1659,7 +1659,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>100m_v_component_of_wind</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1668,7 +1668,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>downward_uv_radiation_at_the_surface</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1677,7 +1677,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>total_cloud_cover</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1686,7 +1686,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Copernicus ERA5</strong></td>
 <td>snow_depth</td>
-<td>0.25° x 0.25°</td>
+<td>0.25°x0.25°</td>
 <td>Global</td>
 <td>1940-present</td>
 <td>hourly</td>
@@ -1695,7 +1695,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>Global SPEI database</strong></td>
 <td>spei_drought_index</td>
-<td>0.5° x 0.5°</td>
+<td>0.5°x0.5°</td>
 <td>Global</td>
 <td>1901-present</td>
 <td>monthly</td>
@@ -1722,7 +1722,7 @@ Last update: July 2025  </p>
 <tr>
 <td><strong>ESPON</strong></td>
 <td>Life expectancy by age and sex</td>
-<td>NUTS</td>
+<td>NUTS0-NUTS2</td>
 <td>Europe</td>
 <td>2002-2017</td>
 <td>yearly</td>
