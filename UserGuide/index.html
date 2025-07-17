@@ -845,8 +845,7 @@ Below an example of <code>config.json</code>:  </p>
 <li>area: Refers to predefined region from workflows/config/bbox.json (see next section)  </li>
 <li>espon_filename_length: Limits the length of filenames for ESPON downloads to prevent exceeding system file length restrictions.   </li>
 </ul>
-<p>[!NOTE]<br />
-The key "espon_filename_length" is an integer value to limit the filename lengths used while downloading the espon data. The filename is generated from the naming and dimension of the different assets (https://database.espon.eu/api/). As single filename cannot exceed 255 characters, therefore, the limit is necessary.  </p>
+<p>Note: The key "espon_filename_length" is an integer value to limit the filename lengths used while downloading the espon data. The filename is generated from the naming and dimension of the different assets (https://database.espon.eu/api/). As single filename cannot exceed 255 characters, therefore, the limit is necessary.  </p>
 <h3 id="bounding-boxes">Bounding boxes</h3>
 <p>CLUES framework comes with a predefined set of bounding boxes found in <code>workflows\config\bbox.json</code>. Custom bbox must also placed in this file. For example, the bounding box for Europe is represented as "Europe": [72, -15, 30, 42.5]. Here, 72 is the minimum longitude, -15 is the minimum latitude, 30 is the maximum longitude, and 42.5 is the maximum latitude.  </p>
 <p>example: 'bbox.json'</p>
