@@ -16,7 +16,7 @@ This page describes the geospatial data sources and datasets integrated into the
 - Format: NetCDF  
 - Config: `reanalysis-era5-single-levels.json`  
 - [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)
-- [!NOTE] Default CLUES dataset includes years 2000-2025
+- Note: Default CLUES dataset includes years 2000-2025
 
 
 ### ESPON
@@ -73,7 +73,7 @@ This page describes the geospatial data sources and datasets integrated into the
     - Format: GeoTIFF  
     - Config: `corine_copernicus.json`  
     - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)  
-    - [!NOTE] Default CLUES dataset includes years 2000, 2006, 2012, and 2018  
+    - Note: Default CLUES dataset includes years 2000, 2006, 2012, and 2018  
 - Tree Cover Density  
     - Description: European tree cover density.  
     - Years: 2012, 2015, and annually from 2018 to 2021  
@@ -81,7 +81,7 @@ This page describes the geospatial data sources and datasets integrated into the
     - Format: GeoTIFF  
     - Config: `treecover_copernicus.json`  
     - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)  
-    - [!NOTE] Default CLUES dataset includes years 2012, 2015, and 2018  
+    - Note: Default CLUES dataset includes years 2012, 2015, and 2018  
 - Forest type
     - Description: The European Forest Type layers provide information on the presence of forest and its dominant leaf type.  
     - Years: 2012, 2015, 2018, 2021  
@@ -89,7 +89,7 @@ This page describes the geospatial data sources and datasets integrated into the
     - Format: GeoTIFF  
     - Config: `treecover_copernicus.json`  
     - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)  
-    - [!NOTE] Default CLUES dataset includes years 2012, 2015, and 2018  
+    - Note: Default CLUES dataset includes years 2012, 2015, and 2018  
   
 ### Moderate Resolution Imagining Spectroradiometer (MODIS)
 - Description: Global Vegetation Index Products - NDVI (Normalized Difference Vegetation Index) and EVI (Enhanced Vegetation Index).  
@@ -106,7 +106,7 @@ This page describes the geospatial data sources and datasets integrated into the
 - Format: NetCDF  
 - Config: `spei.json`  
 - [More Info](https://spei.csic.es)
-- [!NOTE] Default CLUES dataset includes years 2000-2025
+- Note: Default CLUES dataset includes years 2000-2025
 
 ### Hydrosheds - Global Lakes and Wetlands Database (GLWD) version 2
 - Description: Global inland surface waters distinguished into 33 waterbody and wetland types.  
@@ -123,5 +123,5 @@ This page describes the geospatial data sources and datasets integrated into the
 - Format: GeoTIFF  
 - Config: `ntl.json`  
 - [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/8)
-- [!NOTE] Default CLUES dataset includes years 2000-2025
+- Note: Default CLUES dataset includes years 2000-2025
 
