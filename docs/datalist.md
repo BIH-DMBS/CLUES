@@ -1,6 +1,6 @@
 ## Summary Table
 This table provides an overview of all geospatial datasets integrated into the CLUES framework. It reflects the list of datasets retrieved using the default workflow settings.  
-> [!NOTE]: The default CLUES configuration downloads data for 2000–2025, though some sources offer longer coverage.   
+> [!NOTE] The default CLUES configuration downloads data for 2000–2025, though some sources offer longer coverage.   
 > Last update: July 2025  
 
 | Source | Feature | Spatial Resolution | Area Covered | Temporal Coverage | Temporal Resolution | Format |
