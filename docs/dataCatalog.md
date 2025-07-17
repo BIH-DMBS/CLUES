@@ -134,27 +134,27 @@ This table provides an overview of all geospatial datasets integrated into the C
 
 | Source | Feature | Spatial Resolution | Area Covered | Temporal Coverage | Temporal Resolution | Format |
 | --- | --- | --- | --- | --- | --- | --- |
-| **CAMS global reanalysis (EAC4)** | black_carbon_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | organic_matter_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sulphate_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | total_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | total_column_carbon_monoxide | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | total_column_formaldehyde | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | total_column_ozone | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | total_column_methane | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | dust_aerosol_0.03-0.55um_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | dust_aerosol_0.55-0.9um_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | dust_aerosol_0.9-20um_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | hydrophilic_black_carbon_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | hydrophilic_organic_matter_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | hydrophobic_black_carbon_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | hydrophobic_organic_matter_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_0.03-0.5um_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_0.5-5um_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_5-20um_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sulphate_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sulphur_dioxide | 0.75°x0.75° | Global | 2003 - 2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | black_carbon_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | organic_matter_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sulphate_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | total_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | total_column_carbon_monoxide | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | total_column_formaldehyde | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | total_column_ozone | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | total_column_methane | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | dust_aerosol_0.03-0.55um_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | dust_aerosol_0.55-0.9um_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | dust_aerosol_0.9-20um_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | hydrophilic_black_carbon_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | hydrophilic_organic_matter_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | hydrophobic_black_carbon_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | hydrophobic_organic_matter_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_0.03-0.5um_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_0.5-5um_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_5-20um_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sulphate_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sulphur_dioxide | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
 | **Copernicus DEM** | Elevation | 30mx30m | Global | Static | NA | GeoTIFF |
 | **Copernicus DEM** | Elevation | 90mx90m | Global | Static | NA | GeoTIFF |
 | **Copernicus Global Land Service** | Landcover | 100mx100m | Global | 2015-2019 | yearly | GeoTIFF |
@@ -198,13 +198,13 @@ This table provides an overview of all geospatial datasets integrated into the C
 | **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Tropospheric Nitrogen Dioxide (NO2Tropo) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Ozone (O3) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | MetOp GOME-2 Total Column Sulfur Dioxide (SO2) Composite Layer |  | Global | 2013-2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L3 data of radiometric cloud fraction | 5.5x3.5 km2 | Global | 2023-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L3 data of radiometric cloud fraction | 5.5kmx3.5km | Global | 2023-2024 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Cloud Optical Thickness (COT) Composite Layer (S5P) |  | Global | 2023-2024 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Cloud Top Height (CTH) Composite Layer (S5P) |  | Global | 2023-2024 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Formaldehyde (HCHO) Composite Layer (S5P) |  | Global | 2023-2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L3 data of ozone total column |  | Global | 2023-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L3 data of ozone total column | 5.5kmx3.5km | Global | 2023-2024 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Sulphur Dioxid (SO2) Composite Layer (S5P) |  | Global | 2023-2024 | daily | GeoTIFF |
-| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L4 data of Surface NO2 concentration |  | Global | 2023-2024 | daily | GeoTIFF |
+| **EOC-Atmosphere-Coverage-Service** | TROPOMI/S5P L4 data of Surface NO2 concentration | 5.5kmx3.5km | Global | 2023-2024 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | Surface PM2.5 concentrations for Germany and parts of the surrounding countries from Aqua/MODIS and Sentinel-3A/SLSTR |  | Global | 2018-2019 | monthly | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Surf. Cloud Fraction |  | Global | 2018-2020 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Cloud Fraction |  | Global | 2018-2020 | daily | GeoTIFF |
@@ -214,32 +214,32 @@ This table provides an overview of all geospatial datasets integrated into the C
 | **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Trop. NO2 column |  | Global | 2018-2020 | monthly | GeoTIFF |
 | **Hydrosheds** | Global_Lakes_and_Wetlands_Database_(GLWD) | 500mx500m | Global | Static | NA | GeoTIFF |
 | **MODIS Vegetation Index Products** | normalized difference vegetation index (NDVI) | 1kmx1km | Global | 2000-2023 | monthly | GeoTIFF |
-| **MODIS Vegetation Index Products** | normalized difference vegetation index (NDVI) | 250mx250m | Global | 2000 - 2023 | 16-day | GeoTIFF |
-| **MODIS Vegetation Index Products** | enhanced vegetation index (EVI) | 1kmx1km | Global | 2000 - 2023 | monthly | GeoTIFF |
-| **MODIS Vegetation Index Products** | enhanced vegetation index (EVI) | 250mx250m | Global | 2000 - 2035 | 16-day | GeoTIFF |
-| **DMSP and VIIRS** | Night_Time_Lights_(NTL) | 1kmx1km | Global | 1992 - 2021 | yearly | GeoTIFF |
-| **Copernicus ERA5** | 2m_dewpoint_temperature | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | 2m_temperature | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | high_vegetation_cover | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | low_vegetation_cover | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | snowfall | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | soil_temperature_level_1 | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | total_cloud_cover | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | total_precipitation | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | type_of_high_vegetation | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | type_of_low_vegetation | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | surface_pressure | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | 10m_u_component_of_wind | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | 10m_v_component_of_wind | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | 100m_u_component_of_wind | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | 100m_v_component_of_wind | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | downward_uv_radiation_at_the_surface | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | total_cloud_cover | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | snow_depth | 0.25° x 0.25° | Global | 1940-present | hourly | NetCDF |
-| **Global SPEI database** | spei_drought_index | 0.5° x 0.5° | Global | 1901-present | monthly | NetCDF |
+| **MODIS Vegetation Index Products** | normalized difference vegetation index (NDVI) | 250mx250m | Global | 2000-2023 | 16-day | GeoTIFF |
+| **MODIS Vegetation Index Products** | enhanced vegetation index (EVI) | 1kmx1km | Global | 2000-2023 | monthly | GeoTIFF |
+| **MODIS Vegetation Index Products** | enhanced vegetation index (EVI) | 250mx250m | Global | 2000-2023 | 16-day | GeoTIFF |
+| **DMSP and VIIRS** | Night_Time_Lights_(NTL) | 1kmx1km | Global | 1992-2021 | yearly | GeoTIFF |
+| **Copernicus ERA5** | 2m_dewpoint_temperature | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | 2m_temperature | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | high_vegetation_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | low_vegetation_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | snowfall | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | soil_temperature_level_1 | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | total_cloud_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | total_precipitation | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | type_of_high_vegetation | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | type_of_low_vegetation | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | surface_pressure | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | 10m_u_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | 10m_v_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | 100m_u_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | 100m_v_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | downward_uv_radiation_at_the_surface | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | total_cloud_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5** | snow_depth | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Global SPEI database** | spei_drought_index | 0.5°x0.5° | Global | 1901-present | monthly | NetCDF |
 | **ESPON** | Deaths by age groups and gender | NUTS0-NUTS3 | Europe | 2013-2015 | yearly | CSV |
 | **ESPON** | Deaths by age groups | NUTS0-NUTS2 | Europe | 1990-2017 | yearly | CSV |
-| **ESPON** | Life expectancy by age and sex | NUTS | Europe | 2002-2017 | yearly | CSV |
+| **ESPON** | Life expectancy by age and sex | NUTS0-NUTS2 | Europe | 2002-2017 | yearly | CSV |
 | **ESPON** | Life expectancy by age | NUTS0-NUTS2 | Europe | 2002-2017 | yearly | CSV |
 | **ESPON** | Population (total) by gender and broad age group | -- | Europe | -- | yearly | CSV |
 | **ESPON** | Population on 1 January (total) by age group and sex | NUTS0-NUTS2 | Europe | 1990-2020 | yearly | CSV |
