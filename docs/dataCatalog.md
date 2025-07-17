@@ -18,7 +18,7 @@ This page describes the geospatial data sources and datasets integrated into the
 - Format: NetCDF  
 - Config: `reanalysis-era5-single-levels.json`  
 - [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)
-- Note: Default CLUES dataset includes years 2000-2025
+- <ins>Note</ins>: Default CLUES dataset includes years 2000-2025
 
 
 ### ESPON
@@ -45,7 +45,7 @@ This page describes the geospatial data sources and datasets integrated into the
     - Config: `EOC_WSF.json`  
     - [More info](https://www.dlr.de/en/eoc/research-transfer/projects-missions/world-settlement-footprint-wsf-r)
 - WSF3D:  
-    - Description: A global dataset of the average height, total volume, total area and the fraction of buildings, capturing 3D urban structure  
+    - Description: A global dataset of the average height, total volume, total area and the fraction of buildings, capturing 3D urban structure.  
     - Years: Static  
     - Resolution: 90m×90m  
     - Format: GeoTIFF  
@@ -60,7 +60,7 @@ This page describes the geospatial data sources and datasets integrated into the
 - [More Info](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM)  
 
 ### Copernicus Global Land Service
-- Description: Global land cover classification with 23 classes aligned with UN-FAO's Land Cover Classification
+- Description: Global land cover classification with 23 classes aligned with UN-FAO's Land Cover Classification.  
 - Years: 2015-2019
 - Resolution: 100m×100m, yearly  
 - Format: GeoTIFF  
@@ -75,43 +75,43 @@ This page describes the geospatial data sources and datasets integrated into the
     - Format: GeoTIFF  
     - Config: `corine_copernicus.json`  
     - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)  
-    - Note: Default CLUES dataset includes years 2000, 2006, 2012, and 2018  
+    - <ins>Note</ins>: Default CLUES dataset includes years 2000, 2006, 2012, and 2018  
 - Tree Cover Density  
-    - Description: European tree cover density  
+    - Description: European tree cover density.  
     - Years: 2012, 2015, and annually from 2018 to 2021  
     - Resolution: 100m×100m, yearly  
     - Format: GeoTIFF  
     - Config: `treecover_copernicus.json`  
     - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)  
-    - Note: Default CLUES dataset includes years 2012, 2015, and 2018  
+    - <ins>Note</ins>: Default CLUES dataset includes years 2012, 2015, and 2018  
 - Forest type
-    - Description: The European Forest Type layers provide information on the presence of forest and its dominant leaf type  
+    - Description: The European Forest Type layers provide information on the presence of forest and its dominant leaf type.  
     - Years: 2012, 2015, 2018, 2021  
     - Resolution: 100m×100m, yearly  
     - Format: GeoTIFF  
     - Config: `treecover_copernicus.json`  
     - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)  
-    - Note: Default CLUES dataset includes years 2012, 2015, and 2018  
+    - <ins>Note</ins>: Default CLUES dataset includes years 2012, 2015, and 2018  
   
 ### Moderate Resolution Imagining Spectroradiometer (MODIS)
-- Description: Global Vegetation Index Products - NDVI and EVI  
-- Years: 2000-2023  
+- Description: Global Vegetation Index Products - NDVI (Normalized Difference Vegetation Index) and EVI (Enhanced Vegetation Index).  
+- Years: 2000-2025  
 - Resolution: 250m×250m, 16-day; 1km×1km, monthly  
 - Format: GeoTIFF  
 - Config: `modis_vegetation.json`  
 - [More Info](https://modis.gsfc.nasa.gov/data/dataprod/mod13.php)  
 
 ### SPEI (Standardized Precipitation-Evapotranspiration Index)
-- Description: Global drought index based on precipitation and evapotranspiration  
+- Description: Global drought index based on precipitation and evapotranspiration.  
 - Years: 1901–present  
 - Resolution: 0.5°×0.5°, monthly  
 - Format: NetCDF  
 - Config: `spei.json`  
 - [More Info](https://spei.csic.es)
-- Note: Default CLUES dataset includes years 2000-2025
+- <ins>Note</ins>: Default CLUES dataset includes years 2000-2025
 
 ### Hydrosheds - Global Lakes and Wetlands Database (GLWD) version 2
-- Description: Global inland surface waters distinguished into 33 waterbody and wetland types  
+- Description: Global inland surface waters distinguished into 33 waterbody and wetland types.  
 - Years: Static  
 - Resolution: 500m×500m  
 - Format: GeoTIFF  
@@ -119,13 +119,13 @@ This page describes the geospatial data sources and datasets integrated into the
 - [More Info](https://www.hydrosheds.org/products/glwd)  
 
 ### DMSP–VIIRS - Harmonized Night-Time Lights
-- Description: Global nighttime light intensity from satellites, harmonized across sensors  
+- Description: Global nighttime light intensity from satellites, harmonized across sensors.  
 - Years: 1992–2021  
 - Resolution: 1km×1km, yearly  
 - Format: GeoTIFF  
 - Config: `ntl.json`  
 - [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/8)
-- Default CLUES dataset includes years 2000-2025
+- <ins>Note</ins>: Default CLUES dataset includes years 2000-2025
 ---- 
 ## Summary Table
 This table provides an overview of all geospatial datasets integrated into the CLUES framework. It reflects the list of datasets retrieved using the default workflow settings.  
