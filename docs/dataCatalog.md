@@ -62,7 +62,7 @@ This page describes the geospatial data sources and datasets integrated into the
 ### Copernicus Global Land Service
 - Description: Global land cover classification with 23 classes aligned with UN-FAO's Land Cover Classification
 - Years: 2015-2019
-- Resolution: 100m×100m   
+- Resolution: 100m×100m, yearly  
 - Format: GeoTIFF  
 - Config: `copernicus_dynamic_land_cover.json`  
 - [More Info](https://zenodo.org/records/4723924)  
