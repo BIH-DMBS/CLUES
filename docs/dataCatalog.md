@@ -53,7 +53,7 @@ This page describes the geospatial data sources and datasets integrated into the
     - [More info](https://geoservice.dlr.de/web/datasets/wsf_3d)  
 
 ### Copernicus Global Digital Elevation model (DEM) 
-- Description: Digital surface model (DSM) based on TanDEM-X mission that represents the surface of the Earth including buildings, infrastructure and vegetation.  
+- Description: Global elevation data representing Earth's surface, including buildings, infrastructure and vegetation. 
 - Resolution: 30m×30m and 90m×90m, static for years 2011 - 2015  
 - Format: GeoTIFF  
 - Config: `copernicus_dem.json`  
