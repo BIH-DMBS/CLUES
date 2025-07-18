@@ -24,6 +24,7 @@ pip install fastparquet
 to read the results use:
 df = pd.read_parquet("data.parquet", engine="pyarrow")
 '''
+
 ######################################################
 # grunnkretser code stuff
 # Define pkl file path
@@ -296,9 +297,8 @@ with ThreadPoolExecutor() as executor:
     ]
 
     exclude_flag = [
-        "China",
-        "Germany",
-        "UK",
+        "Croatia",
+        "Cottbus",
     ]
     result_folder = 'res\\'
     results = list(executor.map(lambda f: worker(f, exclude_flag, result_folder), foldersOI))

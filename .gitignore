@@ -11,5 +11,4 @@ configs_sources_test/
 *.gif
 *.pdf
 *.tar
-*.pkl
 *.parquet
