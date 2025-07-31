@@ -1,3 +1,97 @@
+import requests
+import time
+import os
+from datetime import datetime, timedelta
+
+def download_modis(url, headers, file_path):
+    # Send the request with streaming enabled
+    response = requests.get(url,  headers=headers, stream=True)
+
+    if response.status_code == 200:
+        total_size = response.headers.get('Content-Length')
+        total_size = int(total_size) if total_size and total_size.isdigit() else None
+
+        chunk_size = 8192
+        downloaded = 0
+        start_time = time.time()
+
+
+        with open(file_path, 'wb') as file:
+            for chunk in response.iter_content(chunk_size=chunk_size):
+                if chunk:
+                    file.write(chunk)
+                    downloaded += len(chunk)
+                    elapsed = time.time() - start_time
+                    speed = downloaded / 1024 / 1024 / max(elapsed, 1e-6)
+
+                    if total_size:
+                        print(f"\rDownloaded: {downloaded / 1024 / 1024:.2f} MB "
+                            f"of {total_size / 1024 / 1024:.2f} MB "
+                            f"({speed:.2f} MB/s)", end='')
+                    else:
+                        print(f"\rDownloaded: {downloaded / 1024 / 1024:.2f} MB "
+                            f"(Unknown total size, {speed:.2f} MB/s)", end='')
+
+        print('\nDownload completed successfully.')
+    else:
+        print(f'Failed to download file. Status code: {response.status_code}')
+
+    return response
+
+
+def get_dates(yearOI, url, headers, start_date):
+    
+    response = requests.get(url,  headers=headers)
+    lines = response.content.decode('utf-8').splitlines()
+
+    # Split into lines
+    #lines = text.splitlines()
+
+    # Find the line that starts with 'time'
+    time_values = next((line for line in lines if line.startswith('/time')), None).split(',')[1:]
+    lenY = len(next((line for line in lines if line.startswith('/YDim')), None).split(',')[1:])
+    lenX = len(next((line for line in lines if line.startswith('/XDim')), None).split(',')[1:])
+
+    time_values = [int(val.strip()) for val in time_values]
+    # Generate corresponding dates
+    date_vector = [start_date + timedelta(days=d) for d in time_values]
+    return lenX, lenY, [(i,d) for i, d in enumerate(date_vector) if d.year == yearOI]
+
+
+def modis_tiles_for_regions(region_bboxes):
+    #Given a dictionary of regions with bounding boxes in the format:
+    #    { "RegionName": [lat_max, lon_min, lat_min, lon_max], ... }
+    #returns a dictionary with region names and lists of (h, v) MODIS tiles that cover them.
+    
+    result = {}
+
+    for region, bbox in region_bboxes.items():
+        lat_max, lon_min, lat_min, lon_max = bbox
+        
+        # Clamp bounds
+        lat_min = max(-90, min(90, lat_min))
+        lat_max = max(-90, min(90, lat_max))
+        lon_min = max(-180, min(180, lon_min))
+        lon_max = max(-180, min(180, lon_max))
+
+        # Convert lat/lon to MODIS tile indices
+        h_min = int((lon_min + 180) // 10)
+        h_max = int((lon_max + 180) // 10)
+        v_min = int((90 - lat_max) // 10)
+        v_max = int((90 - lat_min) // 10)
+
+        # Clamp to MODIS grid size
+        h_min = max(0, min(35, h_min))
+        h_max = max(0, min(35, h_max))
+        v_min = max(0, min(17, v_min))
+        v_max = max(0, min(17, v_max))
+
+        tiles = [(h, v) for h in range(h_min, h_max + 1) for v in range(v_min, v_max + 1)]
+        result[region] = tiles
+
+    return result
+
+'''
 import os
 import json
 import requests
@@ -412,4 +506,4 @@ def get_modis_vi(json_file, name, datum):
     result_filepath_ndvi = os.path.join(ndvi_folder, str(date) + '.tif')
     download_fileset(result_filepath_evi, result_filepath_ndvi, filesOI, folder_tmp, url, token, bbox, date, elements)
     
-    
+    '''
