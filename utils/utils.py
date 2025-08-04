@@ -122,7 +122,7 @@ def get_parameter(parameters_jsonfile, bbox_jsonfile):
         parameters = json.load(file)
     if "start_year" in parameters:
         #if (parameters['type'] != 'MODIS Vegetation Index Products') and (parameters['type'] != 'spei_drought_index') and (parameters['type'] != 'Night_Time_Lights_(NTL)') and (parameters['type'] != 'Global_Lakes_and_Wetlands_Database_(GLWD)'): #cdsapi sources (if not wms or wcs is used)
-        if parameters['type'] not in ['MODIS Vegetation Index Products','spei_drought_index','Night_Time_Lights_(NTL)', 'Global_Lakes_and_Wetlands_Database_(GLWD)','WordSettlementFootprint3D']: #cdsapi sources (if not wms or wcs is used)
+        if parameters['type'] not in ['MODIS_Vegetation_Index_Products','spei_drought_index','Night_Time_Lights_(NTL)', 'Global_Lakes_and_Wetlands_Database_(GLWD)','WordSettlementFootprint3D']: #cdsapi sources (if not wms or wcs is used)
             parameters["start_year"] = datetime.fromisoformat(parameters["start_year"] + "-01-01")
             if parameters["end_year"] == "ongoing":
                 parameters["end_year"] = datetime.now() - timedelta(1)

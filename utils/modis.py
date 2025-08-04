@@ -2,6 +2,19 @@ import requests
 import time
 import os
 from datetime import datetime, timedelta
+import xarray as xr
+import numpy as np
+import os
+import re
+import glob
+import gc
+import yaml
+import utils
+
+try:
+    from .config import download_folder, tmp_folder, secrets_folder
+except:
+    from config import download_folder, tmp_folder, secrets_folder
 
 def download_modis(url, headers, file_path):
     # Send the request with streaming enabled
@@ -42,54 +55,221 @@ def download_modis(url, headers, file_path):
 def get_dates(yearOI, url, headers, start_date):
     
     response = requests.get(url,  headers=headers)
-    lines = response.content.decode('utf-8').splitlines()
+    if response.status_code == 200:
+        lines = response.content.decode('utf-8').splitlines()
 
-    # Split into lines
-    #lines = text.splitlines()
+        # Split into lines
+        #lines = text.splitlines()
 
-    # Find the line that starts with 'time'
-    time_values = next((line for line in lines if line.startswith('/time')), None).split(',')[1:]
-    lenY = len(next((line for line in lines if line.startswith('/YDim')), None).split(',')[1:])
-    lenX = len(next((line for line in lines if line.startswith('/XDim')), None).split(',')[1:])
+        # Find the line that starts with 'time'
+        time_values = next((line for line in lines if line.startswith('/time')), None).split(',')[1:]
+        lenY = len(next((line for line in lines if line.startswith('/YDim')), None).split(',')[1:])
+        lenX = len(next((line for line in lines if line.startswith('/XDim')), None).split(',')[1:])
 
-    time_values = [int(val.strip()) for val in time_values]
-    # Generate corresponding dates
-    date_vector = [start_date + timedelta(days=d) for d in time_values]
-    return lenX, lenY, [(i,d) for i, d in enumerate(date_vector) if d.year == yearOI]
+        time_values = [int(val.strip()) for val in time_values]
+        # Generate corresponding dates
+        date_vector = [start_date + timedelta(days=d) for d in time_values]
+        time_values = [(i,d) for i, d in enumerate(date_vector) if d.year == yearOI]
+        print(time_values)
+        idxs= [x[0] for x in time_values]
+        time_values = [x[1] for x in time_values]
+        return lenX, lenY, idxs, time_values
+    else:
+        print(f'Failed to download file. Status code: {response.status_code}')
 
 
-def modis_tiles_for_regions(region_bboxes):
-    #Given a dictionary of regions with bounding boxes in the format:
-    #    { "RegionName": [lat_max, lon_min, lat_min, lon_max], ... }
-    #returns a dictionary with region names and lists of (h, v) MODIS tiles that cover them.
-    
+def modis_tiles_for_regions(bbox):
+    """
+    Given a bounding boxes in the format:
+        [lat_max, lon_min, lat_min, lon_max]
+    returns list of (h, v) MODIS tiles that cover them.
+    """
     result = {}
 
-    for region, bbox in region_bboxes.items():
-        lat_max, lon_min, lat_min, lon_max = bbox
+    lat_max, lon_min, lat_min, lon_max = bbox
+    
+    # Clamp bounds
+    lat_min = max(-90, min(90, lat_min))
+    lat_max = max(-90, min(90, lat_max))
+    lon_min = max(-180, min(180, lon_min))
+    lon_max = max(-180, min(180, lon_max))
+
+    # Convert lat/lon to MODIS tile indices
+    h_min = int((lon_min + 180) // 10)
+    h_max = int((lon_max + 180) // 10)
+    v_min = int((90 - lat_max) // 10)
+    v_max = int((90 - lat_min) // 10)
+
+    # Clamp to MODIS grid size
+    h_min = max(0, min(35, h_min))
+    h_max = max(0, min(35, h_max))
+    v_min = max(0, min(17, v_min))
+    v_max = max(0, min(17, v_max))
+
+    return [f"h{h:02d}v{v:02d}" for h in range(h_min, h_max + 1) for v in range(v_min, v_max + 1)]
+
+
+def mergeNetCDFModis(name, typ, year, file_list, lenX, lenY):
+    data_dir = os.path.join(download_folder, typ, name)
+    # Parameters
+    tile_regex = re.compile(r'h(\d{2})v(\d{2})')
+
+    print(file_list)
+    # Parse tile indices
+    tiles = {}
+    for f in file_list:
+        match = tile_regex.search(f)
+        if not match:
+            continue
+        h, v = int(match.group(1)), int(match.group(2))
+        tiles[(h, v)] = f
+
+    # Determine overall tile grid
+    hs = sorted(set(h for h, v in tiles.keys()))
+    vs = sorted(set(v for h, v in tiles.keys()))
+    min_h, min_v = min(hs), min(vs)
+
+    grid_width = len(hs) * lenX
+    grid_height = len(vs) * lenY
+
+    # Load one file to get variable names and time
+    sample_ds = xr.open_dataset(next(iter(tiles.values())))
+    time_dim = sample_ds['time']
+    sample_var = sample_ds[name]
+    dtype = sample_var.dtype
+    fill_value = sample_var.attrs.get('_FillValue', np.nan)
+
+    # Preallocate arrays
+    ndvi_mosaic = np.full((len(time_dim), grid_height, grid_width), fill_value, dtype=dtype)
+    lat_mosaic = np.full((grid_height, grid_width), np.nan, dtype=np.float64)
+    lon_mosaic = np.full((grid_height, grid_width), np.nan, dtype=np.float64)
+
+    # Fill the mosaic
+    for (h, v), f in tiles.items():
+        ds = xr.open_dataset(f)
         
-        # Clamp bounds
-        lat_min = max(-90, min(90, lat_min))
-        lat_max = max(-90, min(90, lat_max))
-        lon_min = max(-180, min(180, lon_min))
-        lon_max = max(-180, min(180, lon_max))
+        y_off = (v - min(vs)) * lenY
+        x_off = (h - min(hs)) * lenX
 
-        # Convert lat/lon to MODIS tile indices
-        h_min = int((lon_min + 180) // 10)
-        h_max = int((lon_max + 180) // 10)
-        v_min = int((90 - lat_max) // 10)
-        v_max = int((90 - lat_min) // 10)
+        ndvi_mosaic[:, y_off:y_off+lenY, x_off:x_off+lenX] = ds[name].values
+        lat_mosaic[y_off:y_off+lenY, x_off:x_off+lenX] = ds['Latitude'].values
+        lon_mosaic[y_off:y_off+lenY, x_off:x_off+lenX] = ds['Longitude'].values
+    # Create the new dataset
+    merged_ds = xr.Dataset(
+        {
+            name: (("time", "YDim", "XDim"), ndvi_mosaic),
+            "Latitude": (("YDim", "XDim"), lat_mosaic),
+            "Longitude": (("YDim", "XDim"), lon_mosaic)
+        },
+        coords={
+            "time": time_dim
+        }
+    )
+    encoding_dict = {
+        name: {'zlib': True, 'complevel': 5},
+        'Latitude': {'zlib': True, 'complevel': 5, 'dtype': 'float32'},
+        'Longitude': {'zlib': True, 'complevel': 5, 'dtype': 'float32'}
+    }
 
-        # Clamp to MODIS grid size
-        h_min = max(0, min(35, h_min))
-        h_max = max(0, min(35, h_max))
-        v_min = max(0, min(17, v_min))
-        v_max = max(0, min(17, v_max))
+    print('Start saving result')
+    # Save result with encoding
+    output_path = os.path.join(data_dir, f"{year}.nc")
+    # Pass the encoding dictionary to to_netcdf()
+    merged_ds.to_netcdf(output_path, encoding=encoding_dict)
 
-        tiles = [(h, v) for h in range(h_min, h_max + 1) for v in range(v_min, v_max + 1)]
-        result[region] = tiles
+    print(f"Merged and compressed dataset saved as: {output_path}")
 
-    return result
+    # remove files that are not needed anymore
+    for file_path in file_list:
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+            print(f"Deleted: {file_path}")
+        else:
+            print(f"File not found (skipped): {file_path}")
+
+
+def get_evi_ndvi_modis(data_url, headers, typ, name, yearOI, start_date, tiles):
+    downoad_path = os.path.join(download_folder, typ, name)
+    os.makedirs(downoad_path, exist_ok=True)
+
+    s_time = set()
+    for t in tiles:
+        url = data_url + t + ".ncml.dap.csv?dap4.ce=/YDim;/XDim;/time"
+        print(url)
+        lenX, lenY, idxs, time_values = get_dates(yearOI, url, headers, start_date)
+        s_time = s_time|set(time_values)
+        
+    s_time = sorted(list(s_time))
+
+    file_list = []
+    for t in tiles:
+        netCDF_file = f'{yearOI}_{t}.nc'
+        netCDF_file_path = os.path.join(downoad_path, netCDF_file)
+        file_list.append(netCDF_file_path)
+        print(netCDF_file_path)
+        if not os.path.exists(netCDF_file_path):
+            url = data_url + t + ".ncml.dap.csv?dap4.ce=/YDim;/XDim;/time"
+            print(url)
+            lenX, lenY, idxs, time_values = get_dates(yearOI, url, headers, start_date)
+            #netCDF_file = f'{yearOI}_{t}.nc'
+
+            #file_path = os.path.join(name, netCDF_file)
+            temp_path = netCDF_file_path + ".tmp"
+            print(f"{lenX, lenY, idxs, time_values}")
+            url = data_url + t + f".ncml.dap.nc4?dap4.ce=/Latitude[0:1:{lenX-1}][0:1:{lenY-1}];/Longitude[0:1:{lenX-1}][0:1:{lenY-1}];/{name}[{idxs[0]}:1:{idxs[-1]}][0:1:{lenX-1}][0:1:{lenY-1}];/time[{idxs[0]}:1:{idxs[-1]}]"
+            download_modis(url, headers, netCDF_file_path)
+            
+            temp_path = netCDF_file_path + ".tmp"
+            ds_reindexed = None
+
+            # not all netcdf files from origin have the same temporal dimension
+            with xr.open_dataset(netCDF_file_path) as ds:
+                if len(ds['time']) < len(s_time):
+                    ds = ds.load()  # <- Load everything into memory NOW
+                    ds.close()      # <- Fully close the backing file
+                    ds_reindexed = ds.reindex(time=s_time)
+
+            # Save safely
+            if ds_reindexed is not None:
+                ds_reindexed.to_netcdf(temp_path, engine='netcdf4')  # or use 'netcdf4'
+                ds_reindexed.close()
+                gc.collect()
+                os.replace(temp_path, netCDF_file_path)
+
+        else:
+            print(f"{netCDF_file} exists")
+    return file_list, lenX, lenY
+
+
+def get_modis_vi(json_file, name, year):
+    parameter = utils.get_parameter(json_file,'bbox.json')
+    typ = parameter['type']
+    tiles = modis_tiles_for_regions(parameter['bbox'])
+    for v in parameter['variables']:
+        if v['name'] == name:
+            url = v['url']
+            parameter = v
+            break
+
+    # Create a client for the CDS API
+    file = os.path.join(secrets_folder, 'nasa.sct')
+
+    with open(file, 'r') as f:
+            credentials = yaml.safe_load(f)
+    token = credentials['token']
+    headers = {
+        'Authorization': f'Bearer {token}'
+    }
+    
+    print(token)
+    print(url)
+    print(year)
+    print(tiles)
+    print(parameter)
+    file_list, lenX, lenY = get_evi_ndvi_modis(url, headers, typ, name, int(year), datetime.strptime(parameter['start'], '%Y-%m-%d'), tiles)
+    print(file_list)
+    mergeNetCDFModis(name, typ, year, file_list, lenX, lenY)
+
 
 '''
 import os

@@ -39,31 +39,6 @@ def sanitize_filename(filename):
     sanitized_filename = valid_chars.sub('_', sanitized_filename)  
     return sanitized_filename
 
-# for modis vegetation index
-def get_links(url, years):
-    # Regular expression pattern for dates in YYYY.MM.DD/ format
-    date_pattern = re.compile(r"(\d{4}\.\d{2}\.\d{2})/$")
-    # Send a GET request
-    response = requests.get(url)
-    # Check if the request was successful
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, "html.parser")
-        # Find all links in the page
-        links = [a["href"] for a in soup.find_all("a", href=True)]
-        # Create a dictionary with date objects as keys and full URLs as values
-        date_links_dict = {
-            datetime.strptime(match.group(1), "%Y.%m.%d").date(): url + link
-            for link in links if (match := date_pattern.match(link))
-        }
-    date_links =  {date: link for date, link in date_links_dict.items() if date.year in [int(y) for y in years]}
-    result = {}
-    for k in date_links.keys():
-        if k.year not in result:
-            result[k.year] = [k]
-        else:
-            result[k.year].append(k)
-    return result
-
 configs_assets_folder = data["configs_assets_folder"]
 
 
@@ -81,7 +56,7 @@ files = {
     'ntl':os.path.join(configs_assets_folder, 'ntl.json'),
     'glwd':os.path.join(configs_assets_folder, 'hydrosheds_GLWD.json'),
     'clms':os.path.join(configs_assets_folder, 'copernicus_dynamic_land_cover.json'),
-    'modis_vi':os.path.join(configs_assets_folder, 'modis_vegetation.json')
+    'modis_vi':os.path.join(configs_assets_folder, 'modis_vegetation_indices.json')
 }
 
 parameters = {}
@@ -129,9 +104,11 @@ for file_path in remove:
     else:
         print(f"File not found: {file_path}")
 
+
 ##### Data repository #####
 # create the list of files that will be part of the geospatial data repository
 input = []
+
 
 # (1) 'cams'
 for v in variables['cams']:
@@ -190,14 +167,14 @@ for v in variables['glwd']:
 # (13) clms
 for v in variables['clms']:
     input = input + [os.path.join(download_folder, parameters['clms']['type'], v['name']+'.tif')]
+
 # (14) Modis vegetation index
 for vrbs in variables['modis_vi']:
     year_list = [str(year) for year in range(int(parameters['modis_vi']["start_year"]), int(parameters['modis_vi']["end_year"]) + 1)]
     year_list = list(set(year_list) & set(years))
-    file_lists = get_links(vrbs['url'], year_list)
-    for k,v in file_lists.items():
-        for file in v:
-            input = input + [os.path.join(download_folder, parameters['modis_vi']['type'], vrbs['name'], 'ndvi', str(k), str(file)+'.tif')]
+    for y in year_list:
+        input = input + [os.path.join(download_folder, parameters['modis_vi']['type'], vrbs['name'], str(y)+'.nc')]
+
 
 neighborhood = []
 # (11) copernicus_dem
@@ -211,8 +188,9 @@ for v in variables['copernicus_dem']:
         
 
 input = input + neighborhood
-print(input)
 
+print(input)
+print(parameters['modis_vi'])
 
 # Define a single rule all that includes inputs
 rule all:
@@ -355,17 +333,23 @@ rule get_clms:
         "python workflows/simple_download_tif.py {params.file} {params.name} > log_{params.name}.log 2>&1"
 
 # Define rule MODIS Vegetation Index Products (NDVI and EVI)
-rule get_modis_vi: 
+
+#year_list = [str(year) for year in range(int(parameters['modis_vi']["start_year"]), int(parameters['modis_vi']["end_year"]) + 1)]
+#    year_list = list(set(year_list) & set(years))
+#    for y in year_list:
+#        input = input + [os.path.join(download_folder, parameters['modis_vi']['type'], vrbs['name'], str(y)+'.nc')]
+
+rule get_modis_vi:
     output:
-        os.path.join(download_folder, parameters['modis_vi']['type'],'{name}','{vi}','{year}', '{datum}.tif')
+        os.path.join(download_folder, parameters['modis_vi']['type'],'{name}','{year}.nc')
     params:
         file=files['modis_vi'],
+        type = parameters['modis_vi']['type'],
         name = "{name}", 
-        vi = "{vi}",
-        year = "{year}",
-        datum = "{datum}"
+        year = "{year}"
     shell:
-        "python workflows/modis_vi.py {params.file} {params.name} {params.datum} > log_{params.name}_{params.vi}_{params.datum}.log 2>&1"
+        "python workflows/modis_vi.py {params.file} {params.name} {params.year} > log_{params.type}_{params.name}_{params.year}.log 2>&1"
+
 
 # Define rule Neighborhood
 ruleorder: get_copernicus_odata > get_neighborhood
@@ -381,6 +365,3 @@ rule get_neighborhood:
         file=files['copernicus_dem']
     shell:
         "python workflows/neighborhood.py {params.file} {params.var} {params.mode} > log_{params.var}_{params.mode}.log 2>&1"
-
-
-
