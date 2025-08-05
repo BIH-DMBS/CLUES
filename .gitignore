@@ -5,6 +5,7 @@ playground/
 configs_sources_test/
 *.pyc
 **/__pycache__
+*/__pycache__
 .snakemake
 *.log
 *.mp4

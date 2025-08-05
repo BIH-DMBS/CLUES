@@ -402,7 +402,7 @@ def get_asset_wms(json_file, vOI):
         f.write(map_request.read())
 '''
 
-def get_resolution(wms, bbox):
+def get_resolution(wms, layer, bbox):
     # Calculate the bounding box width and height in degrees
     bbox_width_degrees = bbox[2] - bbox[0]
     bbox_height_degrees = bbox[3] - bbox[1]
@@ -413,7 +413,7 @@ def get_resolution(wms, bbox):
 
     # Get the MinScaleDenominator from WMS, use default if not found
     try:
-        min_scale_denominator_element = wms[variable['name']].min_scale_denominator
+        min_scale_denominator_element = wms[layer].min_scale_denominator
         min_scale_denominator = float(min_scale_denominator_element.text)
     except:
         min_scale_denominator = 236235.119048  # Default value
@@ -424,8 +424,8 @@ def get_resolution(wms, bbox):
     return bbox_width_degrees, bbox_height_degrees, bbox_width_meters, bbox_height_meters, resolution
 
 
-def get_resolution_rescale(wms, bbox, max_tile_size):
-    bbox_width_degrees, bbox_height_degrees, bbox_width_meters, bbox_height_meters, resolution = get_resolution(wms, bbox)
+def get_resolution_rescale(wms, layer, bbox, max_tile_size):
+    bbox_width_degrees, bbox_height_degrees, bbox_width_meters, bbox_height_meters, resolution = get_resolution(wms, layer, bbox)
 
     # Compute original image size in pixels
     width_pixels = bbox_width_meters / resolution
@@ -539,6 +539,7 @@ def get_asset_wms(json_file, vOI):
     for v in parameters['variables']:
         if v['name']==vOI:
             variable = v
+            layer = v['layer']
             break
     print(parameters)
     print(variable)
@@ -563,7 +564,7 @@ def get_asset_wms(json_file, vOI):
     bbox = resize_bbox(wms, bbox, max_tile_size)
     print(bbox)
 
-    bbox_width_degrees, bbox_height_degrees, bbox_width_meters, bbox_height_meters, resolution = get_resolution(wms, bbox, max_tile_size)
+    bbox_width_degrees, bbox_height_degrees, bbox_width_meters, bbox_height_meters, resolution = get_resolution(wms, layer, bbox, max_tile_size)
   
     # Calculate the image width and height in pixels
     width = int(bbox_width_meters / resolution)
@@ -633,19 +634,21 @@ def copenicus_corine(json_file, vOI):
             layer = v['layer']
             layer_name = v['name']
             break
+    print(layer)
 
     wms = WebMapService(wms_url, version='1.3.0')
     # the bbox must be reordered for this service
     bbox = [parameters['bbox'][i] for i in [1,2,3,0]] # copernicus and eoc use a different order of bbox parameters['bbox'],
     
-    bbox_width_degrees, bbox_height_degrees, bbox_width_meters, bbox_height_meters, resolution = get_resolution(wms, bbox)
+    bbox_width_degrees, bbox_height_degrees, bbox_width_meters, bbox_height_meters, resolution = get_resolution(wms, layer, bbox)
+
 
     # Calculate the image width and height in pixels
     width = int(bbox_width_meters / resolution)
     height = int(bbox_height_meters / resolution)
 
     # Define the maximum tile size: toDo shift to config source file
-    max_tile_size = 4000
+    max_tile_size = 1024
 
     # Calculate the number of tiles needed
     num_tiles_x = int(np.ceil(width / max_tile_size))
@@ -662,6 +665,7 @@ def copenicus_corine(json_file, vOI):
     # Download each tile and paste it into the final image
     for i in range(num_tiles_x):
         for j in range(num_tiles_y):
+            png_file = os.path.join(tmp_dir,f'result{i,j}.png')
             tile_bbox = [
                 bbox[0] + i * (bbox_width_degrees / num_tiles_x),
                 bbox[1] + j * (bbox_height_degrees / num_tiles_y),
@@ -671,10 +675,13 @@ def copenicus_corine(json_file, vOI):
             # Calculate the bounding box width in meter
             bbox_width_meters = (tile_bbox[2] - tile_bbox[0]) * 111320 
             bbox_height_meters = (tile_bbox[3] - tile_bbox[1]) * 111320 
-            tile_width = bbox_width_meters / resolution
-            tile_height = bbox_height_meters / resolution
+            tile_width = int(bbox_width_meters / resolution)
+            tile_height =int( bbox_height_meters / resolution)
             print(tile_bbox)
+            print(tile_width)
+            print(tile_height)
             retry_count = 0
+
             while retry_count < max_retries:
                 map_request = wms.getmap(
                     layers=[layer],
@@ -707,8 +714,17 @@ def copenicus_corine(json_file, vOI):
                         count=3, dtype=img_array.dtype,
                         crs='EPSG:4326', transform=transform
                     ) as dst:
-                        for k in range(1, 4):
-                            dst.write(img_array[:, :, k-1], k)
+                        try:
+                            if img_array.ndim == 2:
+                                # Write the same band 3 times
+                                for k in range(1, 4):
+                                    dst.write(img_array, k)
+                            else:
+                                # RGB image
+                                for k in range(1, 4):
+                                    dst.write(img_array[:, :, k-1], k)
+                        except Exception as e:
+                            print(f"An error occurred: {e}")
                     os.remove(png_file)
                 break
 
@@ -742,7 +758,7 @@ def copenicus_corine(json_file, vOI):
     
     for geotiff_file in geotiff_files:
         os.remove(geotiff_file)
-         #print(f"Merged GeoTIFF saved as {output_file}")
+        print(f"Merged GeoTIFF saved as {file_path}")
 
 
 def spei_download(json_file,variableOI):

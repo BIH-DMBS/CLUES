@@ -8,4 +8,5 @@ import utils
 if __name__ == "__main__":
     json_file = sys.argv[1]
     vOI = sys.argv[2]
+    print(json_file)
     utils.copenicus_corine(json_file, vOI)
