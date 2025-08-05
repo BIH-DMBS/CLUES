@@ -45,7 +45,8 @@ files = {
     'ntl':os.path.join(configs_assets_folder, 'ntl.json'),
     'glwd':os.path.join(configs_assets_folder, 'hydrosheds_GLWD.json'),
     'clms':os.path.join(configs_assets_folder, 'copernicus_dynamic_land_cover.json'),
-    'modis_vi':os.path.join(configs_assets_folder, 'modis_vegetation_indices.json')
+    'modis_vi':os.path.join(configs_assets_folder, 'modis_vegetation_indices.json'),
+    'global_treecover':os.path.join(configs_assets_folder, 'treecover_global.json')
 }
 
 parameters = {}
@@ -56,6 +57,7 @@ for key, file in files.items():
 variables = {}
 for key, p in parameters.items():
     variables[key] = [v for v in p['variables']]
+
 
 # some of the years may be requested to be updated with the current data available
 # gather a list of the files that need to be removed therefore
@@ -91,6 +93,7 @@ for file_path in remove:
         print(f"Deleted: {file_path}")
     else:
         print(f"File not found: {file_path}")
+
 
 ##### Data repository #####
 # create the list of files that will be part of the geospatial data repository
@@ -161,6 +164,10 @@ for vrbs in variables['modis_vi']:
     for y in year_list:
         input = input + [os.path.join(download_folder, parameters['modis_vi']['type'], vrbs['name'], str(y)+'.nc')]
 
+#(15) Treecover global
+for vrbs in variables['global_treecover']:
+    print(vrbs)
+    input = input + [os.path.join(download_folder, parameters['global_treecover']['type'], vrbs['name'],'done.flag')]
 
 neighborhood = []
 # (11) copernicus_dem
@@ -174,6 +181,7 @@ for v in variables['copernicus_dem']:
         
 
 input = input + neighborhood
+
 print(input)
 
 # Define a single rule all that includes inputs
@@ -333,6 +341,17 @@ rule get_modis_vi:
         year = "{year}"
     shell:
         "python workflows/modis_vi.py {params.file} {params.name} {params.year} > log_{params.type}_{params.name}_{params.year}.log 2>&1"
+
+rule get_global_treecover:
+    output:
+        os.path.join(download_folder, parameters['global_treecover']['type'], '{name}','done.flag')
+    params:
+        file=files['global_treecover'],
+        type = parameters['global_treecover']['type'],
+        name = "{name}",
+    shell:
+        "python workflows/global_treecover.py {params.file} {params.name} > log_{params.type}_{params.name}.log 2>&1"
+
 
 
 # Define rule Neighborhood
