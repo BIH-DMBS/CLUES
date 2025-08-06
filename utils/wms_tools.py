@@ -3,7 +3,11 @@ import json
 
 def get_eoc_atmosphere_config_json():
     url = "https://geoservice.dlr.de/eoc/atmosphere/wms"
-    wms = WebMapService(url, version='1.3.0')
+    try:
+        wms = WebMapService(url, version='1.3.0')
+    except Exception as e:
+        print(f"Error connecting to WMS service: {e}")
+        return
     # Iterate over the layers and print their metadata
     items = []
     for layer_name, layer in wms.contents.items():
@@ -27,9 +31,12 @@ def get_eoc_atmosphere_config_json():
         "variables":items,
     }
 
-    # Write to a text file
-    with open('EOC_Atmosphere_Coverage_Service.json', 'w') as file:
-        json.dump(eoc_atmosphere, file, indent=4)
+    try:
+        # Write to a text file
+        with open('EOC_Atmosphere_Coverage_Service.json', 'w') as file:
+            json.dump(eoc_atmosphere, file, indent=4)
+    except Exception as e:
+        print(f"Error writing to file: {e}")
 
 
 def get_eoc_elevation_map_service_config_json():
@@ -69,11 +76,12 @@ def get_eoc_elevation_map_service_config_json():
         "crs":"EPSG:4326",
         "variables":items,
     }
-
-    # Write to a text file
-    with open('EOC_Elevation_Map_Service.json', 'w') as file:
-        json.dump(eoc_elevation, file, indent=4)
-
+    try:
+        # Write to a text file
+        with open('EOC_Elevation_Map_Service.json', 'w') as file:
+            json.dump(eoc_elevation, file, indent=4)
+    except Exception as e:
+        print(f"Error writing to file: {e}")
 
 def get_eoc_land_map_service_config_json():
     not_of_interest = [
@@ -167,7 +175,9 @@ def get_eoc_land_map_service_config_json():
         "crs":"EPSG:4326",
         "variables":items,
     }
-
-    # Write to a text file
-    with open('EOC_Land_Map_Service.json', 'w') as file:
-        json.dump(eoc_land, file, indent=4)
+    try:
+        # Write to a text file
+        with open('EOC_Land_Map_Service.json', 'w') as file:
+            json.dump(eoc_land, file, indent=4)
+    except Exception as e:
+        print(f"Error writing to file: {e}")

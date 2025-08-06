@@ -57,8 +57,10 @@ def rename_coords(ds):
 def create_netcdf_from_geotiffs(tiff_directory, output_nc_file):
     # given a folder that contains geoTiff files merge them all together in one netCDF file
     # List all GeoTIFF files in the directory
-    tiff_files = glob.glob(os.path.join(tiff_directory, '*.tif'))
-
+    try:
+        tiff_files = glob.glob(os.path.join(tiff_directory, '*.tif'))
+    except Exception as e:
+        print(f"An error occurred: {e}")
     # Initialize lists to store data, times, and coordinates
     data_arrays = []
     times = []
@@ -88,41 +90,130 @@ def create_netcdf_from_geotiffs(tiff_directory, output_nc_file):
                 times.append(hours_since_reference)
                 # Append the data array
                 data_arrays.append(data)
-        except:
-            pass
-
+        except rasterio.errors.RasterioError as e:
+            print(f"Rasterio error occurred while processing {tiff_file}: {e}")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+    
     # Stack the data arrays along a new time dimension
     try:
         data_stack = np.stack(data_arrays, axis=0)
-    except ValueError as e: #if all tiffs are empty
+    except ValueError as e:
         if str(e) == 'need at least one array to stack':
             # Write an empty .nc file
             with nc.Dataset(output_nc_file, 'w', format='NETCDF4') as ds:
                 pass  # Creating an empty netCDF file
             # Write a .txt file with the message
-            with open(output_nc_file+'txt', 'w') as txt_file:
+            with open(output_nc_file + 'txt', 'w') as txt_file:
                 txt_file.write('no data available from source')
+            return
+        elif str(e) == 'all input arrays must have the same shape':
+            print("Error: All input arrays must have the same shape.")
+            return
+        else:
+            print(f"Unexpected error while stacking data arrays: {e}")
             return
 
     # Create an xarray DataArray
-    data_array = xr.DataArray(data_stack, coords=[times, lat, lon], dims=['valid_time', 'latitude', 'longitude'])
+    try:
+        data_array = xr.DataArray(data_stack, coords=[times, lat, lon], dims=['valid_time', 'latitude', 'longitude'])
+    except Exception as e:
+        print(f"An error occurred: {e}")
     # Set the time unit attribute
     data_array.coords['valid_time'].attrs['units'] = 'hours since 1900-01-01 00:00:00.0'
     # Create an xarray Dataset
     dataset = xr.Dataset({'variable': data_array})
     # Save the Dataset to a NetCDF file
-    dataset.to_netcdf(output_nc_file)
+    try:
+        dataset.to_netcdf(output_nc_file)
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 
 def get_parameter(parameters_jsonfile, bbox_jsonfile):
     # read json file that describes a geospatial datasource and parse the content so that it can be used 
     # to init the downloads 
+    try:
+        with open(os.path.join(configs_assets_folder, parameters_jsonfile), 'r') as file:
+            parameters = json.load(file)
+    except FileNotFoundError:
+        print(f"Error: The configuration file '{parameters_jsonfile}' was not found.")
+        return None
+    except PermissionError:
+        print(f"Error: Insufficient permissions to access the file '{parameters_jsonfile}'.")
+        return None
+    except json.JSONDecodeError:
+        print(f"Error: The file '{parameters_jsonfile}' contains invalid JSON.")
+        return None
+
+    if "start_year" not in parameters:
+
+        if parameters['type'] not in ['MODIS_Vegetation_Index_Products', 'spei_drought_index', 'Night_Time_Lights_(NTL)', 'Global_Lakes_and_Wetlands_Database_(GLWD)', 'WordSettlementFootprint3D']:
+            parameters["start_year"] = datetime.fromisoformat(parameters["start_year"] + "-01-01")
+            if parameters["end_year"] == "ongoing":
+                parameters["end_year"] = datetime.now() - timedelta(1)
+            else:
+                parameters["end_year"] = datetime.fromisoformat(parameters["end_year"] + "-12-31")
+
+            times = [time(i, 0).strftime('%H:%M') for i in range(0, 24, int(parameters["delta_t_in_h"]))]
+            days = [str(i) for i in range(1, 31)]
+            months = [str(i) for i in range(1, 13)]
+            years = [str(i) for i in range(parameters["start_year"].year, parameters["end_year"].year)]
+
+            parameters["times"] = times
+            parameters["days"] = days
+            parameters["months"] = months
+            parameters["years"] = years
+
+    for v in parameters['variables']:
+        if 'temporal_dimension' in v.keys():
+            # Parse the interval string
+            start_str, end_str, period_str = v['temporal_dimension'].split('/')
+            # Convert start and end strings to datetime objects
+            start_date = datetime.fromisoformat(start_str.replace('Z', '+00:00'))
+            end_date = datetime.fromisoformat(end_str.replace('Z', '+00:00'))
+            # Calculate the interval
+            if period_str == 'P1D':
+                delta = timedelta(days=1)
+            elif period_str == 'P1M':
+                delta = relativedelta(months=1)
+            else:
+                raise ValueError("Unsupported period format")
+            # Generate the list of dates
+            current_date = start_date
+            date_list = []
+
+            while current_date <= end_date:
+                date_list.append(current_date.isoformat().replace('+00:00', 'Z'))
+                current_date += delta
+            v['date_list'] = date_list
+
+    try:
+        with open(os.path.join(config_folder, bbox_jsonfile), 'r') as file:
+            bbox = json.load(file)
+    except FileNotFoundError:
+        print(f"Error: The configuration file '{bbox_jsonfile}' was not found.")
+        return None
+    except PermissionError:
+        print(f"Error: Insufficient permissions to access the file '{bbox_jsonfile}'.")
+        return None
+    except json.JSONDecodeError:
+        print(f"Error: The file '{bbox_jsonfile}' contains invalid JSON.")
+        return None
+
+    if area not in bbox:
+        print(f"Error: Missing required key '{area}' in bbox.")
+        return None
+
+    parameters["bbox"] = bbox[area]
+
+    return parameters
      
     with open(os.path.join(configs_assets_folder, parameters_jsonfile), 'r') as file:
         parameters = json.load(file)
     if "start_year" in parameters:
-        #if (parameters['type'] != 'MODIS Vegetation Index Products') and (parameters['type'] != 'spei_drought_index') and (parameters['type'] != 'Night_Time_Lights_(NTL)') and (parameters['type'] != 'Global_Lakes_and_Wetlands_Database_(GLWD)'): #cdsapi sources (if not wms or wcs is used)
-        if parameters['type'] not in ['MODIS_Vegetation_Index_Products','spei_drought_index','Night_Time_Lights_(NTL)', 'Global_Lakes_and_Wetlands_Database_(GLWD)','WordSettlementFootprint3D']: #cdsapi sources (if not wms or wcs is used)
+       if parameters['type'] not in ['MODIS_Vegetation_Index_Products','spei_drought_index','Night_Time_Lights_(NTL)', 'Global_Lakes_and_Wetlands_Database_(GLWD)','WordSettlementFootprint3D']: 
+        #cdsapi sources (if not wms or wcs is used)
             parameters["start_year"] = datetime.fromisoformat(parameters["start_year"] + "-01-01")
             if parameters["end_year"] == "ongoing":
                 parameters["end_year"] = datetime.now() - timedelta(1)
@@ -176,8 +267,11 @@ def get_parameter(parameters_jsonfile, bbox_jsonfile):
 def get_asset_atmosphere(json_file, year, variable):
     # use cdsapi to download data
     # check: https://ads.atmosphere.copernicus.eu/api-how-to
-    parameters = get_parameter(json_file,'bbox.json')
-    file_path = os.path.join(download_folder, parameters['source'], variable, year + '.nc')
+    try:
+        parameters = get_parameter(json_file,'bbox.json')
+        file_path = os.path.join(download_folder, parameters['source'], variable, year + '.nc')
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
     # Extract the directory path from the file path
     directory_path = os.path.dirname(file_path)
@@ -190,16 +284,25 @@ def get_asset_atmosphere(json_file, year, variable):
     if os.path.exists(file_path):
         return
 
-    # Create a client for the CDS API
-    file = os.path.join(secrets_folder, 'cdsapirc_atmo.sct')
+    try:
+        # Create a client for the CDS API
+        file = os.path.join(secrets_folder, 'cdsapirc_atmo.sct')
+        with open(file, 'r') as f:
+                credentials = yaml.safe_load(f)
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
-    with open(file, 'r') as f:
-            credentials = yaml.safe_load(f)
+    try:
+        # get the client
+        c = cdsapi.Client(url=credentials['url'], key=credentials['key'])
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
-    # get the credentials
-    c = cdsapi.Client(url=credentials['url'], key=credentials['key'])
     date = year+'-01-01/'+year+'-12-31'
-    variable_dict = next((var for var in parameters["variables"] if var["name"] == variable), None)
+    try:
+        variable_dict = next((var for var in parameters["variables"] if var["name"] == variable), None)
+    except Exception as e:
+        print(f"An error occurred: {e}")
     # model_level is present for assets that can be monitored at different altitudes
     try:
         if 'model_level' in variable_dict:
@@ -227,60 +330,60 @@ def get_asset_atmosphere(json_file, year, variable):
                 file_path)
     except Exception as e:
         # Print the exception
-        if "Request has not produced a valid combination of values, please check your selection." in str(e):            
-            with open(file_path, 'a') as file:
-                file.write(f"An error occurred: {e}\n")
-            
-            file_path_err = file_path+'.error'
-            with open(file_path_err, 'a') as file:
-                file.write(f"An error occurred: {e}\n")
-
-
         print(f"An error occurred: {e}")
 
     print('file:' + file_path + ' saved')
     
+    # sleep for 10 seconds to ensure that there are no conflicts with another download 
     sleep(10)
-    print('10 seconds passed!!!!!!!!!')
 
 
 
 def get_asset_climate(json_file, year, variable):
-    parameters = get_parameter(json_file,'bbox.json')
-    file_path = os.path.join(download_folder, parameters['source'], variable, year + '.nc')
+    try:
+        parameters = get_parameter(json_file,'bbox.json')
+        file_path = os.path.join(download_folder, parameters['source'], variable, year + '.nc')
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
     # Extract the directory path from the file path
     directory_path = os.path.dirname(file_path)
 
-    # Check if the directory exists, and create it if it doesn't
     if not os.path.exists(directory_path):
-        os.makedirs(directory_path)
+        try:
+        # Check if the directory exists, and create it if it doesn't
+            os.makedirs(directory_path)
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
     # return if result file already exists
     if os.path.exists(file_path):
         return
-    
-    # Create a client for the CDS API
-    file = os.path.join(secrets_folder, 'cdsapirc_climate.sct')
 
-    with open(file, 'r') as f:
+    try:
+        # Create a client for the CDS API
+        file = os.path.join(secrets_folder, 'cdsapirc_climate.sct')
+        with open(file, 'r') as f:
             credentials = yaml.safe_load(f)
-
-    c = cdsapi.Client(url=credentials['url'], key=credentials['key'])
-
-    c.retrieve(
-        parameters['source'],
-        {
-            'product_type': 'reanalysis',
-            'format': parameters['format'],
-            'year': year,
-            'month': parameters['months'],
-            'day': parameters['days'],
-            'time': parameters['times'],
-            'area': parameters['bbox'],
-            'variable': [variable],
-        },
-        file_path)
+    except Exception as e:
+            print(f"An error occurred: {e}")
+    try:
+        c = cdsapi.Client(url=credentials['url'], key=credentials['key'])
+        c.retrieve(
+            parameters['source'],
+            {
+                'product_type': 'reanalysis',
+                'format': parameters['format'],
+                'year': year,
+                'month': parameters['months'],
+                'day': parameters['days'],
+                'time': parameters['times'],
+                'area': parameters['bbox'],
+                'variable': [variable],
+            },
+            file_path)
+    except Exception as e:
+            print(f"An error occurred: {e}")
 
 
 def connect_wms(url, version='1.3.0', retries=3, delay=5):
@@ -345,62 +448,24 @@ def get_asset_wms_year(json_file, variableOI, year):
             )
             with open(file_path, 'wb') as f:
                 f.write(map_request.read())
-        except:
+        except Exception as e:
+            print(f"An error occurred: {e}")
             # Create an empty file
             with open(file_path, 'w') as file:
                 pass
 
     print('transform into netCDF'+variable['name']+ ' for year '+str(year))
     file_path = os.path.join(download_folder, parameters['source'], variable['name'],str(year)+'.nc')
-    #file_path_tmp = os.path.join(download_folder, parameters['source'], variable['name'],str(year)+'_tmp.nc')
-    create_netcdf_from_geotiffs(data_folder,file_path)
-    shutil.rmtree(data_folder) # delete tiffs by removing tmp folder 
+    try:
+        create_netcdf_from_geotiffs(data_folder,file_path)    
+    except Exception as e:
+            print(f"An error occurred: {e}")
+    try:
+        shutil.rmtree(data_folder) # delete tiffs by removing tmp folder 
+    except Exception as e:
+            print(f"An error occurred: {e}")
     print('download '+variable['name']+ ' for year '+str(year)+' completed')
 
-    #with xr.open_dataset(file_path_tmp) as ds:
-    #    ds_eoc_harmonized = rename_coords(ds)  # Rename coordinates
-    #    ds_eoc_harmonized.to_netcdf(file_path)  # Save final dataset
-
-    #os.remove(file_path_tmp)
-
-
-'''
-def get_asset_wms(json_file, vOI):
-    parameters = get_parameter(json_file,'bbox.json')
-    for v in parameters['variables']:
-        if v['name']==vOI:
-            variable = v
-            break
-    
-    if parameters['type'] == 'wms_multiserver': 
-        # download copernicus land else: eoc_land_map
-        url = variable['url']
-        name = variable['name']
-    elif parameters['type'] == 'wms':
-        url = parameters["link"] 
-        name = [variable['name']]
-    
-
-    # Check if the directory exists, and create it if it doesn't
-    if not os.path.exists(os.path.join(download_folder, parameters['source'])):
-        os.makedirs(os.path.join(download_folder, parameters['source']))
-    file_path = os.path.join(download_folder, parameters['source'], variable['name'] +'.tif')
-    if os.path.exists(file_path):
-        print('tif exists')
-        return
-    wms = WebMapService(url, version='1.3.0')
-    map_request = wms.getmap(
-        layers=[variable['name']],
-        srs=parameters['crs'],
-        bbox = [parameters['bbox'][i] for i in [1,2,3,0]], # copernicus and eoc use a different order of bbox parameters['bbox'],
-        size = (4000,4000),
-        #size = (variable['width'],variable['height']),
-        format=parameters['format'],
-    )
-    
-    with open(file_path, 'wb') as f:
-        f.write(map_request.read())
-'''
 
 def get_resolution(wms, layer, bbox):
     # Calculate the bounding box width and height in degrees
@@ -415,7 +480,8 @@ def get_resolution(wms, layer, bbox):
     try:
         min_scale_denominator_element = wms[layer].min_scale_denominator
         min_scale_denominator = float(min_scale_denominator_element.text)
-    except:
+    except Exception as e:
+        print(f"An error occurred: {e}")
         min_scale_denominator = 236235.119048  # Default value
 
     # Calculate resolution in meters per pixel
@@ -464,7 +530,10 @@ def resize_bbox(wms, bbox, max_tile_size):
 
 def merge_neighborhood(num_rows, num_cols, input_dir ,output_dir, name):
     # Define input directory and output directory
-    os.makedirs(output_dir, exist_ok=True)
+    try:
+        os.makedirs(output_dir, exist_ok=True)
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
     # Function to get neighboring files
     def get_neighbors(i, j):
@@ -482,22 +551,30 @@ def merge_neighborhood(num_rows, num_cols, input_dir ,output_dir, name):
             # Open the raster files
             src_files_to_mosaic = []
             for fp in files_to_merge:
-                if os.path.exists(fp):  # Check if file exists
-                    src = rasterio.open(fp)
-                    src_files_to_mosaic.append(src)
+                try:
+                    if os.path.exists(fp):  # Check if file exists
+                        src = rasterio.open(fp)
+                        src_files_to_mosaic.append(src)
+                except Exception as e:
+                    print(f"An error occurred: {e}")
 
             if src_files_to_mosaic:
                 # Merge the rasters
-                mosaic, out_trans = merge(src_files_to_mosaic)
-
+                try:
+                    mosaic, out_trans = merge(src_files_to_mosaic)
+                except Exception as e:
+                    print(f"An error occurred: {e}")
                 # Copy metadata from one of the source files
-                out_meta = src_files_to_mosaic[0].meta.copy()
-                out_meta.update({
-                    "driver": "GTiff",
-                    "height": mosaic.shape[1],
-                    "width": mosaic.shape[2],
-                    "transform": out_trans
-                })
+                try:
+                    out_meta = src_files_to_mosaic[0].meta.copy()
+                    out_meta.update({
+                        "driver": "GTiff",
+                        "height": mosaic.shape[1],
+                        "width": mosaic.shape[2],
+                        "transform": out_trans
+                    })
+                except Exception as e:
+                    print(f"An error occurred: {e}")
 
                 # Extract raster properties
                 min_x = out_trans.c  # Top-left x (same as min_x)
@@ -513,37 +590,46 @@ def merge_neighborhood(num_rows, num_cols, input_dir ,output_dir, name):
                 print("Lower-left coordinates:", min_x, min_y)
 
                 # Save merged raster
-                with rasterio.open(output_filename, "w", **out_meta) as dest:
-                    dest.write(mosaic)
+                try:
+                    with rasterio.open(output_filename, "w", **out_meta) as dest:
+                        dest.write(mosaic)
 
-                print(f"Merged {len(src_files_to_mosaic)} files into {output_filename}")
-
+                    print(f"Merged {len(src_files_to_mosaic)} files into {output_filename}")
+                except Exception as e:
+                    print(f"An error occurred while saving the merged raster: {e}")
                 # Close all source files
-                for src in src_files_to_mosaic:
-                    src.close()
-    from datetime import datetime
-
+                try:
+                    for src in src_files_to_mosaic:
+                        src.close()
+                except Exception as e:
+                    print(f"An error occurred while closing source files: {e}")
+    
     # Get the current timestamp
     current_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     flag_filename = os.path.join(output_dir, "done.txt")
     # Write the timestamp to a text file
-    with open(flag_filename, "w") as file:
-        file.write("Data was downloaded: ")
-        file.write(current_timestamp)
-
+    try:
+        with open(flag_filename, "w") as file:
+            file.write("Data was downloaded: ")
+            file.write(current_timestamp)
+    except Exception as e:
+        print(f"An error occurred while writing the flag file: {e}")
+        
 
 def get_asset_wms(json_file, vOI):
+    try:
+        parameters = get_parameter(json_file,'bbox.json')
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    try:
+        for v in parameters['variables']:
+            if v['name']==vOI:
+                variable = v
+                layer = v['layer']
+                break
+    except Exception as e:
+        print(f"An error occurred: {e}")
     
-    parameters = get_parameter(json_file,'bbox.json')
-    print(vOI)
-    for v in parameters['variables']:
-        if v['name']==vOI:
-            variable = v
-            layer = v['layer']
-            break
-    print(parameters)
-    print(variable)
-
     if parameters['type'] == 'wms_multiserver': 
         # download copernicus land else: eoc_land_map
         url = variable['url']
@@ -554,7 +640,11 @@ def get_asset_wms(json_file, vOI):
     
     output_dir = os.path.join(download_folder, parameters['source'], variable['name'])
     
-    wms = WebMapService(url, version='1.3.0')
+    try:
+        wms = WebMapService(url, version='1.3.0')
+    except Exception as e:
+        print(f"An error occurred while connecting to WMS: {e}")
+        return
     
     # Define the maximum tile size: toDo shift to config source file
     max_tile_size = 4000
@@ -620,28 +710,47 @@ def get_asset_wms(json_file, vOI):
                     with open(geotiff_file, 'wb') as f:
                         f.write(map_request.read())
                     break
-    
-    merge_neighborhood(num_tiles_x, num_tiles_y, tmp_dir , output_dir, variable['name'])
-    shutil.rmtree(tmp_dir)
+    try:
+        merge_neighborhood(num_tiles_x, num_tiles_y, tmp_dir , output_dir, variable['name'])
+    except Exception as e:
+        print(f"An error occurred while merging neighborhood: {e}")
+    try:
+        shutil.rmtree(tmp_dir)
+    except Exception as e:
+        print(f"An error occurred while removing temporary directory: {e}")
 
 
 def copenicus_corine(json_file, vOI):
     # download coperbnicus corine
-    parameters = get_parameter(json_file,'bbox.json')
+    try:
+        parameters = get_parameter(json_file,'bbox.json')
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    # check if vOI is in parameters
+    if vOI not in [v['name'] for v in parameters['variables']]:
+        print(f"Variable {vOI} not found in parameters.")
+        return
     for v in parameters['variables']:
         if v['name']==vOI:
             wms_url = v['url']
             layer = v['layer']
             layer_name = v['name']
             break
-    print(layer)
 
-    wms = WebMapService(wms_url, version='1.3.0')
+    # Define the WMS URL and layer name
+    try:
+        wms = WebMapService(wms_url, version='1.3.0')
+    except Exception as e:
+        print(f"An error occurred while connecting to WMS: {e}")
+        return
     # the bbox must be reordered for this service
     bbox = [parameters['bbox'][i] for i in [1,2,3,0]] # copernicus and eoc use a different order of bbox parameters['bbox'],
     
-    bbox_width_degrees, bbox_height_degrees, bbox_width_meters, bbox_height_meters, resolution = get_resolution(wms, layer, bbox)
-
+    try:
+        bbox_width_degrees, bbox_height_degrees, bbox_width_meters, bbox_height_meters, resolution = get_resolution(wms, layer, bbox)
+    except Exception as e:
+        print(f"An error occurred while getting resolution: {e}")
+        return
 
     # Calculate the image width and height in pixels
     width = int(bbox_width_meters / resolution)
@@ -661,7 +770,11 @@ def copenicus_corine(json_file, vOI):
     max_retries = 20
     tmp_dir = os.path.join(tmp_folder,f'tmp_{vOI}')
     png_file = os.path.join(tmp_dir,'result.png')
-    os.makedirs(tmp_dir, exist_ok=True)
+    try:
+        os.makedirs(tmp_dir, exist_ok=True)
+    except Exception as e:
+        print(f"An error occurred while creating temporary directory: {e}")
+        return
     # Download each tile and paste it into the final image
     for i in range(num_tiles_x):
         for j in range(num_tiles_y):
@@ -677,9 +790,6 @@ def copenicus_corine(json_file, vOI):
             bbox_height_meters = (tile_bbox[3] - tile_bbox[1]) * 111320 
             tile_width = int(bbox_width_meters / resolution)
             tile_height =int( bbox_height_meters / resolution)
-            print(tile_bbox)
-            print(tile_width)
-            print(tile_height)
             retry_count = 0
 
             while retry_count < max_retries:
@@ -697,124 +807,210 @@ def copenicus_corine(json_file, vOI):
                     sleep(1)  # Wait for 1 second before retrying
                     print('retry')
                 else:
-                    with open(png_file, 'wb') as f:
-                        f.write(map_request.read())
+                    try:
+                        with open(png_file, 'wb') as f:
+                            f.write(map_request.read())
+                    except Exception as e:
+                        print(f"An error occurred while writing PNG file: {e}")
+                        return    
                     # Open the PNG file
                     with Image.open(png_file) as img:
-                        img_array = np.array(img)       
-                    transform = rasterio.transform.from_bounds(
+                        img_array = np.array(img)
+                    try:
+                        transform = rasterio.transform.from_bounds(
                             *tile_bbox, width=tile_width, height=tile_height
-                        )
+                            )
+                    except Exception as e:
+                        print(f"An error occurred while creating transform: {e}")
+                        return
                     # Save as GeoTIFF
                     geotiff_file = os.path.join(tmp_dir, f"{i}_{j}_result.tif")
                     geotiff_files.append(geotiff_file)
-                    with rasterio.open(
-                        geotiff_file, 'w', driver='GTiff',
-                        height=tile_height, width=tile_width,
-                        count=3, dtype=img_array.dtype,
-                        crs='EPSG:4326', transform=transform
-                    ) as dst:
-                        try:
-                            if img_array.ndim == 2:
-                                # Write the same band 3 times
-                                for k in range(1, 4):
-                                    dst.write(img_array, k)
-                            else:
-                                # RGB image
-                                for k in range(1, 4):
-                                    dst.write(img_array[:, :, k-1], k)
-                        except Exception as e:
-                            print(f"An error occurred: {e}")
-                    os.remove(png_file)
+                    try:
+                        with rasterio.open(
+                            geotiff_file, 'w', driver='GTiff',
+                            height=tile_height, width=tile_width,
+                            count=3, dtype=img_array.dtype,
+                            crs='EPSG:4326', transform=transform
+                        ) as dst:
+                            try:
+                                if img_array.ndim == 2:
+                                    # Write the same band 3 times
+                                    for k in range(1, 4):
+                                        dst.write(img_array, k)
+                                else:
+                                    # RGB image
+                                    for k in range(1, 4):
+                                        dst.write(img_array[:, :, k-1], k)
+                            except Exception as e:
+                                print(f"An error occurred: {e}")
+                    except Exception as e:
+                        print(f"An error occurred while writing GeoTIFF file: {e}")
+                        return
+                    try:
+                        os.remove(png_file)
+                    except Exception as e:
+                        print(f"An error occurred while removing PNG file: {e}")
+                        return
                 break
 
     # Open all GeoTIFF files
-    src_files_to_mosaic = []
-    for fp in geotiff_files:
-        src = rasterio.open(fp)
-        src_files_to_mosaic.append(rasterio.open(fp))
+    try:
+        src_files_to_mosaic = []
+        for fp in geotiff_files:
+            src = rasterio.open(fp)
+            src_files_to_mosaic.append(rasterio.open(fp))
+    except Exception as e:
+        print(f"An error occurred while opening GeoTIFF files: {e}")
+        return
 
-    # Merge the GeoTIFF files
-    mosaic, out_trans = merge(src_files_to_mosaic)
+    try:
+        # Merge the GeoTIFF files
+        mosaic, out_trans = merge(src_files_to_mosaic)
+    except Exception as e:
+        print(f"An error occurred while merging GeoTIFF files: {e}")
+        return
 
-    # Update the metadata
-    out_meta = src.meta.copy()
-    out_meta.update({
-        "driver": "GTiff",
-        "height": mosaic.shape[1],
-        "width": mosaic.shape[2],
-        "transform": out_trans,
-        "crs": src.crs
-    })
+    try:
+        # Update the metadata
+        out_meta = src.meta.copy()
+        out_meta.update({
+            "driver": "GTiff",
+            "height": mosaic.shape[1],
+            "width": mosaic.shape[2],
+            "transform": out_trans,
+            "crs": src.crs
+        })
+    except Exception as e:
+        print(f"An error occurred while updating metadata: {e}")
+        return
 
-    # Save the merged GeoTIFF
-    file_path = os.path.join(download_folder, parameters['type'], layer_name +'.tif')
-    with rasterio.open(file_path, "w", **out_meta) as dest:
-        dest.write(mosaic)
-
-    # Close all source files
-    for src in src_files_to_mosaic:
-        src.close()
-    
-    for geotiff_file in geotiff_files:
-        os.remove(geotiff_file)
-        print(f"Merged GeoTIFF saved as {file_path}")
+    try:
+        # Save the merged GeoTIFF
+        file_path = os.path.join(download_folder, parameters['type'], layer_name +'.tif')
+        with rasterio.open(file_path, "w", **out_meta) as dest:
+            dest.write(mosaic)
+            print(f"Merged GeoTIFF saved as {file_path}")
+    except Exception as e:
+        print(f"An error occurred while saving the merged GeoTIFF: {e}")
+        return
+    try:
+        # Close all source files
+        for src in src_files_to_mosaic:
+            src.close()
+    except Exception as e:
+        print(f"An error occurred while closing source files: {e}")
+        return
+    try:   
+        for geotiff_file in geotiff_files:
+            os.remove(geotiff_file)
+            print(f"Temporary file {geotiff_file} removed.")
+    except Exception as e:
+        print(f"An error occurred while removing temporary files: {e}")
+        return
 
 
 def spei_download(json_file,variableOI):
     # download drougth data
-    parameter = get_parameter(json_file,'bbox.json')
-    variableOI = int(variableOI)
-    urls = parameter['variables'][0]['urls']
-    url = [url for url in urls if f"spei{variableOI:02}.nc" in url]
-    response = requests.get(url[0])
+    try:
+        parameter = get_parameter(json_file,'bbox.json')
+        variableOI = int(variableOI)
+        urls = parameter['variables'][0]['urls']
+        url = [url for url in urls if f"spei{variableOI:02}.nc" in url]
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return
+    try:
+        response = requests.get(url[0])
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred while downloading the file: {e}")
+        return
     file_path_tmp = os.path.join(download_folder, parameter['type'], str(variableOI) +'_tmp.nc')
     file_path = os.path.join(download_folder, parameter['type'], str(variableOI) +'.nc')
+    
     if response.status_code == 200:
-        with open(file_path_tmp, 'wb') as file:
-            file.write(response.content)
+        try:
+            with open(file_path_tmp, 'wb') as file:
+                file.write(response.content)
 
-        # Open, process, and close the dataset using `with` to ensure closure
-        with xr.open_dataset(file_path_tmp) as ds:
-            ds_spei_harmonized = rename_coords(ds)  # Rename coordinates
-            ds_spei_harmonized.to_netcdf(file_path)  # Save final dataset
-        # Save harmonized datasets
-        os.remove(file_path_tmp)
+            # Open, process, and close the dataset using `with` to ensure closure
+            with xr.open_dataset(file_path_tmp) as ds:
+                ds_spei_harmonized = rename_coords(ds)  # Rename coordinates
+                ds_spei_harmonized.to_netcdf(file_path)  # Save final dataset
+            # Save harmonized datasets
+            os.remove(file_path_tmp)
+            print(f"File downloaded and saved as {file_path}")
+        except Exception as e:
+            print(f"An error occurred while processing the file: {e}")
 
 
 def get_simple_download_zip(json_file):
     # simple download of a zip file as for night time lights
     # after download extract the zip file content
-    parameter = get_parameter(json_file,'bbox.json')
+    try:
+        parameter = get_parameter(json_file,'bbox.json')
+        url = parameter['variables'][0]['url']
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return
     # URL of the zip file
-    url = parameter['variables'][0]['url']
 
     # Download the zip file
     file_path = os.path.join(download_folder, parameter['type'])
-    response = requests.get(url)
-    zip_file = zipfile.ZipFile(io.BytesIO(response.content))
+    # Create the directory if it does not exist
+    try:
+        os.makedirs(file_path, exist_ok=True)
+    except Exception as e:
+        print(f"An error occurred while creating the directory: {e}")
+        return
 
-    # Extract the contents of the zip file
-    zip_file.extractall(file_path)
-    print('NTL down')
+    try:
+        response = requests.get(url)
+        zip_file = zipfile.ZipFile(io.BytesIO(response.content))
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred while downloading the zip file: {e}")
+        return
+    except zipfile.BadZipFile as e:
+        print(f"An error occurred while reading the zip file: {e}")
+        return
+
+    try:
+        # Extract the contents of the zip file
+        zip_file.extractall(file_path)
+        print(f"Zip file downloaded and extracted to {file_path}")
+    except Exception as e:
+        print(f"An error occurred while extracting the zip file: {e}")
+        return
+
+    print('NTL download done.')
 
 
 def get_simple_download_tif(json_file, vOI):
-    # download directly ti files of interst from source
-    parameters = get_parameter(json_file,'bbox.json')
-    print(parameters)
-    for v in parameters['variables']:
-        if v['name']==vOI:
-            parameters['variables'] = v
-            break
-    print(parameters['variables'])
-    # Send a HTTP request to the URL
-    url = parameters['variables']['url']
-    response = requests.get(url)
-    
+    # download directly the files of interst from source
+    try:
+        parameters = get_parameter(json_file,'bbox.json')
+        for v in parameters['variables']:
+            if v['name']==vOI:
+                parameters['variables'] = v
+                break
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return
+    try:
+        # Send a HTTP request to the URL
+        url = parameters['variables']['url']
+        response = requests.get(url)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return
+        
     # Save the content of the response as a file
     file_path = os.path.join(download_folder, parameters['type'],parameters['variables']['name']+'.tif')
-    with open(file_path, 'wb') as f:
-        f.write(response.content)
+    try:
+        with open(file_path, 'wb') as f:
+            f.write(response.content)
+    except Exception as e:
+        print(f"An error occurred while saving the file: {e}")
+        return
 
     print("The GeoTIFF file has been downloaded and saved as '" + parameters['variables']['name']+'.tif' +"'.")

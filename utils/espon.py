@@ -186,11 +186,21 @@ def get_asset_espon(json_file, vOI, dim):
     # main method tp download data 
     # stores the the csv of the data in a folder taht is named aftre the dimension in the downloadfolder
     # im addition a second csv file is create(maintained that stores the shapes of the differnt NUTS areas associated with the data
-    parameter = utils.get_parameter(json_file,'bbox.json')
-    [id, dimension] = get_feature_id(parameter, dim, vOI)
+    try:
+        parameter = utils.get_parameter(json_file,'bbox.json')
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    try:
+        [id, dimension] = get_feature_id(parameter, dim, vOI)
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
-    items = next((p for p in parameter['variables'] if p['dimension'] == dimension), None)
-    item = next((i for i in items['features'] if i['id'] == id), None)
+    try:
+        items = next((p for p in parameter['variables'] if p['dimension'] == dimension), None)
+        item = next((i for i in items['features'] if i['id'] == id), None)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    
     # use asset information to create filepaths
     dimension = sanitize_filename(str(items['dimension']))
     dimension = dimension[0:espon_filename_length] #max folder length names
@@ -205,35 +215,47 @@ def get_asset_espon(json_file, vOI, dim):
     directory_path = os.path.dirname(file_path_csv)
     print(directory_path)
 
-    # Check if the directory exists, and create it if it doesn't
-    if not os.path.exists(directory_path):
-        os.makedirs(directory_path)
-
+    try:
+        # Check if the directory exists, and create it if it doesn't
+        if not os.path.exists(directory_path):
+            os.makedirs(directory_path)
+    except Exception as e:
+        print(f"An error occurred: {e}")
     # return if result file already exists
     if os.path.exists(file_path_csv):
         print('csv exists')
         return
-
+    
     # URL of the file to be downloaded
     url = item['shape']
     # Send a HTTP GET request to the URL
-    response = requests.get(url, stream=True)
+    try:
+        response = requests.get(url, stream=True)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
     # Check if the request was successful
     if response.status_code == 200:
         # (1) Save downloaded zipped file with shapes and data with write-binary mode
-        with open(file_path_shp, 'wb') as file:
-            # Iterate over the response data (stream)
-            for chunk in response.iter_content(chunk_size=1024):
-                file.write(chunk)
+        try:
+            with open(file_path_shp, 'wb') as file:
+                # Iterate over the response data (stream)
+                for chunk in response.iter_content(chunk_size=1024):
+                    file.write(chunk)
+        except Exception as e:
+            print(f"An error occurred: {e}")
         # (2) unzip the downloaded file: it contains 1 or more zipped shape files 
-        shp_zip_list = []
-        with zipfile.ZipFile(file_path_shp, 'r') as zip_ref:
-            # find zip files in the zip archive
-            for file in zip_ref.namelist():
-                if file.endswith('.zip'):
-                    # Extract and keep track of the avaible shape files for the asset of interest
-                    shp_zip_list.append(os.path.join(directory_path,file))
-                    zip_ref.extract(file, directory_path)
+        try:
+            shp_zip_list = []
+            with zipfile.ZipFile(file_path_shp, 'r') as zip_ref:
+                # find zip files in the zip archive
+                for file in zip_ref.namelist():
+                    if file.endswith('.zip'):
+                        # Extract and keep track of the avaible shape files for the asset of interest
+                        shp_zip_list.append(os.path.join(directory_path,file))
+                        zip_ref.extract(file, directory_path)
+        except Exception as e:
+            print(f"An error occurred: {e}")
         # (3.1) If shape files exist
         if shp_zip_list:
             shp_list = []

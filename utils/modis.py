@@ -18,7 +18,11 @@ except:
 
 def download_modis(url, headers, file_path):
     # Send the request with streaming enabled
-    response = requests.get(url,  headers=headers, stream=True)
+    try:
+        response = requests.get(url,  headers=headers, stream=True)
+    except requests.RequestException as e:
+        print(f"Error downloading file: {e}")
+        return
 
     if response.status_code == 200:
         total_size = response.headers.get('Content-Length')
@@ -28,23 +32,26 @@ def download_modis(url, headers, file_path):
         downloaded = 0
         start_time = time.time()
 
+        try:
+            with open(file_path, 'wb') as file:
+                for chunk in response.iter_content(chunk_size=chunk_size):
+                    if chunk:
+                        file.write(chunk)
+                        downloaded += len(chunk)
+                        elapsed = time.time() - start_time
+                        speed = downloaded / 1024 / 1024 / max(elapsed, 1e-6)
 
-        with open(file_path, 'wb') as file:
-            for chunk in response.iter_content(chunk_size=chunk_size):
-                if chunk:
-                    file.write(chunk)
-                    downloaded += len(chunk)
-                    elapsed = time.time() - start_time
-                    speed = downloaded / 1024 / 1024 / max(elapsed, 1e-6)
-
-                    if total_size:
-                        print(f"\rDownloaded: {downloaded / 1024 / 1024:.2f} MB "
-                            f"of {total_size / 1024 / 1024:.2f} MB "
-                            f"({speed:.2f} MB/s)", end='')
-                    else:
-                        print(f"\rDownloaded: {downloaded / 1024 / 1024:.2f} MB "
-                            f"(Unknown total size, {speed:.2f} MB/s)", end='')
-
+                        if total_size:
+                            print(f"\rDownloaded: {downloaded / 1024 / 1024:.2f} MB "
+                                f"of {total_size / 1024 / 1024:.2f} MB "
+                                f"({speed:.2f} MB/s)", end='')
+                        else:
+                            print(f"\rDownloaded: {downloaded / 1024 / 1024:.2f} MB "
+                                f"(Unknown total size, {speed:.2f} MB/s)", end='')
+            print()  # New line after download progress
+        except IOError as e:
+            print(f"Error writing to file {file_path}: {e}")
+            return
         print('\nDownload completed successfully.')
     else:
         print(f'Failed to download file. Status code: {response.status_code}')
@@ -53,8 +60,11 @@ def download_modis(url, headers, file_path):
 
 
 def get_dates(yearOI, url, headers, start_date):
-    
-    response = requests.get(url,  headers=headers)
+    try:
+        response = requests.get(url,  headers=headers)
+    except requests.RequestException as e:
+        print(f"Error fetching data: {e}")
+        return
     if response.status_code == 200:
         lines = response.content.decode('utf-8').splitlines()
 
@@ -172,14 +182,21 @@ def mergeNetCDFModis(name, typ, year, file_list, lenX, lenY):
     # Save result with encoding
     output_path = os.path.join(data_dir, f"{year}.nc")
     # Pass the encoding dictionary to to_netcdf()
-    merged_ds.to_netcdf(output_path, encoding=encoding_dict)
+    try:
+        merged_ds.to_netcdf(output_path, encoding=encoding_dict)
+    except Exception as e:
+        print(f"Error saving dataset: {e}")
+        return
 
     print(f"Merged and compressed dataset saved as: {output_path}")
 
     # remove files that are not needed anymore
     for file_path in file_list:
         if os.path.isfile(file_path):
-            os.remove(file_path)
+            try:
+                os.remove(file_path)
+            except OSError as e:
+                print(f"Error deleting file {file_path}: {e}")
             print(f"Deleted: {file_path}")
         else:
             print(f"File not found (skipped): {file_path}")
@@ -219,20 +236,22 @@ def get_evi_ndvi_modis(data_url, headers, typ, name, yearOI, start_date, tiles):
             temp_path = netCDF_file_path + ".tmp"
             ds_reindexed = None
 
-            # not all netcdf files from origin have the same temporal dimension
-            with xr.open_dataset(netCDF_file_path) as ds:
-                if len(ds['time']) < len(s_time):
-                    ds = ds.load()  # <- Load everything into memory NOW
-                    ds.close()      # <- Fully close the backing file
-                    ds_reindexed = ds.reindex(time=s_time)
+            try:
+                # not all netcdf files from origin have the same temporal dimension
+                with xr.open_dataset(netCDF_file_path) as ds:
+                    if len(ds['time']) < len(s_time):
+                        ds = ds.load()  # <- Load everything into memory NOW
+                        ds.close()      # <- Fully close the backing file
+                        ds_reindexed = ds.reindex(time=s_time)
 
-            # Save safely
-            if ds_reindexed is not None:
-                ds_reindexed.to_netcdf(temp_path, engine='netcdf4')  # or use 'netcdf4'
-                ds_reindexed.close()
-                gc.collect()
-                os.replace(temp_path, netCDF_file_path)
-
+                # Save safely
+                if ds_reindexed is not None:
+                    ds_reindexed.to_netcdf(temp_path, engine='netcdf4')  # or use 'netcdf4'
+                    ds_reindexed.close()
+                    gc.collect()
+                    os.replace(temp_path, netCDF_file_path)
+            except Exception as e:
+                print(f"Error processing {netCDF_file_path}: {e}")
         else:
             print(f"{netCDF_file} exists")
     return file_list, lenX, lenY
@@ -258,11 +277,5 @@ def get_modis_vi(json_file, name, year):
         'Authorization': f'Bearer {token}'
     }
     
-    print(token)
-    print(url)
-    print(year)
-    print(tiles)
-    print(parameter)
     file_list, lenX, lenY = get_evi_ndvi_modis(url, headers, typ, name, int(year), datetime.strptime(parameter['start'], '%Y-%m-%d'), tiles)
-    print(file_list)
     mergeNetCDFModis(name, typ, year, file_list, lenX, lenY)

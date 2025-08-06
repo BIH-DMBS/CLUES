@@ -56,32 +56,36 @@ def zevenbergen_thorne(input_tiff, output_slope_tiff, output_aspect_tiff):
         4. **Return Slope and Aspect**
             - `return Slope, Aspect`
     """
-    with rasterio.open(input_tiff) as src:
-        elevation = src.read(1)
-        transform = src.transform
-        profile = src.profile
+    try:
+        with rasterio.open(input_tiff) as src:
+            elevation = src.read(1)
+            transform = src.transform
+            profile = src.profile
 
-        # Calculate the partial derivatives
-        dzdx = (np.roll(elevation, -1, axis=1) - np.roll(elevation, 1, axis=1)) / (2 * transform.a)
-        dzdy = (np.roll(elevation, -1, axis=0) - np.roll(elevation, 1, axis=0)) / (2 * transform.e)
+            # Calculate the partial derivatives
+            dzdx = (np.roll(elevation, -1, axis=1) - np.roll(elevation, 1, axis=1)) / (2 * transform.a)
+            dzdy = (np.roll(elevation, -1, axis=0) - np.roll(elevation, 1, axis=0)) / (2 * transform.e)
 
-        # Calculate the slope
-        slope = np.sqrt(dzdx**2 + dzdy**2)
+            # Calculate the slope
+            slope = np.sqrt(dzdx**2 + dzdy**2)
 
-        # Calculate the aspect
-        aspect = np.arctan2(dzdy, -dzdx)
-        aspect = np.where(aspect < 0, aspect + 2 * np.pi, aspect)
+            # Calculate the aspect
+            aspect = np.arctan2(dzdy, -dzdx)
+            aspect = np.where(aspect < 0, aspect + 2 * np.pi, aspect)
 
-        # Update profile for slope and aspect
-        profile.update(dtype=rasterio.float32, count=1, compress='lzw')
+            # Update profile for slope and aspect
+            profile.update(dtype=rasterio.float32, count=1, compress='lzw')
 
-        # Write the slope to a new GeoTIFF
-        with rasterio.open(output_slope_tiff, 'w', **profile) as dst:
-            dst.write(slope.astype(rasterio.float32), 1)
+            # Write the slope to a new GeoTIFF
+            with rasterio.open(output_slope_tiff, 'w', **profile) as dst:
+                dst.write(slope.astype(rasterio.float32), 1)
 
-        # Write the aspect to a new GeoTIFF
-        with rasterio.open(output_aspect_tiff, 'w', **profile) as dst:
-            dst.write(aspect.astype(rasterio.float32), 1)
+            # Write the aspect to a new GeoTIFF
+            with rasterio.open(output_aspect_tiff, 'w', **profile) as dst:
+                dst.write(aspect.astype(rasterio.float32), 1)
+    except Exception as e:
+        print(f"Error processing {input_tiff}: {e}")
+        raise e
 
 
 def zevenbergen_thorne_folder(file_list, in_path, out_path):
@@ -101,46 +105,54 @@ def circular_kernel(radius):
 
 
 def mean_filter_geotiff(input_tiff, output_tiff, radius):
-    # Open the input GeoTIFF file
-    with rasterio.open(input_tiff) as src:
-        # Read the input data
-        image = src.read(1)
-        profile = src.profile
+    try:
+        # Open the input GeoTIFF file
+        with rasterio.open(input_tiff) as src:
+            # Read the input data
+            image = src.read(1)
+            profile = src.profile
 
-        # Create a circular kernel
-        kernel = circular_kernel(radius)
+            # Create a circular kernel
+            kernel = circular_kernel(radius)
 
-        # Apply mean filter using convolve from scipy
-        filtered_image = convolve(image, kernel, mode='reflect')
+            # Apply mean filter using convolve from scipy
+            filtered_image = convolve(image, kernel, mode='reflect')
 
-        # Update profile for the output GeoTIFF
-        profile.update(dtype=rasterio.float32, count=1, compress='lzw')
+            # Update profile for the output GeoTIFF
+            profile.update(dtype=rasterio.float32, count=1, compress='lzw')
 
-        # Write the filtered image to a new GeoTIFF file
-        with rasterio.open(output_tiff, 'w', **profile) as dst:
-            dst.write(filtered_image.astype(rasterio.float32), 1)
+            # Write the filtered image to a new GeoTIFF file
+            with rasterio.open(output_tiff, 'w', **profile) as dst:
+                dst.write(filtered_image.astype(rasterio.float32), 1)
+    except Exception as e:
+        print(f"Error processing {input_tiff}: {e}")
+        raise e
 
 
 def calculate_pixel_size_geographic(geo_tiff_path):
-    # compute the average width/height of a pixel in meters given geotiff with CRS geographic(degrees) 
-    with rasterio.open(geo_tiff_path) as src:
-        # Get transform and resolution in degrees
-        transform = src.transform
-        pixel_width_deg = transform.a  # Pixel size in degrees (longitude)
-        pixel_height_deg = abs(transform.e)  # Pixel size in degrees (latitude)
+    try:
+        # compute the average width/height of a pixel in meters given geotiff with CRS geographic(degrees) 
+        with rasterio.open(geo_tiff_path) as src:
+            # Get transform and resolution in degrees
+            transform = src.transform
+            pixel_width_deg = transform.a  # Pixel size in degrees (longitude)
+            pixel_height_deg = abs(transform.e)  # Pixel size in degrees (latitude)
 
 
-        # Get the latitude of the raster's center
-        center_lat = (src.bounds.top + src.bounds.bottom) / 2
-        # Get the longitzude of the raster's center
-        center_lon = (src.bounds.left + src.bounds.right) / 2
+            # Get the latitude of the raster's center
+            center_lat = (src.bounds.top + src.bounds.bottom) / 2
+            # Get the longitzude of the raster's center
+            center_lon = (src.bounds.left + src.bounds.right) / 2
 
-        # Approximate conversion from degrees to meters at the center latitude
-        geod = Geod(ellps="WGS84")
-        _, width_meters, _ = geod.inv(src.bounds.left, center_lat, src.bounds.left + pixel_width_deg, center_lat)
-        _, height_meters, _ = geod.inv(src.bounds.left, center_lon, src.bounds.left + pixel_height_deg, center_lon)
-        
-        return np.abs(width_meters+height_meters)/2
+            # Approximate conversion from degrees to meters at the center latitude
+            geod = Geod(ellps="WGS84")
+            _, width_meters, _ = geod.inv(src.bounds.left, center_lat, src.bounds.left + pixel_width_deg, center_lat)
+            _, height_meters, _ = geod.inv(src.bounds.left, center_lon, src.bounds.left + pixel_height_deg, center_lon)
+            
+            return np.abs(width_meters+height_meters)/2
+    except Exception as e:
+        print(f"Error calculating pixel size for {geo_tiff_path}: {e}")
+        raise e
 
 
 def getFilterRadiusPixel(geo_tiff_path, radius_in_meter):
@@ -264,12 +276,16 @@ def apply_filter_with_adjacent_images(file_list, in_path, out_path, radius, mode
         
         # Save the filtered image
         output_tif = os.path.join(out_path,f"{mode}_{files[coords]}_{radius_in_meter}.tif")
-        # Update profile for the output GeoTIFF
-        profile.update(dtype=rasterio.float32, count=1, compress='lzw')
-        print(profile)
-        # Write the filtered image to a new GeoTIFF file
-        with rasterio.open(output_tif, 'w', **profile) as dst:
-            dst.write(filtered_image.astype(rasterio.float32), 1)
+        try:
+            # Update profile for the output GeoTIFF
+            profile.update(dtype=rasterio.float32, count=1, compress='lzw')
+            print(profile)
+            # Write the filtered image to a new GeoTIFF file
+            with rasterio.open(output_tif, 'w', **profile) as dst:
+                dst.write(filtered_image.astype(rasterio.float32), 1)
+        except Exception as e:
+            print(f"Error writing {output_tif}: {e}")
+            raise e
 
 
 def extract_radius(s):
@@ -280,15 +296,19 @@ def extract_radius(s):
 
 
 def compute_neighborhood(json_file, variableOI, mode):
-    # Load JSON file as a dictionary
-    with open(json_file, 'r') as file:
-        parameters = json.load(file)
+    try:
+        # Load JSON file as a dictionary
+        with open(json_file, 'r') as file:
+            parameters = json.load(file)
 
-    for v in parameters['variables']:
-        print(v['name'])
-        if v['name']==variableOI:
-            variable = v
-            break
+        for v in parameters['variables']:
+            print(v['name'])
+            if v['name']==variableOI:
+                variable = v
+                break
+    except Exception as e:
+        print(f"Error reading JSON file {json_file}: {e}")
+        raise e
 
     in_path = os.path.join(download_folder, parameters['type'], v['name'])
     out_path = os.path.join(download_folder, 'neigborhoods', parameters['type'], v['name'],mode)
@@ -311,9 +331,12 @@ def compute_neighborhood(json_file, variableOI, mode):
     
     # Get the current timestamp
     current_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    flag_filename = os.path.join(out_path, "done.txt")
-    # Write the timestamp to a text file
-    with open(flag_filename, "w") as file:
-        file.write("Data was downloaded: ")
-        file.write(current_timestamp)
+    try:
+        flag_filename = os.path.join(out_path, "done.txt")
+        # Write the timestamp to a text file
+        with open(flag_filename, "w") as file:
+            file.write("Data was downloaded: ")
+            file.write(current_timestamp)
+    except Exception as e:
+        print(f"Error writing flag file {flag_filename}: {e}")
+        raise e

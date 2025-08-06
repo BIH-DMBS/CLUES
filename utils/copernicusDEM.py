@@ -227,10 +227,6 @@ def getInfoCopenicusDEM(parameters_jsonfile, vOI):
             except:
                 print(f'done at iter: {i}')
                 break
-            
-    # Save & Load
-    #df_links.to_pickle('df_links.pkl')
-    #df_links = pd.read_pickle('df_links.pkl')
     
     df_links = df_links.drop_duplicates(subset=['Name'])
     # Convert the 'GeoFootprint' column to shapely geometries
@@ -239,68 +235,6 @@ def getInfoCopenicusDEM(parameters_jsonfile, vOI):
     df_links = gpd.GeoDataFrame(df_links, geometry='geometry')
 
     # Filter the DataFrame for asset of interest
-    
     df_links = df_links[df_links['Name'].str.contains(parameters['variables'][0]['resolution'], case=False, na=False)]
     df_links = df_links.drop_duplicates(subset=['geometry'])
     downloadDEM_zip(df_links, parameters)
-
-
-
-'''
-unused code -> stich several geotifs together into one big tif
-
-def mergeDEM_(tarfolder, extract_path, destination_folder):
-    destination_files = [os.path.join(destination_folder,'result_dem.tif'), os.path.join(destination_folder,'result_wbm.tif')]
-    # Get all .tar files in the folder
-    tar_files = glob.glob(os.path.join(tarfolder, '*.tar'))
-    print(tar_files)
-    # Define the paths
-    tar_file = tar_files[0]
-    source_files = []
-
-    folders_to_extract = ['AUXFILES', 'DEM']
-    for tar_file in tar_files:
-        # Open the tar file
-        with tarfile.open(tar_file, 'r') as tar:
-            # Get the first-level folder name
-            first_level_folder = tar.getmembers()[0].name.split('/')
-            to_extract = [first_level_folder[0] + '/' + folder for folder in folders_to_extract]
-            # Iterate over the members of the tar file
-            for member in tar.getmembers():
-                # Check if the member is in one of the folders to extract
-                for x in to_extract:
-                    if member.name.startswith(x) and member.name.endswith('tif'):
-                        member.name = '\\'.join(member.name.split('/')[1:])
-                        if x.endswith('DEM'):
-                            tar.extract(member, path=extract_path)
-                            source_file_dem = extract_path + '\\' + member.name
-                        elif member.name.endswith('WBM.tif'):
-                            tar.extract(member, path=extract_path)
-                            source_file_wbm = extract_path + '\\' + member.name
-            source_files = [source_file_dem,source_file_wbm]
-
-        # Check if result.tif exists in the folder
-        for i in range(2):
-            if not os.path.exists(destination_files[i]):
-                # Copy test.tif to the folder and rename it to result.tif
-                shutil.copy(source_files[i], destination_files[i])
-                print(f'{source_files[i]} has been copied and renamed to {destination_files[i]}')
-            else:
-                print('stich it together')
-                # Merge the input files
-                mosaic, out_trans = merge([destination_files[i],source_files[i]])
-                # Copy the metadata
-                out_meta = rasterio.open(source_files[i]).meta.copy()
-                out_meta.update({
-                    "driver": "GTiff",
-                    "height": mosaic.shape[1],
-                    "width": mosaic.shape[2],
-                    "transform": out_trans
-                })
-                with rasterio.open(destination_files[i], 'w', **out_meta) as dest:
-                    dest.write(mosaic)
-                    print('Writen the merged file')
-
-            print('Merged file saved as output.tif')
-
-'''

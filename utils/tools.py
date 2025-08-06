@@ -10,7 +10,14 @@ import xarray as xr
 def netCDF2GeoTiff(source, variable, year):
     # netCDF -> geoTIFF... not used 
     file = os.path.join(download_foldern, source, variable, str(year)+'.nc')
-    ds = xr.open_dataset(file)
+    try:
+        ds = xr.open_dataset(file)
+    except FileNotFoundError:
+        print(f"File not found: {file}")
+        return
+    except Exception as e:
+        print(f"Error opening file {file}: {e}")
+        return
     # Get the variable name in the file
     var_name_in_file = list(ds.data_vars)[0]
 
@@ -34,18 +41,21 @@ def netCDF2GeoTiff(source, variable, year):
     # Define the output file name
     output_file = os.path.join(wd, 'data', source, variable, str(year)+'.tif')
 
-    # Write the data to a single GeoTIFF file
-    with rasterio.open(output_file, 'w', **meta) as dst:
-        for i in range(n_times):
-            # Select data for the current time step
-            data = data_var.isel(time=i).values
-            # Get the name for the current time step
-            time_value = data_var.time[i].values.astype('datetime64[ms]').astype('O')  # Convert to Python datetime object
-            name = time_value.strftime('%Y-%m-%d_%H:%M:%S')  # Format the datetime object
-            # Write the data to the corresponding band in the GeoTIFF file
-            dst.write(data, i + 1)
-            # Set the band name
-            dst.set_band_description(i + 1, name)
+    try:
+        # Write the data to a single GeoTIFF file
+        with rasterio.open(output_file, 'w', **meta) as dst:
+            for i in range(n_times):
+                # Select data for the current time step
+                data = data_var.isel(time=i).values
+                # Get the name for the current time step
+                time_value = data_var.time[i].values.astype('datetime64[ms]').astype('O')  # Convert to Python datetime object
+                name = time_value.strftime('%Y-%m-%d_%H:%M:%S')  # Format the datetime object
+                # Write the data to the corresponding band in the GeoTIFF file
+                dst.write(data, i + 1)
+                # Set the band name
+                dst.set_band_description(i + 1, name)
+    except Exception as e:
+        print(f"Error opening file {file}: {e}")
 
     print(f"Saved {output_file}")
 

@@ -36,10 +36,14 @@ def merge_geotiffs_(input_folder, output_file_path):
         input_folder (str): Path to folder containing GeoTIFFs.
         output_file_path (str): Full path for the output file.
     """
-    tiff_files = glob(os.path.join(input_folder, "*.tif"))
+    try:
+        tiff_files = glob(os.path.join(input_folder, "*.tif"))
+    except Exception as e:
+        raise FileNotFoundError(f"Error accessing folder {input_folder}: {e}")
 
     if not tiff_files:
         raise FileNotFoundError(f"No .tif files found in folder: {input_folder}")
+        return
 
     src_files_to_mosaic = [rasterio.open(fp) for fp in tiff_files]
     mosaic, out_transform = merge(src_files_to_mosaic)
@@ -57,19 +61,26 @@ def merge_geotiffs_(input_folder, output_file_path):
         "BIGTIFF": "IF_SAFER"  # Create BigTIFF only if needed
     })
 
-    with rasterio.open(output_file_path, "w", **out_meta) as dest:
-        dest.write(mosaic)
+    try:
+        with rasterio.open(output_file_path, "w", **out_meta) as dest:
+            dest.write(mosaic)
 
-    for src in src_files_to_mosaic:
-        src.close()
+        for src in src_files_to_mosaic:
+            src.close()
+    except Exception as e:
+        raise IOError(f"Error writing output file {output_file_path}: {e}")
 
     print(f"Compressed merged GeoTIFF saved to: {output_file_path}")
 
 
 def merge_geotiffs(input_folder, output_file_path):
-    tiff_files = glob(os.path.join(input_folder, "*.tif"))
+    try:
+        tiff_files = glob(os.path.join(input_folder, "*.tif"))
+    except Exception as e:
+        raise FileNotFoundError(f"Error accessing folder {input_folder}: {e}")
     if not tiff_files:
         raise FileNotFoundError(f"No .tif files found in folder: {input_folder}")
+        return
 
     sources = [rasterio.open(fp) for fp in tiff_files]
 
@@ -105,20 +116,23 @@ def merge_geotiffs(input_folder, output_file_path):
         "blockysize": 512
     }
     i = 0
-    with rasterio.open(output_file_path, "w", **out_meta) as dest:
+    try:
+        with rasterio.open(output_file_path, "w", **out_meta) as dest:
+            for src in sources:
+                print(src)
+                print(i)
+                i=i+1
+                # Get destination window where this src should go
+                window = rasterio.windows.from_bounds(*src.bounds, transform=transform)
+                window = window.round_offsets().round_lengths()
+
+                data = src.read()  # Read with native shape, no resampling
+                dest.write(data, window=window)
+
         for src in sources:
-            print(src)
-            print(i)
-            i=i+1
-            # Get destination window where this src should go
-            window = rasterio.windows.from_bounds(*src.bounds, transform=transform)
-            window = window.round_offsets().round_lengths()
-
-            data = src.read()  # Read with native shape, no resampling
-            dest.write(data, window=window)
-
-    for src in sources:
-        src.close()
+            src.close()
+    except Exception as e:
+        raise IOError(f"Error writing output file {output_file_path}: {e}")
 
 def mkfloder(folder):
     if not os.path.exists(folder):
@@ -150,7 +164,11 @@ def download_wsf(json_file, vOI):
 def get_wsf(url, bbox, output_folder, output_file_path, output_folder_tmp):
 
     if url == "https://download.geoservice.dlr.de/WSF2019/files/":
-        response = requests.get(url)
+        try:
+            response = requests.get(url)
+        except Exception as e:
+            print(f"Error accessing URL {url}: {e}")
+            return
 
         # Parse the HTML content
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -177,7 +195,11 @@ def get_wsf(url, bbox, output_folder, output_file_path, output_folder_tmp):
         # download tiles of interest
         for lnk, v in inbox_file_coordinate_dict.items():
             link = url + lnk
-            download = requests.get(link)
+            try:
+                download = requests.get(link)
+            except Exception as e:
+                print(f"Error downloading {link}: {e}")
+                return
             # Check if the request was successful
             if download.status_code == 200:
                 # Save the content to a file
@@ -188,7 +210,11 @@ def get_wsf(url, bbox, output_folder, output_file_path, output_folder_tmp):
                 print(f'Failed to download file. Status code: {response.status_code}')
 
     else:
-        response = requests.get(url)
+        try:
+            response = requests.get(url)
+        except Exception as e:
+            print(f"Error accessing URL {url}: {e}")
+            return
 
         soup = BeautifulSoup(response.content, 'html.parser')
         table = soup.find('table')
@@ -239,5 +265,8 @@ def get_wsf(url, bbox, output_folder, output_file_path, output_folder_tmp):
                 print(f'Failed to download file. Status code: {response.status_code}')
 
     merge_geotiffs(output_folder_tmp, output_file_path)
-    shutil.rmtree(output_folder_tmp)
+    try:
+        shutil.rmtree(output_folder_tmp)
+    except Exception as e:
+        print(f"Error removing temporary folder {output_folder_tmp}: {e}")
     print('download successfull: ' + output_file_path)
