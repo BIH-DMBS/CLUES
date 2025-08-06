@@ -186,11 +186,20 @@ def get_asset_espon(json_file, vOI, dim):
     # main method tp download data 
     # stores the the csv of the data in a folder taht is named aftre the dimension in the downloadfolder
     # im addition a second csv file is create(maintained that stores the shapes of the differnt NUTS areas associated with the data
+    # TODO: Add exception handling for utils.get_parameter() - could raise FileNotFoundError, JSONDecodeError
     parameter = utils.get_parameter(json_file,'bbox.json')
+    # TODO: Add exception handling for get_feature_id() - could return None or raise errors
     [id, dimension] = get_feature_id(parameter, dim, vOI)
 
+    # TODO: Add exception handling for next() functions - could raise StopIteration if not found
     items = next((p for p in parameter['variables'] if p['dimension'] == dimension), None)
     item = next((i for i in items['features'] if i['id'] == id), None)
+    
+    # TODO: Add None checks for items and item to prevent AttributeError
+    if items is None or item is None:
+        print(f"Error: Could not find variable {vOI} in dimension {dim}")
+        return
+        
     # use asset information to create filepaths
     dimension = sanitize_filename(str(items['dimension']))
     dimension = dimension[0:espon_filename_length] #max folder length names
@@ -206,6 +215,7 @@ def get_asset_espon(json_file, vOI, dim):
     print(directory_path)
 
     # Check if the directory exists, and create it if it doesn't
+    # TODO: Add exception handling for os.makedirs() - could raise PermissionError, OSError
     if not os.path.exists(directory_path):
         os.makedirs(directory_path)
 
@@ -216,16 +226,19 @@ def get_asset_espon(json_file, vOI, dim):
 
     # URL of the file to be downloaded
     url = item['shape']
+    # TODO: Add exception handling for HTTP requests - could raise ConnectionError, Timeout, HTTPError
     # Send a HTTP GET request to the URL
     response = requests.get(url, stream=True)
     # Check if the request was successful
     if response.status_code == 200:
+        # TODO: Add exception handling for file write operations - could raise PermissionError, OSError
         # (1) Save downloaded zipped file with shapes and data with write-binary mode
         with open(file_path_shp, 'wb') as file:
             # Iterate over the response data (stream)
             for chunk in response.iter_content(chunk_size=1024):
                 file.write(chunk)
         # (2) unzip the downloaded file: it contains 1 or more zipped shape files 
+        # TODO: Add exception handling for zipfile operations - could raise zipfile.BadZipFile, zipfile.LargeZipFile
         shp_zip_list = []
         with zipfile.ZipFile(file_path_shp, 'r') as zip_ref:
             # find zip files in the zip archive

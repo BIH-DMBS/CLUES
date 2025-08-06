@@ -56,6 +56,7 @@ def rename_coords(ds):
 
 def create_netcdf_from_geotiffs(tiff_directory, output_nc_file):
     # given a folder that contains geoTiff files merge them all together in one netCDF file
+    # TODO: Add exception handling for glob.glob() - could raise OSError for invalid directory
     # List all GeoTIFF files in the directory
     tiff_files = glob.glob(os.path.join(tiff_directory, '*.tif'))
 
@@ -70,6 +71,10 @@ def create_netcdf_from_geotiffs(tiff_directory, output_nc_file):
     # Read each GeoTIFF file
     for tiff_file in tiff_files:
         try:
+            # TODO: Add specific exception handling for rasterio operations:
+            # - rasterio.errors.RasterioIOError: File reading errors, corrupted files
+            # - rasterio.errors.CRSError: Invalid coordinate reference system
+            # - ValueError: Invalid raster data
             with rasterio.open(tiff_file) as src:
                 # Extract data
                 data = src.read(1)  # Assuming the data is in the first band
@@ -79,6 +84,7 @@ def create_netcdf_from_geotiffs(tiff_directory, output_nc_file):
                     lat = np.linspace(src.bounds.top, src.bounds.bottom, lat)
                     lon = np.linspace(src.bounds.left, src.bounds.right, lon)
                 # Extract time from filename or metadata
+                # TODO: Add exception handling for datetime parsing - could raise ValueError for invalid date formats
                 date_to_convert = os.path.basename(tiff_file).split('.')[0]  # Adjust as needed to extract time
                 date_to_convert = datetime.strptime(date_to_convert, '%Y-%m-%dT%H-%M-%SZ')
                 reference_date = datetime(1900, 1, 1, 0, 0, 0)
@@ -89,27 +95,34 @@ def create_netcdf_from_geotiffs(tiff_directory, output_nc_file):
                 # Append the data array
                 data_arrays.append(data)
         except:
+            # TODO: Log specific errors instead of silently passing
+            # Should handle: FileNotFoundError, PermissionError, rasterio errors
             pass
 
     # Stack the data arrays along a new time dimension
     try:
         data_stack = np.stack(data_arrays, axis=0)
     except ValueError as e: #if all tiffs are empty
+        # TODO: Add more specific ValueError handling for different numpy stack errors
         if str(e) == 'need at least one array to stack':
             # Write an empty .nc file
+            # TODO: Add exception handling for netCDF4.Dataset creation - could raise PermissionError, OSError
             with nc.Dataset(output_nc_file, 'w', format='NETCDF4') as ds:
                 pass  # Creating an empty netCDF file
+            # TODO: Add exception handling for file write operations - could raise PermissionError, OSError
             # Write a .txt file with the message
             with open(output_nc_file+'txt', 'w') as txt_file:
                 txt_file.write('no data available from source')
             return
 
     # Create an xarray DataArray
+    # TODO: Add exception handling for xarray DataArray creation - could raise ValueError for incompatible dimensions
     data_array = xr.DataArray(data_stack, coords=[times, lat, lon], dims=['valid_time', 'latitude', 'longitude'])
     # Set the time unit attribute
     data_array.coords['valid_time'].attrs['units'] = 'hours since 1900-01-01 00:00:00.0'
     # Create an xarray Dataset
     dataset = xr.Dataset({'variable': data_array})
+    # TODO: Add exception handling for NetCDF file saving - could raise PermissionError, OSError
     # Save the Dataset to a NetCDF file
     dataset.to_netcdf(output_nc_file)
 
@@ -117,7 +130,11 @@ def create_netcdf_from_geotiffs(tiff_directory, output_nc_file):
 def get_parameter(parameters_jsonfile, bbox_jsonfile):
     # read json file that describes a geospatial datasource and parse the content so that it can be used 
     # to init the downloads 
-     
+    # TODO: Add exception handling for file operations:
+    # - FileNotFoundError: Missing configuration files
+    # - PermissionError: Insufficient file access permissions  
+    # - json.JSONDecodeError: Invalid JSON format in config files
+    # - KeyError: Missing required keys in configuration 
     with open(os.path.join(configs_assets_folder, parameters_jsonfile), 'r') as file:
         parameters = json.load(file)
     if "start_year" in parameters:
@@ -176,6 +193,8 @@ def get_parameter(parameters_jsonfile, bbox_jsonfile):
 def get_asset_atmosphere(json_file, year, variable):
     # use cdsapi to download data
     # check: https://ads.atmosphere.copernicus.eu/api-how-to
+    # TODO: Add exception handling for get_parameter() - could raise FileNotFoundError, JSONDecodeError
+    # TODO: Add exception handling for missing 'source' key in parameters - could raise KeyError
     parameters = get_parameter(json_file,'bbox.json')
     file_path = os.path.join(download_folder, parameters['source'], variable, year + '.nc')
 
@@ -183,6 +202,7 @@ def get_asset_atmosphere(json_file, year, variable):
     directory_path = os.path.dirname(file_path)
 
     # Check if the directory exists, and create it if it doesn't
+    # TODO: Add exception handling for os.makedirs() - could raise PermissionError, OSError
     if not os.path.exists(directory_path):
         os.makedirs(directory_path)
 
@@ -191,15 +211,22 @@ def get_asset_atmosphere(json_file, year, variable):
         return
 
     # Create a client for the CDS API
+    # TODO: Add exception handling for missing credentials file - could raise FileNotFoundError
+    # TODO: Add exception handling for invalid YAML format - could raise yaml.YAMLError
+    # TODO: Add exception handling for missing 'url' or 'key' in credentials - could raise KeyError
     file = os.path.join(secrets_folder, 'cdsapirc_atmo.sct')
 
     with open(file, 'r') as f:
             credentials = yaml.safe_load(f)
 
     # get the credentials
+    # TODO: Add exception handling for invalid credentials - could raise cdsapi.api.APIKeyNotFoundError
+    # TODO: Add exception handling for network connectivity issues - could raise ConnectionError
     c = cdsapi.Client(url=credentials['url'], key=credentials['key'])
     date = year+'-01-01/'+year+'-12-31'
+    # TODO: Add exception handling for variable not found in parameters - next() could raise StopIteration
     variable_dict = next((var for var in parameters["variables"] if var["name"] == variable), None)
+    # TODO: Add exception handling for None variable_dict - could raise AttributeError when accessing 'model_level'
     # model_level is present for assets that can be monitored at different altitudes
     try:
         if 'model_level' in variable_dict:
@@ -227,6 +254,12 @@ def get_asset_atmosphere(json_file, year, variable):
                 file_path)
     except Exception as e:
         # Print the exception
+        # TODO: Add more specific exception handling for different CDS API errors:
+        # - cdsapi.api.APIKeyNotFoundError: Invalid API credentials
+        # - requests.exceptions.ConnectionError: Network connectivity issues
+        # - requests.exceptions.Timeout: Request timeout
+        # - requests.exceptions.HTTPError: HTTP errors (4xx, 5xx)
+        # TODO: Add exception handling for file write operations - could raise PermissionError, OSError
         if "Request has not produced a valid combination of values, please check your selection." in str(e):            
             with open(file_path, 'a') as file:
                 file.write(f"An error occurred: {e}\n")
@@ -246,6 +279,7 @@ def get_asset_atmosphere(json_file, year, variable):
 
 
 def get_asset_climate(json_file, year, variable):
+    # TODO: Add exception handling for get_parameter() - could raise FileNotFoundError, JSONDecodeError
     parameters = get_parameter(json_file,'bbox.json')
     file_path = os.path.join(download_folder, parameters['source'], variable, year + '.nc')
 
@@ -253,6 +287,7 @@ def get_asset_climate(json_file, year, variable):
     directory_path = os.path.dirname(file_path)
 
     # Check if the directory exists, and create it if it doesn't
+    # TODO: Add exception handling for os.makedirs() - could raise PermissionError, OSError
     if not os.path.exists(directory_path):
         os.makedirs(directory_path)
 
@@ -261,11 +296,17 @@ def get_asset_climate(json_file, year, variable):
         return
     
     # Create a client for the CDS API
+    # TODO: Add exception handling for missing credentials file - could raise FileNotFoundError
+    # TODO: Add exception handling for invalid YAML format - could raise yaml.YAMLError  
+    # TODO: Add exception handling for missing 'url' or 'key' in credentials - could raise KeyError
     file = os.path.join(secrets_folder, 'cdsapirc_climate.sct')
 
     with open(file, 'r') as f:
             credentials = yaml.safe_load(f)
 
+    # TODO: Add exception handling for invalid credentials - could raise cdsapi.api.APIKeyNotFoundError
+    # TODO: Add exception handling for network connectivity issues - could raise ConnectionError
+    # TODO: Add exception handling for CDS API retrieve failures - could raise various API errors
     c = cdsapi.Client(url=credentials['url'], key=credentials['key'])
 
     c.retrieve(
@@ -293,6 +334,12 @@ def connect_wms(url, version='1.3.0', retries=3, delay=5):
     :param delay: Delay between retries in seconds
     :return: WebMapService object if successful, None otherwise
     """
+    # TODO: Add specific exception handling for different connection failures:
+    # - requests.exceptions.ConnectionError: Network connectivity issues
+    # - requests.exceptions.Timeout: Request timeout  
+    # - urllib.error.HTTPError: HTTP errors from WMS server
+    # - owslib.util.ServiceException: WMS service errors
+    # - xml.parsers.expat.ExpatError: Invalid XML response from WMS server
     attempt = 0
     while attempt < retries:
         try:
@@ -343,9 +390,15 @@ def get_asset_wms_year(json_file, variableOI, year):
             format = parameters['format'],
             time = variable['dateOI']
             )
+            # TODO: Add exception handling for file write operations - could raise PermissionError, OSError
             with open(file_path, 'wb') as f:
                 f.write(map_request.read())
         except:
+            # TODO: Add specific exception handling for WMS getmap failures:
+            # - owslib.util.ServiceException: WMS service errors (invalid layer, time, etc.)
+            # - requests.exceptions.HTTPError: HTTP errors from WMS server
+            # - requests.exceptions.Timeout: Request timeout
+            # - IOError: File write permission errors
             # Create an empty file
             with open(file_path, 'w') as file:
                 pass
@@ -353,7 +406,13 @@ def get_asset_wms_year(json_file, variableOI, year):
     print('transform into netCDF'+variable['name']+ ' for year '+str(year))
     file_path = os.path.join(download_folder, parameters['source'], variable['name'],str(year)+'.nc')
     #file_path_tmp = os.path.join(download_folder, parameters['source'], variable['name'],str(year)+'_tmp.nc')
+    # TODO: Add exception handling for create_netcdf_from_geotiffs() - could raise various errors
+    # - IOError: File read/write errors
+    # - ValueError: Invalid data format or empty data arrays
+    # - netCDF4.errors: NetCDF file creation errors  
+    # - rasterio.errors.RasterioIOError: GeoTIFF reading errors
     create_netcdf_from_geotiffs(data_folder,file_path)
+    # TODO: Add exception handling for shutil.rmtree() - could raise PermissionError, OSError
     shutil.rmtree(data_folder) # delete tiffs by removing tmp folder 
     print('download '+variable['name']+ ' for year '+str(year)+' completed')
 

@@ -12,6 +12,8 @@ from shapely.geometry import Point
 
 # Define Read GeoTIFFs to list
 def getNetCDFList(netCDFdir):
+    # TODO: Add exception handling for os.walk() - could raise PermissionError, OSError
+    # TODO: Add validation for netCDFdir existence and accessibility
     tiff_files = []
     for root, _, files in os.walk(netCDFdir):
         for file in files:
@@ -21,8 +23,16 @@ def getNetCDFList(netCDFdir):
 
 # Define Read CSV of Subjects
 def getsubj(subjectfile):
+    # TODO: Add exception handling for file operations:
+    # - FileNotFoundError: Missing subject file
+    # - pd.errors.EmptyDataError: Empty CSV file
+    # - pd.errors.ParserError: Invalid CSV format
+    # - UnicodeDecodeError: Invalid file encoding
     df = gpd.read_file(subjectfile)
+    # TODO: Add validation for required columns (latitude, longitude, subjectid)
+    # TODO: Add exception handling for missing or invalid coordinate values
     df = df[(df['latitude'] != '') & (df['longitude'] != '')]
+    # TODO: Add exception handling for invalid coordinate values - could raise ValueError
     # Create a GeoDataFrame with Point geometry from latitude and longitude columns
     geometry = [Point(lon, lat) for lon, lat in zip(df['longitude'], df['latitude'])]
     gdf = gpd.GeoDataFrame(df, geometry=geometry, crs='EPSG:4326')  # Assuming WGS 84 coordinate reference system
@@ -63,9 +73,15 @@ def netCDF_Link(subjects, netCDFList, pntcoord):
     dataOI = {} # -> container for all results
     for asset in netCDFList:
         dOI = {} # -> asset results
+        # TODO: Add exception handling for netCDF4.Dataset operations:
+        # - FileNotFoundError: Missing NetCDF file
+        # - OSError: File access permission errors
+        # - netCDF4.errors: Invalid NetCDF format or corrupted files
+        # - ValueError: Invalid mode parameter
         fh = netCDF4.Dataset(asset, mode = "r")
         #fh = netCDF4.Dataset(netCDFList[asset], mode = "r")
         
+        # TODO: Add exception handling for missing variables in NetCDF file - could raise KeyError
         # the grit has to be equidistant in degree
         delta = fh.variables['longitude'][1]-fh.variables['longitude'][0]
 
@@ -73,6 +89,8 @@ def netCDF_Link(subjects, netCDFList, pntcoord):
         # {'locID1':['subID1',...'subID3'], ..., 'locIDn':['subIDn',...'subIDn']}
         locIDSubID = {}
         for i, row in subjects.iterrows():
+            # TODO: Add exception handling for invalid geometry access - could raise AttributeError
+            # TODO: Add validation for valid coordinate ranges (lat: -90 to 90, lon: -180 to 180)
             lon = row[pntcoord].x
             lat = row[pntcoord].y
             idx = getIdx(lat, lon, fh, delta)
@@ -82,6 +100,7 @@ def netCDF_Link(subjects, netCDFList, pntcoord):
             else:
                 locIDSubID[key] = [row['subjectid']]
 
+        # TODO: Add exception handling for variable access - could raise KeyError for missing variables
         variablesOI = {var_name:var.dimensions for var_name, var in fh.variables.items() if var_name not in ['longitude','latitude','valid_time','crs','time']}
         for name, value in variablesOI.items():
             # extract thetime series fof each position there we have a subject

@@ -6,6 +6,10 @@ from snakemake.io import expand
 import requests
 from bs4 import BeautifulSoup
 
+# TODO: Add exception handling for configuration file operations
+# - FileNotFoundError: Missing config.json file
+# - json.JSONDecodeError: Invalid JSON format in config file
+# - KeyError: Missing required configuration keys
 config_file = os.path.join(os.getcwd(), 'config', 'config.json')
 
 # Assuming 'data.json' is your JSON file
@@ -50,6 +54,10 @@ files = {
 }
 
 parameters = {}
+# TODO: Add exception handling for parameter file loading:
+# - FileNotFoundError: Missing source configuration files
+# - json.JSONDecodeError: Invalid JSON format in source config files
+# - PermissionError: Insufficient file access permissions
 for key, file in files.items():
     with open(file, 'r') as f:
         parameters[key] = json.load(f)
@@ -87,6 +95,10 @@ for v in variables['era5']:
         year=year_list)
 
 # Iterate through the remove list and delete each file if it exists
+# TODO: Add exception handling for file deletion operations:
+# - PermissionError: Insufficient permissions to delete files
+# - OSError: File in use or system-level deletion errors
+# - FileNotFoundError: Race condition if file deleted by another process
 for file_path in remove:
     if os.path.exists(file_path):
         os.remove(file_path)

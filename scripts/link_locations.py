@@ -26,8 +26,14 @@ def worker_netcdf(input):
     if os.path.exists(resultfile):
         print(f"Result file {resultfile} already exists. Skipping.")
         return
+    # TODO: Add exception handling for netCDFutils.netCDF_Link():
+    # - FileNotFoundError: Missing NetCDF files
+    # - ValueError: Invalid coordinate data or empty datasets
+    # - netCDF4.errors: Corrupted NetCDF files
+    # - MemoryError: Large datasets exceeding available memory
     dataOI = netCDFutils.netCDF_Link(subjects, netCDFList, pntcoord)
     print('Save the result to:' + resultfile)
+    # TODO: Add exception handling for file write operations - could raise PermissionError, OSError
     with open(resultfile, "w") as file:
         file.write(dataOI)
 
@@ -40,11 +46,20 @@ def worker_tiff(input):
     if os.path.exists(resultfile):
         print(f"Result file {resultfile} already exists. Skipping.")
         return
+    # TODO: Add exception handling for geoTIFFutils.getparam():
+    # - FileNotFoundError: Missing GeoTIFF files
+    # - rasterio.errors.RasterioIOError: Corrupted or invalid GeoTIFF files
+    # - ValueError: Invalid raster parameters
     parameter = geoTIFFutils.getparam(tiffList)
     print(parameter)
     #geoTiffLinker(subjects, geoTIFF_Filelist, parameter):
+    # TODO: Add exception handling for geoTIFFutils.geoTiffLinker():
+    # - MemoryError: Large raster datasets exceeding available memory
+    # - ValueError: Coordinate/CRS mismatch between subjects and rasters
+    # - rasterio.errors: Various raster processing errors
     dataOI = geoTIFFutils.geoTiffLinker(subjects, tiffList, parameter)
     #print('Save the pretty JSON to:' + resultfile)
+    # TODO: Add exception handling for CSV write operations - could raise PermissionError, OSError
     # Save DataFrame to CSV
     dataOI.to_csv(resultfile, index=False)  # Set index=False to avoid saving the row numbers as a column
 
@@ -54,6 +69,11 @@ if __name__ == "__main__":
     print('get subjects')
     subjectfile = sys.argv[1]
     print(subjectfile)
+    # TODO: Add exception handling for netCDFutils.getsubj():
+    # - FileNotFoundError: Missing subject file
+    # - pd.errors.EmptyDataError: Empty CSV file
+    # - ValueError: Invalid coordinate data
+    # - KeyError: Missing required columns
     subjects = netCDFutils.getsubj(subjectfile)
     print(subjects)
 
@@ -61,6 +81,9 @@ if __name__ == "__main__":
     map_dir= sys.argv[2]
 
     print('-------- netCDFs --------')
+    # TODO: Add exception handling for netCDFutils.getNetCDFList():
+    # - OSError: Invalid directory path or permission errors
+    # - FileNotFoundError: Directory does not exist
     netCDFList = netCDFutils.getNetCDFList(map_dir)
     if len(netCDFList)>0:
         print(netCDFList)
