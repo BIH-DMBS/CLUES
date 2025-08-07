@@ -133,6 +133,7 @@ def create_netcdf_from_geotiffs(tiff_directory, output_nc_file):
 def get_parameter(parameters_jsonfile, bbox_jsonfile):
     # read json file that describes a geospatial datasource and parse the content so that it can be used 
     # to init the downloads 
+    
     try:
         with open(os.path.join(configs_assets_folder, parameters_jsonfile), 'r') as file:
             parameters = json.load(file)
@@ -146,7 +147,7 @@ def get_parameter(parameters_jsonfile, bbox_jsonfile):
         print(f"Error: The file '{parameters_jsonfile}' contains invalid JSON.")
         return None
 
-    if "start_year" not in parameters:
+    if "start_year" in parameters:
 
         if parameters['type'] not in ['MODIS_Vegetation_Index_Products', 'spei_drought_index', 'Night_Time_Lights_(NTL)', 'Global_Lakes_and_Wetlands_Database_(GLWD)', 'WordSettlementFootprint3D']:
             parameters["start_year"] = datetime.fromisoformat(parameters["start_year"] + "-01-01")
@@ -208,7 +209,7 @@ def get_parameter(parameters_jsonfile, bbox_jsonfile):
     parameters["bbox"] = bbox[area]
 
     return parameters
-     
+    '''
     with open(os.path.join(configs_assets_folder, parameters_jsonfile), 'r') as file:
         parameters = json.load(file)
     if "start_year" in parameters:
@@ -262,16 +263,17 @@ def get_parameter(parameters_jsonfile, bbox_jsonfile):
     parameters["bbox"] = bbox[area]
 
     return parameters
-
+    '''
 
 def get_asset_atmosphere(json_file, year, variable):
     # use cdsapi to download data
     # check: https://ads.atmosphere.copernicus.eu/api-how-to
+    print('----')
     try:
         parameters = get_parameter(json_file,'bbox.json')
         file_path = os.path.join(download_folder, parameters['source'], variable, year + '.nc')
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    except Exception as e:        
+        print(f"An error occurred: {e} (get_asset_atmosphere, get_parameter)")
 
     # Extract the directory path from the file path
     directory_path = os.path.dirname(file_path)
