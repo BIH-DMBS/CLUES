@@ -7,6 +7,10 @@ import os
 from datetime import datetime
 import re
 
+import xarray as xr
+from scipy.ndimage import uniform_filter
+from math import radians, sin, cos, sqrt, atan2
+
 try:
     from .config import download_folder, configs_assets_folder, area, config_folder, secrets_folder
 except:
@@ -340,3 +344,106 @@ def compute_neighborhood(json_file, variableOI, mode):
     except Exception as e:
         print(f"Error writing flag file {flag_filename}: {e}")
         raise e
+
+###########################
+# Define Haversine distance function (meters)
+def haversine(lat1, lon1, lat2, lon2):
+    R = 6371000  # Earth radius in meters
+    phi1 = radians(lat1)
+    phi2 = radians(lat2)
+    dphi = radians(lat2 - lat1)
+    dlambda = radians(lon2 - lon1)
+
+    a = sin(dphi/2)**2 + cos(phi1)*cos(phi2)*sin(dlambda/2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    return R * c
+
+
+def nanmean_filter(data, size):
+    # Create mask of valid (non-NaN) values
+    valid_mask = np.isfinite(data).astype(float)
+    data_filled = np.nan_to_num(data, nan=0.0)
+
+    # Apply uniform filter to both data and mask
+    filtered_sum = uniform_filter(data_filled, size=size, mode='nearest')
+    count_valid = uniform_filter(valid_mask, size=size, mode='nearest')
+
+    # Avoid division by zero
+    with np.errstate(invalid='ignore', divide='ignore'):
+        filtered = filtered_sum / count_valid
+        filtered[count_valid == 0] = np.nan
+
+    return filtered
+
+
+def nanstd_filter(data, size):
+    # Create mask of valid values
+    valid_mask = np.isfinite(data).astype(float)
+    data_filled = np.nan_to_num(data, nan=0.0)
+
+    # First moment (mean)
+    mean = uniform_filter(data_filled, size=size, mode='nearest') / \
+           uniform_filter(valid_mask, size=size, mode='nearest')
+
+    # Second moment (mean of squares)
+    mean_sq = uniform_filter(data_filled**2, size=size, mode='nearest') / \
+              uniform_filter(valid_mask, size=size, mode='nearest')
+
+    # Compute std = sqrt(E[x^2] - (E[x])^2)
+    std = np.sqrt(mean_sq - mean**2)
+
+    # Set std to NaN where there are no valid pixels
+    count_valid = uniform_filter(valid_mask, size=size, mode='nearest')
+    std[count_valid == 0] = np.nan
+
+    return std
+
+
+def compute_neighborhood_modis_vi(json_file, typ, name, fltr, rds_m, year):
+    file_path = os.path.join(download_folder, typ, name, f"{year}.nc")
+    print(file_path)
+    ds = xr.open_dataset(file_path)
+    data_array = ds[name].values
+    Latitude   = ds['Latitude'].values  # (YDim, XDim) float32
+    Longitude  = ds['Longitude'].values  # (YDim, XDim) float32
+    # Pick center of the grid for estimating pixel size
+    center_y = Latitude.shape[0] // 2
+    center_x = Latitude.shape[1] // 2
+
+    # Estimate pixel size in meters using neighboring pixels
+    lat_center = Latitude[center_y, center_x]
+    lon_center = Longitude[center_y, center_x]
+
+    lat_dx = Latitude[center_y, center_x + 1]
+    lon_dx = Longitude[center_y, center_x + 1]
+
+    lat_dy = Latitude[center_y + 1, center_x]
+    lon_dy = Longitude[center_y + 1, center_x]
+
+    # Distance per pixel in X and Y direction
+    dx_m = haversine(lat_center, lon_center, lat_dx, lon_dx)
+    #dy_m = haversine(lat_center, lon_center, lat_dy, lon_dy)
+
+    # Convert radius in meters to pixels (average for isotropic filter)
+    radius_pixels_x = int(int(rds_m) / dx_m)
+    #radius_pixels_y = int(rds_m / dy_m)
+    #radius_pixels_avg = int(rds_m / ((dx_m + dy_m) / 2))
+
+    print(f"Pixel size (dx, ...): ({dx_m:.2f} m, ... m)")
+    print(f"Radius in pixels (x, ...): ({radius_pixels_x}, ... )")
+
+    # create empty array with same shape as data_array
+    filtered_data = np.empty_like(data_array, dtype=np.float32)
+    filter_size = (radius_pixels_x, radius_pixels_x)
+    for t in range(data_array.shape[0]):
+        if fltr == 'mean':    
+            filtered_data[t] = nanmean_filter(data_array[t], size=filter_size)
+        elif fltr == 'std': 
+            filtered_data[t] = nanstd_filter(data_array[t], size=filter_size)
+    # Now add the 3D filtered data to dataset with correct dimensions
+    ds[name + '_filtered'] = (('time', 'YDim', 'XDim'), filtered_data)
+    # remove original data from dataset
+    ds = ds.drop_vars(name)
+    # save the modified dataset to a new file
+    result_file = os.path.join(download_folder,'neigborhoods', f'{typ}',f'{name}',f'{fltr}_radius_{rds_m}_{year}.nc')
+    ds.to_netcdf(result_file)

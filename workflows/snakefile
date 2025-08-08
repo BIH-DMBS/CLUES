@@ -186,17 +186,32 @@ for key,items in variables.items():
         for v in items:
             input = input + [os.path.join(download_folder, parameters['global_treecover']['type'], v['name'],'done.flag')]
 
+
 # Neighborhood computations
 neighborhood = []
-if 'copernicus_dem' in variables:
-    # (11) copernicus_dem
-    for v in variables['copernicus_dem']:
-        for fltr, radius in v['neighborhood'].items():
-            if fltr == 'zevenbergen_thorne':
-                neighborhood = neighborhood + [os.path.join(download_folder, 'neigborhoods', parameters['copernicus_dem']['type'], v['name'],fltr,'done.txt')]
-            else:
-                for r in radius:
-                    neighborhood = neighborhood + [os.path.join(download_folder, 'neigborhoods', parameters['copernicus_dem']['type'], v['name'],fltr+'_radius_'+str(r),'done.txt')]
+for key,items in variables.items():
+    if key == 'copernicus_dem':
+        # (11) copernicus_dem
+        for v in items:
+            for fltr, radius in v['neighborhood'].items():
+                if fltr == 'zevenbergen_thorne':
+                    neighborhood = neighborhood + [os.path.join(download_folder, 'neigborhoods', parameters['copernicus_dem']['type'], v['name'],fltr,'done.txt')]
+                elif fltr in ['mean','std']:
+                    for r in radius:
+                        neighborhood = neighborhood + [os.path.join(download_folder, 'neigborhoods', parameters['copernicus_dem']['type'], v['name'],fltr+'_radius_'+str(r),'done.txt')]
+    if key == 'modis_vi':
+        # (11) copernicus_dem
+        for v in items:
+            year_list = [str(year) for year in range(int(parameters['modis_vi']["start_year"]), int(parameters['modis_vi']["end_year"]) + 1)]
+            year_list = list(set(year_list) & set(years))
+            for v in items:
+                for fltr, radius in v['neighborhood'].items():
+                    if fltr == 'zevenbergen_thorne':
+                        pass
+                    elif fltr in ['mean','std']:
+                        for r in radius:
+                            neighborhood = neighborhood + expand(os.path.join(download_folder,'neigborhoods', parameters['modis_vi']['type'], v['name'],fltr+'_radius_'+str(r) + '_{year}.nc'), 
+                            year=year_list)
         
 
 input = input + neighborhood
@@ -356,6 +371,7 @@ rule get_modis_vi:
     shell:
         "python workflows/modis_vi.py {params.file} {params.name} {params.year} > log_{params.type}_{params.name}_{params.year}.log 2>&1"
 
+
 # Define rule get_global_treecover
 rule get_global_treecover:
     output:
@@ -368,11 +384,10 @@ rule get_global_treecover:
         "python workflows/global_treecover.py {params.file} {params.name} > log_{params.type}_{params.name}.log 2>&1"
 
 
-
 # Define rule Neighborhood
-ruleorder: get_copernicus_odata > get_neighborhood
+ruleorder: get_copernicus_odata > get_neighborhood_copernicus_odata
 
-rule get_neighborhood: 
+rule get_neighborhood_copernicus_odata:
     input:
         os.path.join(download_folder, parameters['copernicus_dem']['type'], '{variable}', 'done.txt')
     output:
@@ -383,4 +398,22 @@ rule get_neighborhood:
         file=files['copernicus_dem']
     shell:
         "python workflows/neighborhood.py {params.file} {params.var} {params.mode} > log_{params.var}_{params.mode}.log 2>&1"
+
+
+ruleorder: get_modis_vi > get_neighborhood_modis_vi
+
+rule get_neighborhood_modis_vi:
+    input:
+        os.path.join(download_folder, parameters['modis_vi']['type'],'{name}','{year}.nc')
+    output:
+        os.path.join(download_folder,'neigborhoods', parameters['modis_vi']['type'],'{name}','{fltr}_radius_{radius}_{year}.nc')
+    params:
+        file=files['modis_vi'],
+        typ = parameters['modis_vi']['type'],
+        name = "{name}",
+        fltr = "{fltr}",
+        rds = "{radius}",
+        year = "{year}"
+    shell:
+        "python workflows/neighborhood_modis_vi.py {params.file} {params.typ} {params.name} {params.fltr} {params.rds} {params.year}> log_{params.name}_{params.fltr}_{params.rds}_{params.year}.log 2>&1"
 

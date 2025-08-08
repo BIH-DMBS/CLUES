@@ -209,61 +209,7 @@ def get_parameter(parameters_jsonfile, bbox_jsonfile):
     parameters["bbox"] = bbox[area]
 
     return parameters
-    '''
-    with open(os.path.join(configs_assets_folder, parameters_jsonfile), 'r') as file:
-        parameters = json.load(file)
-    if "start_year" in parameters:
-       if parameters['type'] not in ['MODIS_Vegetation_Index_Products','spei_drought_index','Night_Time_Lights_(NTL)', 'Global_Lakes_and_Wetlands_Database_(GLWD)','WordSettlementFootprint3D']: 
-        #cdsapi sources (if not wms or wcs is used)
-            parameters["start_year"] = datetime.fromisoformat(parameters["start_year"] + "-01-01")
-            if parameters["end_year"] == "ongoing":
-                parameters["end_year"] = datetime.now() - timedelta(1)
-            else:
-                parameters["end_year"] = datetime.fromisoformat(parameters["end_year"] + "-12-31")
-            
-            times = [time(i, 0).strftime('%H:%M') for i in range(0, 24, int(parameters["delta_t_in_h"]))]
-            days =  [str(i) for i in range(1,31)]
-            months = [str(i) for i in range(1,13)]
-            years = [str(i) for i in range(parameters["start_year"].year,parameters["end_year"].year)]
-
-            parameters["times"] = times
-            parameters["days"] = days
-            parameters["months"] = months
-            parameters["years"] = years
-
-    for v in parameters['variables']:
-        if 'temporal_dimension' in v.keys():
-            # Parse the interval string
-            start_str, end_str, period_str = v['temporal_dimension'].split('/')
-
-            # Convert start and end strings to datetime objects
-            start_date = datetime.fromisoformat(start_str.replace('Z', '+00:00'))
-            end_date = datetime.fromisoformat(end_str.replace('Z', '+00:00'))
-
-            # Calculate the interval
-            if period_str == 'P1D':
-                delta = timedelta(days=1)
-            elif period_str == 'P1M':
-                delta = relativedelta(months=1)
-            else:
-                raise ValueError("Unsupported period format")
-
-            # Generate the list of dates
-            current_date = start_date
-            date_list = []
-
-            while current_date <= end_date:
-                date_list.append(current_date.isoformat().replace('+00:00', 'Z'))
-                current_date += delta 
-            v['date_list'] = date_list
-
-    with open(os.path.join(config_folder, bbox_jsonfile), 'r') as file:
-        bbox = json.load(file)
-
-    parameters["bbox"] = bbox[area]
-
-    return parameters
-    '''
+    
 
 def get_asset_atmosphere(json_file, year, variable):
     # use cdsapi to download data
