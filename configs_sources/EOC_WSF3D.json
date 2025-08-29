@@ -11,17 +11,17 @@
         },
         {
             "name":"WSF3D_V02_BuildingFraction",
-            "url":"https://download.geoservice.dlr.de/WSF3D/files/global/WSF3D_V02_BuildingArea.tif",
+            "url":"https://download.geoservice.dlr.de/WSF3D/files/global/WSF3D_V02_BuildingFraction.tif",
             "flagFile" : "WSF3D_V02_BuildingFraction.tif"
         },
         {
             "name":"WSF3D_V02_BuildingHeight",
-            "url":"https://download.geoservice.dlr.de/WSF3D/files/global/WSF3D_V02_BuildingArea.tif",
+            "url":"https://download.geoservice.dlr.de/WSF3D/files/global/WSF3D_V02_BuildingHeight.tif",
             "flagFile" : "WSF3D_V02_BuildingHeight.tif"
         },
         {
             "name":"WSF3D_V02_BuildingVolume",
-            "url":"https://download.geoservice.dlr.de/WSF3D/files/global/WSF3D_V02_BuildingArea.tif",
+            "url":"https://download.geoservice.dlr.de/WSF3D/files/global/WSF3D_V02_BuildingVolume.tif",
             "flagFile" : "WSF3D_V02_BuildingVolume.tif"
         }
     ]
