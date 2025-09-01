@@ -18,7 +18,7 @@
         {
             "name":"WSF_Evo_1985_2015",
             "url":"https://download.geoservice.dlr.de/WSF_EVO/files/",
-            "flagFile" : "WSF_Evo.tif",
+            "flagFile" : "WSF_Evo_1985_2015.tif",
             "year":"2015"
         }
     ]

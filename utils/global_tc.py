@@ -96,7 +96,7 @@ def getHansen(parameters):
     download_path = os.path.join(download_folder, parameters['type'],parameters['variables'][0]['name'])
     for tile in tilesOI:
         print(tile)
-        download_tile_hansen(tile, download_path)
+        download_tile(tile, download_path)
     # Flag downloads are complete
     done_flag_path = os.path.join(download_path, 'done.flag')
     with open(done_flag_path, 'w') as f:
