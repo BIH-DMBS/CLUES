@@ -1,4 +1,5 @@
 rasterio
+pyproj
 numpy
 pandas
 geopandas
@@ -11,7 +12,6 @@ owslib
 ipykernel
 ipywidgets 
 matplotlib
-djangorestframework
 filelock
 seaborn
 scikit-image
