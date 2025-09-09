@@ -61,6 +61,7 @@ Data from the Copernicus Climate Data Store (CDS) and the Atmosphere Data Store 
     - CDS API instructions at https://cds.climate.copernicus.eu/how-to-api  
     - ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api  
     - DEM Copericus create user account: https://www.copernicus.eu/en/user/login
+
 3. Generate personalized API tokens from both platforms
 
 
@@ -74,10 +75,11 @@ key: place your token here</pre>
 <pre>url: https://cds.climate.copernicus.eu/api
 key: place your token here</pre>
 
+**_Copernicus credential Storage_**  
 *copernicus_credential.sct*
 <pre>grant_type : password
-username : add your username
-password : add your password
+username : place your username here
+password : place your password here
 client_id : cdse-public</pre>
 
 ### NASA EarthData
