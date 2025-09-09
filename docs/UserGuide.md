@@ -60,6 +60,7 @@ Data from the Copernicus Climate Data Store (CDS) and the Atmosphere Data Store 
 
     - CDS API instructions at https://cds.climate.copernicus.eu/how-to-api  
     - ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api  
+    - DEM Copericus create user account: https://www.copernicus.eu/en/user/login
 3. Generate personalized API tokens from both platforms
 
 
@@ -72,6 +73,12 @@ key: place your token here</pre>
 *cdsapirc_climate.sct*  
 <pre>url: https://cds.climate.copernicus.eu/api
 key: place your token here</pre>
+
+*copernicus_credential.sct*
+<pre>grant_type : password
+username : add your username
+password : add your password
+client_id : cdse-public</pre>
 
 ### NASA EarthData
 Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s Earthdata platform also requires registration.

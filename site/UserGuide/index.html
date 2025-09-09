@@ -783,7 +783,8 @@ The location of the credential (.sct) files is defined in the general workflow c
 1. Create an ECMWF account at ecmwf.int<br />
 2. Visit:  </p>
 <pre><code>- CDS API instructions at https://cds.climate.copernicus.eu/how-to-api  
-- ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api
+- ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api  
+- DEM Copericus create user account: https://www.copernicus.eu/en/user/login
 </code></pre>
 <ol>
 <li>Generate personalized API tokens from both platforms</li>
@@ -797,6 +798,12 @@ key: place your token here</pre>
 <p><em>cdsapirc_climate.sct</em>  </p>
 <pre>url: https://cds.climate.copernicus.eu/api
 key: place your token here</pre>
+
+<p><em>copernicus_credential.sct</em></p>
+<pre>grant_type : password
+username : add your username
+password : add your password
+client_id : cdse-public</pre>
 
 <h3 id="nasa-earthdata">NASA EarthData</h3>
 <p>Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s Earthdata platform also requires registration.</p>
