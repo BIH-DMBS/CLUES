@@ -1,7 +1,6 @@
 {
     "type": "espon",
     "source": "espon",
-    "file": "espon.json",
     "link": "https://database.espon.eu/api/",
     "citation": "...",
     "format": "geopandas dataframe with shape",
@@ -2137,6 +2136,12 @@
                     "name": "People employed in highly knowledge intensive sectors"
                 },
                 {
+                    "shape": "https://database.espon.eu/private-media/object/1460/ind_1460_gdpcap_f_shp_rowvZLX.zip",
+                    "csv": "https://database.espon.eu/private-media/object/1460/ind_1460_gdpcap_f_csv_UP9cNsT.zip",
+                    "id": 1460,
+                    "name": "[FORECAST] GDP per capita prediction in the BSR"
+                },
+                {
                     "csv": "https://database.espon.eu/private-media/object/1481/ind_1481_findifc_csv.zip",
                     "shape": "https://database.espon.eu/private-media/object/1481/ind_1481_findifc_shp.zip",
                     "id": 1481,
@@ -2173,12 +2178,6 @@
                     "name": "Share of population living in a 25km corridor along the border"
                 },
                 {
-                    "csv": "https://database.espon.eu/private-media/object/1600/ind_1600_poptfua_csv.zip",
-                    "shape": "https://database.espon.eu/private-media/object/1600/ind_1600_poptfua_shp.zip",
-                    "id": 1600,
-                    "name": "Total population"
-                },
-                {
                     "shape": "https://database.espon.eu/private-media/object/1612/ind_1612_for_area_shp.zip",
                     "csv": "https://database.espon.eu/private-media/object/1612/ind_1612_for_area_csv.zip",
                     "id": 1612,
@@ -2201,12 +2200,6 @@
                     "shape": "https://database.espon.eu/private-media/object/1622/ind_1622_unesco_s_shp.zip",
                     "id": 1622,
                     "name": "UNESCO World Heritage Sites"
-                },
-                {
-                    "csv": "https://database.espon.eu/private-media/object/1625/ind_1625_migrafua_csv.zip",
-                    "shape": "https://database.espon.eu/private-media/object/1625/ind_1625_migrafua_shp.zip",
-                    "id": 1625,
-                    "name": "Net migration rate"
                 },
                 {
                     "csv": "https://database.espon.eu/private-media/object/1949/ind_1949_t4_1_csv_E8pmzd2.zip",
@@ -5785,8 +5778,8 @@
         },
         {
             "dimension": [
-                "Natura 2000 sites",
-                "Nationally designated areas"
+                "Nationally designated areas",
+                "Natura 2000 sites"
             ],
             "features": [
                 {
@@ -5799,13 +5792,13 @@
         },
         {
             "dimension": [
-                "Renewable energy input for district heat production (share of)",
-                "Biomass potential available for decentral heating and hot water in buildings (estimated)",
-                "Heat demand (excl. process heat) in municipalities with district heating systems (estimated)",
                 "Renewable energy input for electricity production (share of)",
-                "Final energy consumption in the residential building sector per capita",
+                "Heat demand (excl. process heat) in municipalities with district heating systems (estimated)",
+                "Electricity production by utilities from combined heat and power capacity (estimated)",
+                "Biomass potential available for decentral heating and hot water in buildings (estimated)",
                 "Access to natural gas for buildings (estimated)",
-                "Electricity production by utilities from combined heat and power capacity (estimated)"
+                "Renewable energy input for district heat production (share of)",
+                "Final energy consumption in the residential building sector per capita"
             ],
             "features": [
                 {
@@ -5849,9 +5842,9 @@
         },
         {
             "dimension": [
-                "Population on 1 January (total) by age group",
                 "Employment (total) - NACE rev.2 Section I",
-                "Gross domestic product (GDP) at current market prices (Million euro)"
+                "Gross domestic product (GDP) at current market prices (Million euro)",
+                "Population on 1 January (total) by age group"
             ],
             "features": [
                 {
@@ -6045,8 +6038,8 @@
         },
         {
             "dimension": [
-                "Unemployment (rate)",
                 "Gross domestic product (GDP) at current market prices (PPS per Inhabitant)",
+                "Unemployment (rate)",
                 "Gross domestic product (GDP) at current market prices (Million euro)"
             ],
             "features": [
@@ -6060,8 +6053,8 @@
         },
         {
             "dimension": [
-                "Gross Domestic Product (GDP) per capita - disintegration scenario 2031",
-                "Gross Domestic Product (GDP) per capita - baseline scenario 2030"
+                "Gross Domestic Product (GDP) per capita - baseline scenario 2030",
+                "Gross Domestic Product (GDP) per capita - disintegration scenario 2031"
             ],
             "features": [
                 {
@@ -6187,8 +6180,8 @@
         },
         {
             "dimension": [
-                "Population",
-                "Overnight stays (total)"
+                "Overnight stays (total)",
+                "Population"
             ],
             "features": [
                 {
@@ -6201,8 +6194,8 @@
         },
         {
             "dimension": [
-                "Foreign residents (total)",
-                "Population"
+                "Population",
+                "Foreign residents (total)"
             ],
             "features": [
                 {
@@ -6268,8 +6261,8 @@
         },
         {
             "dimension": [
-                "[Forecast] GDP in M\u20ac prediction scenario 1: Stable recovery from the crisis scenario",
-                "[Forecast] Population prediction 1: Stable recovery from the crisis scenario"
+                "[Forecast] Population prediction 1: Stable recovery from the crisis scenario",
+                "[Forecast] GDP in M\u20ac prediction scenario 1: Stable recovery from the crisis scenario"
             ],
             "features": [
                 {
@@ -6334,19 +6327,19 @@
         },
         {
             "dimension": [
-                "loan investment for energy in buildings",
-                "other investment for energy in buildings",
-                "guarantee investment for urban development",
-                "equity and VC investment for enterprises",
-                "other investment for urban development",
                 "loan investment for enterprises",
-                "Historic EU payments regionalised and modelled",
-                "equity and VC investment for energy in buildings",
-                "equity and VC investment for urban development",
                 "loan investment for urban development",
-                "guarantee investment for energy in buildings",
+                "Historic EU payments regionalised and modelled",
+                "other investment for urban development",
                 "other investment for enterprises",
-                "guarantee investment for enterprises"
+                "guarantee investment for enterprises",
+                "equity and VC investment for energy in buildings",
+                "guarantee investment for urban development",
+                "loan investment for energy in buildings",
+                "guarantee investment for energy in buildings",
+                "other investment for energy in buildings",
+                "equity and VC investment for enterprises",
+                "equity and VC investment for urban development"
             ],
             "features": [
                 {
@@ -6359,19 +6352,19 @@
         },
         {
             "dimension": [
-                "loan investment for energy in buildings",
-                "other investment for energy in buildings",
-                "Regional GDP. Total 2007-2013",
-                "guarantee investment for urban development",
-                "equity and VC investment for enterprises",
-                "other investment for urban development",
                 "loan investment for enterprises",
-                "equity and VC investment for energy in buildings",
-                "equity and VC investment for urban development",
                 "loan investment for urban development",
-                "guarantee investment for energy in buildings",
+                "other investment for urban development",
                 "other investment for enterprises",
-                "guarantee investment for enterprises"
+                "guarantee investment for enterprises",
+                "Regional GDP. Total 2007-2013",
+                "equity and VC investment for energy in buildings",
+                "guarantee investment for urban development",
+                "loan investment for energy in buildings",
+                "guarantee investment for energy in buildings",
+                "other investment for energy in buildings",
+                "equity and VC investment for enterprises",
+                "equity and VC investment for urban development"
             ],
             "features": [
                 {
@@ -6523,8 +6516,8 @@
         },
         {
             "dimension": [
-                "Trademark applications in the relevant sectors",
-                "Patent application in the relevant sectors"
+                "Patent application in the relevant sectors",
+                "Trademark applications in the relevant sectors"
             ],
             "features": [
                 {
@@ -6537,9 +6530,9 @@
         },
         {
             "dimension": [
+                "Number of overnight stays",
                 "Inversed annual seasonality of tourism",
-                "Area covered by NATURA 2000",
-                "Number of overnight stays"
+                "Area covered by NATURA 2000"
             ],
             "features": [
                 {
@@ -6552,9 +6545,9 @@
         },
         {
             "dimension": [
-                "People employed in highly knowledge intensive sectors",
+                "People employed in medium knowledge intensive sectors",
                 "Patent application in the relevant sectors",
-                "People employed in medium knowledge intensive sectors"
+                "People employed in highly knowledge intensive sectors"
             ],
             "features": [
                 {
@@ -6866,12 +6859,12 @@
         },
         {
             "dimension": [
+                "Specialisation in carrier services",
                 "Specialisation in induced manufacturing sectors",
-                "Specialisation in carrier manufacturing sectors",
                 "Specialisation in technology manufacturing sectors",
-                "Specialisation in technology services",
                 "Specialisation in induced services",
-                "Specialisation in carrier services"
+                "Specialisation in carrier manufacturing sectors",
+                "Specialisation in technology services"
             ],
             "features": [
                 {
@@ -6897,8 +6890,8 @@
         },
         {
             "dimension": [
-                "Regional creation and displacement of low-skill jobs",
-                "Regional creation and displacement of high-skill jobs"
+                "Regional creation and displacement of high-skill jobs",
+                "Regional creation and displacement of low-skill jobs"
             ],
             "features": [
                 {
@@ -6974,10 +6967,10 @@
         {
             "dimension": [
                 "Economic damage due to earthquakes, average of yearly impacts",
-                "Gross Value Added (GVA) at basic prices",
-                "Economic damage due to droughts, average of yearly impacts",
                 "Economic damage due to floods, average of yearly impacts",
-                "Economic damage due to windstorms, average of yearly impacts"
+                "Economic damage due to droughts, average of yearly impacts",
+                "Economic damage due to windstorms, average of yearly impacts",
+                "Gross Value Added (GVA) at basic prices"
             ],
             "features": [
                 {
@@ -7022,11 +7015,11 @@
         {
             "dimension": [
                 "Landslide susceptibility",
-                "Windstorm hazard (maximum wind speed for three-second gusts, 1981-2010)",
-                "100-year river flood (flooded area in percentage of NUTS3 area)",
-                "Drought hazard (number of droughts 1981-2010)",
                 "Seismic hazard (maximal peak ground acceleration as fractions of standard gravity)",
-                "Drought hazard (number of drought months 1981-2010)"
+                "Drought hazard (number of droughts 1981-2010)",
+                "Drought hazard (number of drought months 1981-2010)",
+                "Windstorm hazard (maximum wind speed for three-second gusts, 1981-2010)",
+                "100-year river flood (flooded area in percentage of NUTS3 area)"
             ],
             "features": [
                 {
@@ -7293,9 +7286,9 @@
         },
         {
             "dimension": [
+                "Digitization",
                 "Innovative technologies",
-                "Advanced methods and principles",
-                "Digitization"
+                "Advanced methods and principles"
             ],
             "features": [
                 {
@@ -7308,9 +7301,9 @@
         },
         {
             "dimension": [
-                "Scaling up",
+                "Scaling deep",
                 "Scaling out",
-                "Scaling deep"
+                "Scaling up"
             ],
             "features": [
                 {
@@ -7323,8 +7316,8 @@
         },
         {
             "dimension": [
-                "Proneness to change",
-                "Digital Service Innovation Maturity"
+                "Digital Service Innovation Maturity",
+                "Proneness to change"
             ],
             "features": [
                 {
@@ -7337,8 +7330,8 @@
         },
         {
             "dimension": [
-                "Innovation governance",
-                "Change management"
+                "Change management",
+                "Innovation governance"
             ],
             "features": [
                 {
@@ -7351,9 +7344,9 @@
         },
         {
             "dimension": [
+                "Replication and diffusion",
                 "Context empowerment",
-                "Organizational readiness",
-                "Replication and diffusion"
+                "Organizational readiness"
             ],
             "features": [
                 {
@@ -7366,10 +7359,10 @@
         },
         {
             "dimension": [
-                "Societal engagement",
-                "Institutional capacity",
                 "Procurement",
-                "Data management"
+                "Data management",
+                "Institutional capacity",
+                "Societal engagement"
             ],
             "features": [
                 {
@@ -7382,10 +7375,10 @@
         },
         {
             "dimension": [
+                "Data Platform",
                 "Open Data",
                 "Data Strategy",
                 "Data Use",
-                "Data Platform",
                 "Big Data"
             ],
             "features": [
@@ -7399,9 +7392,9 @@
         },
         {
             "dimension": [
-                "Social Media Presence",
                 "Co-creation",
-                "E-participation"
+                "E-participation",
+                "Social Media Presence"
             ],
             "features": [
                 {
@@ -7429,13 +7422,13 @@
         },
         {
             "dimension": [
-                "Trade of goods regional connectivity",
-                "Trade of goods regional interregional balance",
-                "Trade of goods regional weighted intensity",
                 "Trade of goods regional external Influence",
                 "Trade of goods regional send-receive balance",
+                "Trade of goods regional intensity",
+                "Trade of goods regional weighted intensity",
+                "Trade of goods regional connectivity",
                 "Trade of goods regional network selectivity",
-                "Trade of goods regional intensity"
+                "Trade of goods regional interregional balance"
             ],
             "features": [
                 {
@@ -7503,13 +7496,13 @@
         },
         {
             "dimension": [
-                "Road freight regional send-receive balance",
                 "Road freight regional weighted intensity",
                 "Road freight regional interregional balance",
-                "Road freight regional network selectivity",
+                "Road freight regional external Influence",
                 "Road freight regional intensity",
                 "Road freight regional connectivity",
-                "Road freight regional external Influence"
+                "Road freight regional send-receive balance",
+                "Road freight regional network selectivity"
             ],
             "features": [
                 {
@@ -7536,8 +7529,8 @@
         },
         {
             "dimension": [
-                "Tourism regional weighted intensity",
-                "Tourism regional balance"
+                "Tourism regional balance",
+                "Tourism regional weighted intensity"
             ],
             "features": [
                 {
@@ -7550,19 +7543,19 @@
         },
         {
             "dimension": [
-                "Labour regional intensity (inflows)",
-                "Labour regional interregional balance (outflows)",
-                "Labour regional interregional balance (inflows)",
-                "Labour regional weighted intensity (inflows)",
-                "Labour regional send-receive balance",
-                "Labour regional connectivity (inflows)",
-                "Labour regional external Influence (inflows)",
-                "Labour regional connectivity (outflows)",
-                "Labour regional external Influence (outflows)",
                 "Labour regional network selectivity (inflows)",
-                "Labour regional network selectivity (outflows)",
+                "Labour regional intensity (outflows)",
+                "Labour regional send-receive balance",
+                "Labour regional interregional balance (outflows)",
+                "Labour regional external Influence (inflows)",
                 "Labour regional weighted intensity (outflows)",
-                "Labour regional intensity (outflows)"
+                "Labour regional interregional balance (inflows)",
+                "Labour regional external Influence (outflows)",
+                "Labour regional network selectivity (outflows)",
+                "Labour regional connectivity (inflows)",
+                "Labour regional connectivity (outflows)",
+                "Labour regional weighted intensity (inflows)",
+                "Labour regional intensity (inflows)"
             ],
             "features": [
                 {
@@ -7575,12 +7568,12 @@
         },
         {
             "dimension": [
-                "Rail passenger regional intensity",
-                "Rail passenger regional weighted intensity",
-                "Rail passenger regional external Influence",
-                "Rail passenger regional connectivity",
                 "Rail passenger regional network selectivity",
-                "Rail passenger regional interregional balance"
+                "Rail passenger regional interregional balance",
+                "Rail passenger regional external Influence",
+                "Rail passenger regional weighted intensity",
+                "Rail passenger regional connectivity",
+                "Rail passenger regional intensity"
             ],
             "features": [
                 {
@@ -7593,12 +7586,12 @@
         },
         {
             "dimension": [
-                "Maritime passenger regional connectivity",
-                "Maritime passenger regional interregional balance",
+                "Maritime passenger regional network selectivity",
+                "Maritime passenger regional weighted intensity",
                 "Maritime passenger regional external Influence",
                 "Maritime passenger regional intensity",
-                "Maritime passenger regional weighted intensity",
-                "Maritime passenger regional network selectivity"
+                "Maritime passenger regional connectivity",
+                "Maritime passenger regional interregional balance"
             ],
             "features": [
                 {
@@ -7611,12 +7604,12 @@
         },
         {
             "dimension": [
-                "Air passenger regional external Influence",
-                "Air passenger regional connectivity",
-                "Air passenger regional interregional balance",
-                "Air passenger regional network selectivity",
                 "Air passenger regional intensity",
-                "Air passenger regional weighted intensity"
+                "Air passenger regional interregional balance",
+                "Air passenger regional weighted intensity",
+                "Air passenger regional network selectivity",
+                "Air passenger regional connectivity",
+                "Air passenger regional external Influence"
             ],
             "features": [
                 {
@@ -7629,13 +7622,13 @@
         },
         {
             "dimension": [
-                "FDI regional send-receive balance (incoming)",
+                "FDI regional connectivity (incoming)",
                 "FDI regional network selectivity (incoming)",
                 "FDI regional weighted intensity (incoming)",
-                "FDI regional interregional balance (incoming)",
                 "FDI regional intensity (incoming)",
-                "FDI regional connectivity (incoming)",
-                "FDI regional external Influence (incoming)"
+                "FDI regional send-receive balance (incoming)",
+                "FDI regional external Influence (incoming)",
+                "FDI regional interregional balance (incoming)"
             ],
             "features": [
                 {
@@ -7648,13 +7641,13 @@
         },
         {
             "dimension": [
-                "FDI regional network selectivity (outgoing)",
-                "FDI regional connectivity (outgoing)",
-                "FDI regional interregional balance (outgoing)",
-                "FDI regional weighted intensity (outgoing)",
+                "FDI regional intensity (outgoing)",
                 "FDI regional external Influence (outgoing)",
+                "FDI regional weighted intensity (outgoing)",
                 "FDI regional send-receive balance (outgoing)",
-                "FDI regional intensity (outgoing)"
+                "FDI regional interregional balance (outgoing)",
+                "FDI regional network selectivity (outgoing)",
+                "FDI regional connectivity (outgoing)"
             ],
             "features": [
                 {
@@ -7668,12 +7661,12 @@
         {
             "dimension": [
                 "Remittances regional weighted intensity (incoming)",
-                "Remittances regional intensity (incoming)",
                 "Remittances regional external Influence (incoming)",
                 "Remittances regional interregional balance (incoming)",
                 "Remittances regional send-receive balance (incoming)",
                 "Remittances regional connectivity (incoming)",
-                "Remittances regional network selectivity (incoming)"
+                "Remittances regional network selectivity (incoming)",
+                "Remittances regional intensity (incoming)"
             ],
             "features": [
                 {
@@ -7686,13 +7679,13 @@
         },
         {
             "dimension": [
+                "Remittances regional send-receive balance (outgoing)",
                 "Remittances regional intensity (outgoing)",
-                "Remittances regional connectivity (outgoing)",
-                "Remittances regional interregional balance (outgoing)",
-                "Remittances regional external Influence (outgoing)",
                 "Remittances regional weighted intensity (outgoing)",
-                "Remittances regional network selectivity (outgoing)",
-                "Remittances regional send-receive balance (outgoing)"
+                "Remittances regional external Influence (outgoing)",
+                "Remittances regional interregional balance (outgoing)",
+                "Remittances regional connectivity (outgoing)",
+                "Remittances regional network selectivity (outgoing)"
             ],
             "features": [
                 {
@@ -7705,19 +7698,19 @@
         },
         {
             "dimension": [
-                "Erasmus regional external Influence (inflows)",
-                "Erasmus regional weighted intensity (outflows)",
-                "Erasmus regional send-receive balance",
-                "Erasmus regional network selectivity (outlows)",
-                "Erasmus regional intensity (inflows)",
-                "Erasmus regional interregional balance (outflows)",
-                "Erasmus regional intensity (outflows)",
-                "Erasmus regional external Influence (outflows)",
-                "Erasmus regional interregional balance (inflows)",
                 "Erasmus regional connectivity (outflows)",
-                "Erasmus regional connectivity (inflows)",
                 "Erasmus regional network selectivity (inflows)",
-                "Erasmus regional weighted intensity (inflows)"
+                "Erasmus regional interregional balance (outflows)",
+                "Erasmus regional weighted intensity (outflows)",
+                "Erasmus regional intensity (inflows)",
+                "Erasmus regional send-receive balance",
+                "Erasmus regional weighted intensity (inflows)",
+                "Erasmus regional external Influence (inflows)",
+                "Erasmus regional connectivity (inflows)",
+                "Erasmus regional network selectivity (outlows)",
+                "Erasmus regional intensity (outflows)",
+                "Erasmus regional interregional balance (inflows)",
+                "Erasmus regional external Influence (outflows)"
             ],
             "features": [
                 {
@@ -7730,19 +7723,19 @@
         },
         {
             "dimension": [
-                "H2020 regional external Influence (outflows)",
-                "H2020 regional weighted intensity (outflows)",
-                "H2020 regional interregional balance (outflows)",
-                "H2020 regional weighted intensity (inflows)",
-                "H2020 regional network selectivity (inflows)",
-                "H2020 regional intensity (outflows)",
-                "H2020 regional interregional balance (inflows)",
-                "H2020 regional connectivity (inflows)",
-                "H2020 regional connectivity (outflows)",
-                "H2020 regional send-receive balance",
-                "H2020 regional intensity (inflows)",
                 "H2020 regional network selectivity (outflows)",
-                "H2020 regional external Influence (inflows)"
+                "H2020 regional external Influence (outflows)",
+                "H2020 regional send-receive balance",
+                "H2020 regional connectivity (outflows)",
+                "H2020 regional intensity (outflows)",
+                "H2020 regional intensity (inflows)",
+                "H2020 regional external Influence (inflows)",
+                "H2020 regional connectivity (inflows)",
+                "H2020 regional weighted intensity (inflows)",
+                "H2020 regional interregional balance (inflows)",
+                "H2020 regional interregional balance (outflows)",
+                "H2020 regional network selectivity (inflows)",
+                "H2020 regional weighted intensity (outflows)"
             ],
             "features": [
                 {
@@ -7755,13 +7748,13 @@
         },
         {
             "dimension": [
+                "Patents regional weighted intensity (outflows)",
+                "Patents regional interregional balance (outflows)",
                 "Patents regional network selectivity (outflows)",
+                "Patents regional connectivity (outflows)",
                 "Patents regional send-receive balance (outflows)",
                 "Patents regional intensity (outflows)",
-                "Patents regional external Influence (outflows)",
-                "Patents regional weighted intensity (outflows)",
-                "Patents regional connectivity (outflows)",
-                "Patents regional interregional balance (outflows)"
+                "Patents regional external Influence (outflows)"
             ],
             "features": [
                 {
@@ -7774,13 +7767,13 @@
         },
         {
             "dimension": [
-                "Trade of services regional intensity",
-                "Trade of services regional weighted intensity",
-                "Trade of services regional network selectivity",
-                "Trade of services regional interregional balance",
+                "Trade of services regional send-receive balance",
                 "Trade of services regional connectivity",
+                "Trade of services regional intensity",
+                "Trade of services regional interregional balance",
                 "Trade of services regional external Influence",
-                "Trade of services regional send-receive balance"
+                "Trade of services regional weighted intensity",
+                "Trade of services regional network selectivity"
             ],
             "features": [
                 {
@@ -7793,8 +7786,8 @@
         },
         {
             "dimension": [
-                "Goods, services and capital Balance Index",
-                "Goods, services and capital Weighted intensity  Index"
+                "Goods, services and capital Weighted intensity  Index",
+                "Goods, services and capital Balance Index"
             ],
             "features": [
                 {
@@ -7807,8 +7800,8 @@
         },
         {
             "dimension": [
-                "People Balance  Index",
-                "People Weighted intensity  Index"
+                "People Weighted intensity  Index",
+                "People Balance  Index"
             ],
             "features": [
                 {
@@ -7821,8 +7814,8 @@
         },
         {
             "dimension": [
-                "Knowledge Balance  Index",
-                "Knowledge Weighted intensity  Index"
+                "Knowledge Weighted intensity  Index",
+                "Knowledge Balance  Index"
             ],
             "features": [
                 {
@@ -7835,8 +7828,8 @@
         },
         {
             "dimension": [
-                "All flows Balance Index",
-                "All flows Weighted intensity  Index"
+                "All flows Weighted intensity  Index",
+                "All flows Balance Index"
             ],
             "features": [
                 {
@@ -7919,8 +7912,8 @@
         },
         {
             "dimension": [
-                "People Average Distance  Index",
-                "People Weighted intensity  Index"
+                "People Weighted intensity  Index",
+                "People Average Distance  Index"
             ],
             "features": [
                 {
@@ -7933,8 +7926,8 @@
         },
         {
             "dimension": [
-                "Knowledge Average Distance  Index",
-                "Knowledge Weighted intensity  Index"
+                "Knowledge Weighted intensity  Index",
+                "Knowledge Average Distance  Index"
             ],
             "features": [
                 {
@@ -7947,8 +7940,8 @@
         },
         {
             "dimension": [
-                "All flows Average Distance Index",
-                "All flows Weighted intensity  Index"
+                "All flows Weighted intensity  Index",
+                "All flows Average Distance Index"
             ],
             "features": [
                 {
@@ -8018,13 +8011,13 @@
         },
         {
             "dimension": [
-                "Rail freight regional connectivity",
+                "Rail freight regional weighted intensity",
                 "Rail freight regional intensity",
                 "Rail freight regional external Influence",
-                "Rail freight regional network selectivity",
-                "Rail freight regional interregional balance",
                 "Rail freight regional send-receive balance",
-                "Rail freight regional weighted intensity"
+                "Rail freight regional interregional balance",
+                "Rail freight regional connectivity",
+                "Rail freight regional network selectivity"
             ],
             "features": [
                 {
@@ -8038,12 +8031,12 @@
         {
             "dimension": [
                 "Maritime freight regional external Influence",
-                "Maritime freight regional intensity",
+                "Maritime freight regional send-receive balance",
                 "Maritime freight regional weighted intensity",
-                "Maritime freight regional connectivity",
+                "Maritime freight regional intensity",
                 "Maritime freight regional interregional balance",
                 "Maritime freight regional network selectivity",
-                "Maritime freight regional send-receive balance"
+                "Maritime freight regional connectivity"
             ],
             "features": [
                 {
@@ -8056,13 +8049,13 @@
         },
         {
             "dimension": [
-                "Air freight regional connectivity",
-                "Air freight regional network selectivity",
                 "Air freight regional interregional balance",
-                "Air freight regional external Influence",
-                "Air freight regional weighted intensity",
+                "Air freight regional connectivity",
                 "Air freight regional intensity",
-                "Air freight regional send-receive balance"
+                "Air freight regional external Influence",
+                "Air freight regional send-receive balance",
+                "Air freight regional weighted intensity",
+                "Air freight regional network selectivity"
             ],
             "features": [
                 {
@@ -8754,8 +8747,8 @@
         },
         {
             "dimension": [
-                "Tourism regional weighted intensity",
-                "Tourism regional average distance"
+                "Tourism regional average distance",
+                "Tourism regional weighted intensity"
             ],
             "features": [
                 {
@@ -9142,19 +9135,19 @@
         },
         {
             "dimension": [
-                "Broadband access rate (% households)",
-                "Unemployment (total) - age group 15-24",
-                "Employment rate (%) - age group 25-64",
-                "Crude rate of net migration",
-                "Natural population change (%)",
-                "Intramural R&D expenditure (GERD)",
-                "Population - age group 30-34  - with educational attainment level 5-8 (%)",
                 "NEET (young people neither in employment nor in education or training)",
-                "Unemployment (total) - age group 25+",
                 "Employment rate (%) - age group 15-24",
-                "Gross domestic product (GDP) at current market prices (Million PPS)",
+                "Intramural R&D expenditure (GERD)",
+                "Crude rate of net migration",
                 "Human resources in science and technology (% active population)",
-                "Old dependency ratio (total)"
+                "Unemployment (total) - age group 15-24",
+                "Unemployment (total) - age group 25+",
+                "Population - age group 30-34  - with educational attainment level 5-8 (%)",
+                "Old dependency ratio (total)",
+                "Natural population change (%)",
+                "Broadband access rate (% households)",
+                "Gross domestic product (GDP) at current market prices (Million PPS)",
+                "Employment rate (%) - age group 25-64"
             ],
             "features": [
                 {
@@ -9167,17 +9160,17 @@
         },
         {
             "dimension": [
-                "Crude rate of natural change",
-                "Employment rate (%) - age group 25-64",
                 "Educational attainment level in age groups 25-64 and 30-34",
-                "Crude rate of net migration",
-                "Intramural R&D expenditure (GERD)",
-                "Old-age-dependency ratio by sex",
                 "NEET (young people neither in employment nor in education or training)",
                 "Employment rate (%) - age group 15-24",
-                "Gross domestic product (GDP) at current market prices (Million PPS)",
+                "Intramural R&D expenditure (GERD)",
+                "Old-age-dependency ratio by sex",
+                "Human resources in science and technology (% active population)",
+                "Crude rate of natural change",
+                "Crude rate of net migration",
                 "Patent applications to the EPO",
-                "Human resources in science and technology (% active population)"
+                "Gross domestic product (GDP) at current market prices (Million PPS)",
+                "Employment rate (%) - age group 25-64"
             ],
             "features": [
                 {
@@ -9191,9 +9184,9 @@
         {
             "dimension": [
                 "Renewable energy input for district heat production (share of)",
-                "Electricity production by utilities from combined heat and power capacity (estimated)",
                 "Final energy consumption in the residential building sector per capita",
-                "Heat demand (excl. process heat) in municipalities with district heating systems (estimated)"
+                "Heat demand (excl. process heat) in municipalities with district heating systems (estimated)",
+                "Electricity production by utilities from combined heat and power capacity (estimated)"
             ],
             "features": [
                 {
@@ -9206,8 +9199,8 @@
         },
         {
             "dimension": [
-                "Renewable energy input for electricity production (share of)",
-                "Final energy consumption in the residential building sector per capita"
+                "Final energy consumption in the residential building sector per capita",
+                "Renewable energy input for electricity production (share of)"
             ],
             "features": [
                 {

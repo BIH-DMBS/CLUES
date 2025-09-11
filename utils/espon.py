@@ -57,6 +57,9 @@ def get_feature_id(data, dimension, name):
     return None
 
 
+import cloudscraper
+
+
 def generate_espon_json():
     # the espon.json should not created by hand
     # use this fuvtion to generate this file from the data available online
@@ -66,16 +69,18 @@ def generate_espon_json():
     # URL of the web source
     base_url = "https://database.espon.eu/api/select/indicators/"
     params = {
+        "format": "json",
         "limit": 50,
         "offset": 0
     }
+    scraper = cloudscraper.create_scraper()
 
     all_results = []
 
     while True:
         # Make an HTTP GET request to the web source with pagination parameters
-        response = requests.get(base_url, params=params)
-
+        #response = requests.get(base_url, params=params)
+        response = scraper.get(base_url, params=params)
         # Check if the request was successful
         if response.status_code == 200:
             # Parse the JSON response
@@ -229,8 +234,12 @@ def get_asset_espon(json_file, vOI, dim):
     # URL of the file to be downloaded
     url = item['shape']
     # Send a HTTP GET request to the URL
+    #try:
+    #    response = requests.get(url, stream=True)
+    scraper = cloudscraper.create_scraper()
+
     try:
-        response = requests.get(url, stream=True)
+        response = scraper.get(url, stream=True)
     except Exception as e:
         print(f"An error occurred: {e}")
 
@@ -305,7 +314,9 @@ def get_asset_espon(json_file, vOI, dim):
 
 def download_csv(url, file_path_csv):
     # Send a HTTP GET request to the URL
-    response = requests.get(url, stream=True)
+    scraper = cloudscraper.create_scraper()
+    response = scraper.get(url, stream=True)
+    #response = requests.get(url, stream=True)
     fp_csv = file_path_csv + '.zip'
     # Check if the request was successful
     if response.status_code == 200:

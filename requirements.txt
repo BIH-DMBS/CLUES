@@ -23,6 +23,7 @@ bs4
 snakemake
 pyarrow
 fastparquet
+cloudscraper
 mkdocs
 mkdocs-material
 mkdocs-macros-plugin
