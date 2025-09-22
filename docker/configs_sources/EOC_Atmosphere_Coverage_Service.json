@@ -1,0 +1,17 @@
+{
+    "type": "wms",
+    "source": "EOC-Atmosphere-Coverage-Service",
+    "file": "EOC_Atmosphere_Coverage_Service.json",
+    "link": "https://geoservice.dlr.de/eoc/atmosphere/wms",
+    "format": "image/geotiff",
+    "crs": "EPSG:4326",
+    "variables": [
+        {
+            "name": "S5P_TROPOMI_L3_P1D_SO2",
+            "abstract": "Sulphur Dioxid (SO2) Composite Layer (S5P)",
+            "temporal_dimension": "2023-08-01T00:00:00.000Z/2024-07-26T00:00:00.000Z/P1D",
+            "width": 1000,
+            "height": 1000
+        }
+    ]
+}

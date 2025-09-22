@@ -1,0 +1,9 @@
+{
+    "type": "MODIS_Vegetation_Index_Products",
+    "start_year": "2000",
+    "end_year": "2025",
+    "format": "geoTIFF",
+    "variables":[
+        
+    ]
+} 

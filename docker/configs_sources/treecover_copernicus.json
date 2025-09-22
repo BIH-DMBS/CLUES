@@ -1,0 +1,21 @@
+{
+    "type": "treecover",
+    "format": "geotTiff",
+    "variables":[
+        {
+            "name":"HRL_TCF_TCD_S2021",
+            "url":"https://geoserver.vlcc.geoville.com/geoserver/ows",
+            "layer":"HRL_TCF:TCD_S2021",
+            "year":"2019",
+            "info":"Tree_Cover_Density_2021"
+        }
+    ]
+}
+
+
+
+
+
+
+
+

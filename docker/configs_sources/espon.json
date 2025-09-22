@@ -1,0 +1,29 @@
+{
+    "type": "espon",
+    "source": "espon",
+    "file": "espon.json",
+    "link": "https://database.espon.eu/api/",
+    "citation": "...",
+    "format": "geopandas dataframe with shape",
+    "variables": [
+        {
+            "dimension": [
+                "Deaths by age groups and gender"
+            ],
+            "features": [
+                {
+                    "csv": "https://database.espon.eu/private-media/object/3/ind_3_d_f_0-4_csv.zip",
+                    "shape": "https://database.espon.eu/private-media/object/3/ind_3_d_f_0-4_shp.zip",
+                    "id": 3,
+                    "name": "Deaths - female - age group 0-4"
+                },
+                {
+                    "csv": "https://database.espon.eu/private-media/object/4/ind_4_d_f_5-9_csv_CdWt3ba.zip",
+                    "shape": "https://database.espon.eu/private-media/object/4/ind_4_d_f_5-9_shp_QMUjEgM.zip",
+                    "id": 4,
+                    "name": "Deaths - female - age group 5-9"
+                }
+            ]
+        }
+    ]
+}
