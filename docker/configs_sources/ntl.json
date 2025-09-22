@@ -1,0 +1,13 @@
+{
+    "type": "Night_Time_Lights_(NTL)",
+    "start_year": "1992",
+    "end_year": "2021",
+    "format": "geoTIFF",
+    "variables":[
+        {
+            "name":"ntl",
+            "url":"https://figshare.com/ndownloader/articles/9828827/versions/8",
+            "flagFile" : "Harmonized_DN_NTL_1992_calDMSP.tif"
+        }
+    ]
+}

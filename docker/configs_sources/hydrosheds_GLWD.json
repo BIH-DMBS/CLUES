@@ -1,0 +1,13 @@
+{
+    "type": "Global_Lakes_and_Wetlands_Database_(GLWD)",
+    "start_year": "1990",
+    "end_year": "2020",
+    "format": "geoTIFF",
+    "variables":[
+        {
+            "name":"glwd",
+            "url":"https://figshare.com/ndownloader/files/44398148?private_link=e40017f69f41f80d50df",
+            "flagFile" : "GLWD_TechDoc_v2_delta.pdf"
+        }
+    ]
+}

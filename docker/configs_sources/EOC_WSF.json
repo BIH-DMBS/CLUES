@@ -1,0 +1,13 @@
+{
+    "type": "WordSettlementFootprint",
+    "format": "geoTIFF",
+    "variables":[
+        {
+            "name":"WSF_2015",
+            "url":"https://download.geoservice.dlr.de/WSF2015/files/",
+            "flagFile" : "WSF_2015.tif",
+            "year":"2015"
+            
+        }
+    ]
+}

@@ -1,0 +1,1 @@
+Then running the clues docker demo, the downloaded files will be saved into this folder per default.

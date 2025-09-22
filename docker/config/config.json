@@ -1,0 +1,12 @@
+{
+    "download_folder":"/app/CLUES/clues_data",
+    "tmp_folder":"/app/CLUES/clues_data/tmp/",
+    "configs_assets_folder":"/app/CLUES/configs_sources",
+    "config_folder":"/app/CLUES/config",
+    "secrets_folder":"/app/CLUES/secrets",
+    "years": ["2023", "2024"],
+    "update_years":[],
+    "area":"Brandenburg",
+    "espon_filename_length":80
+}
+

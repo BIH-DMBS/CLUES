@@ -17,6 +17,11 @@ except:
     from config import download_folder, tmp_folder, secrets_folder
 
 def download_modis(url, headers, file_path):
+    print('############################')
+    print(url)
+    print(headers)
+    print(file_path)
+
     # Send the request with streaming enabled
     try:
         response = requests.get(url,  headers=headers, stream=True)
@@ -60,6 +65,11 @@ def download_modis(url, headers, file_path):
 
 
 def get_dates(yearOI, url, headers, start_date):
+    print(url)
+    print(headers)
+    print('############################')
+        # Send the request  with streaming enabled
+
     try:
         response = requests.get(url,  headers=headers)
     except requests.RequestException as e:
@@ -203,6 +213,7 @@ def mergeNetCDFModis(name, typ, year, file_list, lenX, lenY):
 
 
 def get_evi_ndvi_modis(data_url, headers, typ, name, yearOI, start_date, tiles):
+    print('###-----------------########')
     downoad_path = os.path.join(download_folder, typ, name)
     os.makedirs(downoad_path, exist_ok=True)
 
@@ -210,13 +221,19 @@ def get_evi_ndvi_modis(data_url, headers, typ, name, yearOI, start_date, tiles):
     for t in tiles:
         url = data_url + t + ".ncml.dap.csv?dap4.ce=/YDim;/XDim;/time"
         print(url)
+        print('###############')
         lenX, lenY, idxs, time_values = get_dates(yearOI, url, headers, start_date)
+        print('#########fffd######')
         s_time = s_time|set(time_values)
         
     s_time = sorted(list(s_time))
 
     file_list = []
+    print('sfeffeefe')
+    print(tiles)
     for t in tiles:
+        print(t)
+        print('fiwhfioqefiqjefih')
         netCDF_file = f'{yearOI}_{t}.nc'
         netCDF_file_path = os.path.join(downoad_path, netCDF_file)
         file_list.append(netCDF_file_path)
@@ -225,6 +242,10 @@ def get_evi_ndvi_modis(data_url, headers, typ, name, yearOI, start_date, tiles):
             url = data_url + t + ".ncml.dap.csv?dap4.ce=/YDim;/XDim;/time"
             print(url)
             lenX, lenY, idxs, time_values = get_dates(yearOI, url, headers, start_date)
+            print(lenX)
+            print(lenY)
+            print(time_values)
+            print('----------------------------------------')
             #netCDF_file = f'{yearOI}_{t}.nc'
 
             #file_path = os.path.join(name, netCDF_file)
@@ -254,6 +275,9 @@ def get_evi_ndvi_modis(data_url, headers, typ, name, yearOI, start_date, tiles):
                 print(f"Error processing {netCDF_file_path}: {e}")
         else:
             print(f"{netCDF_file} exists")
+    print('###########')
+    print(file_list)
+    print(f"lenX: {lenX}, lenY: {lenY}")
     return file_list, lenX, lenY
 
 
@@ -276,6 +300,13 @@ def get_modis_vi(json_file, name, year):
     headers = {
         'Authorization': f'Bearer {token}'
     }
-    
+    print(url)
+    print(headers)
+    print(typ)
+    print(name)
+    print(year)
+    print(parameter['start'])
+    print(tiles)
+    print('ssssssssssssssssssssssssss')
     file_list, lenX, lenY = get_evi_ndvi_modis(url, headers, typ, name, int(year), datetime.strptime(parameter['start'], '%Y-%m-%d'), tiles)
     mergeNetCDFModis(name, typ, year, file_list, lenX, lenY)
