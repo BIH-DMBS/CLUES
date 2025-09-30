@@ -157,7 +157,7 @@ def get_parameter(parameters_jsonfile, bbox_jsonfile):
                 parameters["end_year"] = datetime.fromisoformat(parameters["end_year"] + "-12-31")
 
             times = [time(i, 0).strftime('%H:%M') for i in range(0, 24, int(parameters["delta_t_in_h"]))]
-            days = [str(i) for i in range(1, 31)]
+            days = [str(i) for i in range(1, 32)]
             months = [str(i) for i in range(1, 13)]
             years = [str(i) for i in range(parameters["start_year"].year, parameters["end_year"].year)]
 
@@ -252,6 +252,7 @@ def get_asset_atmosphere(json_file, year, variable):
     except Exception as e:
         print(f"An error occurred: {e}")
     # model_level is present for assets that can be monitored at different altitudes
+
     try:
         if 'model_level' in variable_dict:
             c.retrieve(
@@ -315,6 +316,7 @@ def get_asset_climate(json_file, year, variable):
             credentials = yaml.safe_load(f)
     except Exception as e:
             print(f"An error occurred: {e}")
+
     try:
         c = cdsapi.Client(url=credentials['url'], key=credentials['key'])
         c.retrieve(
