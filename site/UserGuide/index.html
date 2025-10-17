@@ -401,6 +401,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#climate-change-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Climate Change Indices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#anticipated-results" class="md-nav__link">
     <span class="md-ellipsis">
       Anticipated results
@@ -665,6 +674,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#climate-change-indices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Climate Change Indices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#anticipated-results" class="md-nav__link">
     <span class="md-ellipsis">
       Anticipated results
@@ -795,12 +813,12 @@ Save the tokens in two separate files:<br />
 <pre>url: https://ads.atmosphere.copernicus.eu/api
 key: place your token here</pre>
 
-<p><strong><em>Copernicus credential Storage</em></strong><br />
-<em>cdsapirc_climate.sct</em>  </p>
+<p><em>cdsapirc_climate.sct</em>  </p>
 <pre>url: https://cds.climate.copernicus.eu/api
 key: place your token here</pre>
 
-<p><em>copernicus_credential.sct</em></p>
+<p><strong><em>Copernicus credential Storage</em></strong><br />
+<em>copernicus_credential.sct</em></p>
 <pre>grant_type : password
 username : place your username here
 password : place your password here
@@ -938,6 +956,10 @@ snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait
 <li>--rerun-incomplete reruns any jobs that were not completed  </li>
 <li>--latency-wait 60 waits up to 60 seconds for output files (useful on shared filesystems)  </li>
 </ul>
+<h2 id="climate-change-indices">Climate Change Indices</h2>
+<p>CLUES provides as well a script to compute a big chung of the climate change indices suggested by the joint CCl/CLIVAR/JCOMM Expert Team (ET) on Climate Change Detection and Indices (ETCCDI). The team has a mandate to address the need for the objective measurement and characterization of climate variability and change by providing international coordination and helping organizing collaboration on climate change detection and indices relevant to climate change detection, and by encouraging the comparison of modeled data and observations. A list with all suggested indices can be found <a href="https://etccdi.pacificclimate.org/list_27_indices.shtml">here</a>.</p>
+<p>To calculate the indices using downloaded temperature data use the script <code>scripts/climateChangeIndeces.py</code>. The that must be changed to run the script on your own infrastructure can be found at the bottom of the script.</p>
+<p>The formular are not restricted to temperture, you can also compute this indices for other variables.</p>
 <hr />
 <h2 id="anticipated-results">Anticipated results</h2>
 <p>The workflow automatically downloads all required geospatial data files into the directory specified in the general configuration file <code>config/config.json</code>. For each file retrieved, a corresponding log file is generated during execution, providing detailed information about the download process. These log files are essential for monitoring progress and diagnosing potential issues.  </p>

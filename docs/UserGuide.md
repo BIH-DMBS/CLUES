@@ -228,6 +228,15 @@ Command Options Explained:
 - --rerun-incomplete reruns any jobs that were not completed  
 - --latency-wait 60 waits up to 60 seconds for output files (useful on shared filesystems)  
 
+
+## Climate Change Indices
+
+CLUES provides as well a script to compute a big chung of the climate change indices suggested by the joint CCl/CLIVAR/JCOMM Expert Team (ET) on Climate Change Detection and Indices (ETCCDI). The team has a mandate to address the need for the objective measurement and characterization of climate variability and change by providing international coordination and helping organizing collaboration on climate change detection and indices relevant to climate change detection, and by encouraging the comparison of modeled data and observations. A list with all suggested indices can be found [here](https://etccdi.pacificclimate.org/list_27_indices.shtml).
+
+To calculate the indices using downloaded temperature data use the script `scripts/climateChangeIndeces.py`. The that must be changed to run the script on your own infrastructure can be found at the bottom of the script.
+
+The formular are not restricted to temperture, you can also compute this indices for other variables.
+
 ---
 
 ## Anticipated results  
