@@ -1,0 +1,48 @@
+{
+    "type": "MODIS_Vegetation_Index_Products",
+    "start_year": "2000",
+    "end_year": "2025",
+    "format": "geoTIFF",
+    "variables":[
+        {
+            "name":"_1_km_monthly_NDVI",
+            "start":"2000-02-01",
+            "url":"https://opendap.cr.usgs.gov/opendap/hyrax/MOD13A3.061/",
+            "neighborhood":{
+                "mean":[500,1000],
+                "std":[500,1000],
+                "zevenbergen_thorne":"Any value activates the filter; if missing, the filter won’t run."
+            }
+        },
+        {
+            "name":"_1_km_monthly_EVI",
+            "start":"2000-02-01",
+            "url":"https://opendap.cr.usgs.gov/opendap/hyrax/MOD13A3.061/",
+            "neighborhood":{
+                "mean":[500,1000],
+                "std":[500,1000],
+                "zevenbergen_thorne":"Any value activates the filter; if missing, the filter won’t run."
+            }
+        },
+        {
+            "name":"_250m_16_days_NDVI",
+            "start":"2000-02-18",
+            "url":"https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.061/",
+            "neighborhood":{
+                "mean":[500,1000],
+                "std":[500,1000],
+                "zevenbergen_thorne":"Any value activates the filter; if missing, the filter won’t run."
+            }
+        },
+        {
+            "name":"_250m_16_days_EVI",
+            "start":"2000-02-18",
+            "url":"https://opendap.cr.usgs.gov/opendap/hyrax/MOD13Q1.061/",
+            "neighborhood":{
+                "mean":[500,1000],
+                "std":[500,1000],
+                "zevenbergen_thorne":"Any value activates the filter; if missing, the filter won’t run."
+            }
+        }
+    ]
+}
