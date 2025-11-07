@@ -1,6 +1,7 @@
 # CLUES Geospatial Data Catalog
 This page describes the geospatial data sources and datasets integrated into the CLUES workflow. For each data source, a short description, source-specific configuration file (config), spatial and temporal resolution, download format and reference link are provided. A summary table with all geospatial datasets is provided below the Geospatial Data Sources section. 
 
+
 ## Geospatial Data Sources
 
 ### Copernicus Atmosphere Monitoring Service (CAMS) Global Reanalysis (EAC4)
@@ -11,13 +12,23 @@ This page describes the geospatial data sources and datasets integrated into the
 - Config: `cams-global-reanalysis-eac4.json`  
 - [More Info](https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=overview)  
 
-### Copernicus Climate Change Service (C3S)
+### Copernicus Climate Change Service (C3S) reanalysis-era5-single-levels
 - Description: Global climate reanalysis (ERA5) implemented by ECMWF, using data assimilation of satellite and in-situ observations.  
 - Years: 1940–present  
 - Resolution: 0.25°×0.25°, hourly  
 - Format: NetCDF  
 - Config: `reanalysis-era5-single-levels.json`  
 - [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)
+- Note: Default CLUES dataset includes years 2000-2025
+
+
+### Copernicus Climate Change Service (C3S) reanalysis-land
+- Description: Global climate reanalysis (ERA5) implemented by ECMWF, using data assimilation of satellite and in-situ observations.  
+- Years: 1950–present  
+- Resolution: 0.1°×0.1°, hourly  
+- Format: NetCDF  
+- Config: `reanalysis-era5-land.json`  
+- [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land)
 - Note: Default CLUES dataset includes years 2000-2025
 
 
@@ -218,24 +229,41 @@ This table provides an overview of all geospatial datasets integrated into the C
 | **MODIS Vegetation Index Products** | enhanced vegetation index (EVI) | 1kmx1km | Global | 2000-2023 | monthly | GeoTIFF |
 | **MODIS Vegetation Index Products** | enhanced vegetation index (EVI) | 250mx250m | Global | 2000-2023 | 16-day | GeoTIFF |
 | **DMSP and VIIRS** | Night_Time_Lights_(NTL) | 1kmx1km | Global | 1992-2021 | yearly | GeoTIFF |
-| **Copernicus ERA5** | 2m_dewpoint_temperature | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | 2m_temperature | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | high_vegetation_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | low_vegetation_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | snowfall | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | soil_temperature_level_1 | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | total_cloud_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | total_precipitation | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | type_of_high_vegetation | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | type_of_low_vegetation | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | surface_pressure | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | 10m_u_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | 10m_v_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | 100m_u_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | 100m_v_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | downward_uv_radiation_at_the_surface | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | total_cloud_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5** | snow_depth | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | 2m_dewpoint_temperature | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | 2m_temperature | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | high_vegetation_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | low_vegetation_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | snowfall | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | soil_temperature_level_1 | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | total_cloud_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | total_precipitation | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | type_of_high_vegetation | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | type_of_low_vegetation | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | surface_pressure | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | 10m_u_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | 10m_v_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | 100m_u_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | 100m_v_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | downward_uv_radiation_at_the_surface | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | total_cloud_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 single level** | snow_depth | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | 2m_dewpoint_temperature | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | 2m_temperature | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | snow_cover | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | snow_density | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | snow_depth | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | snowfall | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | volumetric_soil_water_layer_1 | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | volumetric_soil_water_layer_2 | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | surface_net_thermal_radiation | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | 10m_u_component_of_wind | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | 10m_v_component_of_wind | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | surface_pressure | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | total_precipitation | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | leaf_area_index_high_vegetation | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | leaf_area_index_low_vegetation | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | high_vegetation_cover | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
+| **Copernicus ERA5 land** | low_vegetation_cover | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
 | **Global SPEI database** | spei_drought_index | 0.5°x0.5° | Global | 1901-present | monthly | NetCDF |
 | **ESPON** | Deaths by age groups and gender | NUTS0-NUTS3 | Europe | 2013-2015 | yearly | CSV |
 | **ESPON** | Deaths by age groups | NUTS0-NUTS2 | Europe | 1990-2017 | yearly | CSV |
