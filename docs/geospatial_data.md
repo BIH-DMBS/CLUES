@@ -1,4 +1,4 @@
-## Geospatial Data Sources
+## Geospatial Data Sources sdhasjhaskjfh
 This page describes the geospatial data sources and datasets integrated into the CLUES workflow. For each data source, a short description, source-specific configuration file (config), spatial and temporal resolution, download format and reference link are provided
 
 ### Copernicus Atmosphere Monitoring Service (CAMS) Global Reanalysis (EAC4)
@@ -9,13 +9,23 @@ This page describes the geospatial data sources and datasets integrated into the
 - Config: `cams-global-reanalysis-eac4.json`  
 - [More Info](https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=overview)  
 
-### Copernicus Climate Change Service (C3S)
+### Copernicus Climate Change Service (C3S) reanalysis-era5-single-levels
 - Description: Global climate reanalysis (ERA5) implemented by ECMWF, using data assimilation of satellite and in-situ observations.  
 - Years: 1940–present  
 - Resolution: 0.25°×0.25°, hourly  
 - Format: NetCDF  
 - Config: `reanalysis-era5-single-levels.json`  
 - [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)
+- Note: Default CLUES dataset includes years 2000-2025
+
+
+### Copernicus Climate Change Service (C3S) reanalysis-era5-single-levels
+- Description: Global climate reanalysis (ERA5) implemented by ECMWF, using data assimilation of satellite and in-situ observations.  
+- Years: 1950–present  
+- Resolution: 0.1°×0.1°, hourly  
+- Format: NetCDF  
+- Config: `reanalysis-era5-land.json`  
+- [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land)
 - Note: Default CLUES dataset includes years 2000-2025
 
 
