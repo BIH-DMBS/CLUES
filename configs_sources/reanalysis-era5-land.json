@@ -1,0 +1,69 @@
+{
+    "type":"climate",
+    "source":"reanalysis-era5-land",
+    "file":"reanalysis-era5-land.json",
+    "link":"https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land",
+    "time zone":"coordinated universal time",
+    "start_year": "1950",
+    "end_year": "2025",
+    "delta_t_in_h":"1",
+    "product_type": "reanalysis",
+    "format": "netcdf",
+    "variables":[
+        {
+            "name":"2m_dewpoint_temperature"
+        },
+        {
+            "name":"2m_temperature"
+        },
+        {
+            "name":  "snow_cover"
+        },
+        {
+            "name":"snow_density"
+        },
+        {
+            "name":"snow_depth"
+        },
+        {
+            "name":"snowfall"
+        },
+        {
+            "name":"volumetric_soil_water_layer_1"
+        },
+        {
+            "name": "volumetric_soil_water_layer_2"
+        },
+        {
+            "name": "surface_net_solar_radiation"
+        },
+        {
+            "name":"surface_net_thermal_radiation"
+        },
+        {
+            "name":"10m_u_component_of_wind"
+        },
+        {
+            "name":"10m_v_component_of_wind"
+        },
+        {
+            "name":"surface_pressure"
+        },
+        {
+            "name":"total_precipitation"
+        },
+        {
+            "name":"leaf_area_index_high_vegetation"
+        },
+        {
+            "name":"leaf_area_index_low_vegetation"
+        },
+        {
+            "name":"high_vegetation_cover"
+        },
+        {
+            "name":"low_vegetation_cover"
+        } 
+
+    ]
+}

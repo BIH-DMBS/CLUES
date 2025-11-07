@@ -18,7 +18,7 @@ Before getting started, ensure the following tools are installed:
 ### Clone the Repository  
 Navigate to your preferred working directory and clone the CLUES repository:  
 <pre>
-git clone https://gitlab.com/bih_dmbs/CLUES/workflows.git
+git clone https://github.com/BIH-DMBS/CLUES.git
 </pre>
 
 ### Set up a virtual python environment:  
