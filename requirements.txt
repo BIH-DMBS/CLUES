@@ -27,3 +27,4 @@ cloudscraper
 mkdocs
 mkdocs-material
 mkdocs-macros-plugin
+dask
