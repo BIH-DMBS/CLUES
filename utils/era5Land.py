@@ -138,7 +138,7 @@ def getEra5Land(json_file, year, vOI):
             except Exception as e:
                 print("Data is NOT available:", e)
     # List all monthly files in order
-    files = sorted(glob.glob(tmp_folder+'\*.nc'))
+    files = sorted(glob.glob(tmp_folder+'/*.nc'))
     print(files)
     # Open all files as a single xarray dataset along the 'time' dimension
     #ds = xr.open_mfdataset(files, combine='by_coords', chunks=None)
