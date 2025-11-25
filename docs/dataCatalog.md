@@ -102,7 +102,9 @@ This page describes the geospatial data sources and datasets integrated into the
     - Resolution: 100m×100m, yearly  
     - Format: GeoTIFF  
     - Config: `corine_copernicus.json`  
-    - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)  
+    - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)
+    - DOI: [1990](https://doi.org/10.2909/c89324ef-7729-4477-9f1b-623f5f88eaa1), [2000](https://doi.org/10.2909/ddacbd5e-068f-4e52-a596-d606e8de7f40), [2006](https://doi.org/10.2909/08560441-2fd5-4eb9-bf4c-9ef16725726a), [2012](https://doi.org/10.2909/a84ae124-c5c5-4577-8e10-511bfe55cc0d), [2018](https://doi.org/10.2909/960998c1-1870-4e82-8051-6485205ebbac)
+    - Licence: [Copernicus Land Monitoring Service Data Policy](https://land.copernicus.eu/en/data-policy). Free, full, and open access; use permitted with mandatory attribution (“European Union’s Copernicus Land Monitoring Service information”), clear indication when data are modified, and no implied EU endorsement of derived products.
     - Note: Default CLUES dataset includes years 2000, 2006, 2012, and 2018  
 - Tree Cover Density  
     - Description: European tree cover density.  
