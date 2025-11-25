@@ -94,7 +94,6 @@ This page describes the geospatial data sources and datasets integrated into the
 - DOI: https://doi.org/10.5281/zenodo.4723924
 - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 
-
 ### Copernicus Land Monitoring Service
 - Corine Land Cover dataset  
     - Description: European land cover classification and monitoring with 44 thematic classes, ranging from broad forested areas to individual vineyards.  
@@ -104,15 +103,15 @@ This page describes the geospatial data sources and datasets integrated into the
     - Config: `corine_copernicus.json`  
     - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)
     - DOI: [1990](https://doi.org/10.2909/c89324ef-7729-4477-9f1b-623f5f88eaa1), [2000](https://doi.org/10.2909/ddacbd5e-068f-4e52-a596-d606e8de7f40), [2006](https://doi.org/10.2909/08560441-2fd5-4eb9-bf4c-9ef16725726a), [2012](https://doi.org/10.2909/a84ae124-c5c5-4577-8e10-511bfe55cc0d), [2018](https://doi.org/10.2909/960998c1-1870-4e82-8051-6485205ebbac)
-    - Licence: [Copernicus Land Monitoring Service Data Policy](https://land.copernicus.eu/en/data-policy). Free, full, and open access; use permitted with mandatory attribution (“European Union’s Copernicus Land Monitoring Service information”), clear indication when data are modified, and no implied EU endorsement of derived products.
     - Note: Default CLUES dataset includes years 2000, 2006, 2012, and 2018  
 - Tree Cover Density  
     - Description: European tree cover density.  
-    - Years: 2012, 2015, and annually from 2018 to 2021  
+    - Years: 2012, 2015, and annually from 2018 to 2023  
     - Resolution: 100m×100m, yearly  
     - Format: GeoTIFF  
     - Config: `treecover_copernicus.json`  
-    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)  
+    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
+    - DOI: [2012](https://doi.org/10.2909/299ad2d6-f2b8-4716-b169-1d621250fc3c), [2015](https://doi.org/10.2909/264d4e20-de6d-4f88-b1be-b592303452af), [2018](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2019](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2020](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2021](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2022](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2023](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27)
     - Note: Default CLUES dataset includes years 2012, 2015, and 2018  
 - Forest type
     - Description: The European Forest Type layers provide information on the presence of forest and its dominant leaf type.  
@@ -120,9 +119,11 @@ This page describes the geospatial data sources and datasets integrated into the
     - Resolution: 100m×100m, yearly  
     - Format: GeoTIFF  
     - Config: `treecover_copernicus.json`  
-    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)  
-    - Note: Default CLUES dataset includes years 2012, 2015, and 2018  
-  
+    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
+    - DOI: [2012](https://doi.org/10.2909/8367f5f3-5eb1-4d89-ae8d-13a70fc834e0), [2015](https://doi.org/10.2909/8111fc53-934b-4e6a-afc7-d11664c5ebc3), [2018](https://doi.org/10.2909/bcc329c2-0676-40f5-bb62-91d36f956355), [2021](https://doi.org/10.2909/bcc329c2-0676-40f5-bb62-91d36f956355)
+    - Note: Default CLUES dataset includes years 2012, 2015, and 2018
+- Licence: [Copernicus Land Monitoring Service Data Policy](https://land.copernicus.eu/en/data-policy). Free, full, and open access; use permitted with mandatory attribution (“European Union’s Copernicus Land Monitoring Service information”), clear indication when data are modified, and no implied EU endorsement of derived products.
+
 ### Moderate Resolution Imagining Spectroradiometer (MODIS)
 - Description: Global Vegetation Index Products - NDVI (Normalized Difference Vegetation Index) and EVI (Enhanced Vegetation Index).  
 - Years: 2000-2025  
