@@ -10,7 +10,9 @@ This page describes the geospatial data sources and datasets integrated into the
 - Resolution: 0.75°×0.75°, 3-hourly  
 - Format: NetCDF  
 - Config: `cams-global-reanalysis-eac4.json`  
-- [More Info](https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=overview)  
+- [More Info](https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=overview)
+- DOI: 10.24381/d58bbf47
+- License: Creative Commons Attribution 4.0 International [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ### Copernicus Climate Change Service (C3S) reanalysis-era5-single-levels
 - Description: Global climate reanalysis (ERA5) implemented by ECMWF, using data assimilation of satellite and in-situ observations.  
