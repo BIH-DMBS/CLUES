@@ -80,7 +80,9 @@ This page describes the geospatial data sources and datasets integrated into the
 - Resolution: 30m×30m and 90m×90m, static for years 2011 - 2015  
 - Format: GeoTIFF  
 - Config: `copernicus_dem.json`  
-- [More Info](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM)  
+- [More Info](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM)
+- DOI: https://doi.org/10.5270/ESA-c5d3d65
+- Licence: [Copernicus Data Licence](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM) Free use permitted with mandatory attribution (“© DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved”) and required notices for adapted data (“produced using Copernicus WorldDEM-30…” / “produced using Copernicus WorldDEM-90…”).
 
 ### Copernicus Global Land Service
 - Description: Global land cover classification with 23 classes aligned with UN-FAO's Land Cover Classification.  
