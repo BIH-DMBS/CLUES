@@ -49,6 +49,7 @@ files = {
     'modis_vi':os.path.join(CONFIGS_ASSETS_FOLDER, 'modis_vegetation_indices.json'),
     'global_treecover':os.path.join(CONFIGS_ASSETS_FOLDER, 'treecover_global.json'),
     'era5_land':os.path.join(CONFIGS_ASSETS_FOLDER, 'reanalysis-era5-land.json'),
+    'worldpop':os.path.join(CONFIGS_ASSETS_FOLDER, 'worldpop.json'),
 }
 
 print(config)
@@ -192,6 +193,13 @@ for key,items in variables.items():
             year_list = [str(year) for year in range(int(parameters['era5_land']["start_year"]), int(parameters['era5_land']["end_year"]) + 1)]
             year_list = list(set(year_list) & set(years))
             input = input + expand(os.path.join(download_folder, parameters['era5_land']['source'], v['name'], '{year}.nc'), 
+                year=year_list)
+    # (17) world population data
+    if key == 'worldpop':
+        for v in items:
+            year_list = [str(year) for year in range(int(v["start_year"]), int(v["end_year"]) + 1)]
+            year_list = list(set(year_list) & set(years))
+            input = input + expand(os.path.join(download_folder, parameters['worldpop']['type'], v['name'], '{year}.tif'), 
                 year=year_list)
 
 
@@ -401,6 +409,17 @@ rule get_era5_land: #era5
         year="{year}"
     shell:
         "python workflows/era5_land.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1"
+
+# Define rule worldpop population data
+rule worldpop: #worldpop
+    output:
+        os.path.join(download_folder, parameters['worldpop']['type'], '{variable}', '{year}.tif')
+    params:
+        var="{variable}",
+        file=files['worldpop'],
+        year="{year}"
+    shell:
+        "python workflows/worldpop.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1"
 
 
 # Define rule Neighborhood

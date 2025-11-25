@@ -1,0 +1,12 @@
+{
+    "type": "WordPop",
+    "format": "geoTIFF",
+    "variables":[
+        {
+            "name":"people_per_pixel",
+            "product_name":"ppp",
+            "start_year": "2000",
+            "end_year": "2020"
+        }
+    ]
+}

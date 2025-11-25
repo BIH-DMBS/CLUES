@@ -7,35 +7,12 @@ import glob
 import yaml
 import json
 
+import utils
+
 try:
     from .config import download_folder, configs_assets_folder, tmp_folder, area, config_folder, secrets_folder
 except:
     from config import download_folder, configs_assets_folder, tmp_folder, area, config_folder, secrets_folder
-
-
-def get_parameter(bbox_jsonfile):
-    parameters = {}
-
-    try:
-        with open(os.path.join(config_folder, bbox_jsonfile), 'r') as file:
-            bbox = json.load(file)
-    except FileNotFoundError:
-        print(f"Error: The configuration file '{bbox_jsonfile}' was not found.")
-        return None
-    except PermissionError:
-        print(f"Error: Insufficient permissions to access the file '{bbox_jsonfile}'.")
-        return None
-    except json.JSONDecodeError:
-        print(f"Error: The file '{bbox_jsonfile}' contains invalid JSON.")
-        return None
-
-    if area not in bbox:
-        print(f"Error: Missing required key '{area}' in bbox.")
-        return None
-
-    parameters["bbox"] = bbox[area]
-
-    return parameters
 
 
 def getEra5Land(json_file, year, vOI):
@@ -74,7 +51,7 @@ def getEra5Land(json_file, year, vOI):
     ]
 
     try:
-        parameters = get_parameter('bbox.json')
+        parameters = utils.get_bbox('bbox.json')
     except Exception as e:        
         print(f"An error occurred: {e} ")
 
