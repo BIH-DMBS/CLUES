@@ -63,6 +63,8 @@ This page describes the geospatial data sources and datasets integrated into the
     - Format: GeoTIFF  
     - Config: `EOC_WSF.json`  
     - [More info](https://www.dlr.de/en/eoc/research-transfer/projects-missions/world-settlement-footprint-wsf-r)
+    - DOI: 10.15489/6n5h1ezef920 (WSF-2015); 10.15489/twg5xsnquw84 (WSF-2019); No DOI reported for WSF-Evo
+    - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - WSF3D:  
     - Description: A global dataset of the average height, total volume, total area and the fraction of buildings, capturing 3D urban structure.  
     - Years: Static  
