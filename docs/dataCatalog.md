@@ -45,6 +45,7 @@ This page describes the geospatial data sources and datasets integrated into the
 - Format: CSV  
 - Config: `espon.json`  
 - [More Info](https://database.espon.eu)
+- License: Custom ESPON Reuse Policy. Reproduction allowed with mandatory attribution (“© ESPON” and “Origin of information/data: ESPON EGTC”), mandatory disclaimer for results, and restrictions on map design reuse. License [link](https://www.espon.eu/legal-notice)
 
 ### DLR Earth Observation Center (EOC) Geoservice
 - Atmosphere:  
