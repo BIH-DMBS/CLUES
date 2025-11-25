@@ -12,15 +12,17 @@ This page describes the geospatial data sources and datasets integrated into the
 - Config: `cams-global-reanalysis-eac4.json`  
 - [More Info](https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=overview)
 - DOI: 10.24381/d58bbf47
-- License: Creative Commons Attribution 4.0 International [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+- License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 
-### Copernicus Climate Change Service (C3S) reanalysis-era5-single-levels
+### Copernicus Climate Change Service (C3S) Reanalysis ERA5 on single levels
 - Description: Global climate reanalysis (ERA5) implemented by ECMWF, using data assimilation of satellite and in-situ observations.  
 - Years: 1940–present  
 - Resolution: 0.25°×0.25°, hourly  
 - Format: NetCDF  
 - Config: `reanalysis-era5-single-levels.json`  
 - [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)
+- DOI: 10.24381/cds.adbb2d47
+- License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - Note: Default CLUES dataset includes years 2000-2025
 
 
@@ -31,6 +33,8 @@ This page describes the geospatial data sources and datasets integrated into the
 - Format: NetCDF  
 - Config: `reanalysis-era5-land.json`  
 - [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land)
+- DOI: 10.24381/cds.e2161bac
+- License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - Note: Default CLUES dataset includes years 2000-2025
 
 
