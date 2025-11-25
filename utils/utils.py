@@ -964,3 +964,27 @@ def get_simple_download_tif(json_file, vOI):
         return
 
     print("The GeoTIFF file has been downloaded and saved as '" + parameters['variables']['name']+'.tif' +"'.")
+
+def get_bbox(bbox_jsonfile):
+    parameters = {}
+
+    try:
+        with open(os.path.join(config_folder, bbox_jsonfile), 'r') as file:
+            bbox = json.load(file)
+    except FileNotFoundError:
+        print(f"Error: The configuration file '{bbox_jsonfile}' was not found.")
+        return None
+    except PermissionError:
+        print(f"Error: Insufficient permissions to access the file '{bbox_jsonfile}'.")
+        return None
+    except json.JSONDecodeError:
+        print(f"Error: The file '{bbox_jsonfile}' contains invalid JSON.")
+        return None
+
+    if area not in bbox:
+        print(f"Error: Missing required key '{area}' in bbox.")
+        return None
+
+    parameters["bbox"] = bbox[area]
+
+    return parameters
