@@ -11,7 +11,7 @@ This page describes the geospatial data sources and datasets integrated into the
 - Format: NetCDF  
 - Config: `cams-global-reanalysis-eac4.json`  
 - [More Info](https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=overview)
-- [DOI](10.24381/d58bbf47)
+- DOI: 10.24381/d58bbf47
 - License: Creative Commons Attribution 4.0 International [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ### Copernicus Climate Change Service (C3S) reanalysis-era5-single-levels
