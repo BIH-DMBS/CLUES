@@ -54,7 +54,8 @@ This page describes the geospatial data sources and datasets integrated into the
     - Resolution: Varies by product   
     - Format: GeoTIFF  
     - Config: `EOC_Atmosphere_Coverage_Service.json`  
-    - More Info [here](https://atmos.caf.dlr.de/app/missions/gome) and [here](https://geoservice.dlr.de/web/datasets?t=atmosphere)  
+    - More Info [here](https://atmos.caf.dlr.de/app/missions/gome) and [here](https://geoservice.dlr.de/web/datasets?t=atmosphere)
+    - License: Creative Commons Attribution 3.0 International [CC-BY-3.0](https://creativecommons.org/licenses/by/4.0/)
 - World Settlement Footprint (WSF):  
     - Description: Global maps outlining the extent of human settlements. Includes static products for specific years and the WSF Evolution (WSF-Evo) dataset showing annual changes.  
     - Years: 2015, 2019 (WSF); 1985–2015 (WSF-Evo)    
