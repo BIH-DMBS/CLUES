@@ -10,15 +10,19 @@ This page describes the geospatial data sources and datasets integrated into the
 - Resolution: 0.75°×0.75°, 3-hourly  
 - Format: NetCDF  
 - Config: `cams-global-reanalysis-eac4.json`  
-- [More Info](https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=overview)  
+- [More Info](https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=overview)
+- DOI: 10.24381/d58bbf47
+- License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 
-### Copernicus Climate Change Service (C3S) reanalysis-era5-single-levels
+### Copernicus Climate Change Service (C3S) Reanalysis ERA5 on single levels
 - Description: Global climate reanalysis (ERA5) implemented by ECMWF, using data assimilation of satellite and in-situ observations.  
 - Years: 1940–present  
 - Resolution: 0.25°×0.25°, hourly  
 - Format: NetCDF  
 - Config: `reanalysis-era5-single-levels.json`  
 - [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)
+- DOI: 10.24381/cds.adbb2d47
+- License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - Note: Default CLUES dataset includes years 2000-2025
 
 
@@ -29,6 +33,8 @@ This page describes the geospatial data sources and datasets integrated into the
 - Format: NetCDF  
 - Config: `reanalysis-era5-land.json`  
 - [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land)
+- DOI: 10.24381/cds.e2161bac
+- License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - Note: Default CLUES dataset includes years 2000-2025
 
 
@@ -39,6 +45,7 @@ This page describes the geospatial data sources and datasets integrated into the
 - Format: CSV  
 - Config: `espon.json`  
 - [More Info](https://database.espon.eu)
+- License: [Custom ESPON Reuse Policy](https://www.espon.eu/legal-notice). Reproduction allowed with mandatory attribution (“© ESPON” and “Origin of information/data: ESPON EGTC”), mandatory disclaimer for results, and restrictions on map design reuse.
 
 ### DLR Earth Observation Center (EOC) Geoservice
 - Atmosphere:  
@@ -47,7 +54,8 @@ This page describes the geospatial data sources and datasets integrated into the
     - Resolution: Varies by product   
     - Format: GeoTIFF  
     - Config: `EOC_Atmosphere_Coverage_Service.json`  
-    - More Info [here](https://atmos.caf.dlr.de/app/missions/gome) and [here](https://geoservice.dlr.de/web/datasets?t=atmosphere)  
+    - More Info [here](https://atmos.caf.dlr.de/app/missions/gome) and [here](https://geoservice.dlr.de/web/datasets?t=atmosphere)
+    - License: Creative Commons Attribution 3.0 International [CC-BY-3.0](https://creativecommons.org/licenses/by/4.0/)
 - World Settlement Footprint (WSF):  
     - Description: Global maps outlining the extent of human settlements. Includes static products for specific years and the WSF Evolution (WSF-Evo) dataset showing annual changes.  
     - Years: 2015, 2019 (WSF); 1985–2015 (WSF-Evo)    
@@ -55,6 +63,8 @@ This page describes the geospatial data sources and datasets integrated into the
     - Format: GeoTIFF  
     - Config: `EOC_WSF.json`  
     - [More info](https://www.dlr.de/en/eoc/research-transfer/projects-missions/world-settlement-footprint-wsf-r)
+    - DOI: 10.15489/6n5h1ezef920 (WSF-2015); 10.15489/twg5xsnquw84 (WSF-2019)
+    - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - WSF3D:  
     - Description: A global dataset of the average height, total volume, total area and the fraction of buildings, capturing 3D urban structure.  
     - Years: Static  
