@@ -71,7 +71,9 @@ This page describes the geospatial data sources and datasets integrated into the
     - Resolution: 90m×90m  
     - Format: GeoTIFF  
     - Config: `EOC_WSF3D.json`  
-    - [More info](https://geoservice.dlr.de/web/datasets/wsf_3d)  
+    - [More info](https://geoservice.dlr.de/web/datasets/wsf_3d)
+    - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
+
 
 ### Copernicus Global Digital Elevation model (DEM) 
 - Description: Global elevation data representing Earth's surface. 
