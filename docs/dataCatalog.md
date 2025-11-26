@@ -133,6 +133,7 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Format: GeoTIFF  
 - Config: `modis_vegetation.json`  
 - [More Info](https://modis.gsfc.nasa.gov/data/dataprod/mod13.php)
+- DOI: [250m×250m](HTTPS://DOI.ORG/10.5067/MODIS/MOD13Q1.061), [1km×1km](HTTPS://DOI.ORG/10.5067/MODIS/MOD13A3.061)
 - License: [NASA ESDIS Data Use Policy](https://www.earthdata.nasa.gov/engage/open-data-services-software-policies/data-use-guidance). NASA Earth science datasets are generally released under Creative Commons Zero ([CC0](https://creativecommons.org/public-domain/cc0/)), with attribution encouraged and no endorsement permitted.
 
 ### SPEI (Standardized Precipitation-Evapotranspiration Index)
