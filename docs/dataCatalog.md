@@ -142,6 +142,8 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Format: NetCDF  
 - Config: `spei.json`  
 - [More Info](https://spei.csic.es)
+- DOI: 10.5281/zenodo.834461
+- License: [Open Database License (ODbL 1.0)](https://opendatacommons.org/licenses/odbl/1-0/). Free to share, use, adapt, and create derivatives, provided that attribution is given (cite the recommended publications), the licence remains clear upon redistribution, and any publicly released adapted versions must be shared under the same ODbL (Share-Alike).
 - Note: Default CLUES dataset includes years 2000-2025
 
 ### Hydrosheds - Global Lakes and Wetlands Database (GLWD) version 2
@@ -150,7 +152,8 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Resolution: 500m×500m  
 - Format: GeoTIFF  
 - Config: `hydrosheds_GLWD.json`  
-- [More Info](https://www.hydrosheds.org/products/glwd)  
+- [More Info](https://www.hydrosheds.org/products/glwd)
+- License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ### DMSP–VIIRS - Harmonized Night-Time Lights
 - Description: Global nighttime light intensity from satellites, harmonized across sensors.  
@@ -159,6 +162,7 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Format: GeoTIFF  
 - Config: `ntl.json`  
 - [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/8)
+- License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - Note: Default CLUES dataset includes years 2000-2025
 ---- 
 ## Summary Table
