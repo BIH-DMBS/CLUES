@@ -132,7 +132,8 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Resolution: 250m×250m, 16-day; 1km×1km, monthly  
 - Format: GeoTIFF  
 - Config: `modis_vegetation.json`  
-- [More Info](https://modis.gsfc.nasa.gov/data/dataprod/mod13.php)  
+- [More Info](https://modis.gsfc.nasa.gov/data/dataprod/mod13.php)
+- License: [NASA ESDIS Data Use Policy](https://www.earthdata.nasa.gov/engage/open-data-services-software-policies/data-use-guidance). NASA Earth science datasets are generally released under Creative Commons Zero [CC0](https://creativecommons.org/public-domain/cc0/), with attribution encouraged and no endorsement permitted.
 
 ### SPEI (Standardized Precipitation-Evapotranspiration Index)
 - Description: Global drought index based on precipitation and evapotranspiration.  
