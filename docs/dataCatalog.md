@@ -161,7 +161,7 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Resolution: 1km×1km, yearly  
 - Format: GeoTIFF  
 - Config: `ntl.json`  
-- [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/8)
+- [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/10)
 - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - Note: Default CLUES dataset includes years 2000-2025
 ---- 
