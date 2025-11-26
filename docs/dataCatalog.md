@@ -92,7 +92,7 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Resolution: 100m×100m, yearly  
 - Format: GeoTIFF  
 - Config: `copernicus_dynamic_land_cover.json`  
-- [More Info](https://zenodo.org/records/4723924)
+- [More Info](https://www.copernicus.eu/en/access-data/copernicus-services-catalogue/land-cover-2015-2019-raster-100-m-global-annual-version-3)
 - DOI: https://doi.org/10.5281/zenodo.4723924
 - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 
