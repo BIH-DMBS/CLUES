@@ -1,5 +1,7 @@
 # CLUES Geospatial Data Catalog
-This page describes the geospatial data sources and datasets integrated into the CLUES workflow. For each data source, a short description, source-specific configuration file (config), spatial and temporal resolution, download format and reference link are provided. A summary table with all geospatial datasets is provided below the Geospatial Data Sources section. 
+This page describes the geospatial data sources and datasets integrated into the CLUES workflow. For each data source, a short description, source-specific configuration file (config), spatial and temporal resolution, download format and reference link are provided. 
+
+A summary table with all geospatial datasets is provided below the Geospatial Data Sources section. 
 
 
 ## Geospatial Data Sources
@@ -63,7 +65,7 @@ This page describes the geospatial data sources and datasets integrated into the
     - Format: GeoTIFF  
     - Config: `EOC_WSF.json`  
     - [More info](https://www.dlr.de/en/eoc/research-transfer/projects-missions/world-settlement-footprint-wsf-r)
-    - DOI: 10.15489/6n5h1ezef920 (WSF-2015); 10.15489/twg5xsnquw84 (WSF-2019)
+    - DOI: [WSF-2015](https://doi.org/10.15489/rlyibn8gjc58); [WSF-2019](https://doi.org/10.15489/twg5xsnquw84)
     - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - WSF3D:  
     - Description: A global dataset of the average height, total volume, total area and the fraction of buildings, capturing 3D urban structure.  
@@ -71,14 +73,18 @@ This page describes the geospatial data sources and datasets integrated into the
     - Resolution: 90m×90m  
     - Format: GeoTIFF  
     - Config: `EOC_WSF3D.json`  
-    - [More info](https://geoservice.dlr.de/web/datasets/wsf_3d)  
+    - [More info](https://geoservice.dlr.de/web/datasets/wsf_3d)
+    - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
+
 
 ### Copernicus Global Digital Elevation model (DEM) 
 - Description: Global elevation data representing Earth's surface. 
 - Resolution: 30m×30m and 90m×90m, static for years 2011 - 2015  
 - Format: GeoTIFF  
 - Config: `copernicus_dem.json`  
-- [More Info](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM)  
+- [More Info](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM)
+- DOI: https://doi.org/10.5270/ESA-c5d3d65
+- Licence: [Copernicus Data Licence](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM) Free use permitted with mandatory attribution (“© DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved”) and required notices for adapted data (“produced using Copernicus WorldDEM-30…” / “produced using Copernicus WorldDEM-90…”).
 
 ### Copernicus Global Land Service
 - Description: Global land cover classification with 23 classes aligned with UN-FAO's Land Cover Classification.  
@@ -86,7 +92,9 @@ This page describes the geospatial data sources and datasets integrated into the
 - Resolution: 100m×100m, yearly  
 - Format: GeoTIFF  
 - Config: `copernicus_dynamic_land_cover.json`  
-- [More Info](https://zenodo.org/records/4723924)  
+- [More Info](https://www.copernicus.eu/en/access-data/copernicus-services-catalogue/land-cover-2015-2019-raster-100-m-global-annual-version-3)
+- DOI: [2015](https://doi.org/10.5281/zenodo.3939038), [2016](https://doi.org/10.5281/zenodo.3518026), [2017](https://doi.org/10.5281/zenodo.3518036), [2018](https://doi.org/10.5281/zenodo.3518038), [2019](https://doi.org/10.5281/zenodo.3939050)
+- License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ### Copernicus Land Monitoring Service
 - Corine Land Cover dataset  
@@ -95,15 +103,17 @@ This page describes the geospatial data sources and datasets integrated into the
     - Resolution: 100m×100m, yearly  
     - Format: GeoTIFF  
     - Config: `corine_copernicus.json`  
-    - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)  
+    - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)
+    - DOI: [1990](https://doi.org/10.2909/c89324ef-7729-4477-9f1b-623f5f88eaa1), [2000](https://doi.org/10.2909/ddacbd5e-068f-4e52-a596-d606e8de7f40), [2006](https://doi.org/10.2909/08560441-2fd5-4eb9-bf4c-9ef16725726a), [2012](https://doi.org/10.2909/a84ae124-c5c5-4577-8e10-511bfe55cc0d), [2018](https://doi.org/10.2909/960998c1-1870-4e82-8051-6485205ebbac)
     - Note: Default CLUES dataset includes years 2000, 2006, 2012, and 2018  
 - Tree Cover Density  
     - Description: European tree cover density.  
-    - Years: 2012, 2015, and annually from 2018 to 2021  
+    - Years: 2012, 2015, and annually from 2018 to 2023  
     - Resolution: 100m×100m, yearly  
     - Format: GeoTIFF  
     - Config: `treecover_copernicus.json`  
-    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)  
+    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
+    - DOI: [2012](https://doi.org/10.2909/299ad2d6-f2b8-4716-b169-1d621250fc3c), [2015](https://doi.org/10.2909/264d4e20-de6d-4f88-b1be-b592303452af), [2018](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2019](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2020](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2021](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2022](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2023](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27)
     - Note: Default CLUES dataset includes years 2012, 2015, and 2018  
 - Forest type
     - Description: The European Forest Type layers provide information on the presence of forest and its dominant leaf type.  
@@ -111,16 +121,20 @@ This page describes the geospatial data sources and datasets integrated into the
     - Resolution: 100m×100m, yearly  
     - Format: GeoTIFF  
     - Config: `treecover_copernicus.json`  
-    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)  
-    - Note: Default CLUES dataset includes years 2012, 2015, and 2018  
-  
+    - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
+    - DOI: [2012](https://doi.org/10.2909/8367f5f3-5eb1-4d89-ae8d-13a70fc834e0), [2015](https://doi.org/10.2909/8111fc53-934b-4e6a-afc7-d11664c5ebc3), [2018](https://doi.org/10.2909/bcc329c2-0676-40f5-bb62-91d36f956355), [2021](https://doi.org/10.2909/bcc329c2-0676-40f5-bb62-91d36f956355)
+    - Note: Default CLUES dataset includes years 2012, 2015, and 2018
+- Licence: [Copernicus Land Monitoring Service Data Policy](https://land.copernicus.eu/en/data-policy). Free, full, and open access; use permitted with mandatory attribution (“European Union’s Copernicus Land Monitoring Service information”), clear indication when data are modified, and no implied EU endorsement of derived products.
+
 ### Moderate Resolution Imagining Spectroradiometer (MODIS)
 - Description: Global Vegetation Index Products - NDVI (Normalized Difference Vegetation Index) and EVI (Enhanced Vegetation Index).  
 - Years: 2000-2025  
 - Resolution: 250m×250m, 16-day; 1km×1km, monthly  
 - Format: GeoTIFF  
 - Config: `modis_vegetation.json`  
-- [More Info](https://modis.gsfc.nasa.gov/data/dataprod/mod13.php)  
+- [More Info](https://modis.gsfc.nasa.gov/data/dataprod/mod13.php)
+- DOI: [250m×250m](HTTPS://DOI.ORG/10.5067/MODIS/MOD13Q1.061), [1km×1km](HTTPS://DOI.ORG/10.5067/MODIS/MOD13A3.061)
+- License: [NASA ESDIS Data Use Policy](https://www.earthdata.nasa.gov/engage/open-data-services-software-policies/data-use-guidance). NASA Earth science datasets are generally released under Creative Commons Zero ([CC0](https://creativecommons.org/public-domain/cc0/)), with attribution encouraged and no endorsement permitted.
 
 ### SPEI (Standardized Precipitation-Evapotranspiration Index)
 - Description: Global drought index based on precipitation and evapotranspiration.  
@@ -129,6 +143,8 @@ This page describes the geospatial data sources and datasets integrated into the
 - Format: NetCDF  
 - Config: `spei.json`  
 - [More Info](https://spei.csic.es)
+- DOI: 10.5281/zenodo.834461
+- License: [Open Database License (ODbL 1.0)](https://opendatacommons.org/licenses/odbl/1-0/). Free to share, use, adapt, and create derivatives, provided that attribution is given (cite the recommended publications), the licence remains clear upon redistribution, and any publicly released adapted versions must be shared under the same ODbL (Share-Alike).
 - Note: Default CLUES dataset includes years 2000-2025
 
 ### Hydrosheds - Global Lakes and Wetlands Database (GLWD) version 2
@@ -137,7 +153,8 @@ This page describes the geospatial data sources and datasets integrated into the
 - Resolution: 500m×500m  
 - Format: GeoTIFF  
 - Config: `hydrosheds_GLWD.json`  
-- [More Info](https://www.hydrosheds.org/products/glwd)  
+- [More Info](https://www.hydrosheds.org/products/glwd)
+- License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ### DMSP–VIIRS - Harmonized Night-Time Lights
 - Description: Global nighttime light intensity from satellites, harmonized across sensors.  
@@ -145,7 +162,8 @@ This page describes the geospatial data sources and datasets integrated into the
 - Resolution: 1km×1km, yearly  
 - Format: GeoTIFF  
 - Config: `ntl.json`  
-- [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/8)
+- [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/10)
+- License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - Note: Default CLUES dataset includes years 2000-2025
 ---- 
 ## Summary Table
