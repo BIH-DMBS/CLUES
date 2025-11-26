@@ -51,13 +51,16 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 
 ### DLR Earth Observation Center (EOC) Geoservice
 - Atmosphere:  
-    - Description: A collection of satellite-derived global atmospheric composition and cloud property layers provided as composite images via WMS, covering global daily or monthly observations from missions like GOME, GOME-2, and TROPOMI.  
+    - Description: A collection of satellite-derived global atmospheric composition and cloud property layers provided as composite images via WMS, covering global daily or monthly observations from missions like GOME, GOME-2, and Sentinel-5/TROPOMI.  
     - Years: Varies by product  
     - Resolution: Varies by product   
     - Format: GeoTIFF  
     - Config: `EOC_Atmosphere_Coverage_Service.json`  
     - More Info [here](https://atmos.caf.dlr.de/app/missions/gome) and [here](https://geoservice.dlr.de/web/datasets?t=atmosphere)
-    - License: [EUMETSAT AC-SAF User Licence](https://geoservice.dlr.de/resources/licenses/ac_saf/AC-SAF_User_License.pdf). Free-to-use with mandatory attribution (“copyright © EUMETSAT ”). Intellectual property rights belong to EUMETSAT; products may be reused and redistributed provided the copyright notice is displayed.
+    - License:
+        - For GOME datasets:  
+        - For GOME-2 datasets: [EUMETSAT AC-SAF User Licence](https://geoservice.dlr.de/resources/licenses/ac_saf/AC-SAF_User_License.pdf). Free-to-use with mandatory attribution (“copyright ©     EUMETSAT ”). Intellectual property rights belong to EUMETSAT; products may be reused and redistributed provided the copyright notice is displayed.
+        - For Sentinel-5/TROPOMI datasets: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - World Settlement Footprint (WSF):  
     - Description: Global maps outlining the extent of human settlements. Includes static products for specific years and the WSF Evolution (WSF-Evo) dataset showing annual changes.  
     - Years: 2015, 2019 (WSF); 1985–2015 (WSF-Evo)    
