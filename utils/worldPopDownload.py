@@ -6,7 +6,7 @@ import json
 
 import utils
 
-
+# Import CLUES configuration
 try:
     from .config import download_folder, configs_assets_folder, tmp_folder, area, config_folder, secrets_folder
 except:
@@ -16,6 +16,10 @@ import logging
 import os
 
 def getWorldPop(json_file, year, vOI):
+    """
+    Function to download WorldPop raster(s) for specified variable(s) and years,
+    and save them as a GeoTIFF inside the CLUES download folder.
+    """
     # -------------------------------------------------------
     # 1. Load bounding box for the region of interest (ROI)
     # -------------------------------------------------------
