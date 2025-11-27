@@ -63,7 +63,7 @@ def getWorldPop(json_file, year, vOI):
      # -------------------------------------------------------
     # 4. Save to GeoTIFF
     # -------------------------------------------------------
-    output_path = download_folder_er5_land = os.path.join(
+    output_path = os.path.join(
         download_folder,parameters['type'], 
         vOI, 
         f"{year}.tif")
