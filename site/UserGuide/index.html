@@ -480,9 +480,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#clues-with-docker" class="md-nav__link">
+  <a href="#running-clues-with-docker" class="md-nav__link">
     <span class="md-ellipsis">
-      CLUES with Docker
+      Running CLUES with Docker
     </span>
   </a>
   
@@ -846,9 +846,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#clues-with-docker" class="md-nav__link">
+  <a href="#running-clues-with-docker" class="md-nav__link">
     <span class="md-ellipsis">
-      CLUES with Docker
+      Running CLUES with Docker
     </span>
   </a>
   
@@ -1272,28 +1272,31 @@ if __name__ == &quot;__main__&quot;:
 <a href="https://github.com/BIH-DMBS/CLUES/blob/main/utils/worldPopDownload.py">utils/worldPopDownload.py</a></p>
 <h2 id="clues-docker-usage">CLUES Docker Usage</h2>
 <p>This repository provides a Dockerized environment for running <strong>CLUES</strong>.<br />
-The setup ensures a consistent and isolated execution environment without requiring manual installation of dependencies.</p>
+Using Docker ensures consistent, reproducible, and isolated execution environment without requiring manual installation of Python packages or system dependencies.</p>
 <hr />
 <h3 id="build-the-docker-image">Build the Docker Image</h3>
 <p>Run the following command to build the Docker image locally:</p>
 <pre><code class="language-bash">docker build -t clues .
 </code></pre>
 <p><strong>Configs:</strong> Local config/, configs_sources/, and secrets/ folders are copied into the container.</p>
-<p>The the config/ and configs_sources/ contain default files that run as a short demo.</p>
-<p>The secrets/ folder must contain the credential files for the copernicus api, nasa earth login and copernicus. The files are given per default but need to be adjusted with personal credentials (check https://bih-dmbs.github.io/CLUES/).</p>
-<h3 id="clues-with-docker">CLUES with Docker</h3>
-<p>To run CLUES interactively:</p>
+<p>The config/ and configs_sources/ folders contain default files that run as a short demo.</p>
+<p>The secrets/ folder must contain the credential files for the Copernicus CDS API, Copernicus Atmosphere Data Store, and NASA Earthdata login. Template files are included by default but must be updated with personal access tokens. For instructions, see section Third party accounts in the <a href="https://bih-dmbs.github.io/CLUES/UserGuide/">User Guide</a>.</p>
+<h3 id="running-clues-with-docker">Running CLUES with Docker</h3>
+<p>To start CLUES container interactively:</p>
 <pre><code class="language-bash">docker run -it --rm -v ${PWD}/clues_data:/app/CLUES/clues_data clues 
 </code></pre>
-<p>This will start the container and starts a bash shell.</p>
-<p>To run CLUES start the workflow inside the container with:</p>
+<p>This command:
+- launches an interactive shell inside the container
+- mounts the local clues_data/ folder into the container
+- ensures all output from CLUES is written to the local machine.</p>
+<p>Inside the container, run the CLUES workflow with:</p>
 <pre><code class="language-bash">snakemake -s workflows/snakefile --cores 16 -p --scheduler greedy --rerun-incomplete --latency-wait 30
 </code></pre>
-<p>The folder clues_data\ set in the config file will be used to store the results. The folder is mirrored on the local mashine.</p>
+<p>The folder clues_data/, as defined in your config file, will store all downloaded, processed, and linked data. Because it is mounted, all results appear automatically on your local machine.</p>
 <h2 id="climate-change-indices">Climate Change Indices</h2>
-<p>CLUES provides as well a script to compute a big chung of the climate change indices suggested by the joint CCl/CLIVAR/JCOMM Expert Team (ET) on Climate Change Detection and Indices (ETCCDI). The team has a mandate to address the need for the objective measurement and characterization of climate variability and change by providing international coordination and helping organizing collaboration on climate change detection and indices relevant to climate change detection, and by encouraging the comparison of modeled data and observations. A list with all suggested indices can be found <a href="https://etccdi.pacificclimate.org/list_27_indices.shtml">here</a>.</p>
-<p>To calculate the indices using downloaded temperature data use the script <code>scripts/climateChangeIndeces.py</code>. The that must be changed to run the script on your own infrastructure can be found at the bottom of the script.</p>
-<p>The formular are not restricted to temperture, you can also compute this indices for other variables.</p>
+<p>CLUES also provides a script to compute a big chung of the climate change indices suggested by the joint CCl/CLIVAR/JCOMM Expert Team (ET) on Climate Change Detection and Indices (ETCCDI). The team has a mandate to address the need for the objective measurement and characterization of climate variability and change by providing international coordination and helping organizing collaboration on climate change detection and indices relevant to climate change detection, and by encouraging the comparison of modeled data and observations. A list with all suggested indices can be found <a href="https://etccdi.pacificclimate.org/list_27_indices.shtml">here</a>.</p>
+<p>To calculate the indices using downloaded temperature data use the script <code>scripts/climateChangeIndices.py</code>. The paths and settings that must be changed to run the script on your own infrastructure can be found at the bottom of the script.</p>
+<p>The formulas are not restricted to temperture, you can also compute these indices for other variables (e.g., precipitation).</p>
 <hr />
 <h2 id="anticipated-results">Anticipated results</h2>
 <p>The workflow automatically downloads all required geospatial data files into the directory specified in the general configuration file <code>config/config.json</code>. For each file retrieved, a corresponding log file is generated during execution, providing detailed information about the download process. These log files are essential for monitoring progress and diagnosing potential issues.  </p>
