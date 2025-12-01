@@ -394,7 +394,7 @@ The actual download logic (API queries, file handling, error management, etc.) i
 ## CLUES Docker Usage
 
 This repository provides a Dockerized environment for running **CLUES**.  
-The setup ensures a consistent and isolated execution environment without requiring manual installation of dependencies.
+Using Docker ensures consistent, reproducible, and isolated execution environment without requiring manual installation of Python packages or system dependencies.
 
 ---
 
@@ -408,36 +408,39 @@ docker build -t clues .
 
 **Configs:** Local config/, configs_sources/, and secrets/ folders are copied into the container.
 
-The the config/ and configs_sources/ contain default files that run as a short demo.
+The config/ and configs_sources/ folders contain default files that run as a short demo.
 
-The secrets/ folder must contain the credential files for the copernicus api, nasa earth login and copernicus. The files are given per default but need to be adjusted with personal credentials (check https://bih-dmbs.github.io/CLUES/).
+The secrets/ folder must contain the credential files for the Copernicus CDS API, Copernicus Atmosphere Data Store, and NASA Earthdata login. Template files are included by default but must be updated with personal access tokens. For instructions, see section Third party accounts in the [User Guide](https://bih-dmbs.github.io/CLUES/UserGuide/).
 
 
-### CLUES with Docker
+### Running CLUES with Docker
 
-To run CLUES interactively:
+To start CLUES container interactively:
 
 ```bash
 docker run -it --rm -v ${PWD}/clues_data:/app/CLUES/clues_data clues 
 ```
-This will start the container and starts a bash shell.
+This command:
+- launches an interactive shell inside the container
+- mounts the local clues_data/ folder into the container
+- ensures all output from CLUES is written to the local machine.
 
-To run CLUES start the workflow inside the container with:
+Inside the container, run the CLUES workflow with:
 
 ```bash
 snakemake -s workflows/snakefile --cores 16 -p --scheduler greedy --rerun-incomplete --latency-wait 30
 ```
 
-The folder clues_data\ set in the config file will be used to store the results. The folder is mirrored on the local mashine.
+The folder clues_data/, as defined in your config file, will store all downloaded, processed, and linked data. Because it is mounted, all results appear automatically on your local machine.
 
 
 ## Climate Change Indices
 
-CLUES provides as well a script to compute a big chung of the climate change indices suggested by the joint CCl/CLIVAR/JCOMM Expert Team (ET) on Climate Change Detection and Indices (ETCCDI). The team has a mandate to address the need for the objective measurement and characterization of climate variability and change by providing international coordination and helping organizing collaboration on climate change detection and indices relevant to climate change detection, and by encouraging the comparison of modeled data and observations. A list with all suggested indices can be found [here](https://etccdi.pacificclimate.org/list_27_indices.shtml).
+CLUES also provides a script to compute a big chung of the climate change indices suggested by the joint CCl/CLIVAR/JCOMM Expert Team (ET) on Climate Change Detection and Indices (ETCCDI). The team has a mandate to address the need for the objective measurement and characterization of climate variability and change by providing international coordination and helping organizing collaboration on climate change detection and indices relevant to climate change detection, and by encouraging the comparison of modeled data and observations. A list with all suggested indices can be found [here](https://etccdi.pacificclimate.org/list_27_indices.shtml).
 
-To calculate the indices using downloaded temperature data use the script `scripts/climateChangeIndeces.py`. The that must be changed to run the script on your own infrastructure can be found at the bottom of the script.
+To calculate the indices using downloaded temperature data use the script `scripts/climateChangeIndices.py`. The that must be changed to run the script on your own infrastructure can be found at the bottom of the script.
 
-The formular are not restricted to temperture, you can also compute this indices for other variables.
+The formulas are not restricted to temperture, you can also compute these indices for other variables (e.g., precipitation).
 
 ---
 
