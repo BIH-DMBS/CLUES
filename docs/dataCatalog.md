@@ -167,7 +167,17 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Config: `ntl.json`  
 - [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/10)
 - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
-- Note: Default CLUES dataset includes years 2000-2025
+- Note: Default CLUES dataset includes years 2000-2020
+
+### WorldPop - Population counts
+- Description: Global esimated total number of people per grid-cell.
+- Years: 2000-2020
+- Resolution: 1km×1km, yearly
+- Format: GeoTIFF
+- Config:
+- [More info](https://hub.worldpop.org/geodata/summary?id=24777)
+- License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
+
 ---- 
 ## Summary Table
 This table provides an overview of all geospatial datasets integrated into the CLUES framework. It reflects the list of datasets retrieved using the default workflow settings. 
