@@ -172,7 +172,7 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Note: Default CLUES dataset includes years 2000-2020
 
 ### WorldPop - Population counts
-- Description: Global esimated total number of people per grid-cell.
+- Description: WorldPop provides population distributions and demographic datasets. Here a configuration file for global estimated total number of people per grid-cell.
 - Years: 2000-2020
 - Resolution: 1km×1km, yearly
 - Format: GeoTIFF
