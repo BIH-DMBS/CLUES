@@ -307,9 +307,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#copernicus-climate-change-service-c3s-reanalysis-era5-single-levels" class="md-nav__link">
+  <a href="#copernicus-climate-change-service-c3s-reanalysis-era5-on-single-levels" class="md-nav__link">
     <span class="md-ellipsis">
-      Copernicus Climate Change Service (C3S) reanalysis-era5-single-levels
+      Copernicus Climate Change Service (C3S) Reanalysis ERA5 on single levels
     </span>
   </a>
   
@@ -495,9 +495,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#copernicus-climate-change-service-c3s-reanalysis-era5-single-levels" class="md-nav__link">
+  <a href="#copernicus-climate-change-service-c3s-reanalysis-era5-on-single-levels" class="md-nav__link">
     <span class="md-ellipsis">
-      Copernicus Climate Change Service (C3S) reanalysis-era5-single-levels
+      Copernicus Climate Change Service (C3S) Reanalysis ERA5 on single levels
     </span>
   </a>
   
@@ -624,7 +624,8 @@
 
 
 <h1 id="clues-geospatial-data-catalog">CLUES Geospatial Data Catalog</h1>
-<p>This page describes the geospatial data sources and datasets integrated into the CLUES workflow. For each data source, a short description, source-specific configuration file (config), spatial and temporal resolution, download format and reference link are provided. A summary table with all geospatial datasets is provided below the Geospatial Data Sources section. </p>
+<p>This page describes the geospatial data sources and datasets integrated into the CLUES workflow. For each data source, a short description, source-specific configuration file (config), spatial and temporal resolution, download format and reference link are provided. </p>
+<p>A summary table with all geospatial datasets is provided below the Geospatial Data Sources section. </p>
 <h2 id="geospatial-data-sources">Geospatial Data Sources</h2>
 <h3 id="copernicus-atmosphere-monitoring-service-cams-global-reanalysis-eac4">Copernicus Atmosphere Monitoring Service (CAMS) Global Reanalysis (EAC4)</h3>
 <ul>
@@ -633,9 +634,11 @@
 <li>Resolution: 0.75°×0.75°, 3-hourly  </li>
 <li>Format: NetCDF  </li>
 <li>Config: <code>cams-global-reanalysis-eac4.json</code>  </li>
-<li><a href="https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=overview">More Info</a>  </li>
+<li><a href="https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=overview">More Info</a></li>
+<li>DOI: 10.24381/d58bbf47</li>
+<li>License: Creative Commons Attribution 4.0 International <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a></li>
 </ul>
-<h3 id="copernicus-climate-change-service-c3s-reanalysis-era5-single-levels">Copernicus Climate Change Service (C3S) reanalysis-era5-single-levels</h3>
+<h3 id="copernicus-climate-change-service-c3s-reanalysis-era5-on-single-levels">Copernicus Climate Change Service (C3S) Reanalysis ERA5 on single levels</h3>
 <ul>
 <li>Description: Global climate reanalysis (ERA5) implemented by ECMWF, using data assimilation of satellite and in-situ observations.  </li>
 <li>Years: 1940–present  </li>
@@ -643,6 +646,8 @@
 <li>Format: NetCDF  </li>
 <li>Config: <code>reanalysis-era5-single-levels.json</code>  </li>
 <li><a href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview">More Info</a></li>
+<li>DOI: 10.24381/cds.adbb2d47</li>
+<li>License: Creative Commons Attribution 4.0 International <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a></li>
 <li>Note: Default CLUES dataset includes years 2000-2025</li>
 </ul>
 <h3 id="copernicus-climate-change-service-c3s-reanalysis-land">Copernicus Climate Change Service (C3S) reanalysis-land</h3>
@@ -653,6 +658,8 @@
 <li>Format: NetCDF  </li>
 <li>Config: <code>reanalysis-era5-land.json</code>  </li>
 <li><a href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land">More Info</a></li>
+<li>DOI: 10.24381/cds.e2161bac</li>
+<li>License: Creative Commons Attribution 4.0 International <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a></li>
 <li>Note: Default CLUES dataset includes years 2000-2025</li>
 </ul>
 <h3 id="espon">ESPON</h3>
@@ -663,16 +670,23 @@
 <li>Format: CSV  </li>
 <li>Config: <code>espon.json</code>  </li>
 <li><a href="https://database.espon.eu">More Info</a></li>
+<li>License: <a href="https://www.espon.eu/legal-notice">Custom ESPON Reuse Policy</a>. Reproduction allowed with mandatory attribution (“© ESPON” and “Origin of information/data: ESPON EGTC”), mandatory disclaimer for results, and restrictions on map design reuse.</li>
 </ul>
 <h3 id="dlr-earth-observation-center-eoc-geoservice">DLR Earth Observation Center (EOC) Geoservice</h3>
 <ul>
 <li>Atmosphere:  <ul>
-<li>Description: A collection of satellite-derived global atmospheric composition and cloud property layers provided as composite images via WMS, covering global daily or monthly observations from missions like GOME, GOME-2, and TROPOMI.  </li>
+<li>Description: A collection of satellite-derived global atmospheric composition and cloud property layers provided as composite images via WMS, covering global daily or monthly observations from missions like GOME, GOME-2, and Sentinel-5/TROPOMI.  </li>
 <li>Years: Varies by product  </li>
 <li>Resolution: Varies by product   </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>EOC_Atmosphere_Coverage_Service.json</code>  </li>
-<li>More Info <a href="https://atmos.caf.dlr.de/app/missions/gome">here</a> and <a href="https://geoservice.dlr.de/web/datasets?t=atmosphere">here</a>  </li>
+<li>More Info <a href="https://atmos.caf.dlr.de/app/missions/gome">here</a> and <a href="https://geoservice.dlr.de/web/datasets?t=atmosphere">here</a></li>
+<li>License:<ul>
+<li>For GOME datasets:  </li>
+<li>For GOME-2 datasets: <a href="https://geoservice.dlr.de/resources/licenses/ac_saf/AC-SAF_User_License.pdf">EUMETSAT AC-SAF User Licence</a>. Free-to-use with mandatory attribution (“copyright ©     EUMETSAT ”). Intellectual property rights belong to EUMETSAT; products may be reused and redistributed provided the copyright notice is displayed.</li>
+<li>For Sentinel-5/TROPOMI datasets: Creative Commons Attribution 4.0 International <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li>World Settlement Footprint (WSF):  <ul>
@@ -682,6 +696,8 @@
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>EOC_WSF.json</code>  </li>
 <li><a href="https://www.dlr.de/en/eoc/research-transfer/projects-missions/world-settlement-footprint-wsf-r">More info</a></li>
+<li>DOI: <a href="https://doi.org/10.15489/rlyibn8gjc58">WSF-2015</a>; <a href="https://doi.org/10.15489/twg5xsnquw84">WSF-2019</a></li>
+<li>License: Creative Commons Attribution 4.0 International <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a></li>
 </ul>
 </li>
 <li>WSF3D:  <ul>
@@ -690,7 +706,8 @@
 <li>Resolution: 90m×90m  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>EOC_WSF3D.json</code>  </li>
-<li><a href="https://geoservice.dlr.de/web/datasets/wsf_3d">More info</a>  </li>
+<li><a href="https://geoservice.dlr.de/web/datasets/wsf_3d">More info</a></li>
+<li>License: Creative Commons Attribution 4.0 International <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a></li>
 </ul>
 </li>
 </ul>
@@ -700,7 +717,9 @@
 <li>Resolution: 30m×30m and 90m×90m, static for years 2011 - 2015  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>copernicus_dem.json</code>  </li>
-<li><a href="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM">More Info</a>  </li>
+<li><a href="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM">More Info</a></li>
+<li>DOI: https://doi.org/10.5270/ESA-c5d3d65</li>
+<li>Licence: <a href="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM">Copernicus Data Licence</a> Free use permitted with mandatory attribution (“© DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved”) and required notices for adapted data (“produced using Copernicus WorldDEM-30…” / “produced using Copernicus WorldDEM-90…”).</li>
 </ul>
 <h3 id="copernicus-global-land-service">Copernicus Global Land Service</h3>
 <ul>
@@ -709,7 +728,9 @@
 <li>Resolution: 100m×100m, yearly  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>copernicus_dynamic_land_cover.json</code>  </li>
-<li><a href="https://zenodo.org/records/4723924">More Info</a>  </li>
+<li><a href="https://www.copernicus.eu/en/access-data/copernicus-services-catalogue/land-cover-2015-2019-raster-100-m-global-annual-version-3">More Info</a></li>
+<li>DOI: <a href="https://doi.org/10.5281/zenodo.3939038">2015</a>, <a href="https://doi.org/10.5281/zenodo.3518026">2016</a>, <a href="https://doi.org/10.5281/zenodo.3518036">2017</a>, <a href="https://doi.org/10.5281/zenodo.3518038">2018</a>, <a href="https://doi.org/10.5281/zenodo.3939050">2019</a></li>
+<li>License: Creative Commons Attribution 4.0 International <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a></li>
 </ul>
 <h3 id="copernicus-land-monitoring-service">Copernicus Land Monitoring Service</h3>
 <ul>
@@ -719,17 +740,19 @@
 <li>Resolution: 100m×100m, yearly  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>corine_copernicus.json</code>  </li>
-<li><a href="https://land.copernicus.eu/en/products/corine-land-cover">More Info</a>  </li>
+<li><a href="https://land.copernicus.eu/en/products/corine-land-cover">More Info</a></li>
+<li>DOI: <a href="https://doi.org/10.2909/c89324ef-7729-4477-9f1b-623f5f88eaa1">1990</a>, <a href="https://doi.org/10.2909/ddacbd5e-068f-4e52-a596-d606e8de7f40">2000</a>, <a href="https://doi.org/10.2909/08560441-2fd5-4eb9-bf4c-9ef16725726a">2006</a>, <a href="https://doi.org/10.2909/a84ae124-c5c5-4577-8e10-511bfe55cc0d">2012</a>, <a href="https://doi.org/10.2909/960998c1-1870-4e82-8051-6485205ebbac">2018</a></li>
 <li>Note: Default CLUES dataset includes years 2000, 2006, 2012, and 2018  </li>
 </ul>
 </li>
 <li>Tree Cover Density  <ul>
 <li>Description: European tree cover density.  </li>
-<li>Years: 2012, 2015, and annually from 2018 to 2021  </li>
+<li>Years: 2012, 2015, and annually from 2018 to 2023  </li>
 <li>Resolution: 100m×100m, yearly  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>treecover_copernicus.json</code>  </li>
-<li><a href="https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density">More Info</a>  </li>
+<li><a href="https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density">More Info</a></li>
+<li>DOI: <a href="https://doi.org/10.2909/299ad2d6-f2b8-4716-b169-1d621250fc3c">2012</a>, <a href="https://doi.org/10.2909/264d4e20-de6d-4f88-b1be-b592303452af">2015</a>, <a href="https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27">2018</a>, <a href="https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27">2019</a>, <a href="https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27">2020</a>, <a href="https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27">2021</a>, <a href="https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27">2022</a>, <a href="https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27">2023</a></li>
 <li>Note: Default CLUES dataset includes years 2012, 2015, and 2018  </li>
 </ul>
 </li>
@@ -739,10 +762,12 @@
 <li>Resolution: 100m×100m, yearly  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>treecover_copernicus.json</code>  </li>
-<li><a href="https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density">More Info</a>  </li>
-<li>Note: Default CLUES dataset includes years 2012, 2015, and 2018  </li>
+<li><a href="https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density">More Info</a></li>
+<li>DOI: <a href="https://doi.org/10.2909/8367f5f3-5eb1-4d89-ae8d-13a70fc834e0">2012</a>, <a href="https://doi.org/10.2909/8111fc53-934b-4e6a-afc7-d11664c5ebc3">2015</a>, <a href="https://doi.org/10.2909/bcc329c2-0676-40f5-bb62-91d36f956355">2018</a>, <a href="https://doi.org/10.2909/bcc329c2-0676-40f5-bb62-91d36f956355">2021</a></li>
+<li>Note: Default CLUES dataset includes years 2012, 2015, and 2018</li>
 </ul>
 </li>
+<li>Licence: <a href="https://land.copernicus.eu/en/data-policy">Copernicus Land Monitoring Service Data Policy</a>. Free, full, and open access; use permitted with mandatory attribution (“European Union’s Copernicus Land Monitoring Service information”), clear indication when data are modified, and no implied EU endorsement of derived products.</li>
 </ul>
 <h3 id="moderate-resolution-imagining-spectroradiometer-modis">Moderate Resolution Imagining Spectroradiometer (MODIS)</h3>
 <ul>
@@ -751,7 +776,9 @@
 <li>Resolution: 250m×250m, 16-day; 1km×1km, monthly  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>modis_vegetation.json</code>  </li>
-<li><a href="https://modis.gsfc.nasa.gov/data/dataprod/mod13.php">More Info</a>  </li>
+<li><a href="https://modis.gsfc.nasa.gov/data/dataprod/mod13.php">More Info</a></li>
+<li>DOI: <a href="HTTPS://DOI.ORG/10.5067/MODIS/MOD13Q1.061">250m×250m</a>, <a href="HTTPS://DOI.ORG/10.5067/MODIS/MOD13A3.061">1km×1km</a></li>
+<li>License: <a href="https://www.earthdata.nasa.gov/engage/open-data-services-software-policies/data-use-guidance">NASA ESDIS Data Use Policy</a>. NASA Earth science datasets are generally released under Creative Commons Zero (<a href="https://creativecommons.org/public-domain/cc0/">CC0</a>), with attribution encouraged and no endorsement permitted.</li>
 </ul>
 <h3 id="spei-standardized-precipitation-evapotranspiration-index">SPEI (Standardized Precipitation-Evapotranspiration Index)</h3>
 <ul>
@@ -761,6 +788,8 @@
 <li>Format: NetCDF  </li>
 <li>Config: <code>spei.json</code>  </li>
 <li><a href="https://spei.csic.es">More Info</a></li>
+<li>DOI: 10.5281/zenodo.834461</li>
+<li>License: <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL 1.0)</a>. Free to share, use, adapt, and create derivatives, provided that attribution is given (cite the recommended publications), the licence remains clear upon redistribution, and any publicly released adapted versions must be shared under the same ODbL (Share-Alike).</li>
 <li>Note: Default CLUES dataset includes years 2000-2025</li>
 </ul>
 <h3 id="hydrosheds-global-lakes-and-wetlands-database-glwd-version-2">Hydrosheds - Global Lakes and Wetlands Database (GLWD) version 2</h3>
@@ -770,7 +799,8 @@
 <li>Resolution: 500m×500m  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>hydrosheds_GLWD.json</code>  </li>
-<li><a href="https://www.hydrosheds.org/products/glwd">More Info</a>  </li>
+<li><a href="https://www.hydrosheds.org/products/glwd">More Info</a></li>
+<li>License: Creative Commons Attribution 4.0 International <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a></li>
 </ul>
 <h3 id="dmspviirs-harmonized-night-time-lights">DMSP–VIIRS - Harmonized Night-Time Lights</h3>
 <ul>
@@ -779,7 +809,8 @@
 <li>Resolution: 1km×1km, yearly  </li>
 <li>Format: GeoTIFF  </li>
 <li>Config: <code>ntl.json</code>  </li>
-<li><a href="https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/8">More Info</a></li>
+<li><a href="https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/10">More Info</a></li>
+<li>License: Creative Commons Attribution 4.0 International <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a></li>
 <li>Note: Default CLUES dataset includes years 2000-2025</li>
 </ul>
 <hr />

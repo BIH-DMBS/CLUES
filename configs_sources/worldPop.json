@@ -1,6 +1,7 @@
 {
     "type": "WordPop",
     "format": "geoTIFF",
+    "url": "https://www.worldpop.org/",
     "variables":[
         {
             "name":"people_per_pixel",

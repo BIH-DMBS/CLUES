@@ -228,6 +228,208 @@ Command Options Explained:
 - --rerun-incomplete reruns any jobs that were not completed  
 - --latency-wait 60 waits up to 60 seconds for output files (useful on shared filesystems)  
 
+## Adding a New Dataset to CLUES: WorldPop Example
+
+This tutorial provides a short guide for adding a new dataset to CLUES, using the WorldPop population distribution raster (i.e., a gridded map, where each pixel stores a population estimate) as an example. It demonstrates where external data can be integrated within the CLUES architecture, and what level of coding effort is required.
+The guide outlines the relevant components of the CLUES codebase, provides minimal working code snippets, and links to the corresponding sections of the technical documentation. By the end of the tutorial, users should be able to understand the workflow for extending CLUES and integrate new datasets. 
+The workflow consists of five main steps:
+
+1. Accessing WorldPop data
+2. Inspect available WorldPop products
+3. Create a source-specific configuration file
+4. Register the dataset in the CLUES Snakemake workflow
+5. Implement a small download script
+
+### Step 1. Accessing WorldPop Data
+
+WorldPop provides high-resolution population and demographic data in raster format, covering multiple years and regions globally (Open Spatial Demographic Data and Research - WorldPop). The dataset is widely used in public health, demography, and epidemiology.
+For programmatic access, WorldPop offers a RESTful API (https://www.worldpop.org/sdi/introapi/). Python users can interact with this API through the WorldPopPy library, which allows you to:
+
+- retrieve population rasters for countries, regions, or custom bounding boxes (AOIs)
+- specify product types (e.g., PPP: people per pixel, wpgpas: age/sex-stratified layers)
+- download data for single years or a range of years
+- automatically handle missing data masking and caching
+- save rasters directly as GeoTIFF files for downstream processing
+
+### Step 2. Accessing WorldPop Data
+
+Before adding a dataset to CLUES, it is helpful to explore which WorldPop products exist and for which years they are available. To get an overview on the available datasets, use the WorldPopPy library as below: 
+
+```bash
+#pip install WorldPopPy  # first install library
+from worldpoppy import wp_manifest
+import pandas as pd
+manifest = wp_manifest()
+# Show distinct product names
+products = manifest["product_name"].unique()
+
+table = []
+for p in products:
+    sub = manifest[manifest["product_name"] == p]
+    years = sorted(sub["year"].dropna().unique())
+    table.append({"product_name": p, "years": years})
+
+df = pd.DataFrame(table)
+print(df)
+
+```
+
+In this tutorial, we will integrate the PPP (people per pixel) product, a raster where each cell represents the estimated number of people living in that grid cell. This dataset is available for the years 2000–2020. 
+
+### Step 3. Create a source-specific configuration file
+
+Next, create a configuration file that tells CLUES how to download the WorldPop dataset.
+This file specifies:
+- the data source type
+- the time range
+- file format
+- and the specific variables or products to retrieve
+
+Create a new file named:
+<pre>
+config_sources/worldPop.json
+</pre>
+
+```bash
+{
+    "type": "WordPop",
+    "format": "geoTIFF",
+    "variables":[
+        {   
+            "name":"people_per_pixel",
+            "product_name":"ppp",
+            "start_year": "2000",
+            "end_year": "2020",
+        }
+    ]
+}
+```
+
+The “variables” block can include multiple items when a source provides several distinct datasets.
+All source-specific configuration files must be stored in the folder defined by [configs_sources](https://github.com/BIH-DMBS/CLUES/blob/main/configs_sources/) in the general CLUES configuration. In this example the file is called: [worldPop.json](https://github.com/BIH-DMBS/CLUES/blob/main/configs_sources/worldPop.json).
+
+
+### Step 4. Register the dataset in the CLUES Snakemake workflow
+After creating the configuration file, you must tell CLUES’ Snakemake workflow how to use it. This involves three small changes in the Snakefile [Snakefile](https://github.com/BIH-DMBS/CLUES/blob/main/workflows/snakefile):
+
+i. **Add the configuration file to the list of sources.** Locate the dictionary that lists all data sources and add an entry for WorldPop: 
+```bash
+files = {
+       …,
+       'era5_land':os.path.join(CONFIGS_ASSETS_FOLDER, 'reanalysis-era5-land.json'),
+       'worldpop':os.path.join(CONFIGS_ASSETS_FOLDER, 'worldpop.json'),
+}
+```
+
+This makes Snakemake aware of the new source-specific *config.file*.
+
+
+ii. **Define the expected output files** Extend the section that builds the list of files CLUES should download. For WorldPop, add: 
+
+```bash
+if key == 'worldpop':
+    for v in items:
+        year_list = [str(year) for year in range(int(v["start_year"]), int(v["end_year"]) + 1)]
+        year_list = list(set(year_list) & set(years))
+        input = input + expand(os.path.join(download_folder, parameters['worldpop']['type'], v['name'], '{year}.nc'), 
+            year=year_list)
+```
+
+This section collects the file paths for WorldPop data. For each dataset, it selects the years within the specified range that are available, then generates the corresponding file paths for those years. These paths are added to the list of input files to be processed.
+
+This instructs Snakemake to include all WorldPop files for the requested years in the workflow. For example: (['/downloadfolder/WordPop/people_per_pixel/2017.nc',…,'/downloadfolder/WordPop/people_per_pixel\\2018.nc']).
+
+iii. **Add a Snakemake rule for downloading WorldPop.** Create a rule that specifies how WorldPop data should be downloaded:
+
+```bash
+rule worldpop: #worldpop
+    output:
+        os.path.join(download_folder, parameters['worldpop']['type'], '{variable}', '{year}.nc')
+    params:
+        var="{variable}",
+        file=files['worldpop'],
+        year="{year}"
+    shell:
+        "python workflows/worldpop.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1"
+```
+
+This rule defines how to generate WorldPop data files. For each variable and year, it specifies where the output file will be saved and which input file to use. It then runs a Python script to create the file, saving a log of the process for reference.
+
+This rule ensures that each required file triggers a call to the download script (defined in Step 5), if the file is not already present.
+Tip: You can check the actual snakefile of CLUES to see where the code snippets are located.
+
+### Step 5. Implement a small download script
+
+The final step is to add a small script that performs the download of the WorldPop data. In CLUES, each external data source has a corresponding script inside the workflows directory that calls the underlying download function.
+
+Create a new file:
+<pre>
+[workflows/worldpop.py](https://github.com/BIH-DMBS/CLUES/blob/main/workflows/worldpop.py)
+</pre>
+
+and include the following code:
+
+```bash
+import os
+import sys
+
+# Append the target folder to sys.path
+sys.path.append(os.path.join(os.getcwd(), 'utils'))
+import worldPopDownload
+
+if __name__ == "__main__":
+    json_file = sys.argv[1]
+    vOI = sys.argv[2]
+    year = sys.argv[3]
+    worldPopDownload.getWorldPop(json_file, year, vOI)
+```
+
+This script serves as a simple wrapper:
+- Snakemake calls it for each required year and variable
+- It passes those arguments to the underlying downloader
+
+The actual download logic (API queries, file handling, error management, etc.) is placed in:
+[utils/worldPopDownload.py](https://github.com/BIH-DMBS/CLUES/blob/main/utils/worldPopDownload.py)
+
+## CLUES Docker Usage
+
+This repository provides a Dockerized environment for running **CLUES**.  
+The setup ensures a consistent and isolated execution environment without requiring manual installation of dependencies.
+
+---
+
+### Build the Docker Image
+
+Run the following command to build the Docker image locally:
+
+```bash
+docker build -t clues .
+```
+
+**Configs:** Local config/, configs_sources/, and secrets/ folders are copied into the container.
+
+The the config/ and configs_sources/ contain default files that run as a short demo.
+
+The secrets/ folder must contain the credential files for the copernicus api, nasa earth login and copernicus. The files are given per default but need to be adjusted with personal credentials (check https://bih-dmbs.github.io/CLUES/).
+
+
+### CLUES with Docker
+
+To run CLUES interactively:
+
+```bash
+docker run -it --rm -v ${PWD}/clues_data:/app/CLUES/clues_data clues 
+```
+This will start the container and starts a bash shell.
+
+To run CLUES start the workflow inside the container with:
+
+```bash
+snakemake -s workflows/snakefile --cores 16 -p --scheduler greedy --rerun-incomplete --latency-wait 30
+```
+
+The folder clues_data\ set in the config file will be used to store the results. The folder is mirrored on the local mashine.
+
 
 ## Climate Change Indices
 
