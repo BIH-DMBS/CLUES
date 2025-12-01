@@ -157,6 +157,7 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Format: GeoTIFF  
 - Config: `hydrosheds_GLWD.json`  
 - [More Info](https://www.hydrosheds.org/products/glwd)
+- DOI: 10.6084/m9.figshare.28519994
 - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ### DMSP–VIIRS - Harmonized Night-Time Lights
