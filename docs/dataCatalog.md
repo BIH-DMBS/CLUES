@@ -86,7 +86,7 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Format: GeoTIFF  
 - Config: `copernicus_dem.json`  
 - [More Info](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM)
-- DOI: https://doi.org/10.5270/ESA-c5d3d65
+- DOI: 10.5270/ESA-c5d3d65
 - Licence: [Copernicus Data Licence](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM) Free use permitted with mandatory attribution (“© DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved”) and required notices for adapted data (“produced using Copernicus WorldDEM-30…” / “produced using Copernicus WorldDEM-90…”).
 
 ### Copernicus Global Land Service
@@ -157,6 +157,7 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Format: GeoTIFF  
 - Config: `hydrosheds_GLWD.json`  
 - [More Info](https://www.hydrosheds.org/products/glwd)
+- DOI: 10.6084/m9.figshare.28519994
 - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ### DMSP–VIIRS - Harmonized Night-Time Lights
@@ -165,9 +166,21 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Resolution: 1km×1km, yearly  
 - Format: GeoTIFF  
 - Config: `ntl.json`  
-- [More Info](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/10)
+- [More Info](https://doi.org/10.3390/rs9060637)
+- DOI: 10.6084/m9.figshare.9828827
 - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
-- Note: Default CLUES dataset includes years 2000-2025
+- Note: Default CLUES dataset includes years 2000-2020
+
+### WorldPop - Population counts
+- Description: Global esimated total number of people per grid-cell.
+- Years: 2000-2020
+- Resolution: 1km×1km, yearly
+- Format: GeoTIFF
+- Config: `worldPop.json`
+- [More info](https://hub.worldpop.org/geodata/summary?id=24777)
+- DOI: 10.5258/SOTON/WP00647
+- License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
+
 ---- 
 ## Summary Table
 This table provides an overview of all geospatial datasets integrated into the CLUES framework. It reflects the list of datasets retrieved using the default workflow settings. 
