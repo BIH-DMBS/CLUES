@@ -10,7 +10,7 @@ This script processes sub-daily temperature data from NetCDF files to compute va
 It includes functions to read data, compute reference percentiles, yearly extremes, special days, monthly statistics,
 and spell duration indices. The results are saved back to NetCDF files.
 
-to change the parameters, modify the folder_path, ref_start, ref_end, and result_folder variables in the main script section.
+To change the parameters, modify the folder_path, ref_start, ref_end, and result_folder variables in the main script section.
 """
 
 def save_to_netcdf(filename, dataOI, valid_time, latitude, longitude, var_name="dataOI", var_units="Kelvin"):
