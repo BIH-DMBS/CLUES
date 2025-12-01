@@ -363,9 +363,9 @@ Tip: You can check the actual snakefile of CLUES to see where the code snippets 
 The final step is to add a small script that performs the download of the WorldPop data. In CLUES, each external data source has a corresponding script inside the workflows directory that calls the underlying download function.
 
 Create a new file:
-<pre>
+
 [workflows/worldpop.py](https://github.com/BIH-DMBS/CLUES/blob/main/workflows/worldpop.py)
-</pre>
+
 
 and include the following code:
 
