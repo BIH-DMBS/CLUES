@@ -174,8 +174,9 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Years: 2000-2020
 - Resolution: 1km×1km, yearly
 - Format: GeoTIFF
-- Config:
+- Config: `worldPop.json`
 - [More info](https://hub.worldpop.org/geodata/summary?id=24777)
+- DOI: 10.5258/SOTON/WP00647
 - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ---- 
