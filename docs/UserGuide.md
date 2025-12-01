@@ -438,7 +438,7 @@ The folder clues_data/, as defined in your config file, will store all downloade
 
 CLUES also provides a script to compute a big chung of the climate change indices suggested by the joint CCl/CLIVAR/JCOMM Expert Team (ET) on Climate Change Detection and Indices (ETCCDI). The team has a mandate to address the need for the objective measurement and characterization of climate variability and change by providing international coordination and helping organizing collaboration on climate change detection and indices relevant to climate change detection, and by encouraging the comparison of modeled data and observations. A list with all suggested indices can be found [here](https://etccdi.pacificclimate.org/list_27_indices.shtml).
 
-To calculate the indices using downloaded temperature data use the script `scripts/climateChangeIndices.py`. The that must be changed to run the script on your own infrastructure can be found at the bottom of the script.
+To calculate the indices using downloaded temperature data use the script `scripts/climateChangeIndices.py`. The paths and settings that must be changed to run the script on your own infrastructure can be found at the bottom of the script.
 
 The formulas are not restricted to temperture, you can also compute these indices for other variables (e.g., precipitation).
 
