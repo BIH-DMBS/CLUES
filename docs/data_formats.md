@@ -31,9 +31,9 @@ Usage within CLUES: GeoTIFF is used for spatial raster datasets where a simple 2
 
 ---
 
-## CSV files for socioeconomic indicator datasets (primarily from ESPON)  
+## CSV files  
 
-CLUES currently uses CSV files primarily for tabular socioeconomic and demographic indicators originate from the ESPON repository. ESPON distributes indicator tables as CSV, accompanied by a separate geometry.csv file that provides the spatial boundaries in WKT format. 
+CLUES currently uses CSV files primarily for tabular socioeconomic and demographic indicators that originate from the ESPON repository. ESPON distributes indicators CSV tables, accompanied by a separate geometry.csv file that provides the spatial boundaries in WKT format. 
 
 ESPON data structure:
 - One folder per indicator or theme
