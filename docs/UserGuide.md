@@ -195,7 +195,7 @@ Neighbourhood zones represent the spatial extent used to calculate local statist
 Whether and how this processing is applied is defined in the source-specific configuration files, which specify the filter type and the radius of the neighbourhood zone. Default configurations are provided, but users can easily adapt them to meet specific analytical needs.  
 
 Example of the source-specific configuration file `copenicus_dem.json`  
-<pre>
+```bash
 {
     "type":"DEM",
     "format": "geotTiff",
@@ -209,7 +209,7 @@ Example of the source-specific configuration file `copenicus_dem.json`
                 "zevenbergen_thorne: "yes"}
   ]
 }
-</pre>
+```
 
 ---
 

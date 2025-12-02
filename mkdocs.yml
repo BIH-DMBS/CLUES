@@ -3,6 +3,7 @@ nav:
   - Home: index.md
   - User Guide: UserGuide.md
   - Geospatial Data Catalog: dataCatalog.md
+  - Data Format Specifications: data_formats.md
   - Applied Examples: examples.md
   
 markdown_extensions:
