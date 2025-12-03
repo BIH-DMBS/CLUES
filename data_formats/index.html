@@ -337,9 +337,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#espon-socioeconomic-indicator-data" class="md-nav__link">
+  <a href="#csv-files" class="md-nav__link">
     <span class="md-ellipsis">
-      ESPON (socioeconomic / indicator) data
+      CSV files
     </span>
   </a>
   
@@ -438,9 +438,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#espon-socioeconomic-indicator-data" class="md-nav__link">
+  <a href="#csv-files" class="md-nav__link">
     <span class="md-ellipsis">
-      ESPON (socioeconomic / indicator) data
+      CSV files
     </span>
   </a>
   
@@ -473,44 +473,43 @@
 
 <h1 id="data-formats-used-in-clues">Data Formats Used in CLUES</h1>
 <h2 id="introduction">Introduction</h2>
-<p>CLUES integrates a variety of open‑access geospatial and environmental data for epidemiological and health research. To accommodate diverse data types (gridded climate data, raster imagery, socioeconomic indicators, etc.) while preserving interoperability, readability, and reproducibility, CLUES supports multiple standard data formats. This document describes the main formats used: netCDF, GeoTIFF, and the ESPON‑derived CSV structure.</p>
+<p>CLUES integrates a variety of open‑access geospatial and environmental data for epidemiological and health research. To accommodate diverse data types (gridded climate data, raster imagery, socioeconomic indicators, etc.) while preserving interoperability, readability, and reproducibility, CLUES supports multiple standard data formats. </p>
+<p>This document describes the main formats used: netCDF, GeoTIFF, and CSV for tabular socioeconomic indicator datasets.</p>
 <hr />
 <h2 id="netcdf-files">netCDF files</h2>
-<p>We use netCDF (Network Common Data Format) — typically with the “classic” or NetCDF‑4/HDF5 model — for multidimensional scientific data cubes (e.g. time × latitude × longitude, possibly with additional dimensions like vertical levels or variables).  </p>
-<p><strong>Why netCDF?</strong>  </p>
-<ul>
-<li>netCDF is a <strong>self‑describing, machine‑independent</strong> format: each file contains metadata describing its dimensions, variables, units, and attributes. </li>
-<li>It is widely used in climate, environmental, and Earth-system sciences (e.g. modelling, remote sensing products), which makes it ideal for climate or environmental layers integrated into CLUES.  </li>
-<li>netCDF supports efficient slicing, subsetting, compression, and remote/partial reading — useful for large spatio‑temporal datasets. </li>
-</ul>
+<p>We use netCDF (Network Common Data Format) — typically with the “classic” or NetCDF‑4/HDF5 model — for storing multidimensional scientific data cubes (e.g. time × latitude × longitude, possibly with additional dimensions like vertical levels or variables).  </p>
+<p><strong>Why netCDF?</strong><br />
+- netCDF is a <strong>self‑describing, machine‑independent</strong> format: each file contains metadata describing its dimensions, variables, units, and attributes. 
+- It is widely used in climate, environmental, and Earth-system sciences (e.g. modelling, remote sensing products), which makes it ideal for climate or environmental layers integrated into CLUES.<br />
+- netCDF supports efficient slicing, subsetting, compression, and remote/partial reading — useful for large spatio‑temporal datasets. </p>
 <p>Usage within CLUES: netCDF files store gridded data (e.g. time series of temperature, precipitation, air pollution) in a way that preserves full dimensionality and metadata, facilitating reproducible analyses, time‑series extraction, and subsetting by time or space.</p>
 <hr />
 <h2 id="geotiff-files">GeoTIFF files</h2>
 <p>For raster data (e.g. satellite imagery, land‑cover maps, digital elevation models, other spatial rasters), CLUES uses GeoTIFF format — the georeferenced extension of the standard TIFF image format.</p>
-<p><strong>Strengths:</strong>  </p>
-<ul>
-<li>GeoTIFF embeds geographic metadata (coordinate reference system, georeferencing, projection info), making it directly compatible with GIS software. </li>
-<li>It is a widely supported, open, and interoperable standard. Many GIS and remote‑sensing tools (open-source and commercial) can read/write GeoTIFF. </li>
-<li>Suitable for raster layers that do not need multidimensional time-series structure (or where each raster corresponds to a single timestamp or scenario). </li>
-</ul>
+<p><strong>Strengths:</strong><br />
+- GeoTIFF embeds geographic metadata (coordinate reference system, georeferencing, projection info), making it directly compatible with GIS software. 
+- It is a widely supported, open, and interoperable standard. Many GIS and remote‑sensing tools (open-source and commercial) can read/write GeoTIFF. 
+- Suitable for raster layers that do not need multidimensional time-series structure (or where each raster corresponds to a single timestamp or scenario). </p>
 <p>Usage within CLUES: GeoTIFF is used for spatial raster datasets where a simple 2D (or multi-band) grid suffices — for example land cover, elevation, or fixed raster surfaces. Users can load these directly into GIS or raster‑processing tools for mapping or spatial analyses.</p>
 <hr />
-<h2 id="espon-socioeconomic-indicator-data">ESPON (socioeconomic / indicator) data</h2>
-<p>The ESPON repository provides one folder per indicator or theme and a top-level geometry.csv. Indicator CSVs include metadata columns (id, name, code, nomenclature, version, tunit_code, tunit_name, sources, etc.) along with value columns (e.g., y_2015). Spatial geometry is stored once in geometry.csv as WKT keyed by tunit_code. The indicators themselves are retrieved via the ESPON API, which means they are programmatically queried from ESPON’s database.</p>
-<p>CSV was chosen for portability, human readability, and tooling support. CSV files are universally readable, easily diff-able and version-controlled, and embedding metadata in each row ensures that the data is self-describing for non-GIS users. Using CSV also avoids limitations of shapefiles/DBF (restricted field names, limited types, poor Unicode support) and allows geometry reuse across multiple indicators without duplicating large geometry blobs. A single geometry.csv avoids duplicating large geometry blobs across many indicator files — smaller repo, simpler geometry updates.</p>
-<p><strong>Data</strong></p>
+<h2 id="csv-files">CSV files</h2>
+<p>CLUES currently uses CSV files primarily for tabular socioeconomic and demographic indicators that originate from the ESPON repository. ESPON distributes indicators CSV tables, accompanied by a separate geometry.csv file that provides the spatial boundaries in WKT format. </p>
+<p>ESPON data structure:
+- One folder per indicator or theme
+- A central geometry.csv containing spatial geometries in WKT, keyed by tunit_code.
+- Indicator CSVs (e.g., Population_total_-_age_group_65.csv) containing:
+  - metadata columns: id, name, code, nomenclature, version, tunit_code, tunit_name, sources, etc.
+  - one or more value columns (e.g., y_2015)</p>
+<p>This structure allows multiple indicators to reuse the same geometry. The indicators are retrieved via the ESPON API, which means they are programmatically queried from ESPON’s database.</p>
+<p><strong>Why CSV?</strong></p>
 <ul>
-<li>Layout: espon contains one folder per indicator/theme and a top-level geometry.csv.</li>
-<li>Data model: Indicator CSVs (e.g., Population_total_-_age_group_65.csv) include metadata columns (id, name, code, nomenclature, version, tunit_code, tunit_name, sources, etc.) and one or more value columns (y_2015 …). Spatial geometry is stored once in geometry.csv as WKT keyed by tunit_code.</li>
-</ul>
-<p><strong>Why CSV</strong></p>
-<ul>
-<li>Portability &amp; tooling: CSV is readable by nearly every data tool, scripting language (Pandas, R), CLI utilities and is trivial to diff/version-control. That makes automated ETL and reproducible scripts simpler.</li>
+<li>Portability &amp; interoperability: readable by nearly every data tool, scripting language (Pandas, R), CLI utilities and is trivial to diff/version-control. That makes automated ETL and reproducible scripts simpler.</li>
 <li>Human readable / small metadata-per-row: Embedding metadata columns in every row (sources, id, version) makes each CSV self-describing for non-GIS users.</li>
 <li>Avoid DBF/shapefile limitations: Shapefile (DBF) imposes limits (10-character field names in older DBF implementations, restricted types, poor Unicode support). Using CSV avoids silent name truncation and encoding issues.</li>
-<li>Geometry reuse: A single geometry.csv avoids duplicating large geometry blobs across many indicator files — smaller repo, simpler geometry updates.</li>
+<li>Efficient and lightweight: geometry stored once instead of duplicated across layers.</li>
 </ul>
-<p><strong>Conversion example</strong></p>
+<p><strong>Converting CSV + geometry into GIS format</strong></p>
+<p>Users who require GIS-native formats (e.g., GeoPackage) can convert ESPON CSV data into geospatial layers.</p>
 <p>Python (GeoPandas) example to merge a CSV and geometry.csv and write a GeoPackage:</p>
 <pre><code class="language-bash">import pandas as pd
 import geopandas as gpd
@@ -528,14 +527,14 @@ gdf.to_file(&quot;Population_total_age65.gpkg&quot;, layer=&quot;Pp65sp&quot;, d
 </code></pre>
 <p>The merged result can be stored as GeoPackage (.gpkg).</p>
 <p><strong>Conversion script into a GeoPackage and a metadata.json</strong></p>
-<p>CLUES provides a <a href="https://github.com/BIH-DMBS/CLUES/blob/main/scripts/espon_to_gpkg.py">conversion script</a> that converts an ESPON indicator CSV together with geometry.csv into a fully geospatial GeoPackage and an accompanying metadata.json. It merges the attribute and geometry data by tunit_code, attempts to infer simple column types, and outputs a GIS-ready layer with CRS and provenance information. This provides a reproducible, interoperable format for use in GIS software while preserving the simplicity and portability of the original CSV structure. </p>
+<p>CLUES includes a <a href="https://github.com/BIH-DMBS/CLUES/blob/main/scripts/espon_to_gpkg.py">conversion script</a> that converts an ESPON indicator CSV together with geometry.csv into a GeoPackage and an accompanying metadata.json. It merges the attribute and geometry data via tunit_code, infers simple column types, and outputs a GIS-ready layer with coordinate reference system (CRS) and provenance information. This provides a standard geospatial output format for users who require direct integration with GIS software, while retaining the original CSV-based structure as the primary source format. </p>
 <hr />
 <h2 id="why-this-combination-of-formats">Why this combination of formats</h2>
-<p>By supporting netCDF for multidimensional gridded data, GeoTIFF for raster layers, and a tabular-plus-geometry CSV structure for socioeconomic indicators, CLUES achieves:  </p>
+<p>Using netCDF for multidimensional gridded data, GeoTIFF for raster layers, and a tabular-plus-geometry CSV structure for socioeconomic indicators allows to represent each data type in a format suited for its structure:  </p>
 <ul>
 <li><strong>Flexibility:</strong> different data types (time series, rasters, tabular indicators) are stored in the most appropriate, standards-compliant format.  </li>
 <li><strong>Interoperability:</strong> netCDF and GeoTIFF are widely supported in scientific and GIS workflows; the CSV approach for indicators remains simple and easily usable by non‑GIS users, while conversion to full GIS‑ready formats remains possible.  </li>
-<li><strong>Reproducibility and version control:</strong> formats are open and text/binary standards (netCDF, GeoTIFF, CSV), making data easier to share, diff, and manage in code-based workflows.  </li>
+<li><strong>Reproducibility and version control:</strong> formats are open and text/binary standards (netCDF, GeoTIFF, CSV), making data easier to share, compare across versions, and manage in code-based workflows.  </li>
 </ul>
 <hr />
 
