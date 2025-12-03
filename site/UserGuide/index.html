@@ -1341,8 +1341,10 @@ latitude,longitude,subjectid
 <p>The results of this enrichment process are saved in the output folder. The output includes:  </p>
 <ul>
 <li>JSON files with extracted values from NetCDF features.  </li>
-<li>CSV files with extracted values from GeoTIFF features.  </li>
+<li>CSV files with extracted values from GeoTIFF features.</li>
 </ul>
+<p>If your dataset contains address-based locations rather than coordinates, a geocoding script is provided <a href="https://github.com/BIH-DMBS/CLUES/tree/main/scripts/address2coord">here</a> to convert address lists into latitude–longitude pairs. </p>
+<p>For users working with routes or movement paths (e.g., commuting trajectories or GPS traces), no special linkage procedure is required: as long as the route is represented as a series of coordinate points, it can be processed using the standard CLUES enrichment workflow. An example notebook illustrating how such route-based exposures can be linked and visualised after linkage is provided <a href="https://github.com/BIH-DMBS/CLUES/blob/main/notebooks/linkage_of_tracks_2_netcdf_geoTiff.ipynb">here</a>.</p>
 <h3 id="enrichment-for-geographic-areas">Enrichment for Geographic Areas</h3>
 <p>In addition to point-based enrichment, CLUES supports linking environmental data to geographic areas, such as predefined administrative boundaries (e.g., postal codes or districts).
 This allows for aggregation of environmental features across regions rather than individual coordinates, enabling analysis when precise locations are unavailable or when regional exposures are more relevant.</p>
