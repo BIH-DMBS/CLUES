@@ -9,6 +9,7 @@ CLUES integrates a variety of open‑access geospatial and environmental data fo
 We use netCDF (Network Common Data Format) — typically with the “classic” or NetCDF‑4/HDF5 model — for multidimensional scientific data cubes (e.g. time × latitude × longitude, possibly with additional dimensions like vertical levels or variables).  
 
 **Why netCDF?**  
+
 - netCDF is a **self‑describing, machine‑independent** format: each file contains metadata describing its dimensions, variables, units, and attributes. 
 - It is widely used in climate, environmental, and Earth-system sciences (e.g. modelling, remote sensing products), which makes it ideal for climate or environmental layers integrated into CLUES.  
 - netCDF supports efficient slicing, subsetting, compression, and remote/partial reading — useful for large spatio‑temporal datasets. 
@@ -21,6 +22,7 @@ Usage within CLUES: netCDF files store gridded data (e.g. time series of tempera
 For raster data (e.g. satellite imagery, land‑cover maps, digital elevation models, other spatial rasters), CLUES uses GeoTIFF format — the georeferenced extension of the standard TIFF image format.
 
 **Strengths:**  
+
 - GeoTIFF embeds geographic metadata (coordinate reference system, georeferencing, projection info), making it directly compatible with GIS software. 
 - It is a widely supported, open, and interoperable standard. Many GIS and remote‑sensing tools (open-source and commercial) can read/write GeoTIFF. 
 - Suitable for raster layers that do not need multidimensional time-series structure (or where each raster corresponds to a single timestamp or scenario). 

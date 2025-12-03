@@ -477,18 +477,22 @@
 <hr />
 <h2 id="netcdf-files">netCDF files</h2>
 <p>We use netCDF (Network Common Data Format) — typically with the “classic” or NetCDF‑4/HDF5 model — for multidimensional scientific data cubes (e.g. time × latitude × longitude, possibly with additional dimensions like vertical levels or variables).  </p>
-<p><strong>Why netCDF?</strong><br />
-- netCDF is a <strong>self‑describing, machine‑independent</strong> format: each file contains metadata describing its dimensions, variables, units, and attributes. 
-- It is widely used in climate, environmental, and Earth-system sciences (e.g. modelling, remote sensing products), which makes it ideal for climate or environmental layers integrated into CLUES.<br />
-- netCDF supports efficient slicing, subsetting, compression, and remote/partial reading — useful for large spatio‑temporal datasets. </p>
+<p><strong>Why netCDF?</strong>  </p>
+<ul>
+<li>netCDF is a <strong>self‑describing, machine‑independent</strong> format: each file contains metadata describing its dimensions, variables, units, and attributes. </li>
+<li>It is widely used in climate, environmental, and Earth-system sciences (e.g. modelling, remote sensing products), which makes it ideal for climate or environmental layers integrated into CLUES.  </li>
+<li>netCDF supports efficient slicing, subsetting, compression, and remote/partial reading — useful for large spatio‑temporal datasets. </li>
+</ul>
 <p>Usage within CLUES: netCDF files store gridded data (e.g. time series of temperature, precipitation, air pollution) in a way that preserves full dimensionality and metadata, facilitating reproducible analyses, time‑series extraction, and subsetting by time or space.</p>
 <hr />
 <h2 id="geotiff-files">GeoTIFF files</h2>
 <p>For raster data (e.g. satellite imagery, land‑cover maps, digital elevation models, other spatial rasters), CLUES uses GeoTIFF format — the georeferenced extension of the standard TIFF image format.</p>
-<p><strong>Strengths:</strong><br />
-- GeoTIFF embeds geographic metadata (coordinate reference system, georeferencing, projection info), making it directly compatible with GIS software. 
-- It is a widely supported, open, and interoperable standard. Many GIS and remote‑sensing tools (open-source and commercial) can read/write GeoTIFF. 
-- Suitable for raster layers that do not need multidimensional time-series structure (or where each raster corresponds to a single timestamp or scenario). </p>
+<p><strong>Strengths:</strong>  </p>
+<ul>
+<li>GeoTIFF embeds geographic metadata (coordinate reference system, georeferencing, projection info), making it directly compatible with GIS software. </li>
+<li>It is a widely supported, open, and interoperable standard. Many GIS and remote‑sensing tools (open-source and commercial) can read/write GeoTIFF. </li>
+<li>Suitable for raster layers that do not need multidimensional time-series structure (or where each raster corresponds to a single timestamp or scenario). </li>
+</ul>
 <p>Usage within CLUES: GeoTIFF is used for spatial raster datasets where a simple 2D (or multi-band) grid suffices — for example land cover, elevation, or fixed raster surfaces. Users can load these directly into GIS or raster‑processing tools for mapping or spatial analyses.</p>
 <hr />
 <h2 id="espon-socioeconomic-indicator-data">ESPON (socioeconomic / indicator) data</h2>
