@@ -1,8 +1,5 @@
 # Example
 
-## Miscellaneous
-coming soon :)
-
 
 ## JupyterHub instance
 
