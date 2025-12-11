@@ -74,12 +74,9 @@ def netCDF_Link(subjects, netCDFList, pntcoord):
         # Compute delta (grid spacing)
         delta = float(ds.longitude[1] - ds.longitude[0])
 
-        # Vectorized lat/lon to index conversion
-        lat0 = float(ds.latitude[0])
-        lon0 = float(ds.longitude[0])
-
-        lat_idx = np.floor((lats - lat0) / delta).astype(int)
-        lon_idx = np.floor((lons - lon0) / delta).astype(int)
+        # compute nearest index for each lat/lon
+        lat_idx = np.array([np.abs(ds.latitude.values - lat).argmin() for lat in lats])
+        lon_idx = np.array([np.abs(ds.longitude.values - lon).argmin() for lon in lons])
 
         # Build subject grouping by grid cell
         locIDSubID = {}
@@ -88,23 +85,22 @@ def netCDF_Link(subjects, netCDFList, pntcoord):
                 continue
             key = f"{xi},{yi}"
             locIDSubID.setdefault(key, []).append(sid)
-
+            
         # Select variables (skip coordinates)
         variablesOI = {
             name: var.dims
             for name, var in ds.variables.items()
-            if name not in ['longitude', 'latitude', 'valid_time', 'crs', 'time']
+            if name not in ['longitude', 'latitude', 'valid_time', 'crs', 'time','number','expver']
         }
-
         # Process each variable
         for name, dims in variablesOI.items():
-
-            # Load entire variable once = huge speedup
+            # Load entire variable once
             var = ds[name].load()
             data = var.data  # NumPy array
 
             ddOI = {}
             for key in locIDSubID:
+                #print(key)
                 x, y = map(int, key.split(','))
                 
                 # dimension dispatch
@@ -122,7 +118,6 @@ def netCDF_Link(subjects, netCDFList, pntcoord):
 
                 elif dims == ("months", "lat", "lon"):
                     ddOI[key] = data[:, x, y].tolist()
-
                 elif dims == ("valid_time", "latitude", "longitude"):
                     ddOI[key] = data[:, x, y].tolist()
                 elif dims == ('valid_time', 'model_level', 'latitude', 'longitude'):
@@ -147,4 +142,5 @@ def netCDF_Link(subjects, netCDFList, pntcoord):
 
     # Convert numpy types so json.dumps won't fail
     return json.dumps(convert_numpy_types(dataOI), indent=4)
+
 
