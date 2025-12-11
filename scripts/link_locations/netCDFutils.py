@@ -59,74 +59,92 @@ def convert_numpy_types(obj):
 
 
 def netCDF_Link(subjects, netCDFList, pntcoord):
-    z = 0
-    dataOI = {} # -> container for all results
-    for asset in netCDFList:
-        dOI = {} # -> asset results
-        fh = netCDF4.Dataset(asset, mode = "r")
-        #fh = netCDF4.Dataset(netCDFList[asset], mode = "r")
-        
-        # the grit has to be equidistant in degree
-        delta = fh.variables['longitude'][1]-fh.variables['longitude'][0]
 
-        # create mapping of subjects that fall into same area in the grid
-        # {'locID1':['subID1',...'subID3'], ..., 'locIDn':['subIDn',...'subIDn']}
+    dataOI = {}
+
+    # Extract coords from DataFrame only once
+    subject_ids = subjects["subjectid"].values
+    lats = subjects[pntcoord].apply(lambda p: p.y).values
+    lons = subjects[pntcoord].apply(lambda p: p.x).values
+
+    for idx_asset, asset in enumerate(netCDFList):
+        ds = xr.open_dataset(asset)
+        dOI = {}
+
+        # Compute delta (grid spacing)
+        delta = float(ds.longitude[1] - ds.longitude[0])
+
+        # Vectorized lat/lon to index conversion
+        lat0 = float(ds.latitude[0])
+        lon0 = float(ds.longitude[0])
+
+        lat_idx = np.floor((lats - lat0) / delta).astype(int)
+        lon_idx = np.floor((lons - lon0) / delta).astype(int)
+
+        # Build subject grouping by grid cell
         locIDSubID = {}
-        for i, row in subjects.iterrows():
-            lon = row[pntcoord].x
-            lat = row[pntcoord].y
-            idx = getIdx(lat, lon, fh, delta)
-            key = str(idx[0])+','+str(idx[1])
-            if key in locIDSubID:
-                locIDSubID[key].append(row['subjectid'])
-            else:
-                locIDSubID[key] = [row['subjectid']]
+        for sid, xi, yi in zip(subject_ids, lat_idx, lon_idx):
+            if np.isinf(xi) or np.isinf(yi):
+                continue
+            key = f"{xi},{yi}"
+            locIDSubID.setdefault(key, []).append(sid)
 
-        variablesOI = {var_name:var.dimensions for var_name, var in fh.variables.items() if var_name not in ['longitude','latitude','valid_time','crs','time']}
-        for name, value in variablesOI.items():
-            # extract thetime series fof each position there we have a subject
-            # {'locID1':['t1',...'tn'], ..., 'locIDn':['t1',...'tn']}
+        # Select variables (skip coordinates)
+        variablesOI = {
+            name: var.dims
+            for name, var in ds.variables.items()
+            if name not in ['longitude', 'latitude', 'valid_time', 'crs', 'time']
+        }
+
+        # Process each variable
+        for name, dims in variablesOI.items():
+
+            # Load entire variable once = huge speedup
+            var = ds[name].load()
+            data = var.data  # NumPy array
+
             ddOI = {}
-            for k in locIDSubID:
-                split_string = k.split(',')
-                if(split_string[0]=='inf'):
-                    dOI[k]='nan'
+            for key in locIDSubID:
+                x, y = map(int, key.split(','))
+                
+                # dimension dispatch
+                if dims == ("lat", "lon"):
+                    ddOI[key] = [data[x, y].item()]
+
+                elif dims == ("days", "lat", "lon"):
+                    ddOI[key] = data[:, x, y].tolist()
+
+                elif dims == ("days", "hours", "lat", "lon"):
+                    ddOI[key] = data[:, :, x, y].reshape(-1).tolist()
+
+                elif dims == ("lat", "lon", "days"):
+                    ddOI[key] = data[x, y, :].tolist()
+
+                elif dims == ("months", "lat", "lon"):
+                    ddOI[key] = data[:, x, y].tolist()
+
+                elif dims == ("valid_time", "latitude", "longitude"):
+                    ddOI[key] = data[:, x, y].tolist()
+                elif dims == ('valid_time', 'model_level', 'latitude', 'longitude'):
+                    ddOI[key] = data[:, :, x, y].reshape(-1).tolist()
+                elif dims == ('model_level',):
+                    ddOI[key] = 'nan'
                 else:
-                    x = int(split_string[0])
-                    y = int(split_string[1])
-                    if value == ('lat', 'lon'):
-                        ddOI[k] = [fh.variables[name][x,y].item()]
-                    elif value == ('days', 'lat', 'lon'): 
-                        ddOI[k] = fh.variables[name][:,x,y]
-                    elif value == ('days', 'hours', 'lat', 'lon'):
-                        series = fh.variables[name][:,:,x,y]
-                        ddOI[k] = [num for row in series for num in row]
-                    elif value == ('lat', 'lon', 'days'):
-                        ddOI[k] = fh.variables[name][x,y,:]
-                    elif value == ('months', 'lat', 'lon'):
-                        ddOI[k] = fh.variables[name][:,x,y]
-                    elif value == ('valid_time', 'latitude', 'longitude'): 
-                        ddOI[k] = fh.variables[name][:,x,y]
-                    #elif value == ('time', 'latitude', 'longitude'):
-                    #    ddOI[k] = fh.variables[name][:,x,y]
-                    try:
-                        if not isinstance(ddOI[k],list):
-                            if isinstance(ddOI[k].mask,np.ndarray):
-                                ddOI[k] = [item if not ddOI[k].mask[index] else None for index, item in enumerate(ddOI[k])]
-                            else:
-                                ddOI[k] = ddOI[k].tolist()
-                    except:
-                        print('##############')
-                        print(asset)
-                        print(value)
-                        print(name)
-                        print(k)
-                        ddOI[k] = []
+                    # Generic fallback using xarray
+                    ddOI[key] = var.isel(lat=x, lon=y).values.tolist()
+
             dOI[name] = ddOI
-        dataOI[asset] = dOI
-        dataOI[asset]['subjects'] = locIDSubID
-        z = z+1
-        if z%50==0:
-            print(str(z) + ' > '+ str(z/len(netCDFList)*100)+'% : ' + str(asset))
-    return(json.dumps(convert_numpy_types(dataOI), indent=4))
+
+        # Add subject → grid mapping
+        tmp = str(asset)
+        dataOI[tmp] = dOI
+        dataOI[tmp]["subjects"] = locIDSubID
+
+        if (idx_asset + 1) % 50 == 0:
+            print(f"{idx_asset+1} > {(idx_asset+1)/len(netCDFList)*100:.1f}% : {asset}")
+
+        ds.close()
+
+    # Convert numpy types so json.dumps won't fail
+    return json.dumps(convert_numpy_types(dataOI), indent=4)
 
