@@ -75,7 +75,7 @@ The merged result can be stored as GeoPackage (.gpkg).
 
 **Conversion script into a GeoPackage and a metadata.json**
 
-CLUES includes a [conversion script](https://github.com/BIH-DMBS/CLUES/blob/main/scripts/espon_to_gpkg.py) that converts an ESPON indicator CSV together with geometry.csv into a GeoPackage and an accompanying metadata.json. It merges the attribute and geometry data via tunit_code, infers simple column types, and outputs a GIS-ready layer with coordinate reference system (CRS) and provenance information. This provides a standard geospatial output format for users who require direct integration with GIS software, while retaining the original CSV-based structure as the primary source format. 
+CLUES includes a [conversion script](https://github.com/BIH-DMBS/CLUES/blob/main/scripts/espon/espon_to_gpkg.py) that converts an ESPON indicator CSV together with geometry.csv into a GeoPackage and an accompanying metadata.json. It merges the attribute and geometry data via tunit_code, infers simple column types, and outputs a GIS-ready layer with coordinate reference system (CRS) and provenance information. This provides a standard geospatial output format for users who require direct integration with GIS software, while retaining the original CSV-based structure as the primary source format. 
 
 ---
 
