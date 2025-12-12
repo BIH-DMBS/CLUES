@@ -345,11 +345,6 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#climate-change-indices" class="md-nav__link">
     <span class="md-ellipsis">
@@ -357,8 +352,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Climate Change Indices">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#tools" class="md-nav__link">
@@ -608,11 +602,6 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#climate-change-indices" class="md-nav__link">
     <span class="md-ellipsis">
@@ -620,8 +609,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Climate Change Indices">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#tools" class="md-nav__link">
@@ -736,10 +724,54 @@
 <h5 id="locations">Locations</h5>
 <h5 id="area">Area</h5>
 <h5 id="espon">Espon</h5>
-<h3 id="climate-change-indices">Climate Change Indices</h3>
+<h4 id="climate-change-indices"><a href="https://github.com/BIH-DMBS/CLUES/tree/main/scripts/climate_Change_indices/">Climate Change Indices</a></h4>
+<p>This module provides functionality for calculating and analyzing climate change indices. It contains tools for processing climate data and computing various indicators used to measure changes in climate patterns, temperature trends, precipitation anomalies, and other climate-related metrics.</p>
+<p><strong>Features</strong>
+- Climate index calculation
+- Data processing and analysis
+- Climate change trend assessment
+- Statistical analysis of climate variables</p>
+<p><strong>Usage</strong>
+Import this module to access climate change index calculations and analysis functions.</p>
 <h4 id="tools">Tools</h4>
-<h4 id="adaptive-kernel">Adaptive Kernel</h4>
+<h4 id="adaptive-kernel"><a href="https://github.com/BIH-DMBS/CLUES/tree/main/scripts/adaptive_kernel_filter/">Adaptive Kernel</a></h4>
+<p>The <code>adaptive_kde_raster.py</code> module implements adaptive kernel density estimation (KDE) for raster data processing.</p>
+<p><strong>Purpose</strong></p>
+<p>Generates density raster maps using adaptive kernel density estimation techniques, allowing for variable bandwidth based on local data density.</p>
+<p><strong>Key Features</strong>
+- <strong>Adaptive Bandwidth</strong>: Adjusts kernel bandwidth based on local point density
+- <strong>Raster Output</strong>: Produces gridded density estimates
+- <strong>Flexible Kernels</strong>: Supports various kernel functions for density computation</p>
+<p><strong>Usage</strong></p>
+<pre><code class="language-python">from adaptive_kernel_filter.adaptive_kde_raster import AdaptiveKDERaster
+
+kde = AdaptiveKDERaster(points, grid_resolution=100)
+density_raster = kde.compute()
+</code></pre>
+<p><strong>Parameters</strong>
+- <code>points</code>: Input point geometry
+- <code>grid_resolution</code>: Output raster cell size
+- <code>bandwidth</code>: Adaptive bandwidth calculation method</p>
+<p><strong>Output</strong>
+Returns a raster grid containing kernel density values at each cell location.</p>
 <h4 id="address-to-coordinates">Address to coordinates</h4>
+<p>Script for converting addresses to geographic coordinates.</p>
+<p><strong>Usage</strong></p>
+<pre><code class="language-bash">python geocode_addresses.py &lt;input_file&gt; &lt;output_file&gt;
+</code></pre>
+<p><strong>Features</strong></p>
+<ul>
+<li>Batch geocoding of addresses</li>
+<li>Multiple geocoding provider support</li>
+<li>Error handling and logging</li>
+<li>CSV input/output support</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="language-python">from geocode_addresses import geocode_batch
+
+results = geocode_batch('addresses.csv')
+results.to_csv('coordinates.csv')
+</code></pre>
 <h3 id="notebooks">Notebooks</h3>
 <h4 id="analysis-demo">Analysis Demo</h4>
 <h4 id="geotiff">GeoTiff</h4>
