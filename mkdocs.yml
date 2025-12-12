@@ -2,9 +2,10 @@ site_name: CLUES - A Comprehensive Workflow for Integrating Geospatial Data in H
 nav:
   - Home: index.md
   - User Guide: UserGuide.md
+  - Scripts and Notebook Examples: Scripts_Notebooks.md
   - Geospatial Data Catalog: dataCatalog.md
   - Data Format Specifications: data_formats.md
-  - Applied Examples: examples.md
+  - Applied Examples: Examples.md
   
 markdown_extensions:
   - pymdownx.snippets
