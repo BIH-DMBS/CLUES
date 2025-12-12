@@ -381,6 +381,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#blur-locations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blur Locations**
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -638,6 +647,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#blur-locations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blur Locations**
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -772,6 +790,29 @@ Returns a raster grid containing kernel density values at each cell location.</p
 results = geocode_batch('addresses.csv')
 results.to_csv('coordinates.csv')
 </code></pre>
+<h4 id="blur-locations"><a href="https://bih-dmbs.github.io/CLUES/Scripts_Notebooks/">Blur Locations</a>**</h4>
+<p>This module provides functionality to blur geographic point locations by adding buffers around them. It's useful for privacy protection when working with sensitive location data.</p>
+<p><strong><code>blur_locations(csv_path, output_path, buffer_meters=100, wsg_epsg=4326, metric_epsg=3857)</code></strong>
+Blurs point locations by creating a buffer zone around each point and calculating the centroid within that buffer.</p>
+<p><strong>Parameters:</strong>
+- <code>csv_path</code> (str): Path to input CSV file containing columns: ID, x, y
+- <code>output_path</code> (str): Path where the output CSV will be saved
+- <code>buffer_meters</code> (int): Buffer radius in meters (default: 100)
+- <code>wsg_epsg</code> (int): EPSG code for original geographic projection (default: 4326 for WGS84)
+- <code>metric_epsg</code> (int): EPSG code for metric projection used in calculations (default: 3857 for Web Mercator)</p>
+<p><strong>Returns:</strong>
+None. Writes results to CSV file with columns: ID, blurred_x, blurred_y</p>
+<p><strong>Process:</strong>
+1. Reads input CSV and creates GeoDataFrame with point geometries
+2. Reprojects to metric CRS for accurate distance-based buffering
+3. Creates circular buffer around each point
+4. Calculates centroid of buffer as blurred location
+5. Reprojects back to original coordinate system
+6. Exports results to CSV</p>
+<p>** <code>create_example_csv(output_path="example_locations.csv")</code>
+Generates a sample CSV file with random geographic coordinates for testing purposes.</p>
+<p><strong>Parameters:</strong>
+- <code>output_path</code> (str): Path where example CSV will be saved (default: "example_locations.csv")</p>
 <h3 id="notebooks">Notebooks</h3>
 <h4 id="analysis-demo">Analysis Demo</h4>
 <h4 id="geotiff">GeoTiff</h4>
