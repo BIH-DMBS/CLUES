@@ -458,7 +458,7 @@ Below is an example of the folder structure of downloaded geospatial data for Eu
 ---
 
 ## Data enrichment
-After running the workflow, the required datasets will be downloaded and stored according to the general configuration specified in `config/config.json`. You can then enrich your data by linking environmental exposures to participant locations.  
+After running the workflow, the required datasets will be downloaded and stored according to the general configuration specified in `config/config.json`. You can then enrich your data by linking environmental exposures to participant locations. Participant locations are expected to be provided in geographic latitude–longitude (WGS84). If location data are available in a different coordinate reference system, you must reproject them to WGS84 prior to linkage. A general tutorial on reprojection is available here: https://py.geocompx.org/06-reproj. 
 
 ### Enrichment for Point Locations
 In the simplest case, your data may consist of a CSV file with geocoordinates (latitude, longitude) and a participant ID, as shown below:  
