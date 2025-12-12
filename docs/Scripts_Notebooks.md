@@ -10,7 +10,40 @@ To facilitate working with CLUES users are provided with …
 
 ##### Area
 
-##### Espon
+##### [ESPON Scripts Documentation](https://github.com/BIH-DMBS/CLUES/tree/main/scripts/espon/)
+
+cripts for processing ESPON (European Spatial Planning Observation Network) geospatial data.
+
+**espon_to_gpkg.py**
+Converts ESPON data formats to GeoPackage (.gpkg) format.
+
+Purpose: Transform ESPON datasets into a standard GeoPackage database for easier integration and analysis.
+
+Key Features:
+- Reads ESPON source files
+- Validates geospatial data
+- Exports to GeoPackage format
+
+Usage:
+```bash
+python espon_to_gpkg.py [input_file] [output_file.gpkg]
+```
+
+---
+
+**geolocation_to_espon.py**
+
+Links geolocation data to ESPON-csv data.
+
+Purpose: Linking standard geolocation datasets to align with ESPON data structures and requirements.
+
+**Usage:**
+```bash
+python geolocation_to_espon.py [input_file] [output_file]
+```
+
+---
+
 
 ####  [Climate Change Indices](https://github.com/BIH-DMBS/CLUES/tree/main/scripts/climate_Change_indices/)
 
@@ -112,7 +145,6 @@ Generates a sample CSV file with random geographic coordinates for testing purpo
 
 **Parameters:**
 - `output_path` (str): Path where example CSV will be saved (default: "example_locations.csv")
-
 
 
 ### Notebooks
