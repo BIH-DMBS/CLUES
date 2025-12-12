@@ -332,9 +332,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#espon" class="md-nav__link">
+  <a href="#espon-scripts-documentation" class="md-nav__link">
     <span class="md-ellipsis">
-      Espon
+      ESPON Scripts Documentation
     </span>
   </a>
   
@@ -433,7 +433,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#espon_1" class="md-nav__link">
+  <a href="#espon" class="md-nav__link">
     <span class="md-ellipsis">
       Espon
     </span>
@@ -598,9 +598,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#espon" class="md-nav__link">
+  <a href="#espon-scripts-documentation" class="md-nav__link">
     <span class="md-ellipsis">
-      Espon
+      ESPON Scripts Documentation
     </span>
   </a>
   
@@ -699,7 +699,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#espon_1" class="md-nav__link">
+  <a href="#espon" class="md-nav__link">
     <span class="md-ellipsis">
       Espon
     </span>
@@ -741,7 +741,26 @@
 <h4 id="linking">Linking</h4>
 <h5 id="locations">Locations</h5>
 <h5 id="area">Area</h5>
-<h5 id="espon">Espon</h5>
+<h5 id="espon-scripts-documentation"><a href="https://github.com/BIH-DMBS/CLUES/tree/main/scripts/espon/">ESPON Scripts Documentation</a></h5>
+<p>cripts for processing ESPON (European Spatial Planning Observation Network) geospatial data.</p>
+<p><strong>espon_to_gpkg.py</strong>
+Converts ESPON data formats to GeoPackage (.gpkg) format.</p>
+<p>Purpose: Transform ESPON datasets into a standard GeoPackage database for easier integration and analysis.</p>
+<p>Key Features:
+- Reads ESPON source files
+- Validates geospatial data
+- Exports to GeoPackage format</p>
+<p>Usage:</p>
+<pre><code class="language-bash">python espon_to_gpkg.py [input_file] [output_file.gpkg]
+</code></pre>
+<hr />
+<p><strong>geolocation_to_espon.py</strong></p>
+<p>Links geolocation data to ESPON-csv data.</p>
+<p>Purpose: Linking standard geolocation datasets to align with ESPON data structures and requirements.</p>
+<p><strong>Usage:</strong></p>
+<pre><code class="language-bash">python geolocation_to_espon.py [input_file] [output_file]
+</code></pre>
+<hr />
 <h4 id="climate-change-indices"><a href="https://github.com/BIH-DMBS/CLUES/tree/main/scripts/climate_Change_indices/">Climate Change Indices</a></h4>
 <p>This module provides functionality for calculating and analyzing climate change indices. It contains tools for processing climate data and computing various indicators used to measure changes in climate patterns, temperature trends, precipitation anomalies, and other climate-related metrics.</p>
 <p><strong>Features</strong>
@@ -817,7 +836,7 @@ Generates a sample CSV file with random geographic coordinates for testing purpo
 <h4 id="analysis-demo">Analysis Demo</h4>
 <h4 id="geotiff">GeoTiff</h4>
 <h4 id="netcdf">NetCDF</h4>
-<h4 id="espon_1">Espon</h4>
+<h4 id="espon">Espon</h4>
 
 
 
