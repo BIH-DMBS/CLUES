@@ -1,55 +1,83 @@
-from pathlib import Path
-import pandas as pd
-import os
-from shapely.geometry import mapping
 import rasterio
+import rasterio.mask
+import geopandas as gpd
+import numpy as np
+from shapely.geometry import box
+import multiprocessing
+import pandas as pd
 
-def link_area_geoTIFFs(folderOI, gdf_areas, result_folder):
-    folderOI = Path(folderOI)
-    tiffList = folderOI.glob('**/*.tif')
-    for tif in tiffList:
-        filename = str(tif).split('/')[-1].replace('.tif', '')
-        print(filename)  
-        if os.path.exists(result_folder + filename + '.csv.gz'):
-            print('result already exists ' + result_folder + filename + '.csv.gz')
-        else:
-            with rasterio.open(tif) as src:
-                values_list = []
-                i = 0
-                a = 0
-                x = 0
-                for geom in gdf_areas.geometry:
-                    geom_mapping = [mapping(geom)]  # mask expects a list of GeoJSON-like geometries
-                    try:
-                        out_image, _ = mask(src, geom_mapping, crop=True)
-                        band1 = out_image[0]  # First band
-                        flattened = band1.flatten()
-                        values_list.append(flattened)
-                    except Exception as e:
-                        # Handle geometry outside raster or other errors
-                        values_list.append(None)
-                        print(f"Warning: Geometry failed - {e}")
-                        x = x+1
-                        print(x)
-                    i = i+1
+def weighted_median(values, weights):
+    """Compute weighted median of 1D arrays"""
+    sorter = np.argsort(values)
+    values_sorted = values[sorter]
+    weights_sorted = weights[sorter]
+    cumsum = np.cumsum(weights_sorted)
+    cutoff = 0.5 * np.sum(weights_sorted)
+    return values_sorted[np.searchsorted(cumsum, cutoff)]
 
-                    percent = 100 * i // len(gdf_areas.geometry)
-                    if percent % 2 == 0: 
-                        if percent > a:
-                            a = percent
-                            print(f"{percent}% complete")
-            gdf = gdf_areas
-            gdf["values"] = values_list
-            print(filename)
-            gdf.to_csv(result_folder + 'tiff_' + filename + '.csv.gz', compression='gzip', index=False)
+def compute_stats_for_aoi(args):
+    """Compute area-weighted stats for a single AOI"""
+    file_path, aoi_geojson, aoi_name = args
+    src = rasterio.open(file_path)
 
+    # Mask raster (keep original nodata)
+    out_image, out_transform = rasterio.mask.mask(src, aoi_geojson, crop=True)
+    masked_data = out_image[0]
 
-folderOI = 'C:/code/DEGDB/degdb_utils/data/WordSettlementFootprint'
+    # Pixel size in degrees
+    pixel_width_deg = out_transform.a
+    pixel_height_deg = -out_transform.e
 
-# Define pkl file path
-pkl_file = 'dummy_areas.pkl'
-gdf_areas = pd.read_pickle(pkl_file)
-print(gdf_areas)
-result_folder = 'results/'
+    # Latitude of each pixel
+    nrows, ncols = masked_data.shape
+    lat_start = out_transform.f + pixel_height_deg / 2
+    lat_array = lat_start + np.arange(nrows) * pixel_height_deg
+    lat_grid = np.repeat(lat_array[:, np.newaxis], ncols, axis=1)
 
-link_area_geoTIFFs(folderOI, gdf_areas, result_folder)
+    # Pixel area in km²
+    pixel_area = (pixel_width_deg * 111.32) * (pixel_height_deg * 110.57 * np.cos(np.deg2rad(lat_grid)))
+
+    # Valid pixels
+    valid_mask = masked_data != src.nodata
+    vals = masked_data[valid_mask].flatten()
+    areas = pixel_area[valid_mask].flatten()
+
+    if len(vals) == 0:
+        return (aoi_name, np.nan, np.nan, np.nan)
+
+    # Weighted statistics
+    weighted_sum = np.sum(vals * areas)
+    total_area = np.sum(areas)
+    area_weighted_mean = weighted_sum / total_area
+    w_median = weighted_median(vals, areas)
+    weighted_var = np.sum(areas * (vals - area_weighted_mean)**2) / np.sum(areas)
+    weighted_std = np.sqrt(weighted_var)
+
+    return (aoi_name, area_weighted_mean, w_median, weighted_std)
+
+if __name__ == "__main__":
+    file_path = r'C:\code\CLUES\data\Night_Time_Lights_(NTL)\Harmonized_DN_NTL_2002_calDMSP.tif'
+
+    # Define multiple AOIs as tuples (name, geometry)
+    aoi_list = [
+        ("AOI_1", box(-10, 35, 0, 45)),
+        ("AOI_2", box(0, 35, 10, 45)),
+        ("AOI_3", box(-10, 45, 0, 55)),
+        # Add more AOIs here...
+    ]
+
+    # Prepare input for multiprocessing
+    input_list = []
+    for name, geom in aoi_list:
+        aoi_geojson = [gpd.GeoSeries([geom], crs="EPSG:4326").__geo_interface__['features'][0]['geometry']]
+        input_list.append((file_path, aoi_geojson, name))
+
+    # Run in parallel
+    pool = multiprocessing.Pool(processes=16)
+    results = pool.map(compute_stats_for_aoi, input_list)
+    pool.close()
+    pool.join()
+
+    # Convert results to a table
+    df = pd.DataFrame(results, columns=["AOI", "Mean", "Median", "StdDev"])
+    print(df)
