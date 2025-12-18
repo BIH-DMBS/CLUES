@@ -49,7 +49,7 @@ files = {
     'modis_vi':os.path.join(CONFIGS_ASSETS_FOLDER, 'modis_vegetation_indices.json'),
     'global_treecover':os.path.join(CONFIGS_ASSETS_FOLDER, 'treecover_global.json'),
     'era5_land':os.path.join(CONFIGS_ASSETS_FOLDER, 'reanalysis-era5-land.json'),
-    'worldpop':os.path.join(CONFIGS_ASSETS_FOLDER, 'worldpop.json'),
+    'worldpop':os.path.join(CONFIGS_ASSETS_FOLDER, 'worldPop.json'),
 }
 
 print(config)
@@ -365,7 +365,7 @@ rule get_glwd:
     shell:
         "python workflows/simple_download_zip.py {params.file} > log_{params.name}.log 2>&1"
 
-# Define rule Gcopernicus_dynamic_land_cover
+# Define rule Copernicus_dynamic_land_cover
 rule get_clms: 
     output:
         os.path.join(download_folder, parameters['clms']['type'], '{name}.tif')
