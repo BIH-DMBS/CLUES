@@ -1055,14 +1055,25 @@ password : place your password here
 client_id : cdse-public</pre>
 
 <h3 id="nasa-earthdata">NASA EarthData</h3>
-<p>Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s Earthdata platform also requires registration.</p>
+<p>Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s via the earthaccess python library also requires registration.
+The library looks for your Earthdata Login credentials in a .netrc file on your system. </p>
 <p><strong><em>Steps</em></strong><br />
-1. Register at <a href="https://www.earthdata.nasa.gov/">earthdata.nasa.gov</a><br />
-2. Create a personal access token  </p>
-<p><strong><em>Token Storage</em></strong><br />
+1. <strong><em>Register</em></strong> at <a href="https://www.earthdata.nasa.gov/">earthdata.nasa.gov</a>  </p>
+<ol>
+<li><strong><em>Deploy credentials</em></strong><br />
 Create the following file:<br />
-<em>nasa.sct</em>  </p>
-<pre>token: place your token here</pre>
+<em>_netrc</em> 
+File Location:</li>
+<li>Linux / macOS: ~/.netrc</li>
+<li>Windows: %USERPROFILE%.netrc</li>
+<li>he file must be named exactly .netrc (Linux) or _netrc (Windows).
+File content. </li>
+</ol>
+<pre>
+machine urs.earthdata.nasa.gov
+  login your_username
+  password your_password
+</pre>
 
 <hr />
 <h2 id="configuration-management">Configuration Management</h2>
@@ -1345,7 +1356,7 @@ Using Docker ensures consistent, reproducible, and isolated execution environmen
 <p><img alt="Diagram" src="../filesystem.png" /></p>
 <hr />
 <h2 id="data-enrichment">Data enrichment</h2>
-<p>After running the workflow, the required datasets will be downloaded and stored according to the general configuration specified in <code>config/config.json</code>. You can then enrich your data by linking environmental exposures to participant locations.  </p>
+<p>After running the workflow, the required datasets will be downloaded and stored according to the general configuration specified in <code>config/config.json</code>. You can then enrich your data by linking environmental exposures to participant locations. Participant locations are expected to be provided in geographic latitude–longitude (WGS84). If location data are available in a different coordinate reference system, you must reproject them to WGS84 prior to linkage. A general tutorial on reprojection is available here: https://py.geocompx.org/06-reproj. </p>
 <h3 id="enrichment-for-point-locations">Enrichment for Point Locations</h3>
 <p>In the simplest case, your data may consist of a CSV file with geocoordinates (latitude, longitude) and a participant ID, as shown below:  </p>
 <pre>

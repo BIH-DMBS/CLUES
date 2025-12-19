@@ -83,17 +83,25 @@ password : place your password here
 client_id : cdse-public</pre>
 
 ### NASA EarthData
-Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s Earthdata platform also requires registration.
+Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s via the earthaccess python library also requires registration.
+The library looks for your Earthdata Login credentials in a .netrc file on your system. 
 
 **_Steps_**  
-1. Register at [earthdata.nasa.gov](https://www.earthdata.nasa.gov/)  
-2. Create a personal access token  
+1. **_Register_** at [earthdata.nasa.gov](https://www.earthdata.nasa.gov/)  
 
-
-**_Token Storage_**  
+2. **_Deploy credentials_**  
 Create the following file:  
-*nasa.sct*  
-<pre>token: place your token here</pre>
+*_netrc* 
+File Location:
+- Linux / macOS: ~/.netrc
+- Windows: %USERPROFILE%\.netrc
+- he file must be named exactly .netrc (Linux) or _netrc (Windows).
+File content. 
+<pre>
+machine urs.earthdata.nasa.gov
+  login your_username
+  password your_password
+</pre>
 
 ---
 
