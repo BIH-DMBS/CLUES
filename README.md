@@ -16,9 +16,10 @@ Get in touch: dmbs@bih-charite.de
 ![Diagram](docs/CLUES_schema.png)
 
 ## Getting started
+- A extended documentation can be found under [here] (https://bih-dmbs.github.io/CLUES/).
 - To understand the scientific foundation of CLUES, please read our publication (**link coming soon**).  
-- To get an overview of the geospatial data and data sources used in CLUES, see the [Data List](docs/datalist.md). For more infomation, visit the [Geospatial Data Guide](docs/geospatial_data.md).  
-- To learn how to use the CLUES framework, follow the [User Guide](docs/UserGuide.md) and explore the [Applied Examples](https://github.com/BIH-DMBS/CLUES/blob/main/docs/Examples.md).  
+- To get an overview of the geospatial data and data sources used in CLUES, see the [Data List](docs/data_list.md). For more infomation, visit the [Geospatial Data Guide](docs/dataCatalog.md).  
+- To learn how to use the CLUES framework, follow the [User Guide](docs/UserGuide.md) and explore the [Applied Examples](https://github.com/BIH-DMBS/CLUES/blob/main/docs/Examples.md) or the [random forest example](notebooks\random_forest_demo\random_forest_analysis_marseille_summer_school_2025.ipynb).  
 - [Scripts](scripts) for integrating the geospatial database to location data and [python notebooks](notebooks) for interacting and visualising the geospatial data are available.  
 - For more information on software resources, see [here](docs/softwareResources.md).  
 
@@ -36,7 +37,7 @@ The CLUES maintainers are:
 ## Usage policies
 All datasets used in CLUES are open-access and publicly available, but each comes with its own licensing terms and conditions. We encourage users to review the terms of use for each of them to ensure proper citation and responsible use.  
 This includes understanding any limits on redistribution, commercial use, or derivative works.  
-You can find an overview of the main data sources and datasets included in the default workflow [here](docs/datalist.md), which can help users identify the relevant licenses to consult as needed.
+You can find an overview of the main data sources and datasets included in the default workflow [here](docs\dataCatalog.md), which can help users identify the relevant licenses to consult as needed.
 
 ## License
 [MIT License](LICENSE)  
