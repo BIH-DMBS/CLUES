@@ -1,7 +1,7 @@
 {
     "download_folder":"C:\\code\\CLUES\\data",
     "tmp_folder":"C:\\code\\CLUES\\tmp",
-    "configs_assets_folder":"C:\\code\\CLUES\\configs_sources_test",
+    "configs_assets_folder":"C:\\code\\CLUES\\configs_sources",
     "config_folder":"C:\\code\\CLUES\\config",
     "secrets_folder":"C:\\code\\CLUES\\secrets",
     "years": ["2017","2018","2019"],

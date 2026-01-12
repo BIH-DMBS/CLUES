@@ -30,3 +30,4 @@ mkdocs-macros-plugin
 dask
 worldpoppy
 earthaccess
+cfgrib
