@@ -61,7 +61,7 @@ def getWorldPop(json_file, year, vOI):
         aoi=bbox,  # pass bbox
         years=[int(year)],
         masked=True,
-        skip_download_if_exists=False  # ensures it downloads fresh
+        #skip_download_if_exists=False  # ensures it downloads fresh
     )
 
      # -------------------------------------------------------
