@@ -8,6 +8,9 @@ import yaml
 import json
 
 import utils
+import numpy as np
+from pathlib import Path
+import shutil
 
 try:
     from .config import download_folder, configs_assets_folder, tmp_folder, area, config_folder, secrets_folder
@@ -16,9 +19,7 @@ except:
 
 
 def getEra5Land(json_file, year, vOI):
-    """
-    Placeholder function for getting ERA5 Land data.
-    """
+
     print(f"Getting ERA5 Land data for {json_file}, year {year}, variable {vOI}")
 
     dataset = "reanalysis-era5-land"
@@ -77,9 +78,9 @@ def getEra5Land(json_file, year, vOI):
         else:
             print(f"Folder already exists: {tmp_folder}")
 
-        file_path = os.path.join(tmp_folder, f'{month}.nc')
+        file_path = os.path.join(tmp_folder, f'{month}.grib')
         file_path_zip = os.path.join(tmp_folder, f'{month}.zip')
-        
+
         if os.path.exists(file_path):
             print(f"The file {file_path} exists.")
         else:
@@ -89,11 +90,10 @@ def getEra5Land(json_file, year, vOI):
                 "month": month,
                 "day": days,
                 "time": times,
-                "data_format": "netcdf",
+                "data_format": "grib",
                 "download_format": "zip",
-                "area":  parameters['bbox']
+                "area": parameters['bbox']
             }
-
             try:
                 c.retrieve(dataset, request, file_path_zip)
                 print("Data is available for this month.")
@@ -103,9 +103,9 @@ def getEra5Land(json_file, year, vOI):
                     namelist = z.namelist()
                     print("Files in zip:", namelist)
 
-                    # Extract the first .nc file and save as nc_path
+                    # Extract the first .grib file and save as file_path
                     for name in namelist:
-                        if name.endswith('.nc'):
+                        if name.endswith('.grib'):
                             with z.open(name) as src, open(file_path, 'wb') as dst:
                                 dst.write(src.read())
                             print(f"Saved {name} as {file_path}")
@@ -114,25 +114,90 @@ def getEra5Land(json_file, year, vOI):
                 os.remove(file_path_zip)
             except Exception as e:
                 print("Data is NOT available:", e)
-    # List all monthly files in order
-    files = sorted(glob.glob(tmp_folder+'/*.nc'))
-    print(files)
-    # Open all files as a single xarray dataset along the 'time' dimension
-    #ds = xr.open_mfdataset(files, combine='by_coords', chunks=None)
 
-    # Optional: inspect
-    #print(ds)
 
-    # Save to a new NetCDF file
-    # Open, merge, and save safely
-    with xr.open_mfdataset(files, combine='by_coords', chunks=None) as ds:
-        ds.load()  # Load all data into memory, freeing file handles
-        ds.to_netcdf(os.path.join(download_folder_er5_land, f'{year}.nc'))
-
-    # Delete individual monthly files
+    # raw grib file to monthly netcdf file 
+    files = sorted(glob.glob(tmp_folder + "/*.grib"))
+    # anchor for time conversion
+    epoch = np.datetime64("1970-01-01T00:00:00")
     for f in files:
-        try:
-            os.remove(f)
-            print(f"Deleted: {f}")
-        except Exception as e:
-            print(f"Error deleting {f}: {e}")
+        ds = xr.open_dataset(f, engine="cfgrib")
+        mnth = Path(f).stem            # e.g. "01", "02", ..., "12"
+        target_month = int(mnth)
+
+        # 1️. get the variable of interest (skip coords)
+        data_vars = [v for v in ds.data_vars]
+        if len(data_vars) != 1:
+            raise ValueError(f"Expected exactly 1 data variable in {f}, found: {data_vars}")
+        var_name = data_vars[0]
+
+        var_units = ds[var_name].attrs.get("units", "")
+        var_long_name = ds[var_name].attrs.get("long_name", var_name)
+
+        # 2️. extract raw data
+        x = ds[var_name].values  # (time, step, lat, lon)
+
+        # 3️. flatten first two dimensions into hours
+        x_flat = x.reshape(-1, x.shape[2], x.shape[3])
+
+        # 4️. compute valid_time for each hour
+        valid_time_dt = ds.time.values[:, None] + ds.step.values[None, :]
+        valid_time_flat = valid_time_dt.ravel()
+        valid_time_int = ((valid_time_flat - epoch) / np.timedelta64(1, "s")).astype("int64")
+
+        # 5. MONTH FILTER (using only mnth)
+        valid_time_dt64 = epoch + valid_time_int.astype("timedelta64[s]")
+        months = valid_time_dt64.astype("datetime64[M]")
+        mask = (months.astype(int) % 12 + 1 == target_month)
+
+        x_flat = x_flat[mask]
+        valid_time_int = valid_time_int[mask]
+
+        # 6. create new Dataset
+        ds_new = xr.Dataset(
+            data_vars={
+                var_name: (["valid_time", "latitude", "longitude"], x_flat)
+            },
+            coords={
+                "valid_time": ("valid_time", valid_time_int),
+                "latitude": ("latitude", ds.latitude.values),
+                "longitude": ("longitude", ds.longitude.values)
+            }
+        )
+
+        # 7. CF attributes
+        ds_new[var_name].attrs["long_name"] = var_long_name
+        ds_new[var_name].attrs["units"] = var_units
+        ds_new["valid_time"].attrs["standard_name"] = "time"
+        ds_new["valid_time"].attrs["units"] = "seconds since 1970-01-01"
+        ds_new["latitude"].attrs["standard_name"] = "latitude"
+        ds_new["longitude"].attrs["standard_name"] = "longitude"
+
+        # 8. write NetCDF
+        ds_new.to_netcdf(Path(tmp_folder) / (mnth + ".nc"), engine="netcdf4")
+
+        print(f"Saved {mnth}.nc with shape {ds_new[var_name].shape}")
+        ds.close()
+
+    files = sorted(glob.glob(tmp_folder + "/*.nc"))
+    print(files)
+
+    # Open without combining yet
+    datasets = [xr.open_dataset(f) for f in files]
+
+    # Concatenate along valid_time
+    ds = xr.concat(datasets, dim="valid_time")
+
+    # Sort by valid_time (guaranteed monotonic)
+    ds = ds.sortby("valid_time")
+
+    # Save final yearly NetCDF
+    ds.to_netcdf(os.path.join(download_folder_er5_land, f'{year}.nc'))
+    ds.close()
+
+    # Close monthly datasets to free file handles
+    for d in datasets:
+        d.close()
+
+    # remove temporary folder
+    shutil.rmtree(tmp_folder)
