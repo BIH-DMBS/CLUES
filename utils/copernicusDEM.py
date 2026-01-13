@@ -117,6 +117,11 @@ def downloadDEM_zip(df_links, parameters):
     prepare_path(tmp_folder)
 
     access_token = get_copernicus_odata_token()
+    if access_token is not None:
+        print("Access token retrieved successfully.") 
+    else:   
+        print("Failed to retrieve access token.")
+        return 0
     headers = {"Authorization": f"Bearer {access_token}"}
     # Create a session and update headers
     session = requests.Session()
