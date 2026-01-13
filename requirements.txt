@@ -31,3 +31,4 @@ dask
 worldpoppy
 earthaccess
 cfgrib
+yaml
