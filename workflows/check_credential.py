@@ -14,7 +14,7 @@ def get_copernicus_odata_token(sct_fldr):
     }
 
     # Create a client for the CDS API
-    credential_file = os.path.join(r"C:\code\CLUES\secrets", 'copernicus_credential.sct')
+    credential_file = os.path.join(sct_fldr, 'copernicus_credential.sct')
 
     with open(credential_file, 'r') as f:
             credentials = yaml.safe_load(f)
