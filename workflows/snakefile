@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, time
 from snakemake.io import expand
 import requests
 from bs4 import BeautifulSoup
+import check_credential
 
 # Load configuration file
 CONFIG_FILE = os.path.join(os.getcwd(), 'config', 'config.json')
@@ -31,6 +32,13 @@ years = config['years']
 update_years = config["update_years"]
 espon_filename_length = config["espon_filename_length"]
 
+sct_fldr = config['secrets_folder']
+print("*** Check credentials ***")
+print("Secrets folder:", sct_fldr)
+check_credential.get_copernicus_odata_token(sct_fldr)
+check_credential.check_credential_atmosphere(sct_fldr)
+check_credential.check_credential_climate(sct_fldr)
+check_credential.check_earthdata_credential()
 
 files = {
     'cams':os.path.join(CONFIGS_ASSETS_FOLDER, 'cams-global-reanalysis-eac4.json'),
@@ -425,4 +433,3 @@ rule get_neighborhood_copernicus_odata:
         file=files['copernicus_dem']
     shell:
         "python workflows/neighborhood.py {params.file} {params.var} {params.mode} > log_{params.var}_{params.mode}.log 2>&1"
-
