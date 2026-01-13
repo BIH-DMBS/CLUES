@@ -52,35 +52,40 @@ To enable the CLUES framework to access certain geospatial datasets, users must 
 The location of the credential (.sct) files is defined in the general workflow configuration file **config.json** under the key: `configs_assets_folder`. For more details on configuration management, see the section Configuration Management. 
 
 ### Copernicus (ECMWF)
-Data from the Copernicus Climate Data Store (CDS) and the Atmosphere Data Store (ADS) requires a free account with the European Centre for Medium-Range Weather Forecasts (ECMWF).
+Data from the Copernicus Climate Data Store (CDS), the Atmosphere Data Store (ADS) and Copernicus DEM - Global and European Digital Elevation Model require a free account with the European Centre for Medium-Range Weather Forecasts (ECMWF). For ADS and CDS you need to create token and save them to the framework. For DEM you need to save your credentials to the secret_folder.
 
 **_Steps_**  
-1. Create an ECMWF account at ecmwf.int  
+1. Create an ECMWF account at [ecmwf.int](ecmwf.int)  
 2. Visit:  
 
     - CDS API instructions at https://cds.climate.copernicus.eu/how-to-api  
     - ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api  
-    - DEM Copericus create user account: https://www.copernicus.eu/en/user/login
+
 
 3. Generate personalized API tokens from both platforms
 
-
-**_Token Storage_**  
+    **_Token Storage_**  
 Save the tokens in two separate files:  
-*cdsapirc_atmo.sct*
-<pre>url: https://ads.atmosphere.copernicus.eu/api
-key: place your token here</pre>
 
-*cdsapirc_climate.sct*  
-<pre>url: https://cds.climate.copernicus.eu/api
-key: place your token here</pre>
+    *cdsapirc_climate.sct*  
+    <pre>
+    url: https://cds.climate.copernicus.eu/api
+    key: place your token here</pre>
 
-**_Copernicus credential Storage_**  
-*copernicus_credential.sct*
-<pre>grant_type : password
-username : place your username here
-password : place your password here
-client_id : cdse-public</pre>
+    *cdsapirc_atmo.sct*
+    <pre>
+    url: https://ads.atmosphere.copernicus.eu/api
+    key: place your token here</pre>
+
+4. Save [ECMWF](ecmwf.int) credentials to file to access DEM
+
+    **_Copernicus credential Storage_**  
+    *copernicus_credential.sct*
+    <pre>
+    grant_type : password
+    username : place your username here
+    password : place your password here
+    client_id : cdse-public</pre>
 
 ### NASA EarthData
 Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s via the earthaccess python library also requires registration.
@@ -97,11 +102,10 @@ File Location:
 - Windows: %USERPROFILE%\.netrc
 - he file must be named exactly .netrc (Linux) or _netrc (Windows).
 File content. 
-<pre>
-machine urs.earthdata.nasa.gov
-  login your_username
-  password your_password
-</pre>
+    <pre>
+    machine urs.earthdata.nasa.gov
+      login your_username
+      password your_password</pre>
 
 ---
 
