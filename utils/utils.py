@@ -914,9 +914,42 @@ def get_simple_download_zip(json_file):
         print(f"An error occurred while creating the directory: {e}")
         return
 
+    session = requests.Session()
+    session.headers.update({
+        "User-Agent": "Mozilla/5.0",
+        "Accept": "*/*"
+    })
+
+    for _ in range(60):
+        r = session.get(url, stream=True)
+        
+        if r.status_code == 200 and r.headers.get("Content-Type", "").startswith("application"):
+            print("Download ready!")
+            break
+        
+        print("Waiting for Figshare to prepare file...")
+        time.sleep(1)
+    else:
+        raise TimeoutError("Figshare did not provide the file")
+
+    # Step 2: Stream the actual file with progress
+    total = int(r.headers.get("Content-Length", 0))
+    downloaded = 0
+    chunks = []
+
+    for i, chunk in enumerate(r.iter_content(chunk_size=16*1024*1024)):
+        if chunk:
+            chunks.append(chunk)
+            downloaded += len(chunk)
+            percent = downloaded * 100 / total if total else 0
+            if i % 5 == 0:  # print every 5 chunks
+                downloaded_mb = (i+1)*16
+                print(f"\rDownloaded ~{downloaded_mb} MB", end="")
+
     try:
-        response = requests.get(url)
-        zip_file = zipfile.ZipFile(io.BytesIO(response.content))
+        content = b"".join(chunks)
+        zip_file = zipfile.ZipFile(io.BytesIO(content))
+        print("\nZIP opened successfully")
     except requests.exceptions.RequestException as e:
         print(f"An error occurred while downloading the zip file: {e}")
         return
