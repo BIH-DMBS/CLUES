@@ -138,7 +138,10 @@ def getEra5Land(json_file, year, vOI):
         x = ds[var_name].values  # (time, step, lat, lon)
 
         # 3️. flatten first two dimensions into hours
-        x_flat = x.reshape(-1, x.shape[2], x.shape[3])
+        if len(x.shape) > 3:
+            x_flat = x.reshape(-1, x.shape[2], x.shape[3])
+        else:
+            x_flat = x  # some raw grib files are already (time, lat, lon)
 
         # 4️. compute valid_time for each hour
         valid_time_dt = ds.time.values[:, None] + ds.step.values[None, :]
