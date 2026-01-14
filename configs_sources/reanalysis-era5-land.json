@@ -57,13 +57,6 @@
         },
         {
             "name":"leaf_area_index_low_vegetation"
-        },
-        {
-            "name":"high_vegetation_cover"
-        },
-        {
-            "name":"low_vegetation_cover"
-        } 
-
+        }
     ]
 }
