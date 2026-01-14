@@ -4,8 +4,8 @@
     "url": "https://www.worldpop.org/",
     "variables":[
         {
-            "name":"people_per_pixel",
-            "product_name":"ppp",
+            "name":"Est_total_people_per_gridcell_2025_alpha_release",
+            "product_name":"pop_g2_r25a",
             "start_year": "2000",
             "end_year": "2020"
         }

@@ -1,5 +1,6 @@
 secrets/*.sct
 cluesEnv/
+test_env/
 data/
 data_france/
 data_old/
