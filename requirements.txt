@@ -32,3 +32,4 @@ worldpoppy
 earthaccess
 cfgrib
 pyyaml
+pulp==2.7.0

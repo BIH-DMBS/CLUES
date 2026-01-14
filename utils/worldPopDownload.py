@@ -1,6 +1,7 @@
 import geopandas as gpd
 from shapely.geometry import box
 from worldpoppy import wp_raster
+from worldpoppy import show_supported_data_products
 import rioxarray as rxr
 import json
 
@@ -16,6 +17,7 @@ import logging
 import os
 
 def getWorldPop(json_file, year, vOI):
+    show_supported_data_products()
     """
     Function to download WorldPop raster(s) for specified variable(s) and years,
     and save them as a GeoTIFF inside the CLUES download folder.
