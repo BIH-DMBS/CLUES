@@ -1,7 +1,6 @@
 {
     "type": "espon",
     "source": "espon",
-    "file": "espon.json",
     "link": "https://database.espon.eu/api/",
     "citation": "...",
     "format": "geopandas dataframe with shape",

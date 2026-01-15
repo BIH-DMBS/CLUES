@@ -7,9 +7,9 @@
     "crs": "EPSG:4326",
     "variables": [
         {
-            "name": "S5P_TROPOMI_L3_P1D_SO2",
-            "abstract": "Sulphur Dioxid (SO2) Composite Layer (S5P)",
-            "temporal_dimension": "2023-08-01T00:00:00.000Z/2024-07-26T00:00:00.000Z/P1D",
+            "name": "ERS-2_GOME-1_DAILY_CF",
+            "abstract": "Daily GOME-1 Cloud Fraction (CF) Total Column Composite Layer (ERS-2)",
+            "temporal_dimension": "1995-06-27T00:00:00.000Z/2011-07-03T00:00:00.000Z/P1D",
             "width": 1000,
             "height": 1000
         }

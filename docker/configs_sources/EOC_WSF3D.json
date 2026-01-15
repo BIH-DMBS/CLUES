@@ -5,9 +5,9 @@
     "format": "geoTIFF",
     "variables":[
         {
-            "name":"WSF3D_V02_BuildingFraction",
-            "url":"https://download.geoservice.dlr.de/WSF3D/files/global/WSF3D_V02_BuildingFraction.tif",
-            "flagFile" : "WSF3D_V02_BuildingFraction.tif"
+            "name":"WSF3D_V02_BuildingArea",
+            "url":"https://download.geoservice.dlr.de/WSF3D/files/global/WSF3D_V02_BuildingArea.tif",
+            "flagFile" : "WSF3D_V02_BuildingArea.tif"
         }
     ]
 }

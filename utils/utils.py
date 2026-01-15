@@ -913,38 +913,45 @@ def get_simple_download_zip(json_file):
     except Exception as e:
         print(f"An error occurred while creating the directory: {e}")
         return
-
+    
     session = requests.Session()
     session.headers.update({
         "User-Agent": "Mozilla/5.0",
-        "Accept": "*/*"
+        "Accept": "*/*",
+        "Referer": "https://figshare.com/"
     })
 
-    for _ in range(60):
-        r = session.get(url, stream=True)
-        
-        if r.status_code == 200 and r.headers.get("Content-Type", "").startswith("application"):
+    # Step 1 — warm up session (this is the missing piece)
+    session.get("https://figshare.com", timeout=10)
+
+    # Step 2 — request the file with redirects & cookies
+    for attempt in range(60):
+        r = session.get(url, stream=True, allow_redirects=True, timeout=30)
+
+        content_type = r.headers.get("Content-Type", "")
+        length = int(r.headers.get("Content-Length", 0))
+
+        if r.status_code == 200 and length > 1_000_000:
             print("Download ready!")
             break
-        
-        print("Waiting for Figshare to prepare file...")
-        time.sleep(1)
+
+        print(f"Waiting for Figshare... ({attempt+1})")
+        sleep(1)
     else:
         raise TimeoutError("Figshare did not provide the file")
 
-    # Step 2: Stream the actual file with progress
-    total = int(r.headers.get("Content-Length", 0))
+    # Step 3 — download with progress
+    total = length
     downloaded = 0
     chunks = []
 
-    for i, chunk in enumerate(r.iter_content(chunk_size=16*1024*1024)):
+    for chunk in r.iter_content(chunk_size=4*1024*1024):
         if chunk:
             chunks.append(chunk)
             downloaded += len(chunk)
-            percent = downloaded * 100 / total if total else 0
-            if i % 5 == 0:  # print every 5 chunks
-                downloaded_mb = (i+1)*16
-                print(f"\rDownloaded ~{downloaded_mb} MB", end="")
+            percent = downloaded * 100 / total
+            print(f"Downloading: {percent:.1f}%", flush=True)
+            #print(f"\rDownloading: {percent:.1f}%", end="")
 
     try:
         content = b"".join(chunks)
