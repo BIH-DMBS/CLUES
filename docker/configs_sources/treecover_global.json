@@ -3,9 +3,9 @@
     "format": "geotTiff",
     "variables":[
         {
-            "name":"Global_forest_cover_2020",
-            "url":"https://ies-ows.jrc.ec.europa.eu/iforce/gfc2020/download.py?version=v2&type=tile",
-            "year":"2020"
+            "name":"global_tree_cover_hansen_2000",
+            "url":"https://storage.googleapis.com/earthenginepartners-hansen/GFC-2022-v1.10/",
+            "year":"2000"
         }
     ]
 }

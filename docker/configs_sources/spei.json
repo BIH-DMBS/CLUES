@@ -3,7 +3,7 @@
     "start_year": "1901",
     "end_year": "2023",
     "format": "netcdf",
-    "time_scales": [12],
+    "time_scales": [1,2],
     "variables":[
         {
             "name":"spei",

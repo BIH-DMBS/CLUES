@@ -1,0 +1,13 @@
+{
+    "type": "WordPop",
+    "format": "geoTIFF",
+    "url": "https://www.worldpop.org/",
+    "variables":[
+        {
+            "name":"Est_total_people_per_gridcell_2025_alpha_release",
+            "product_name":"pop_g2_r25a",
+            "start_year": "2015",
+            "end_year": "2030"
+        }
+    ]
+}

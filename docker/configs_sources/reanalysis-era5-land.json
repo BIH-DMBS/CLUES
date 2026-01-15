@@ -1,0 +1,17 @@
+{
+    "type":"climate",
+    "source":"reanalysis-era5-land",
+    "file":"reanalysis-era5-land.json",
+    "link":"https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land",
+    "time zone":"coordinated universal time",
+    "start_year": "1950",
+    "end_year": "2025",
+    "delta_t_in_h":"1",
+    "product_type": "reanalysis",
+    "format": "netcdf",
+    "variables":[
+        {
+            "name":"2m_temperature"
+        }
+    ]
+}

@@ -2,13 +2,14 @@
     "type":"DEM",
     "format": "geotTiff",
     "variables":[
+
         {
             "name":"Digital_Geospatial_Elevation_Data_90m",
             "url":"https://prism-dem-open.copernicus.eu/pd-desk-open-access/publicDemURLs",
             "resolution":"DEM1_SAR_DGE_90",
             "neighborhood":{
-                "mean":[500],
-                "std":[500],
+                "mean":[500,1000],
+                "std":[500,1000],
                 "zevenbergen_thorne":"Any value activates the filter; if missing, the filter won’t run."
             }
         }
