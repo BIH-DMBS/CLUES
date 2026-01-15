@@ -34,3 +34,4 @@ cfgrib
 pyyaml
 tomli
 pulp==2.7.0
+pyhdf
