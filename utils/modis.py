@@ -5,7 +5,13 @@ import glob
 import numpy as np
 import pandas as pd
 import xarray as xr
-from netCDF4 import Dataset
+try: #linux system
+    print("Using pyhdf (HDF4 only)")
+    from pyhdf.SD import SD, SDC
+except ImportError: #windows system
+    print("Using netCDF4 (HDF5 only)")
+    from netCDF4 import Dataset
+
 from pyproj import CRS, Transformer
 from collections import defaultdict
 import shutil
@@ -126,9 +132,14 @@ def get_modis_vi(json_file, name, vars_name, year):
             merged_ndvi = np.full((nrows, ncols), np.nan, dtype=np.float32)
 
             for tile in tiles:
-                ds = Dataset(tile, 'r')
-                ndvi = ds.variables[asset][:].astype(np.float32) / 10000.0
-                ndvi[ndvi < -1] = np.nan  # mask invalid values
+                try: #windows system
+                    ds = Dataset(tile, 'r')
+                    ndvi = ds.variables[asset][:].astype(np.float32) / 10000.0
+                    ndvi[ndvi < -1] = np.nan  # mask invalid values
+                except: #linux system
+                    sd = SD(tile, SDC.READ)
+                    ndvi = sd.select(asset)[:].astype(np.float32) / 10000.0
+                    ndvi[ndvi < -1] = np.nan  # mask invalid values
 
                 base = tile.split(".")[2]
                 h = int(base[1:3])
@@ -138,7 +149,10 @@ def get_modis_vi(json_file, name, vars_name, year):
                 row_start = (v - v_min) * tile_pixels
                 col_start = (h - h_min) * tile_pixels
                 merged_ndvi[row_start:row_start+tile_pixels, col_start:col_start+tile_pixels] = ndvi
-                ds.close()
+                try: # windows system
+                    ds.close()
+                except: # linux system
+                    sd.end()
 
             merged_arrays.append(merged_ndvi)
 
