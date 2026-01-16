@@ -333,6 +333,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Copernicus (ECMWF)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#licence-acceptance-required-to-use-the-cds-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Licence acceptance required to use the CDS API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -743,6 +758,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Copernicus (ECMWF)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#licence-acceptance-required-to-use-the-cds-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Licence acceptance required to use the CDS API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -1027,7 +1057,30 @@ pip install -r requirements.txt
 The location of the credential (.sct) files is defined in the general workflow configuration file <strong>config.json</strong> under the key: <code>configs_assets_folder</code>. For more details on configuration management, see the section Configuration Management. </p>
 <h3 id="copernicus-ecmwf">Copernicus (ECMWF)</h3>
 <p>Data from the Copernicus Climate Data Store (CDS), the Atmosphere Data Store (ADS) and Copernicus DEM - Global and European Digital Elevation Model require a free account with the European Centre for Medium-Range Weather Forecasts (ECMWF). For ADS and CDS you need to create token and save them to the framework. For DEM you need to save your credentials to the secret_folder.</p>
-<p><strong><em>Steps</em></strong><br />
+<h4 id="licence-acceptance-required-to-use-the-cds-api">Licence acceptance required to use the CDS API</h4>
+<p>To access data through the Copernicus Climate Data Store (CDS) API (including CDS and ADS services), users must first accept the relevant Copernicus licences.</p>
+<p>Licence acceptance is done once per user account via the CDS website:
+https://cds.climate.copernicus.eu/profile?tab=licences</p>
+<p>If the required licences have not been accepted, API requests may fail or return authorization errors, even if the API key is correctly configured.</p>
+<p>What users need to do:</p>
+<ul>
+<li>
+<p>Log in to their Copernicus Climate Data Store account.</p>
+</li>
+<li>
+<p>Visit the licences page linked above.</p>
+</li>
+<li>
+<p>Review and accept all applicable licences.</p>
+</li>
+<li>
+<p>Retry their CDS API requests.</p>
+</li>
+<li>
+<p>This step is mandatory for legal and compliance reasons and applies to both interactive downloads and automated API access.</p>
+</li>
+</ul>
+<p><strong><em>Steps to set up CLUES</em></strong><br />
 1. Create an ECMWF account at <a href="ecmwf.int">ecmwf.int</a><br />
 2. Visit:  </p>
 <pre><code>- CDS API instructions at https://cds.climate.copernicus.eu/how-to-api  
@@ -1383,9 +1436,7 @@ latitude,longitude,subjectid
 <h3 id="enrichment-for-geographic-areas">Enrichment for Geographic Areas</h3>
 <p>In addition to point-based enrichment, CLUES supports linking environmental data to geographic areas, such as predefined administrative boundaries (e.g., postal codes or districts).
 This allows for aggregation of environmental features across regions rather than individual coordinates, enabling analysis when precise locations are unavailable or when regional exposures are more relevant.</p>
-<blockquote>
-<p>Scripts for area-based enrichment will be available soon.  </p>
-</blockquote>
+<p>The enrichment of vector-based areas with raster-derived geospatial variables is performed by computing area-weighted aggregate statistics over each region of interest. As implemented in the enrichment scripts available <a href="https://github.com/BIH-DMBS/CLUES/tree/main/scripts/link_areas">here</a>, raster values are first spatially intersected with each target polygon. For each raster pixel intersecting a region, a weight is computed as the ratio between the pixel’s intersection area and the total area, expressed in metric units. This weighting is required because input rasters are commonly provided in geographic coordinate reference systems such as WGS84, where pixels do not represent equal-area cells and pixel surface areas vary with latitude. The aggregated value  for a region  is therefore computed as a weighted statistic. Based on these weights, the scripts compute area-consistent summary statistics including weighted mean, weighted median, and weighted standard deviation, ensuring that spatial aggregation remains physically meaningful across differing projections and varying pixel sizes.</p>
 <hr />
 <h2 id="next-steps-try-it-out">Next Steps: Try It Out</h2>
 <p>To help you get started, we provide simple <a href="https://github.com/BIH-DMBS/CLUES/blob/main/docs/Examples.md">applied examples</a>. In addition, <a href="https://github.com/BIH-DMBS/CLUES/tree/main/scripts">scripts</a> are available for enriching a dummy location dataset, and <a href="https://github.com/BIH-DMBS/CLUES/tree/main/notebooks">python notebooks</a> demonstrate how to interact with and visualize geospatial outputs using a test dataset. These resources offer hands-on guidance, showcasing how different data types and formats can be processed and analyzed within the CLUES environment.</p>
