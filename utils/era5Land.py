@@ -137,16 +137,17 @@ def getEra5Land(json_file, year, vOI):
         # 2️. extract raw data
         x = ds[var_name].values  # (time, step, lat, lon)
 
-        # 3️. flatten first two dimensions into hours
         if len(x.shape) > 3:
             x_flat = x.reshape(-1, x.shape[2], x.shape[3])
+            # 4️. compute valid_time for each hour
+            valid_time_dt = ds.time.values[:, None] + ds.step.values[None, :]
+            valid_time_flat = valid_time_dt.ravel()
+            valid_time_int = ((valid_time_flat - epoch) / np.timedelta64(1, "s")).astype("int64")
         else:
             x_flat = x  # some raw grib files are already (time, lat, lon)
-
-        # 4️. compute valid_time for each hour
-        valid_time_dt = ds.time.values[:, None] + ds.step.values[None, :]
-        valid_time_flat = valid_time_dt.ravel()
-        valid_time_int = ((valid_time_flat - epoch) / np.timedelta64(1, "s")).astype("int64")
+            # 4️. compute valid_time for each hour
+            valid_time_flat = ds.time.values.ravel()
+            valid_time_int = ((valid_time_flat - epoch) / np.timedelta64(1, "s")).astype("int64")
 
         # 5. MONTH FILTER (using only mnth)
         valid_time_dt64 = epoch + valid_time_int.astype("timedelta64[s]")
