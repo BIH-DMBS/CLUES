@@ -57,7 +57,9 @@ def get_modis_vi(json_file, name, vars_name, year):
     # -------------------------
     tiles_by_doy = defaultdict(list)
     for f in hdf_files:
-        doy = f.split(".")[1]  # e.g., 'A2021001'
+        print(f)
+        doy = f.split(".")[-5]  # e.g., 'A2021001'
+        print(doy)
         tiles_by_doy[doy].append(f)
 
     # -------------------------
@@ -123,7 +125,7 @@ def get_modis_vi(json_file, name, vars_name, year):
     # -------------------------
     # 8. Merge NDVI tiles per DOY
     # -------------------------
-    i = 0
+    
     for asset in parameter['vars']:
         merged_arrays = []
         time_list = []
@@ -194,7 +196,6 @@ def get_modis_vi(json_file, name, vars_name, year):
             'Latitude': {'dtype':'float32'},
             'Longitude': {'dtype':'float32'}
         })
-        i += 1
         print(f"{asset} NetCDF successfully created with precise lat/lon (Sinusoidal projection)")
     # -------------------------
     # Cleanup temporary files   
