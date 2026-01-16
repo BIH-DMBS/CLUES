@@ -523,6 +523,8 @@ This allows for aggregation of environmental features across regions rather than
 
 The enrichment of vector-based areas with raster-derived geospatial variables is performed by computing area-weighted aggregate statistics over each region of interest. As implemented in the enrichment scripts available [here](https://github.com/BIH-DMBS/CLUES/tree/main/scripts/link_areas), raster values are first spatially intersected with each target polygon. For each raster pixel intersecting a region, a weight is computed as the ratio between the pixel’s intersection area and the total area, expressed in metric units. This weighting is required because input rasters are commonly provided in geographic coordinate reference systems such as WGS84, where pixels do not represent equal-area cells and pixel surface areas vary with latitude. The aggregated value  for a region  is therefore computed as a weighted statistic. Based on these weights, the scripts compute area-consistent summary statistics including weighted mean, weighted median, and weighted standard deviation, ensuring that spatial aggregation remains physically meaningful across differing projections and varying pixel sizes.
 
+The enrichment workflow is designed for region-based polygonal inputs (e.g. NUTS regions, administrative boundaries, or ZIP code areas), for which reprojection poses no issues; users providing regions of interest as raster data are therefore recommended to convert these datasets to point-based representations before applying the enrichment scripts.
+
 ---
 
 ## Next Steps: Try It Out  
