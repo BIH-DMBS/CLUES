@@ -54,7 +54,28 @@ The location of the credential (.sct) files is defined in the general workflow c
 ### Copernicus (ECMWF)
 Data from the Copernicus Climate Data Store (CDS), the Atmosphere Data Store (ADS) and Copernicus DEM - Global and European Digital Elevation Model require a free account with the European Centre for Medium-Range Weather Forecasts (ECMWF). For ADS and CDS you need to create token and save them to the framework. For DEM you need to save your credentials to the secret_folder.
 
-**_Steps_**  
+#### Licence acceptance required to use the CDS API
+
+To access data through the Copernicus Climate Data Store (CDS) API (including CDS and ADS services), users must first accept the relevant Copernicus licences.
+
+Licence acceptance is done once per user account via the CDS website:
+https://cds.climate.copernicus.eu/profile?tab=licences
+
+If the required licences have not been accepted, API requests may fail or return authorization errors, even if the API key is correctly configured.
+
+What users need to do:
+
+- Log in to their Copernicus Climate Data Store account.
+
+- Visit the licences page linked above.
+
+- Review and accept all applicable licences.
+
+- Retry their CDS API requests.
+
+- This step is mandatory for legal and compliance reasons and applies to both interactive downloads and automated API access.
+
+**_Steps to set up CLUES_**  
 1. Create an ECMWF account at [ecmwf.int](ecmwf.int)  
 2. Visit:  
 
@@ -500,7 +521,7 @@ For users working with routes or movement paths (e.g., commuting trajectories or
 In addition to point-based enrichment, CLUES supports linking environmental data to geographic areas, such as predefined administrative boundaries (e.g., postal codes or districts).
 This allows for aggregation of environmental features across regions rather than individual coordinates, enabling analysis when precise locations are unavailable or when regional exposures are more relevant.
 
-> Scripts for area-based enrichment will be available soon.  
+The enrichment of vector-based areas with raster-derived geospatial variables is performed by computing area-weighted aggregate statistics over each region of interest. As implemented in the enrichment scripts available [here](https://github.com/BIH-DMBS/CLUES/tree/main/scripts/link_areas), raster values are first spatially intersected with each target polygon. For each raster pixel intersecting a region, a weight is computed as the ratio between the pixel’s intersection area and the total area, expressed in metric units. This weighting is required because input rasters are commonly provided in geographic coordinate reference systems such as WGS84, where pixels do not represent equal-area cells and pixel surface areas vary with latitude. The aggregated value  for a region  is therefore computed as a weighted statistic. Based on these weights, the scripts compute area-consistent summary statistics including weighted mean, weighted median, and weighted standard deviation, ensuring that spatial aggregation remains physically meaningful across differing projections and varying pixel sizes.
 
 ---
 
