@@ -125,7 +125,7 @@ def get_modis_vi(json_file, name, vars_name, year):
     # -------------------------
     # 8. Merge NDVI tiles per DOY
     # -------------------------
-    
+    i = 0
     for asset in parameter['vars']:
         merged_arrays = []
         time_list = []
@@ -188,6 +188,7 @@ def get_modis_vi(json_file, name, vars_name, year):
         # 11. Save NetCDF
         # -------------------------
         data_dir = os.path.join(download_folder, typ, name, parameter['vars_name'][i])
+        i = i+1
         output_path = os.path.join(data_dir, str(year) + '.nc')
         print(output_path)
         os.makedirs(data_dir, exist_ok=True)
