@@ -1,18 +1,26 @@
 ## Scripts and Notebooks
 
-To facilitate working with CLUES users are provided with …
+To facilitate working with CLUES users are provided with scripts and notebooks that can be uesed to get a better understanding on how to link research data with geospatial features.
 
 ### Scripts
 
+A collection of handy [Scripts](https://bih-dmbs.github.io/CLUES/Scripts_Notebooks/)** can be found here.
+
 #### Linking
+
+There are two ways of linking geospatial data, either with point locations or with areas.
 
 ##### Locations
 
+For [area point](https://github.com/BIH-DMBS/CLUES/tree/main/scripts/link_locations) scripts can be found here. There are two scripts, one for geoTIFF data and another for netCDF files.
+
 ##### Area
+
+For [area linking](https://github.com/BIH-DMBS/CLUES/tree/main/scripts/link_areas) scripts can be found here. There are two scripts, one for geoTIFF data and another for netCDF files.
 
 ##### [ESPON Scripts Documentation](https://github.com/BIH-DMBS/CLUES/tree/main/scripts/espon/)
 
-cripts for processing ESPON (European Spatial Planning Observation Network) geospatial data.
+Scripts for processing ESPON (European Spatial Planning Observation Network) geospatial data.
 
 **espon_to_gpkg.py**
 Converts ESPON data formats to GeoPackage (.gpkg) format.
@@ -38,6 +46,7 @@ Links geolocation data to ESPON-csv data.
 Purpose: Linking standard geolocation datasets to align with ESPON data structures and requirements.
 
 **Usage:**
+
 ```bash
 python geolocation_to_espon.py [input_file] [output_file]
 ```
@@ -149,11 +158,8 @@ Generates a sample CSV file with random geographic coordinates for testing purpo
 
 ### Notebooks
 
+There a several notebooks that can be used as tutorials. They can be found [here](https://github.com/BIH-DMBS/CLUES/tree/main/notebooks). There are notebooks that demonstrate how to work with: GeoTiff, NetCDF or Espon.
+
 #### Analysis Demo
 
-#### GeoTiff
-
-#### NetCDF
-
-#### Espon
- 
+For the environMENTAL Summer school 2025 in Marseile we have created a small demo on how to use CLUES on dummy data. There is a collection of notebooks that create dummy data and apply random forest as an example on the dummy data. The notebooks can be found [here](https://github.com/BIH-DMBS/CLUES/tree/main/notebooks/random_forest_demo)
