@@ -236,8 +236,24 @@ def get_asset_espon(json_file, vOI, dim):
     # Send a HTTP GET request to the URL
     #try:
     #    response = requests.get(url, stream=True)
-    scraper = cloudscraper.create_scraper()
+    scraper = cloudscraper.create_scraper(
+        browser={
+            'browser': 'chrome',
+            'platform': 'windows',
+            'desktop': True
+        }
+    )
 
+    # Add additional headers
+    headers = {
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Referer': 'https://database.espon.eu/',
+        'DNT': '1',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+    }
     try:
         response = scraper.get(url, stream=True)
     except Exception as e:
