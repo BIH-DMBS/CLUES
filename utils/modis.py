@@ -74,8 +74,8 @@ def get_modis_vi(json_file, name, vars_name, year):
     # -------------------------
     # 4. Determine merged grid size
     # -------------------------
-    h_all = [int(f.split(".")[2][1:3]) for f in hdf_files]
-    v_all = [int(f.split(".")[2][4:6]) for f in hdf_files]
+    h_all = [int(os.path.basename(f).split(".")[2][1:3]) for f in hdf_files]
+    v_all = [int(os.path.basename(f).split(".")[2][4:6]) for f in hdf_files]
     h_min, h_max = min(h_all), max(h_all)
     v_min, v_max = min(v_all), max(v_all)
 
@@ -99,14 +99,15 @@ def get_modis_vi(json_file, name, vars_name, year):
     # 7. Precompute merged lat/lon grid
     # -------------------------
     for tile_file in hdf_files:
-        base = tile_file.split(".")[2]  # e.g., 'h17v03'
+        #base = tile_file.split(".")[2]  # e.g., 'h17v03' /!\ PB if '.' in path /!\
+        base = os.path.basename(tile_file).split(".")[2] # e.g., 'h17v03'
         h = int(base[1:3])
         v = int(base[4:6])
 
         # Tile upper-left corner in Sinusoidal meters
         ulx = (h - 18) * tile_pixels * pixel_size
         uly = (9 - v) * tile_pixels * pixel_size
-
+        
         # Pixel coordinates in Sinusoidal
         x = ulx + (np.arange(tile_pixels) + 0.5) * pixel_size
         y = uly - (np.arange(tile_pixels) + 0.5) * pixel_size
@@ -143,7 +144,7 @@ def get_modis_vi(json_file, name, vars_name, year):
                     ndvi = sd.select(asset)[:].astype(np.float32) / 10000.0
                     ndvi[ndvi < -1] = np.nan  # mask invalid values
 
-                base = tile.split(".")[2]
+                base = os.path.basename(tile).split(".")[2]
                 h = int(base[1:3])
                 v = int(base[4:6])
 
