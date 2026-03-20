@@ -58,8 +58,7 @@ Data from the Copernicus Climate Data Store (CDS), the Atmosphere Data Store (AD
 
 To access data through the Copernicus Climate Data Store (CDS) API (including CDS and ADS services), users must first accept the relevant Copernicus licences.
 
-Licence acceptance is done once per user account via the CDS website:
-https://cds.climate.copernicus.eu/profile?tab=licences
+Licence acceptance is done once per user account via the [CDS website](https://cds.climate.copernicus.eu/).
 
 If the required licences have not been accepted, API requests may fail or return authorization errors, even if the API key is correctly configured.
 
@@ -76,11 +75,11 @@ What users need to do:
 - This step is mandatory for legal and compliance reasons and applies to both interactive downloads and automated API access.
 
 **_Steps to set up CLUES_**  
-1. Create an ECMWF account at [ecmwf.int](ecmwf.int)  
+1. Create an ECMWF account at [ecmwf.int](https://www.ecmwf.int/) or use the [login](https://cds.climate.copernicus.eu/profile?tab=licences)  
 2. Visit:  
 
-    - CDS API instructions at https://cds.climate.copernicus.eu/how-to-api  
-    - ADS API instructions at https://ads.atmosphere.copernicus.eu/how-to-api  
+    - CDS API instructions at [https://cds.climate.copernicus.eu/how-to-api](https://cds.climate.copernicus.eu/how-to-api)
+    - ADS API instructions at [https://ads.atmosphere.copernicus.eu/how-to-api](https://ads.atmosphere.copernicus.eu/how-to-api)
 
 
 3. Generate personalized API tokens from both platforms
@@ -98,7 +97,7 @@ Save the tokens in two separate files:
     url: https://ads.atmosphere.copernicus.eu/api
     key: place your token here</pre>
 
-4. Save [ECMWF](ecmwf.int) credentials to file to access DEM
+4. Save [ECMWF](https://www.ecmwf.int/) credentials to file to access DEM
 
     **_Copernicus credential Storage_**  
     *copernicus_credential.sct*
