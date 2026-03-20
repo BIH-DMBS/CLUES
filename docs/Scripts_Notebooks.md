@@ -4,7 +4,7 @@ To facilitate working with CLUES users are provided with scripts and notebooks t
 
 ### Scripts
 
-A collection of handy [Scripts](https://bih-dmbs.github.io/CLUES/Scripts_Notebooks/)** can be found here.
+A collection of handy [Scripts](https://bih-dmbs.github.io/CLUES/Scripts_Notebooks/) can be found here.
 
 #### Linking
 
