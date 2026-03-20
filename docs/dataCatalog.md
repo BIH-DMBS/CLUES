@@ -146,7 +146,7 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Format: NetCDF  
 - Config: `spei.json`  
 - [More Info](https://spei.csic.es)
-- DOI: 10.5281/zenodo.834461
+- [DOI](https://doi.org/10.5281/zenodo.5864391)
 - License: [Open Database License (ODbL 1.0)](https://opendatacommons.org/licenses/odbl/1-0/). Free to share, use, adapt, and create derivatives, provided that attribution is given (cite the recommended publications), the licence remains clear upon redistribution, and any publicly released adapted versions must be shared under the same ODbL (Share-Alike).
 - Note: Default CLUES dataset includes years 2000-2025
 
