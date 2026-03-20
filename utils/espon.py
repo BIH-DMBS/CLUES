@@ -113,7 +113,7 @@ def generate_espon_json():
 
     # unique_dict_list now contains only dictionaries with unique 'id's
 
-    keys = ['id','name']
+    keys = ['id','name', 'years_string'] # add years_string here
 
     erg = []
     for d in unique_results_sorted:
@@ -309,7 +309,8 @@ def get_asset_espon(json_file, vOI, dim):
                                 with zip_ref.open(file) as source, open(os.path.splitext(file_path_shp)[0]  + '-' + str(i) + '.prj', 'wb') as target:
                                     target.write(source.read())
                     i = i+1
-                shape2csv_lock(shp_list, file_path_csv, file_path_geometry)
+                years_string = item.get('years_string',None)
+                shape2csv_lock(shp_list, file_path_csv, file_path_geometry, years_string=years_string)
             except zipfile.BadZipFile:
                 print('----Bad Zip streamline-----')
                 # URL of the file to be downloaded
@@ -360,21 +361,21 @@ def download_csv(url, file_path_csv):
         print(f"Failed to download the csv file. Status code: {response.status_code}")
 
 
-def shape2csv_lock(shape_files, file_path, file_path_geometry):
+def shape2csv_lock(shape_files, file_path, file_path_geometry, years_string=None):
     # lock guratees that no other parallel snakemake process tries
     # to use the file with the geometry at the same time
     lock_path = f"{file_path_geometry}.lock"
     lock = FileLock(lock_path, timeout=100)  # Wait up to 10 seconds for the lock 
     try:
         with lock:
-            shape2csv(shape_files, file_path, file_path_geometry)
+            shape2csv(shape_files, file_path, file_path_geometry, years_string=years_string)
     except Timeout:
         print(f"Could not acquire lock on {file_path} within the timeout period.")
     except Exception as e:
         print(f"An error occurred: {e}")
 
 
-def shape2csv(shape_files, file_path, file_path_geometry):
+def shape2csv(shape_files, file_path, file_path_geometry, years_string=None):
     # shapefiles downloaded from espon are splitted up in a csv file that holds specific the data
     # and one csv file for all assets that contains the geometries. 
     # The csv file with the geometries and the data csvs can be joined on 'tunit_code'   
@@ -389,6 +390,16 @@ def shape2csv(shape_files, file_path, file_path_geometry):
     print('---------')
     # Concatenate the GeoDataFrames
     gdf = gpd.GeoDataFrame(pd.concat(gdf, ignore_index=True))
+    # fix truncated year column name using API metadata
+    if years_string:
+        for token in years_string.split(','):
+            token = token.strip()
+            if '-' in token:
+                full_col = f"y_{token}"   # e.g. y_2014-2016
+                trunc_col = full_col[:10]  # e.g. y_2014-201
+                if len(full_col) > 10 and trunc_col in gdf.columns:
+                    gdf.rename(columns={trunc_col: full_col}, inplace=True)
+                    print(f"renamed: {trunc_col} -> {full_col}")
     # Drop duplicate geometries, keeping the first occurrence
     gdf = gdf.drop_duplicates(subset='geometry', keep='first')
     # Create a new GeoDataFrame with only 'geometry' and 'tunit_code'
