@@ -1,0 +1,23 @@
+{
+    "type":"climate",
+    "source":"reanalysis-era5-single-levels",
+    "file":"creanalysis-era5-single-levels.json",
+    "link":"https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=form",
+    "time zone":"coordinated universal time",
+    "start_year": "1940",
+    "end_year": "2025",
+    "delta_t_in_h":"1",
+    "product_type": "reanalysis",
+    "format": "netcdf",
+    "variables":[
+        {
+            "name":"2m_dewpoint_temperature"
+        },
+        {
+            "name":"2m_temperature"
+        },
+        {
+            "name":  "high_vegetation_cover"
+        }
+    ]
+}

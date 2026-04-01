@@ -1,0 +1,30 @@
+{
+    "type": "espon",
+    "source": "espon",
+    "link": "https://database.espon.eu/api/",
+    "citation": "...",
+    "format": "geopandas dataframe with shape",
+    "variables": [
+        {
+            "dimension": [
+                "Deaths by age groups and gender"
+            ],
+            "features": [
+                {
+                    "csv": "https://database.espon.eu/private-media/object/3/ind_3_d_f_0-4_csv.zip",
+                    "shape": "https://database.espon.eu/private-media/object/3/ind_3_d_f_0-4_shp.zip",
+                    "id": 3,
+                    "name": "Deaths - female - age group 0-4",
+                    "years_string": "1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017"
+                },
+                {
+                    "csv": "https://database.espon.eu/private-media/object/4/ind_4_d_f_5-9_csv_CdWt3ba.zip",
+                    "shape": "https://database.espon.eu/private-media/object/4/ind_4_d_f_5-9_shp_QMUjEgM.zip",
+                    "id": 4,
+                    "name": "Deaths - female - age group 5-9",
+                    "years_string": "1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017"
+                }
+            ]
+        }
+    ]
+}

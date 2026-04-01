@@ -895,81 +895,107 @@ def spei_download(json_file,variableOI):
 
 
 def get_simple_download_zip(json_file):
-    # simple download of a zip file as for night time lights
-    # after download extract the zip file content
     try:
-        parameter = get_parameter(json_file,'bbox.json')
+        parameter = get_parameter(json_file, 'bbox.json')
         url = parameter['variables'][0]['url']
     except Exception as e:
         print(f"An error occurred: {e}")
         return
-    # URL of the zip file
 
-    # Download the zip file
     file_path = os.path.join(download_folder, parameter['type'])
-    # Create the directory if it does not exist
     try:
         os.makedirs(file_path, exist_ok=True)
     except Exception as e:
         print(f"An error occurred while creating the directory: {e}")
         return
-    
+
     session = requests.Session()
     session.headers.update({
-        "User-Agent": "Mozilla/5.0",
-        "Accept": "*/*",
-        "Referer": "https://figshare.com/"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                      "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Referer": "https://figshare.com/",
     })
 
-    # Step 1 — warm up session (this is the missing piece)
-    session.get("https://figshare.com", timeout=10)
+    # Step 1 — follow the full redirect chain manually to get the real CDN url
+    print(f"Resolving redirect chain for: {url}")
+    try:
+        head = session.head(url, allow_redirects=True, timeout=30)
+        final_url = head.url
+        content_type = head.headers.get("Content-Type", "")
+        content_length = int(head.headers.get("Content-Length", 0))
+        print(f"Final URL     : {final_url}")
+        print(f"Content-Type  : {content_type}")
+        print(f"Content-Length: {content_length}")
+    except Exception as e:
+        print(f"HEAD request failed: {e}")
+        return
 
-    # Step 2 — request the file with redirects & cookies
-    for attempt in range(60):
-        r = session.get(url, stream=True, allow_redirects=True, timeout=30)
+    # If HEAD doesn't give a file, fall back to a GET with stream
+    if content_length < 1_000_000 or "zip" not in content_type and "octet" not in content_type:
+        print("HEAD didn't resolve to a binary — trying GET redirect follow...")
+        try:
+            probe = session.get(url, allow_redirects=True, timeout=30, stream=True)
+            final_url = probe.url
+            content_type = probe.headers.get("Content-Type", "")
+            content_length = int(probe.headers.get("Content-Length", 0))
+            print(f"Final URL     : {final_url}")
+            print(f"Content-Type  : {content_type}")
+            print(f"Content-Length: {content_length}")
+        except Exception as e:
+            print(f"GET probe failed: {e}")
+            return
 
-        content_type = r.headers.get("Content-Type", "")
-        length = int(r.headers.get("Content-Length", 0))
+        if content_length < 1_000_000:
+            # Print a snippet to see if it's an HTML error/login page
+            snippet = b""
+            for chunk in probe.iter_content(1024):
+                snippet += chunk
+                if len(snippet) >= 2048:
+                    break
+            print(f"Response snippet:\n{snippet[:2048]}")
+            print("Could not resolve a binary zip URL — see snippet above.")
+            return
 
-        if r.status_code == 200 and length > 1_000_000:
-            print("Download ready!")
-            break
-
-        print(f"Waiting for Figshare... ({attempt+1})")
-        sleep(1)
+        # Stream from the already-open response
+        total = content_length
+        downloaded = 0
+        chunks = []
+        for chunk in probe.iter_content(chunk_size=4 * 1024 * 1024):
+            if chunk:
+                chunks.append(chunk)
+                downloaded += len(chunk)
+                print(f"Downloading: {downloaded * 100 / total:.1f}%", flush=True)
     else:
-        raise TimeoutError("Figshare did not provide the file")
+        # Step 2 — download from the resolved CDN URL directly
+        print("Downloading from resolved CDN URL...")
+        r = session.get(final_url, stream=True, timeout=60)
+        total = content_length
+        downloaded = 0
+        chunks = []
+        for chunk in r.iter_content(chunk_size=4 * 1024 * 1024):
+            if chunk:
+                chunks.append(chunk)
+                downloaded += len(chunk)
+                print(f"Downloading: {downloaded * 100 / total:.1f}%", flush=True)
 
-    # Step 3 — download with progress
-    total = length
-    downloaded = 0
-    chunks = []
-
-    for chunk in r.iter_content(chunk_size=4*1024*1024):
-        if chunk:
-            chunks.append(chunk)
-            downloaded += len(chunk)
-            percent = downloaded * 100 / total
-            print(f"Downloading: {percent:.1f}%", flush=True)
-            #print(f"\rDownloading: {percent:.1f}%", end="")
-
+    # Step 3 — unzip
     try:
         content = b"".join(chunks)
         zip_file = zipfile.ZipFile(io.BytesIO(content))
         print("\nZIP opened successfully")
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred while downloading the zip file: {e}")
-        return
     except zipfile.BadZipFile as e:
-        print(f"An error occurred while reading the zip file: {e}")
+        print(f"Bad zip: {e}")
+        # Dump the first bytes to diagnose
+        print(f"First 200 bytes: {content[:200]}")
         return
 
     try:
-        # Extract the contents of the zip file
         zip_file.extractall(file_path)
-        print(f"Zip file downloaded and extracted to {file_path}")
+        print(f"Extracted to {file_path}")
     except Exception as e:
-        print(f"An error occurred while extracting the zip file: {e}")
+        print(f"Extraction error: {e}")
         return
 
     print('NTL download done.')

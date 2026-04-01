@@ -1,0 +1,16 @@
+{
+    "type": "MODIS_Vegetation_Index_Products",
+    "start_year": "2000",
+    "end_year": "2025",
+    "format": "geoTIFF",
+    "variables":[
+        {
+            "name":"MOD13A3",
+            "vars": ["1 km monthly NDVI"], 
+            "vars_name": ["1_km_monthly_NDVI"],
+            "url":"https://opendap.cr.usgs.gov/opendap/hyrax/MOD13A3.061/",
+            "tile_pixels":  1200,
+            "pixel_size_in_m": 926.625
+        }
+    ]
+}

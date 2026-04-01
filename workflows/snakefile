@@ -246,7 +246,10 @@ rule get_cams: #cams
         file=files['cams'],
         year="{year}"
     shell:
-        "python workflows/cams.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1"
+        """
+        python workflows/cams.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.var}_{params.year}.log')"
+        """
 
 # Define rule era5 climate
 rule get_era5: #era5
@@ -257,7 +260,10 @@ rule get_era5: #era5
         file=files['era5'],
         year="{year}"
     shell:
-        "python workflows/era5.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1"
+        """
+        python workflows/era5.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.var}_{params.year}.log')"
+        """
 
 # Define rule get_asset_C
 rule get_espon: #espon
@@ -268,7 +274,10 @@ rule get_espon: #espon
         file=files['espon'],
         dim='{dim}'
     shell:
-        "python workflows/espon_download.py {params.file} {params.var} {params.dim} > log_{params.var}_{params.dim}.log 2>&1"
+        """
+        python workflows/espon_download.py {params.file} {params.var} {params.dim} > log_{params.var}_{params.dim}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.var}_{params.dim}.log')"
+        """
 
 # Define rule EOC_Atmosphere
 rule get_eoc_atmosphere: #EOC_Atmosphere
@@ -279,7 +288,10 @@ rule get_eoc_atmosphere: #EOC_Atmosphere
         file=files['EOC_Atmosphere'],
         year="{year}"
     shell:
-        "python workflows/wms_timeresolved.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1"
+        """
+        python workflows/wms_timeresolved.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.var}_{params.year}.log')"
+        """
 
 # Define WSF3D
 rule get_WSF3D: 
@@ -289,7 +301,10 @@ rule get_WSF3D:
         file=files['EOC_WSF3D'],
         name = "{name}"
     shell:
-        "python workflows/simple_download_tif.py {params.file} {params.name} > log_{params.name}.log 2>&1"
+        """
+        python workflows/simple_download_tif.py {params.file} {params.name} > log_{params.name}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.name}.log')"
+        """
 
 # Define WSF
 rule get_WSF: 
@@ -299,7 +314,10 @@ rule get_WSF:
         file=files['EOC_WSF'],
         name = "{name}"
     shell:
-        "python workflows/wsf_download.py {params.file} {params.name} > log_{params.name}.log 2>&1"
+        """
+        python workflows/wsf_download.py {params.file} {params.name} > log_{params.name}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.name}.log')"
+        """
 
 # Define rule Copernicus treecover
 rule copernicus_land: #Copernicus treecover
@@ -309,7 +327,10 @@ rule copernicus_land: #Copernicus treecover
         var="{variable}",
         file=files['treecover_copernicus']
     shell:
-        "python workflows/copernicus_corine.py {params.file} {params.var} > log_{params.var}.log 2>&1"
+        """
+        python workflows/copernicus_corine.py {params.file} {params.var} > log_{params.var}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.var}.log')"
+        """
 
 # Define rule Copernicus corine
 rule get_copernicus_corine: #Copernicus corine
@@ -319,7 +340,10 @@ rule get_copernicus_corine: #Copernicus corine
         var="{variable}",
         file=files['corine_copernicus']
     shell:
-        "python workflows/copernicus_corine.py {params.file} {params.var} > log_{params.var}.log 2>&1"
+        """
+        python workflows/copernicus_corine.py {params.file} {params.var} > log_{params.var}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.var}.log')"
+        """
 
 # Define rule spei drought index
 rule get_spei_idx: 
@@ -330,7 +354,10 @@ rule get_spei_idx:
         year="{time_scale}",
         file=files['spei']
     shell:
-        "python workflows/spei_drought_idx.py {params.file} {params.year} > log_{params.year}.log 2>&1"
+        """
+        python workflows/spei_drought_idx.py {params.file} {params.year} > log_{params.year}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.year}.log')"
+        """
 
 # Define rule odata copernicus
 rule get_copernicus_odata: #DEM
@@ -340,8 +367,11 @@ rule get_copernicus_odata: #DEM
         file=files['copernicus_dem'],
         resolution = "{resolution}"
     shell:
-        "python workflows/copernicus_odata.py {params.file} {params.resolution} > log_{params.resolution}.log 2>&1"
-
+        """
+        python workflows/copernicus_odata.py {params.file} {params.resolution} > log_{params.resolution}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.resolution}.log')"
+        """
+    
 # Define rule night time lights
 rule get_ntl: 
     output:
@@ -350,7 +380,10 @@ rule get_ntl:
         file=files['ntl'],
         name = "{name}"
     shell:
-        "python workflows/simple_download_zip.py {params.file} > log_{params.name}.log 2>&1"
+        """
+        python workflows/simple_download_zip.py {params.file} > log_{params.name}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.name}.log')"
+        """
 
 # Define rule Global Lakes and Wetlands Database
 rule get_glwd: 
@@ -360,7 +393,11 @@ rule get_glwd:
         file=files['glwd'],
         name = "{name}"
     shell:
-        "python workflows/simple_download_zip.py {params.file} > log_{params.name}.log 2>&1"
+        """
+        python workflows/simple_download_zip.py {params.file} > log_{params.name}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.name}.log')"
+        """
+        
 
 # Define rule Copernicus_dynamic_land_cover
 rule get_clms: 
@@ -370,7 +407,10 @@ rule get_clms:
         file=files['clms'],
         name = "{name}"
     shell:
-        "python workflows/simple_download_tif.py {params.file} {params.name} > log_{params.name}.log 2>&1"
+        """
+        python workflows/simple_download_tif.py {params.file} {params.name} > log_{params.name}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.name}.log')"
+        """
 
 # Define rule get_modis_vi
 rule get_modis_vi:
@@ -383,7 +423,10 @@ rule get_modis_vi:
         year = "{year}",
         name = "{name}"
     shell:
-        "python workflows/modis_vi.py {params.file} {params.name} {params.vars_name} {params.year} > log_{params.type}_{params.vars_name}_{params.year}.log 2>&1"
+        """
+        python workflows/modis_vi.py {params.file} {params.name} {params.vars_name} {params.year} > log_{params.type}_{params.vars_name}_{params.year}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.type}_{params.vars_name}_{params.year}.log')"
+        """
 
 # Define rule get_global_treecover
 rule get_global_treecover:
@@ -394,7 +437,10 @@ rule get_global_treecover:
         type = parameters['global_treecover']['type'],
         name = "{name}",
     shell:
-        "python workflows/global_treecover.py {params.file} {params.name} > log_{params.type}_{params.name}.log 2>&1"
+        """
+        python workflows/global_treecover.py {params.file} {params.name} > log_{params.type}_{params.name}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.type}_{params.name}.log')"
+        """
 
 # Define rule era5 land climate
 rule get_era5_land: #era5
@@ -405,7 +451,10 @@ rule get_era5_land: #era5
         file=files['era5_land'],
         year="{year}"
     shell:
-        "python workflows/era5_land.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1"
+        """
+        python workflows/era5_land.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.var}_{params.year}.log')"
+        """
 
 # Define rule worldpop population data
 rule worldpop: #worldpop
@@ -416,7 +465,10 @@ rule worldpop: #worldpop
         file=files['worldpop'],
         year="{year}"
     shell:
-        "python workflows/worldpop.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1"
+        """
+        python workflows/worldpop.py {params.file} {params.var} {params.year} > log_{params.var}_{params.year}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.var}_{params.year}.log')"
+        """
 
 
 # Define rule Neighborhood
@@ -432,4 +484,7 @@ rule get_neighborhood_copernicus_odata:
         var="{variable}",
         file=files['copernicus_dem']
     shell:
-        "python workflows/neighborhood.py {params.file} {params.var} {params.mode} > log_{params.var}_{params.mode}.log 2>&1"
+        """
+        python workflows/neighborhood.py {params.file} {params.var} {params.mode} > log_{params.var}_{params.mode}.log 2>&1 && \
+        python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.var}_{params.mode}.log')"
+        """

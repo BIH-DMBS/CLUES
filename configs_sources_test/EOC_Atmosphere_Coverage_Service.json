@@ -1,0 +1,24 @@
+{
+    "type": "wms",
+    "source": "EOC-Atmosphere-Coverage-Service",
+    "file": "EOC_Atmosphere_Coverage_Service.json",
+    "link": "https://geoservice.dlr.de/eoc/atmosphere/wms",
+    "format": "image/geotiff",
+    "crs": "EPSG:4326",
+    "variables": [
+        {
+            "name": "METOP-B_GOME-2_L2C_P1D_CF",
+            "abstract": "MetOp-B GOME-2 Total Column Cloud Fraction (CF) Composite Layer",
+            "temporal_dimension": "2012-12-13T00:00:00.000Z/2024-08-18T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        },
+        {
+            "name": "METOP-B_GOME-2_L2C_P1D_COT",
+            "abstract": "MetOp-B GOME-2 Total Column Cloud Optical Thickness (COT) Composite Layer",
+            "temporal_dimension": "2012-12-13T00:00:00.000Z/2024-08-13T23:59:59.999Z/P1D",
+            "width": 1000,
+            "height": 1000
+        }
+    ]
+}

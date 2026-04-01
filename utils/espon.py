@@ -310,6 +310,7 @@ def get_asset_espon(json_file, vOI, dim):
                                     target.write(source.read())
                     i = i+1
                 years_string = item.get('years_string',None)
+                print('shape2csv')
                 shape2csv_lock(shp_list, file_path_csv, file_path_geometry, years_string=years_string)
             except zipfile.BadZipFile:
                 print('----Bad Zip streamline-----')
@@ -409,7 +410,12 @@ def shape2csv(shape_files, file_path, file_path_geometry, years_string=None):
     # Create a new GeoDataFrame without 'geometry'
     gdf = gdf.drop(columns='geometry')
     # save data csv
-    gdf.to_csv(file_path, index=False)
+    print(gdf)
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    try:
+        gdf.to_csv(file_path, index=False)
+    except Exception as e:
+        print(f"Error occurred while saving CSV: {e}")
 
     # update the existing geometry csv
     if os.path.exists(file_path_geometry):
