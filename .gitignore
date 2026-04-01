@@ -6,7 +6,6 @@ data_france/
 data_old/
 tmp/
 playground/
-configs_sources_test/
 configs_sources_copy/
 *.pyc
 **/__pycache__

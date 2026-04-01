@@ -1,0 +1,11 @@
+{
+    "type": "treecover_global",
+    "format": "geotTiff",
+    "variables":[
+        {
+            "name":"global_tree_cover_hansen_2000",
+            "url":"https://storage.googleapis.com/earthenginepartners-hansen/GFC-2022-v1.10/",
+            "year":"2000"
+        }
+    ]
+}
