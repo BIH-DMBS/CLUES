@@ -68,52 +68,57 @@ def getEra5Land(json_file, year, vOI):
 
     download_folder_er5_land = os.path.join(download_folder,'reanalysis-era5-land', vOI)
     print(download_folder_er5_land)
+    max_retries=5
+    retry = 0
+    while retry<max_retries:
+        for month in months:
+            tmp_folder = os.path.join(download_folder_er5_land, 'tmp',year) 
 
-    for month in months:
-        tmp_folder = os.path.join(download_folder_er5_land, 'tmp',year) 
+            if not os.path.exists(tmp_folder):
+                os.makedirs(tmp_folder)
+                print(f"Folder created: {tmp_folder}")
+            else:
+                print(f"Folder already exists: {tmp_folder}")
 
-        if not os.path.exists(tmp_folder):
-            os.makedirs(tmp_folder)
-            print(f"Folder created: {tmp_folder}")
-        else:
-            print(f"Folder already exists: {tmp_folder}")
+            file_path = os.path.join(tmp_folder, f'{month}.grib')
+            file_path_zip = os.path.join(tmp_folder, f'{month}.zip')
 
-        file_path = os.path.join(tmp_folder, f'{month}.grib')
-        file_path_zip = os.path.join(tmp_folder, f'{month}.zip')
+            if os.path.exists(file_path):
+                print(f"The file {file_path} exists.")
+            else:
+                request = {
+                    "variable": vOI,
+                    "year": year,
+                    "month": month,
+                    "day": days,
+                    "time": times,
+                    "data_format": "grib",
+                    "download_format": "zip",
+                    "area": parameters['bbox']
+                }
+                try:
+                    c.retrieve(dataset, request, file_path_zip)
+                    print("Data is available for this month.")
+                    # Open the zip file
+                    with zipfile.ZipFile(file_path_zip, 'r') as z:
+                        # List contents (usually there should be one .nc file)
+                        namelist = z.namelist()
+                        print("Files in zip:", namelist)
 
-        if os.path.exists(file_path):
-            print(f"The file {file_path} exists.")
-        else:
-            request = {
-                "variable": vOI,
-                "year": year,
-                "month": month,
-                "day": days,
-                "time": times,
-                "data_format": "grib",
-                "download_format": "zip",
-                "area": parameters['bbox']
-            }
-            try:
-                c.retrieve(dataset, request, file_path_zip)
-                print("Data is available for this month.")
-                # Open the zip file
-                with zipfile.ZipFile(file_path_zip, 'r') as z:
-                    # List contents (usually there should be one .nc file)
-                    namelist = z.namelist()
-                    print("Files in zip:", namelist)
-
-                    # Extract the first .grib file and save as file_path
-                    for name in namelist:
-                        if name.endswith('.grib'):
-                            with z.open(name) as src, open(file_path, 'wb') as dst:
-                                dst.write(src.read())
-                            print(f"Saved {name} as {file_path}")
-                            break
-                    # Delete the zip file after successful extraction
-                os.remove(file_path_zip)
-            except Exception as e:
-                print("Data is NOT available:", e)
+                        # Extract the first .grib file and save as file_path
+                        for name in namelist:
+                            if name.endswith('.grib'):
+                                with z.open(name) as src, open(file_path, 'wb') as dst:
+                                    dst.write(src.read())
+                                print(f"Saved {name} as {file_path}")
+                                break
+                        # Delete the zip file after successful extraction
+                    os.remove(file_path_zip)
+                    retry = max_retries
+                except Exception as e:
+                    print("Data is NOT available:", e)
+                    print(f"Download try {retry} failed.")
+                    retry=retry+1
 
 
     # raw grib file to monthly netcdf file 
