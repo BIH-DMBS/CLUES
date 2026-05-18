@@ -17,7 +17,7 @@ Get in touch: dmbs@bih-charite.de
 
 ## Getting started
 - A extended documentation can be found under [here] (https://bih-dmbs.github.io/CLUES/).
-- To understand the scientific foundation of CLUES, please read our publication (**link coming soon**).  
+- To understand the scientific foundation of CLUES, please read our [publication](https://doi.org/10.1038/s41467-026-73048-6).  
 - To get an overview of the geospatial data and data sources used in CLUES, see the [Data List](docs/data_list.md). For more infomation, visit the [Geospatial Data Guide](docs/dataCatalog.md).  
 - To learn how to use the CLUES framework, follow the [User Guide](docs/UserGuide.md) and explore the [Applied Examples](https://github.com/BIH-DMBS/CLUES/blob/main/docs/Examples.md) or the [random forest example](notebooks\random_forest_demo\random_forest_analysis_marseille_summer_school_2025.ipynb).  
 - [Scripts](scripts) for integrating the geospatial database to location data and [python notebooks](notebooks) for interacting and visualising the geospatial data are available.  
