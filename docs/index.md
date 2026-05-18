@@ -17,15 +17,19 @@ Get in touch: dmbs@bih-charite.de
 ![Diagram](CLUES_schema.png)
 
 ## Getting started
-- To understand the scientific foundation of CLUES, please read our publication (**link coming soon**).  
+- To understand the scientific foundation of CLUES, please read our [publication](https://doi.org/10.1038/s41467-026-73048-6).  
 - To get an overview of the geospatial data and data sources used in CLUES, see the [Data List](https://github.com/BIH-DMBS/CLUES/tree/main/docs/data_list.md). For more infomation, visit the [Geospatial Data Guide](https://github.com/BIH-DMBS/CLUES/tree/main/docs/dataCatalog.md).  
 - To learn how to use the CLUES framework, follow the [User Guide](https://github.com/BIH-DMBS/CLUES/tree/main/docs/UserGuide.md) and explore the [Applied Examples](https://github.com/BIH-DMBS/CLUES/tree/main/docs/Examples.md).  
 - [Scripts](https://github.com/BIH-DMBS/CLUES/tree/main/scripts) for integrating the geospatial database to location data and [python notebooks](https://github.com/BIH-DMBS/CLUES/tree/main/notebooks) for interacting and visualising the geospatial data are available.  
 - For more information on software resources, see [here](softwareResources.md).  
 
 ## Citation
-When using CLUES in your work, please cite our paper  
-(**info coming soon**)
+When using CLUES in your work, please cite our paper:  
+
+Jentsch, M., Polemiti, E., Renner, P. et al. CLUES A Comprehensive Workflow for Integrating Geospatial Data in Biomedical Research. Nat Commun 17, 4330 (2026). 
+
+### DOI  
+https://doi.org/10.1038/s41467-026-73048-6
 
 ## Maintainers
 
