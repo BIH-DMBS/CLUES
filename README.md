@@ -24,8 +24,12 @@ Get in touch: dmbs@bih-charite.de
 - For more information on software resources, see [here](docs/softwareResources.md).  
 
 ## Citation
-When using CLUES in your work, please cite our paper  
-(**info coming soon**)
+Please cite this article:  
+
+Jentsch, M., Polemiti, E., Renner, P. et al. CLUES A Comprehensive Workflow for Integrating Geospatial Data in Biomedical Research. Nat Commun 17, 4330 (2026). 
+
+### DOI  
+https://doi.org/10.1038/s41467-026-73048-6
 
 ## Maintainers 
 The CLUES maintainers are:  
