@@ -13,7 +13,16 @@ Get in touch: dmbs@bih-charite.de
 - Extensible architecture for adding new environmental variables over time  
 - Adherence to FAIR (Findable, Accessible, Interoperable, Reusable) and data protection principles  
 
+
 ![Diagram](docs/CLUES_schema.png)
+
+## Join us for the upcoming CLUES Seminar
+
+**Date: 24.06.2026**
+
+In this seminar, we will present the CLUES pipeline and demonstrate how environmental exposure data from open-access sources can be systematically linked to individual-level health data in a privacy-compliant way. 
+
+**Register here:** https://www.environmental-project.org/news/join-us-for-the-upcoming-clues-seminar/
 
 ## Getting started
 - A extended documentation can be found under [here] (https://bih-dmbs.github.io/CLUES/).
