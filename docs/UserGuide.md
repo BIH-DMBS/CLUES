@@ -249,8 +249,10 @@ Example of the source-specific configuration file `copenicus_dem.json`
 Once everything is set up, third-party accounts are configured, and the configuration files are customized, you can run the CLUES workflow using Snakemake:  
 
 <pre>
-snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60
+ snakemake -s workflows/snakefile --cores 6 -p --rerun-incomplete --latency-wait 60 --resources heavy_rule_slots=2
 </pre>
+The *--resources heavy_rule_slots=2* was added as the copernicus climate data store does not allow multiple parallel request for downloading the **ERA5-Land hourly data from 1950 to present** dataset. This caps *get_era5_land* at 4 concurrent instances while every other rule in your workflow keeps scheduling normally against --cores (and any resources they define).
+
 
 Command Options Explained:  
 
