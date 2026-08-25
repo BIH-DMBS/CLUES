@@ -97,7 +97,7 @@ Save the tokens in two separate files:
     url: https://ads.atmosphere.copernicus.eu/api
     key: place your token here</pre>
 
-4. Save [ECMWF](https://www.ecmwf.int/) credentials to file to access DEM
+4. . Users need to register at https://dataspace.copernicus.eu/ and use those credentials in *copernicus_credential.sct.* to access DEM
 
     **_Copernicus credential Storage_**  
     *copernicus_credential.sct*
