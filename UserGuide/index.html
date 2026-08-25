@@ -1100,7 +1100,7 @@ url: https://ads.atmosphere.copernicus.eu/api
 key: place your token here</pre></p>
 </li>
 <li>
-<p>Save <a href="https://www.ecmwf.int/">ECMWF</a> credentials to file to access DEM</p>
+<p>. Users need to register at https://dataspace.copernicus.eu/ and use those credentials in <em>copernicus_credential.sct.</em> to access DEM</p>
 <p><strong><em>Copernicus credential Storage</em></strong><br />
 <em>copernicus_credential.sct</em>
 <pre>
@@ -1238,9 +1238,9 @@ CLUES supports neighbourhood-based operations to enhance spatial analysis by inc
 <h2 id="run-the-workflow">Run the workflow</h2>
 <p>Once everything is set up, third-party accounts are configured, and the configuration files are customized, you can run the CLUES workflow using Snakemake:  </p>
 <pre>
-snakemake -s workflows/snakefile --cores 16 -p --rerun-incomplete --latency-wait 60
+ snakemake -s workflows/snakefile --cores 6 -p --rerun-incomplete --latency-wait 60 --resources heavy_rule_slots=2
 </pre>
-
+<p>The <em>--resources heavy_rule_slots=2</em> was added as the copernicus climate data store does not allow multiple parallel request for downloading the <strong>ERA5-Land hourly data from 1950 to present</strong> dataset. This caps <em>get_era5_land</em> at 4 concurrent instances while every other rule in your workflow keeps scheduling normally against --cores (and any resources they define).</p>
 <p>Command Options Explained:  </p>
 <ul>
 <li>-s workflows/snakefile specifies the Snakefile path  </li>
