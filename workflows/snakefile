@@ -446,6 +446,8 @@ rule get_global_treecover:
 rule get_era5_land: #era5
     output:
         os.path.join(download_folder, parameters['era5_land']['source'], '{variable}', '{year}.nc')
+    resources:
+        heavy_rule_slots=1
     params:
         var="{variable}",
         file=files['era5_land'],
