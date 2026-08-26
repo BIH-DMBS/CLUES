@@ -16,14 +16,6 @@ Get in touch: dmbs@bih-charite.de
 
 ![Diagram](docs/CLUES_schema.png)
 
-## Join us for the upcoming CLUES Seminar
-
-**Date: 24.06.2026**
-
-In this seminar, we will present the CLUES pipeline and demonstrate how environmental exposure data from open-access sources can be systematically linked to individual-level health data in a privacy-compliant way. 
-
-**Register here:** https://www.environmental-project.org/news/join-us-for-the-upcoming-clues-seminar/
-
 ## Getting started
 - A extended documentation can be found under [here] (https://bih-dmbs.github.io/CLUES/).
 - To understand the scientific foundation of CLUES, please read our [publication](https://doi.org/10.1038/s41467-026-73048-6).  
@@ -55,3 +47,11 @@ You can find an overview of the main data sources and datasets included in the d
 ## License
 [MIT License](LICENSE)  
 Copyright (c) 2025 BIH-DMBS 
+
+## Past Events
+
+**Date: 24.06.2026**
+
+In this seminar, we presented the CLUES pipeline and demonstrate how environmental exposure data from open-access sources can be systematically linked to individual-level health data in a privacy-compliant way. 
+
+**Link:** https://www.environmental-project.org/resources/environmental-seminar-series/
