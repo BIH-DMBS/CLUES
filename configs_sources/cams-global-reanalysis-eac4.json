@@ -40,6 +40,18 @@
             "name":"total_column_methane"
         },
         {
+            "name":"particulate_matter_1um"
+        },
+        {
+            "name":"particulate_matter_2.5um"
+        },
+        {
+            "name":"particulate_matter_10um"
+        },
+        {
+            "name":"total_column_nitrogen_dioxide"
+        },
+        {
             "name": "dust_aerosol_0.03-0.55um_mixing_ratio",
             "model_level": "60"
         },
