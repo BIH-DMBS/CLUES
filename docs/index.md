@@ -32,6 +32,13 @@ Jentsch, M., Polemiti, E., Renner, P. et al. CLUES A Comprehensive Workflow for 
 ### DOI  
 https://doi.org/10.1038/s41467-026-73048-6
 
+
+### Feedback / de.NBI User Survey
+
+This is an approved de.NBI service. Please help us improve by taking our short user [survey](https://www.surveymonkey.de/r/denbi-service?sc=associatedpartner&tool=clues).
+
+![Diagram](denbi.png)
+
 ## Maintainers
 
 The CLUES maintainers are:  
