@@ -21,22 +21,22 @@ secrets_folder = f"{base_folder}\secrets"
 # This script checks the availability of all data sources used in CLUES by attempting to access/download a small sample from each source.
 
 ckecklist = [
-    'cams',
-    'era5_single',
-    'espon',
-     'EOC_Atmosphere',
-    'EOC_WSF3D',
-    'EOC_WSF',
-    'treecover_copernicus',
-    'corine_copernicus',
-    'spei',
-    'copernicus_dem',
+    #'cams',
+    #'era5_single',
+    #'espon',
+    #'EOC_Atmosphere',
+    #'EOC_WSF3D',
+    #'EOC_WSF',
+    #'treecover_copernicus',
+    #'corine_copernicus',
+    #'spei',
+    #'copernicus_dem',
     'ntl',
     'glwd',
-    'Copernicus_dynamic_land_cover',
-    'modis_vi',
-    'global_treecover',
-    'worldpop'
+    #'Copernicus_dynamic_land_cover',
+    #'modis_vi',
+    #'global_treecover',
+    #'worldpop'
 ]
 
 # to download data access token from copernicus a needed
@@ -61,77 +61,46 @@ def get_copernicus_odata_token():
     return access_token
 
 
-def get_simple_download_zip(url):
+def get_all_files(article_id):
+    files = []
+    seen = set()
+    page = 1
+    while True:
+        url = f"https://api.figshare.com/v2/articles/{article_id}/files?page={page}&page_size=100"
+        batch = requests.get(url, timeout=30).json()
+        if not batch:
+            break
+        for f in batch:
+            if f["name"] not in seen:
+                seen.add(f["name"])
+                files.append(f)
+        if len(batch) < 100:
+            break
+        page += 1
+    return files
 
-    session = requests.Session()
-    session.headers.update({
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                      "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
-        "Referer": "https://figshare.com/",
-    })
+def download_ntl_glwd(article_id, files_oi="all"):
+    files = get_all_files(article_id)
+    if files_oi != "all":
+        files = [f for f in files if f["name"] in files_oi]
 
-    # Step 1 — follow the full redirect chain manually to get the real CDN url
-    print(f"Resolving redirect chain for: {url}")
-    try:
-        head = session.head(url, allow_redirects=True, timeout=30)
-        final_url = head.url
-        content_type = head.headers.get("Content-Type", "")
-        content_length = int(head.headers.get("Content-Length", 0))
-        print(f"Final URL     : {final_url}")
-        print(f"Content-Type  : {content_type}")
-        print(f"Content-Length: {content_length}")
-    except Exception as e:
-        print(f"HEAD request failed: {e}")
-        return
+    print(f"Found {len(files)} file(s) to download")
 
-    # If HEAD doesn't give a file, fall back to a GET with stream
-    if content_length < 1_000_000 or "zip" not in content_type and "octet" not in content_type:
-        print("HEAD didn't resolve to a binary — trying GET redirect follow...")
-        try:
-            probe = session.get(url, allow_redirects=True, timeout=30, stream=True)
-            final_url = probe.url
-            content_type = probe.headers.get("Content-Type", "")
-            content_length = int(probe.headers.get("Content-Length", 0))
-            print(f"Final URL     : {final_url}")
-            print(f"Content-Type  : {content_type}")
-            print(f"Content-Length: {content_length}")
-        except Exception as e:
-            print(f"GET probe failed: {e}")
-            return
+    for file_info in files:
+        print(f"  Downloading: {file_info['name']}")
+        r = requests.get(file_info["download_url"], stream=True, timeout=120,
+                         headers={"Accept-Encoding": "identity"})
+        r.raise_for_status()
 
-        if content_length < 1_000_000:
-            # Print a snippet to see if it's an HTML error/login page
-            snippet = b""
-            for chunk in probe.iter_content(1024):
-                snippet += chunk
-                if len(snippet) >= 2048:
-                    break
-            print(f"Response snippet:\n{snippet[:2048]}")
-            print("Could not resolve a binary zip URL — see snippet above.")
-            return
-
-        # Stream from the already-open response
-        total = content_length
         downloaded = 0
-        chunks = []
-        for chunk in probe.iter_content(chunk_size=4 * 1024 * 1024):
-            if chunk:
-                print('Download available')
-                break
-    else:
-        # Step 2 — download from the resolved CDN URL directly
-        print("Downloading from resolved CDN URL...")
-        r = session.get(final_url, stream=True, timeout=60)
-        total = content_length
-        downloaded = 0
-        chunks = []
         for chunk in r.iter_content(chunk_size=4 * 1024 * 1024):
-           if chunk:
-                print('Download available')
+            if chunk:
+                x = chunk
+                downloaded += len(chunk)
+                print(f"    {downloaded * 100 / file_info['size']:.1f}%", end="\r", flush=True)
                 break
-
+        break
+    print('figshare resource works')
 
 for item in ckecklist:
     print(f"Checking {item}...")
@@ -428,13 +397,14 @@ for item in ckecklist:
             os.remove('test.zip')
         print("--------------------------------")
     elif item == 'ntl':
-        url = "https://figshare.com/ndownloader/articles/9828827/versions/10"
-        get_simple_download_zip(url)
+        article_id = 9828827
+        download_ntl_glwd(article_id)
         print("NTL: Available and downloaded successfully.")
         print("--------------------------------")
     elif item == 'glwd':
-        url = "https://figshare.com/ndownloader/articles/9828827/versions/10"
-        get_simple_download_zip(url)
+        article_id = 28519994
+        files_oi = ['GLWD_v2_0_area_by_class_ha_tif.zip']
+        download_ntl_glwd(article_id, files_oi=files_oi)
         print("GLWD: Available and downloaded successfully.")
         print("--------------------------------")
     elif item == 'Copernicus_dynamic_land_cover':
