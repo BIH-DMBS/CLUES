@@ -894,113 +894,6 @@ def spei_download(json_file,variableOI):
             print(f"An error occurred while processing the file: {e}")
 
 
-def get_simple_download_zip(json_file):
-    try:
-        parameter = get_parameter(json_file, 'bbox.json')
-        url = parameter['variables'][0]['url']
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return
-
-    file_path = os.path.join(download_folder, parameter['type'])
-    try:
-        os.makedirs(file_path, exist_ok=True)
-    except Exception as e:
-        print(f"An error occurred while creating the directory: {e}")
-        return
-
-    session = requests.Session()
-    session.headers.update({
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                      "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
-        "Referer": "https://figshare.com/",
-    })
-
-    # Step 1 — follow the full redirect chain manually to get the real CDN url
-    print(f"Resolving redirect chain for: {url}")
-    try:
-        head = session.head(url, allow_redirects=True, timeout=30)
-        final_url = head.url
-        content_type = head.headers.get("Content-Type", "")
-        content_length = int(head.headers.get("Content-Length", 0))
-        print(f"Final URL     : {final_url}")
-        print(f"Content-Type  : {content_type}")
-        print(f"Content-Length: {content_length}")
-    except Exception as e:
-        print(f"HEAD request failed: {e}")
-        return
-
-    # If HEAD doesn't give a file, fall back to a GET with stream
-    if content_length < 1_000_000 or "zip" not in content_type and "octet" not in content_type:
-        print("HEAD didn't resolve to a binary — trying GET redirect follow...")
-        try:
-            probe = session.get(url, allow_redirects=True, timeout=30, stream=True)
-            final_url = probe.url
-            content_type = probe.headers.get("Content-Type", "")
-            content_length = int(probe.headers.get("Content-Length", 0))
-            print(f"Final URL     : {final_url}")
-            print(f"Content-Type  : {content_type}")
-            print(f"Content-Length: {content_length}")
-        except Exception as e:
-            print(f"GET probe failed: {e}")
-            return
-
-        if content_length < 1_000_000:
-            # Print a snippet to see if it's an HTML error/login page
-            snippet = b""
-            for chunk in probe.iter_content(1024):
-                snippet += chunk
-                if len(snippet) >= 2048:
-                    break
-            print(f"Response snippet:\n{snippet[:2048]}")
-            print("Could not resolve a binary zip URL — see snippet above.")
-            return
-
-        # Stream from the already-open response
-        total = content_length
-        downloaded = 0
-        chunks = []
-        for chunk in probe.iter_content(chunk_size=4 * 1024 * 1024):
-            if chunk:
-                chunks.append(chunk)
-                downloaded += len(chunk)
-                print(f"Downloading: {downloaded * 100 / total:.1f}%", flush=True)
-    else:
-        # Step 2 — download from the resolved CDN URL directly
-        print("Downloading from resolved CDN URL...")
-        r = session.get(final_url, stream=True, timeout=60)
-        total = content_length
-        downloaded = 0
-        chunks = []
-        for chunk in r.iter_content(chunk_size=4 * 1024 * 1024):
-            if chunk:
-                chunks.append(chunk)
-                downloaded += len(chunk)
-                print(f"Downloading: {downloaded * 100 / total:.1f}%", flush=True)
-
-    # Step 3 — unzip
-    try:
-        content = b"".join(chunks)
-        zip_file = zipfile.ZipFile(io.BytesIO(content))
-        print("\nZIP opened successfully")
-    except zipfile.BadZipFile as e:
-        print(f"Bad zip: {e}")
-        # Dump the first bytes to diagnose
-        print(f"First 200 bytes: {content[:200]}")
-        return
-
-    try:
-        zip_file.extractall(file_path)
-        print(f"Extracted to {file_path}")
-    except Exception as e:
-        print(f"Extraction error: {e}")
-        return
-
-    print('NTL download done.')
-
-
 def get_simple_download_tif(json_file, vOI):
     # download directly the files of interst from source
     try:
@@ -1054,3 +947,74 @@ def get_bbox(bbox_jsonfile):
     parameters["bbox"] = bbox[area]
 
     return parameters
+
+
+def get_all_files(article_id):
+    files = []
+    seen = set()
+    page = 1
+    while True:
+        url = f"https://api.figshare.com/v2/articles/{article_id}/files?page={page}&page_size=100"
+        batch = requests.get(url, timeout=30).json()
+        if not batch:
+            break
+        for f in batch:
+            if f["name"] not in seen:
+                seen.add(f["name"])
+                files.append(f)
+        if len(batch) < 100:
+            break
+        page += 1
+    return files
+
+def download_ntl_glwd(json_file):
+    #article_id, out_dir="ntl", files_oi="all"
+    try:
+        parameter = get_parameter(json_file, 'bbox.json')
+        url = parameter['variables'][0]['url']
+        article_id  = parameter['variables'][0]['article_id']
+        files_oi  = parameter['variables'][0]['files_oi']
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return
+    print(article_id)
+    print(files_oi)
+    file_path = os.path.join(download_folder, parameter['type'])
+    try:
+        os.makedirs(file_path, exist_ok=True)
+    except Exception as e:
+        print(f"An error occurred while creating the directory: {e}")
+        return
+
+    files = get_all_files(article_id)
+    if files_oi != "all":
+        files = [f for f in files if f["name"] in files_oi]
+
+    print(f"Found {len(files)} file(s) to download")
+
+    for file_info in files:
+        dest = os.path.join(file_path, file_info["name"])
+        if os.path.exists(dest) and os.path.getsize(dest) == file_info["size"]:
+            print(f"  Skip (done): {file_info['name']}")
+        else:
+            print(f"  Downloading: {file_info['name']}")
+            r = requests.get(file_info["download_url"], stream=True, timeout=120,
+                            headers={"Accept-Encoding": "identity"})
+            r.raise_for_status()
+
+            with open(dest, "wb") as f:
+                downloaded = 0
+                for chunk in r.iter_content(chunk_size=4 * 1024 * 1024):
+                    if chunk:
+                        f.write(chunk)
+                        downloaded += len(chunk)
+                        print(f"    {downloaded * 100 / file_info['size']:.1f}%", end="\r", flush=True)
+            print(f"    Done {dest}")
+
+        if dest.endswith(".zip"):
+            print(f"  Extracting: {file_info['name']}")
+            with zipfile.ZipFile(dest) as zf:
+                zf.extractall(file_path)
+            os.remove(dest)
+            print(f"  Extracted and removed zip")
+

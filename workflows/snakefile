@@ -381,7 +381,7 @@ rule get_ntl:
         name = "{name}"
     shell:
         """
-        python workflows/simple_download_zip.py {params.file} > log_{params.name}.log 2>&1 && \
+        python workflows/download_ntl_glwd.py {params.file} > log_{params.name}.log 2>&1 && \
         python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.name}.log')"
         """
 
@@ -394,7 +394,7 @@ rule get_glwd:
         name = "{name}"
     shell:
         """
-        python workflows/simple_download_zip.py {params.file} > log_{params.name}.log 2>&1 && \
+        python workflows/download_ntl_glwd.py {params.file} > log_{params.name}.log 2>&1 && \
         python -c "import os; os.path.isfile(r'{output}') and os.remove('log_{params.name}.log')"
         """
         
