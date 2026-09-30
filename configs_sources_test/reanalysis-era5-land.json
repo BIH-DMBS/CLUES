@@ -10,8 +10,6 @@
     "product_type": "reanalysis",
     "format": "netcdf",
     "variables":[
-        {
-            "name":"2m_temperature"
-        }
+
     ]
 }

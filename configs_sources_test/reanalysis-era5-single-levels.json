@@ -10,14 +10,6 @@
     "product_type": "reanalysis",
     "format": "netcdf",
     "variables":[
-        {
-            "name":"2m_dewpoint_temperature"
-        },
-        {
-            "name":"2m_temperature"
-        },
-        {
-            "name":  "high_vegetation_cover"
-        }
+
     ]
 }

@@ -9,14 +9,6 @@
     "delta_t_in_h":"3",
     "format": "netcdf",
     "variables":[
-        {
-            "name":"black_carbon_aerosol_optical_depth_550nm"
-        },
-        {
-            "name":"dust_aerosol_optical_depth_550nm"
-        },
-        {
-            "name":"organic_matter_aerosol_optical_depth_550nm"
-        }
+
     ]
 }
