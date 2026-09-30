@@ -21,22 +21,22 @@ secrets_folder = f"{base_folder}\secrets"
 # This script checks the availability of all data sources used in CLUES by attempting to access/download a small sample from each source.
 
 ckecklist = [
-    #'cams',
-    #'era5_single',
-    #'espon',
-    #'EOC_Atmosphere',
-    #'EOC_WSF3D',
-    #'EOC_WSF',
-    #'treecover_copernicus',
-    #'corine_copernicus',
-    #'spei',
-    #'copernicus_dem',
+    'cams',
+    'era5_single',
+    'espon',
+    'EOC_Atmosphere',
+    'EOC_WSF3D',
+    'EOC_WSF',
+    'treecover_copernicus',
+    'corine_copernicus',
+    'spei',
+    'copernicus_dem',
     'ntl',
     'glwd',
-    #'Copernicus_dynamic_land_cover',
-    #'modis_vi',
-    #'global_treecover',
-    #'worldpop'
+    'Copernicus_dynamic_land_cover',
+    'modis_vi',
+    'global_treecover',
+    'worldpop'
 ]
 
 # to download data access token from copernicus a needed
