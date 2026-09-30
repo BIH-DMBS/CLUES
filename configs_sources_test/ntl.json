@@ -4,10 +4,6 @@
     "end_year": "2021",
     "format": "geoTIFF",
     "variables":[
-        {
-            "name":"ntl",
-            "url":"https://figshare.com/ndownloader/articles/9828827/versions/10",
-            "flagFile" : "Harmonized_DN_NTL_1992_calDMSP.tif"
-        }
+
     ]
 }

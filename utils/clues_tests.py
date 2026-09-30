@@ -4,10 +4,7 @@ import cdsapi
 import cloudscraper
 import requests
 import time
-import pandas as pd
-import geopandas as gpd
 from owslib.wms import WebMapService
-from shapely.geometry import shape
 import earthaccess
 from worldpoppy import wp_raster
 
@@ -38,28 +35,6 @@ ckecklist = [
     'global_treecover',
     'worldpop'
 ]
-
-# to download data access token from copernicus a needed
-def get_copernicus_odata_token():
-    # The function retrieves an access token from the Copernicus Data Space Ecosystem (CDSE).
-    # It extracts the access token from the response and returns it.
-    url = 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token'
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-
-    # Create a client for the CDS API
-    credential_file = os.path.join(secrets_folder, 'copernicus_credential.sct')
-
-    with open(credential_file, 'r') as f:
-            credentials = yaml.safe_load(f)
-
-    response = requests.post(url, headers=headers, data=credentials)
-
-    # Access the generated access token
-    access_token = response.json().get('access_token')
-    return access_token
-
 
 def get_all_files(article_id):
     files = []
@@ -323,78 +298,36 @@ for item in ckecklist:
         print("SPEI: Available.")
         print("--------------------------------")
     elif item == 'copernicus_dem':
-        access_token = get_copernicus_odata_token()
-
-        if access_token:
-            print("Copernicus DEM: Authentication successful, access token obtained.")
-        else:
-            print("Copernicus DEM: Authentication failed, no access token obtained.")
-        
-        c = '(10 51, 11 51, 11 50, 10 50, 10 51)'
-        url = 'https://catalogue.dataspace.copernicus.eu/odata/v1/Products'
-        collection = 'COP-DEM'
-        filt=f"((Collection/Name eq '{collection}' and\
-            OData.CSC.Intersects(area=geography'SRID=4326;POLYGON ({c})')) )"
-        url_filt=f"{url}?$filter={filt}"
-        
-        max_retries = 20
-        retry_count = 0
-        while retry_count < max_retries:
-            response = requests.get(url_filt)
-            if response.status_code == 200:
-                print('Copernicus DEM: Data available and accessible.')
-                json_lnks = requests.get(url_filt)
-                json_lnks = json_lnks.json()
-                json_lnks = pd.DataFrame.from_dict(json_lnks['value'])
-                break
-        json_lnks = json_lnks.drop_duplicates(subset=['Name'])
-        # Convert the 'GeoFootprint' column to shapely geometries
-        json_lnks['geometry'] = json_lnks['GeoFootprint'].apply(lambda x: shape(x))
-        # Create a GeoDataFrame
-        json_lnks = gpd.GeoDataFrame(json_lnks, geometry='geometry')
-        # Filter the DataFrame for asset of interest
-        json_lnks = json_lnks[json_lnks['Name'].str.contains("DEM1_SAR_DGE_90", case=False, na=False)]
-        json_lnks = json_lnks.drop_duplicates(subset=['geometry'])
-
-        headers = {"Authorization": f"Bearer {access_token}"}
-        # Create a session and update headers
-        session = requests.Session()
-        session.headers.update(headers)
-        url = 'https://download.dataspace.copernicus.eu/odata/v1/Products'
-        json_lnks = json_lnks.head(1)
-        for id in json_lnks['Id']:
-            url_download = f"{url}({id})/$value"
-
-            # Perform the GET request
-            response = session.get(url_download, stream=True)
-
-            # Check if the request was successful
-            if response.status_code == 200:
-                with open(os.path.join("test.zip"), "wb") as file:
-                    for chunk in response.iter_content(chunk_size=8192):
-                        if chunk:  # filter out keep-alive new chunks
-                            file.write(chunk)
-            else:
-                # try with new token
-                access_token = get_copernicus_odata_token()
-                headers = {"Authorization": f"Bearer {access_token}"}
-                # Create a session and update headers
-                session = requests.Session()
-                session.headers.update(headers)
-                # Perform the GET request
-                response = session.get(url_download, stream=True)
-
+        # the Copernicus DEM is downloaded from the public AWS Open Data registry (no account needed)
+        # test tile N50 E010 (covers 50-51°N, 10-11°E)
+        urls = {
+            '30m': 'https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N50_00_E010_00_DEM/Copernicus_DSM_COG_10_N50_00_E010_00_DEM.tif',
+            '90m': 'https://copernicus-dem-90m.s3.amazonaws.com/Copernicus_DSM_COG_30_N50_00_E010_00_DEM/Copernicus_DSM_COG_30_N50_00_E010_00_DEM.tif',
+        }
+        for res, url in urls.items():
+            try:
+                response = requests.head(url, timeout=10)
                 if response.status_code == 200:
-                    with open(os.path.join("test.zip"), "wb") as file:
-                        for chunk in response.iter_content(chunk_size=8192):
-                            if chunk:  # filter out keep-alive new chunks
-                                file.write(chunk)
+                    print(f"Copernicus DEM {res}: available for download")
                 else:
-                    print(f"Failed to download file. Status code: {response.status_code}")
-                    print(response.text)
-        if os.path.exists('test.zip'):
+                    print(f"Copernicus DEM {res}: not available (status code: {response.status_code})")
+            except requests.exceptions.RequestException as e:
+                print(f"Copernicus DEM {res}: an error occurred: {e}")
+
+        # download the (small) 90m test tile
+        try:
+            response = requests.get(urls['90m'], stream=True, timeout=60)
+            if response.status_code == 200:
+                with open('test.tif', 'wb') as file:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        file.write(chunk)
+            else:
+                print(f"Failed to download file. Status code: {response.status_code}")
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
+        if os.path.exists('test.tif'):
             print("DEM (Copernicus): Available and downloaded successfully.")
-            os.remove('test.zip')
+            os.remove('test.tif')
         print("--------------------------------")
     elif item == 'ntl':
         article_id = 9828827
