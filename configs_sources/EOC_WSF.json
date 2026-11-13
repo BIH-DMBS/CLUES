@@ -1,23 +1,28 @@
 {
     "type": "WordSettlementFootprint",
     "format": "geoTIFF",
+    "link": "https://geoservice.dlr.de/web/datasets?t=wsf",
+    "citation": "Marconcini et al. (2020), Outlining where humans live, the World Settlement Footprint 2015, Scientific Data 7, 242; WSF 2019 and WSF Evolution: German Aerospace Center (DLR)",
+    "units": "WSF 2015 and 2019: 255 = settlement, 0 = no settlement. WSF Evolution: year (1985-2015) in which the pixel became settlement, 0 = no settlement",
     "variables":[
         {
             "name":"WSF_2015",
             "url":"https://download.geoservice.dlr.de/WSF2015/files/",
+            "tile":"WSF2015_v2_{lon}_{lat}/WSF2015_v2_{lon}_{lat}.tif",
             "flagFile" : "WSF_2015.tif",
             "year":"2015"
-            
         },
         {
             "name":"WSF_2019",
-            "url":"https://download.geoservice.dlr.de/WSF2015/files/",
+            "url":"https://download.geoservice.dlr.de/WSF2019/files/",
+            "tile":"WSF2019_v1_{lon}_{lat}.tif",
             "flagFile" : "WSF_2019.tif",
             "year":"2019"
         },
         {
             "name":"WSF_Evo_1985_2015",
             "url":"https://download.geoservice.dlr.de/WSF_EVO/files/",
+            "tile":"WSFevolution_v1_{lon}_{lat}.tif",
             "flagFile" : "WSF_Evo_1985_2015.tif",
             "year":"2015"
         }

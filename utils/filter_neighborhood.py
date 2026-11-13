@@ -1,295 +1,61 @@
-import numpy as np
-from scipy.ndimage import convolve, generic_filter
-import rasterio
-from pyproj import Geod
+import glob
 import json
 import os
-from datetime import datetime
 import re
+from datetime import datetime
 
-import xarray as xr
-from scipy.ndimage import uniform_filter
-from math import radians, sin, cos, sqrt, atan2
+import numpy as np
+import rasterio
+from rasterio.enums import Resampling
+from rasterio.merge import merge
+from scipy.signal import oaconvolve
 
 try:
-    from .config import download_folder, configs_assets_folder, area, config_folder, secrets_folder
-except:
-    from config import download_folder, configs_assets_folder, area, config_folder, secrets_folder
+    from .config import download_folder
+except ImportError:
+    from config import download_folder
 
 
-def zevenbergen_thorne(input_tiff, output_slope_tiff, output_aspect_tiff):
-    infoTxt = """
-        ## Zevenbergen-Thorne Algorithm
+# Neighbourhood filters for the tiles of the Copernicus DEM.
+#
+# The tiles are 1 degree x 1 degree GeoTIFFs in geographic coordinates (EPSG:4326). A pixel is
+# therefore not a square in metres, and its width in degrees changes with the latitude zone of the
+# tile (e.g. 90 m product: 3 arcsec up to 50 N, 4.5 arcsec from 50 N to 60 N, 6 arcsec from 60 N).
+# All distances used by the filters are computed in metres from the latitude of the pixels.
+#
+# Every tile is processed together with a margin taken from its (up to 8) neighbouring tiles, so
+# that the results are seamless across tile borders. Where no neighbouring tile exists (border of
+# the downloaded area, sea), the filters use the available pixels only.
 
-        ### Function: ZevenbergenThorne(DEM)
+# WGS84 ellipsoid
+WGS84_A = 6378137.0
+WGS84_E2 = 6.69437999014e-3
 
-        1. **Get the dimensions of the DEM**
-            - `rows = number of rows in DEM`
-            - `cols = number of columns in DEM`
 
-        2. **Initialize Slope and Aspect arrays with the same dimensions as DEM**
-            - `Slope = array of size (rows, cols)`
-            - `Aspect = array of size (rows, cols)`
-
-        3. **Loop through each cell in the DEM (excluding the border cells)**
-            - `for i from 1 to rows-2:`
-                - `for j from 1 to cols-2:`
-                    - **Get the elevation values of the 3x3 neighborhood**
-                        - `z1 = DEM[i-1][j-1]`
-                        - `z2 = DEM[i-1][j]`
-                        - `z3 = DEM[i-1][j+1]`
-                        - `z4 = DEM[i][j-1]`
-                        - `z5 = DEM[i][j]`  (Center cell)
-                        - `z6 = DEM[i][j+1]`
-                        - `z7 = DEM[i+1][j-1]`
-                        - `z8 = DEM[i+1][j]`
-                        - `z9 = DEM[i+1][j+1]`
-
-                    - **Calculate the partial derivatives**
-                        - `dzdx = ((z3 + 2*z6 + z9) - (z1 + 2*z4 + z7)) / (8 * cell_size)`
-                        - `dzdy = ((z1 + 2*z2 + z3) - (z7 + 2*z8 + z9)) / (8 * cell_size)`
-
-                    - **Calculate the slope**
-                        - `Slope[i][j] = sqrt(dzdx^2 + dzdy^2)`
-
-                    - **Calculate the aspect**
-                        - `Aspect[i][j] = atan2(dzdy, -dzdx)`
-                        - `if Aspect[i][j] < 0:`
-                            - `Aspect[i][j] += 2 * PI`
-
-        4. **Return Slope and Aspect**
-            - `return Slope, Aspect`
+def pixel_size_m(latitude, xres_deg, yres_deg):
     """
-    try:
-        with rasterio.open(input_tiff) as src:
-            elevation = src.read(1)
-            transform = src.transform
-            profile = src.profile
-
-            # Calculate the partial derivatives
-            dzdx = (np.roll(elevation, -1, axis=1) - np.roll(elevation, 1, axis=1)) / (2 * transform.a)
-            dzdy = (np.roll(elevation, -1, axis=0) - np.roll(elevation, 1, axis=0)) / (2 * transform.e)
-
-            # Calculate the slope
-            slope = np.sqrt(dzdx**2 + dzdy**2)
-
-            # Calculate the aspect
-            aspect = np.arctan2(dzdy, -dzdx)
-            aspect = np.where(aspect < 0, aspect + 2 * np.pi, aspect)
-
-            # Update profile for slope and aspect
-            profile.update(dtype=rasterio.float32, count=1, compress='lzw')
-
-            # Write the slope to a new GeoTIFF
-            with rasterio.open(output_slope_tiff, 'w', **profile) as dst:
-                dst.write(slope.astype(rasterio.float32), 1)
-
-            # Write the aspect to a new GeoTIFF
-            with rasterio.open(output_aspect_tiff, 'w', **profile) as dst:
-                dst.write(aspect.astype(rasterio.float32), 1)
-    except Exception as e:
-        print(f"Error processing {input_tiff}: {e}")
-        raise e
-
-
-def zevenbergen_thorne_folder(file_list, in_path, out_path):
-    for tiff in file_list:
-        input_tiff = os.path.join(in_path,tiff)
-        output_slope_tiff = os.path.join(out_path,f"slope_{tiff}")
-        output_aspect_tiff = os.path.join(out_path,f"aspect_{tiff}")
-        zevenbergen_thorne(input_tiff, output_slope_tiff, output_aspect_tiff)
-
-
-def circular_kernel(radius):
-    """Create a circular kernel with the given radius."""
-    L = np.arange(-radius, radius+1)
-    X, Y = np.meshgrid(L, L)
-    kernel = (X**2 + Y**2) <= radius**2
-    return kernel / kernel.sum()
-
-
-def mean_filter_geotiff(input_tiff, output_tiff, radius):
-    try:
-        # Open the input GeoTIFF file
-        with rasterio.open(input_tiff) as src:
-            # Read the input data
-            image = src.read(1)
-            profile = src.profile
-
-            # Create a circular kernel
-            kernel = circular_kernel(radius)
-
-            # Apply mean filter using convolve from scipy
-            filtered_image = convolve(image, kernel, mode='reflect')
-
-            # Update profile for the output GeoTIFF
-            profile.update(dtype=rasterio.float32, count=1, compress='lzw')
-
-            # Write the filtered image to a new GeoTIFF file
-            with rasterio.open(output_tiff, 'w', **profile) as dst:
-                dst.write(filtered_image.astype(rasterio.float32), 1)
-    except Exception as e:
-        print(f"Error processing {input_tiff}: {e}")
-        raise e
-
-
-def calculate_pixel_size_geographic(geo_tiff_path):
-    try:
-        # compute the average width/height of a pixel in meters given geotiff with CRS geographic(degrees) 
-        with rasterio.open(geo_tiff_path) as src:
-            # Get transform and resolution in degrees
-            transform = src.transform
-            pixel_width_deg = transform.a  # Pixel size in degrees (longitude)
-            pixel_height_deg = abs(transform.e)  # Pixel size in degrees (latitude)
-
-
-            # Get the latitude of the raster's center
-            center_lat = (src.bounds.top + src.bounds.bottom) / 2
-            # Get the longitzude of the raster's center
-            center_lon = (src.bounds.left + src.bounds.right) / 2
-
-            # Approximate conversion from degrees to meters at the center latitude
-            geod = Geod(ellps="WGS84")
-            _, width_meters, _ = geod.inv(src.bounds.left, center_lat, src.bounds.left + pixel_width_deg, center_lat)
-            _, height_meters, _ = geod.inv(src.bounds.left, center_lon, src.bounds.left + pixel_height_deg, center_lon)
-            
-            return np.abs(width_meters+height_meters)/2
-    except Exception as e:
-        print(f"Error calculating pixel size for {geo_tiff_path}: {e}")
-        raise e
-
-
-def getFilterRadiusPixel(geo_tiff_path, radius_in_meter):
-    resolution = calculate_pixel_size_geographic(geo_tiff_path)
-    radius_in_pixel = np.ceil((radius_in_meter-resolution/2)/resolution)
-    return int(radius_in_pixel)
+    Size of a pixel in metres at the given latitude(s).
+    Returns (width east-west, height north-south).
+    """
+    phi = np.radians(latitude)
+    w = 1.0 - WGS84_E2 * np.sin(phi) ** 2
+    radius_meridian = WGS84_A * (1.0 - WGS84_E2) / w ** 1.5
+    radius_parallel = WGS84_A / np.sqrt(w) * np.cos(phi)
+    return np.radians(xres_deg) * radius_parallel, np.radians(yres_deg) * radius_meridian
 
 
 def list_tif_files(folder_path):
-    # List to store the names of .tif files
-    tif_files = []
-
-    # Iterate over all the files in the given folder
-    for file_name in os.listdir(folder_path):
-        # Check if the file ends with .tif
-        if file_name.endswith('.tif'):
-            tif_files.append(file_name)
-    return tif_files
+    return sorted(f for f in os.listdir(folder_path) if f.endswith('.tif'))
 
 
 def extract_coordinates(filename):
-    match = re.search(r'N(\d+)_00_E(\d+)_00', filename)
-    if match:
-        lat = int(match.group(1))
-        lon = int(match.group(2))
-        return lon, lat
-    match = re.search(r'N(\d+)_00_W(\d+)_00', filename)
-    if match:
-        lat = int(match.group(1))
-        lon = -int(match.group(2))
-        return lon, lat
-    match = re.search(r'S(\d+)_00_E(\d+)_00', filename)
-    if match:
-        lat = -int(match.group(1))
-        lon = int(match.group(2))
-        return lon, lat
-    match = re.search(r'S(\d+)_00_W(\d+)_00', filename)
-    if match:
-        lat = -int(match.group(1))
-        lon = -int(match.group(2))
-        return lon, lat
-    return None
-
-
-def nan_convolve(image, kernel):
-    # Create mask of valid (non-NaN) values
-    nan_mask = np.isnan(image)
-    valid_mask = (~nan_mask).astype(float)
-
-    image = np.nan_to_num(image, nan=0.0)
-
-    convolved = convolve(image, kernel, mode='reflect')
-    normalization = convolve(valid_mask, kernel, mode='reflect')
-
-    # Avoid division by zero
-    with np.errstate(invalid='ignore', divide='ignore'):
-        result = convolved / normalization
-        result[normalization == 0] = np.nan
-
-    return result
-
-
-def apply_filter_with_adjacent_images(file_list, in_path, out_path, radius, mode, radius_in_meter):
-    # Read all images and store them in a dictionary with their coordinates as keys
-    images = {}
-    profiles = {}
-    files = {}
-    for file in file_list:
-        coords = extract_coordinates(file)
-        print('...')
-        print(coords)
-        print('..')
-        with rasterio.open(os.path.join(in_path, file)) as src:
-            images[coords] = src.read(1)
-            profiles[coords] = src.profile
-            files[coords] = file
-    
-    # Get the unique coordinates
-    unique_coords = list(images.keys())
-    kernel = circular_kernel(radius)
-    # Apply mean filter to each image using adjacent images at the margins
-    for coords in unique_coords:
-        img = images[coords]
-        profile = profiles[coords]
-        # Get the window size for the mean filter
-        window_size = 2 * radius + 1
-        # Create an empty array to store the enlarged image
-        enlarged_img = np.empty((img.shape[0] + 2 * radius, img.shape[1] + 2 * radius))
-        # Copy the original image to the center of the enlarged image
-        enlarged_img[radius:-radius, radius:-radius] = img
-
-        # Get adjacent images and copy their margins to the enlarged image
-        for adj_coords in [x for x in unique_coords if x != coords]:
-            adj_img = images[adj_coords]
-            print(adj_img.shape)
-            print(enlarged_img.shape)
-            if adj_coords[0] == coords[0]:  # Same x coordinate
-                if adj_coords[1] == coords[1]+1:  # Bottom adjacent image
-                    enlarged_img[radius:-radius,:radius] = adj_img[:,-radius:]
-                elif adj_coords[1] == coords[1]-1:  # Bottom adjacent image
-                    enlarged_img[radius:-radius, -radius:] = adj_img[:,:radius]
-            elif adj_coords[1] == coords[1]:  # Same y coordinate
-                if adj_coords[0] == coords[0]-1:  # Left adjacent image
-                    enlarged_img[:radius, radius:-radius] = adj_img[-radius:,:]
-                elif adj_coords[0] == coords[0]+1:  # Right adjacent image
-                    enlarged_img[-radius:, radius:-radius] = adj_img[:radius, :]
-                    
-        if mode == 'mean':
-            # Apply mean filter using convolve from scipy
-            filtered_image = nan_convolve(enlarged_img, kernel)
-        elif mode == 'std':
-            # Mean of x
-            mean = nan_convolve(enlarged_img, kernel)
-            # Mean of x^2
-            mean_of_square = nan_convolve(enlarged_img**2, kernel)
-            # std = sqrt(E[x^2] - (E[x])^2)
-            filtered_image = np.sqrt(mean_of_square - mean**2)
-        
-        # Crop the filtered image to the original size
-        filtered_image = filtered_image[radius:-radius, radius:-radius]
-        
-        # Save the filtered image
-        output_tif = os.path.join(out_path,f"{mode}_{files[coords]}_{radius_in_meter}.tif")
-        try:
-            # Update profile for the output GeoTIFF
-            profile.update(dtype=rasterio.float32, count=1, compress='lzw')
-            print(profile)
-            # Write the filtered image to a new GeoTIFF file
-            with rasterio.open(output_tif, 'w', **profile) as dst:
-                dst.write(filtered_image.astype(rasterio.float32), 1)
-        except Exception as e:
-            print(f"Error writing {output_tif}: {e}")
-            raise e
+    # lower left corner (lon, lat) of a tile from its name, e.g. ..._N53_00_E013_00_DEM.tif -> (13, 53)
+    match = re.search(r'([NS])(\d+)_00_([EW])(\d+)_00', filename)
+    if not match:
+        return None
+    lat = int(match.group(2)) * (1 if match.group(1) == 'N' else -1)
+    lon = int(match.group(4)) * (1 if match.group(3) == 'E' else -1)
+    return lon, lat
 
 
 def extract_radius(s):
@@ -299,102 +65,229 @@ def extract_radius(s):
     return None
 
 
-def compute_neighborhood(json_file, variableOI, mode):
+def index_tiles(file_list, in_path):
+    # {(lon, lat): path} for all tiles of the folder
+    tiles = {}
+    for file in file_list:
+        coords = extract_coordinates(file)
+        if coords is None:
+            raise ValueError(f"Cannot read the tile position from the file name '{file}'")
+        tiles[coords] = os.path.join(in_path, file)
+    return tiles
+
+
+def read_with_margin(tiles, coords, margin_x, margin_y):
+    """
+    Read the tile at `coords` (lon, lat) with a margin of margin_x / margin_y pixels on every side.
+
+    The margin is filled from the neighbouring tiles. Neighbours in another latitude zone have a
+    different pixel width, they are resampled (bilinear) to the pixel grid of the tile. Pixels of
+    the margin without data are NaN. The pixels of the tile itself are returned unchanged.
+
+    Returns (array of shape (rows + 2*margin_y, columns + 2*margin_x), dataset profile of the tile).
+    """
+    lon, lat = coords
+    paths = [tiles[coords]]  # the tile itself first, its pixels have priority
+    for dlat in (1, 0, -1):
+        for dlon in (-1, 0, 1):
+            neighbour = (lon + dlon, lat + dlat)
+            if neighbour != coords and neighbour in tiles:
+                paths.append(tiles[neighbour])
+
+    sources = [rasterio.open(p) for p in paths]
     try:
-        # Load JSON file as a dictionary
-        with open(json_file, 'r') as file:
-            parameters = json.load(file)
-
-        for v in parameters['variables']:
-            print(v['name'])
-            if v['name']==variableOI:
-                variable = v
-                break
-    except Exception as e:
-        print(f"Error reading JSON file {json_file}: {e}")
-        raise e
-
-    in_path = os.path.join(download_folder, parameters['type'], v['name'])
-    out_path = os.path.join(download_folder, 'neigborhoods', parameters['type'], v['name'],mode)
-    # List of .tif files in the folder
-    tif_files = list_tif_files(in_path)
-    print('files to process:')
-    print(tif_files)
-    
-    radius_in_meter = extract_radius(mode)
-    if 'mean' in mode:
-        radius_in_pxl = getFilterRadiusPixel(os.path.join(in_path,tif_files[0]), radius_in_meter)
-        apply_filter_with_adjacent_images(tif_files, in_path, out_path, radius_in_pxl, 'mean', radius_in_meter)
-    elif 'std' in mode:
-        radius_in_pxl = getFilterRadiusPixel(os.path.join(in_path,tif_files[0]), radius_in_meter)
-        apply_filter_with_adjacent_images(tif_files, in_path, out_path, radius_in_pxl, 'std', radius_in_meter)
-    elif 'zevenbergen_thorne':
-        zevenbergen_thorne_folder(tif_files, in_path, out_path)
-    else:
-        print('filter mode ' + mode + 'not available')
-    
-    # Get the current timestamp
-    current_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    try:
-        flag_filename = os.path.join(out_path, "done.txt")
-        # Write the timestamp to a text file
-        with open(flag_filename, "w") as file:
-            file.write("Data was downloaded: ")
-            file.write(current_timestamp)
-    except Exception as e:
-        print(f"Error writing flag file {flag_filename}: {e}")
-        raise e
-
-###########################
-# Define Haversine distance function (meters)
-def haversine(lat1, lon1, lat2, lon2):
-    R = 6371000  # Earth radius in meters
-    phi1 = radians(lat1)
-    phi2 = radians(lat2)
-    dphi = radians(lat2 - lat1)
-    dlambda = radians(lon2 - lon1)
-
-    a = sin(dphi/2)**2 + cos(phi1)*cos(phi2)*sin(dlambda/2)**2
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
-    return R * c
+        src = sources[0]
+        profile = src.profile.copy()
+        xres, yres = src.res
+        bounds = (
+            src.bounds.left - margin_x * xres,
+            src.bounds.bottom - margin_y * yres,
+            src.bounds.right + margin_x * xres,
+            src.bounds.top + margin_y * yres,
+        )
+        data, _ = merge(sources, bounds=bounds, res=(xres, yres), nodata=np.nan, dtype='float32',
+                        indexes=[1], resampling=Resampling.bilinear, method='first')
+        data = data[0]
+        expected = (src.height + 2 * margin_y, src.width + 2 * margin_x)
+        if data.shape != expected:
+            raise RuntimeError(f"Unexpected shape {data.shape} instead of {expected} for {paths[0]}")
+        # make sure the tile itself is exactly the original data
+        data[margin_y:margin_y + src.height, margin_x:margin_x + src.width] = src.read(1)
+        if src.nodata is not None:
+            data[data == src.nodata] = np.nan
+    finally:
+        for s in sources:
+            s.close()
+    return data, profile
 
 
-def nanmean_filter(data, size):
-    # Create mask of valid (non-NaN) values
-    valid_mask = np.isfinite(data).astype(float)
-    data_filled = np.nan_to_num(data, nan=0.0)
+def elliptical_kernel(radius_in_meter, dx, dy):
+    """
+    Kernel (1 inside, 0 outside) of all pixels whose centre is at most radius_in_meter away from the
+    centre pixel. dx, dy: pixel width and height in metres. Because the pixels are not square in
+    metres the circle is an ellipse in pixels.
+    """
+    rx = int(radius_in_meter // dx)
+    ry = int(radius_in_meter // dy)
+    jj, ii = np.meshgrid(np.arange(-rx, rx + 1), np.arange(-ry, ry + 1))
+    return ((jj * dx) ** 2 + (ii * dy) ** 2 <= radius_in_meter ** 2).astype(float)
 
-    # Apply uniform filter to both data and mask
-    filtered_sum = uniform_filter(data_filled, size=size, mode='nearest')
-    count_valid = uniform_filter(valid_mask, size=size, mode='nearest')
 
-    # Avoid division by zero
+def neighbourhood_mean_std(data, kernel):
+    """
+    Mean and standard deviation of all valid (non NaN) pixels under the kernel, for every pixel.
+    Returns (mean, std), NaN where no valid pixel lies under the kernel.
+    """
+    valid = np.isfinite(data)
+    if not valid.any():
+        nan = np.full(data.shape, np.nan)
+        return nan, nan.copy()
+    # remove the overall level first, this keeps the sums of squares small and the result precise
+    offset = float(data[valid].mean())
+    x = np.where(valid, data.astype(float) - offset, 0.0)
+
+    count = np.rint(oaconvolve(valid.astype(float), kernel, mode='same'))
+    sum_x = oaconvolve(x, kernel, mode='same')
+    sum_xx = oaconvolve(x * x, kernel, mode='same')
+
     with np.errstate(invalid='ignore', divide='ignore'):
-        filtered = filtered_sum / count_valid
-        filtered[count_valid == 0] = np.nan
+        mean = sum_x / count
+        variance = sum_xx / count - mean ** 2
+    std = np.sqrt(np.clip(variance, 0.0, None))
+    std[count == 1] = 0.0  # a single value has no spread, avoid rounding noise
+    mean = mean + offset
+    mean[count == 0] = np.nan
+    std[count == 0] = np.nan
+    return mean, std
 
-    return filtered
+
+def slope_aspect(data, dx, dy):
+    """
+    Slope and aspect with the method of Zevenbergen and Thorne (1987): central differences of the
+    four direct neighbours.
+
+    data: elevation in metres including a margin of one pixel on every side (NaN where unknown)
+    dx:   pixel width in metres, one value per row of the tile (array of shape (rows, 1)) or a scalar
+    dy:   pixel height in metres
+
+    Returns (slope, aspect) for the tile without the margin:
+      slope   steepness in degrees, 0 (flat) to 90 (vertical)
+      aspect  direction the slope faces (downhill direction) in degrees clockwise from north,
+              0 = north, 90 = east, 180 = south, 270 = west, NaN for flat pixels
+    At the border of the data a one-sided difference is used.
+    """
+    data = data.astype(float)
+    centre = data[1:-1, 1:-1]
+    north, south = data[:-2, 1:-1], data[2:, 1:-1]
+    west, east = data[1:-1, :-2], data[1:-1, 2:]
+
+    def difference(plus, minus, step):
+        # derivative in the direction from `minus` to `plus`
+        both = np.isfinite(plus) & np.isfinite(minus)
+        only_plus = np.isfinite(plus) & ~np.isfinite(minus)
+        only_minus = ~np.isfinite(plus) & np.isfinite(minus)
+        result = np.full(centre.shape, np.nan)
+        with np.errstate(invalid='ignore'):
+            result = np.where(both, (plus - minus) / (2.0 * step), result)
+            result = np.where(only_plus, (plus - centre) / step, result)
+            result = np.where(only_minus, (centre - minus) / step, result)
+        return result
+
+    dz_east = difference(east, west, dx)      # rise towards east per metre
+    dz_north = difference(north, south, dy)   # rise towards north per metre
+
+    slope = np.degrees(np.arctan(np.hypot(dz_east, dz_north)))
+    aspect = np.degrees(np.arctan2(-dz_east, -dz_north)) % 360.0
+    aspect[(dz_east == 0) & (dz_north == 0)] = np.nan
+    return slope, aspect
 
 
-def nanstd_filter(data, size):
-    # Create mask of valid values
-    valid_mask = np.isfinite(data).astype(float)
-    data_filled = np.nan_to_num(data, nan=0.0)
+def write_result(path, array, profile, tags):
+    profile = profile.copy()
+    profile.update(dtype=rasterio.float32, count=1, compress='lzw', nodata=np.nan)
+    with rasterio.open(path, 'w', **profile) as dst:
+        dst.write(array.astype(rasterio.float32), 1)
+        dst.update_tags(**tags)
 
-    # First moment (mean)
-    mean = uniform_filter(data_filled, size=size, mode='nearest') / \
-           uniform_filter(valid_mask, size=size, mode='nearest')
 
-    # Second moment (mean of squares)
-    mean_sq = uniform_filter(data_filled**2, size=size, mode='nearest') / \
-              uniform_filter(valid_mask, size=size, mode='nearest')
+def tile_geometry(profile):
+    # latitude of the centre of every row and of the tile centre, pixel size in degrees
+    transform = profile['transform']
+    xres, yres = transform.a, abs(transform.e)
+    row_latitudes = transform.f - (np.arange(profile['height']) + 0.5) * yres
+    return row_latitudes, float(row_latitudes.mean()), xres, yres
 
-    # Compute std = sqrt(E[x^2] - (E[x])^2)
-    std = np.sqrt(mean_sq - mean**2)
 
-    # Set std to NaN where there are no valid pixels
-    count_valid = uniform_filter(valid_mask, size=size, mode='nearest')
-    std[count_valid == 0] = np.nan
+def zevenbergen_thorne_folder(file_list, in_path, out_path):
+    tiles = index_tiles(file_list, in_path)
+    for coords in sorted(tiles):
+        tiff = os.path.basename(tiles[coords])
+        data, profile = read_with_margin(tiles, coords, 1, 1)
+        row_latitudes, _, xres, yres = tile_geometry(profile)
+        dx, dy = pixel_size_m(row_latitudes, xres, yres)
+        slope, aspect = slope_aspect(data, dx.reshape(-1, 1), float(np.mean(dy)))
+        write_result(os.path.join(out_path, f"slope_{tiff}"), slope, profile,
+                     {'units': 'degrees', 'method': 'Zevenbergen and Thorne (1987)'})
+        write_result(os.path.join(out_path, f"aspect_{tiff}"), aspect, profile,
+                     {'units': 'degrees clockwise from north, direction the slope faces',
+                      'method': 'Zevenbergen and Thorne (1987)'})
+        print(f"slope and aspect written for {tiff}")
 
-    return std
 
+def apply_filter_with_adjacent_images(file_list, in_path, out_path, mode, radius_in_meter):
+    # mean or standard deviation of the elevation within radius_in_meter around every pixel
+    if mode not in ('mean', 'std'):
+        raise ValueError(f"filter mode '{mode}' not available")
+    tiles = index_tiles(file_list, in_path)
+    for coords in sorted(tiles):
+        tiff = os.path.basename(tiles[coords])
+        with rasterio.open(tiles[coords]) as src:
+            profile = src.profile.copy()
+        _, centre_latitude, xres, yres = tile_geometry(profile)
+        dx, dy = pixel_size_m(centre_latitude, xres, yres)
+        kernel = elliptical_kernel(radius_in_meter, float(dx), float(dy))
+        margin_y, margin_x = kernel.shape[0] // 2, kernel.shape[1] // 2
+
+        data, profile = read_with_margin(tiles, coords, margin_x, margin_y)
+        mean, std = neighbourhood_mean_std(data, kernel)
+        result = mean if mode == 'mean' else std
+        result = result[margin_y:result.shape[0] - margin_y, margin_x:result.shape[1] - margin_x]
+
+        output_tif = os.path.join(out_path, f"{mode}_{tiff}_{radius_in_meter}.tif")
+        write_result(output_tif, result, profile,
+                     {'units': 'metres', 'filter': mode, 'radius_in_meter': str(radius_in_meter)})
+        print(f"{mode} within {radius_in_meter} m written for {tiff}")
+
+
+def compute_neighborhood(json_file, variableOI, mode):
+    with open(json_file, 'r') as file:
+        parameters = json.load(file)
+
+    variable = next((v for v in parameters['variables'] if v['name'] == variableOI), None)
+    if variable is None:
+        raise ValueError(f"Variable '{variableOI}' is not listed in '{json_file}'")
+
+    in_path = os.path.join(download_folder, parameters['type'], variable['name'])
+    out_path = os.path.join(download_folder, 'neigborhoods', parameters['type'], variable['name'], mode)
+    os.makedirs(out_path, exist_ok=True)
+    # results of an earlier run (maybe for another area) must not remain in the folder
+    for old_file in glob.glob(os.path.join(out_path, '*.tif')):
+        os.remove(old_file)
+
+    tif_files = list_tif_files(in_path)
+    if not tif_files:
+        raise RuntimeError(f"No .tif files found in {in_path}")
+    print(f"{len(tif_files)} files to process")
+
+    if mode == 'zevenbergen_thorne':
+        zevenbergen_thorne_folder(tif_files, in_path, out_path)
+    elif mode.startswith(('mean_radius_', 'std_radius_')):
+        radius_in_meter = extract_radius(mode)
+        apply_filter_with_adjacent_images(tif_files, in_path, out_path, mode.split('_')[0], radius_in_meter)
+    else:
+        raise ValueError(f"filter mode '{mode}' not available")
+
+    # flag file that tells snakemake the computation is done
+    with open(os.path.join(out_path, "done.txt"), "w") as file:
+        file.write("Neighbourhood was computed: ")
+        file.write(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))

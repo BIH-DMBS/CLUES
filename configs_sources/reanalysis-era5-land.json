@@ -3,10 +3,13 @@
     "source":"reanalysis-era5-land",
     "file":"reanalysis-era5-land.json",
     "link":"https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land",
+    "doi": "10.24381/cds.e2161bac",
+    "citation": "Munoz Sabater, J. (2019), ERA5-Land hourly data from 1950 to present, Copernicus Climate Change Service (C3S) Climate Data Store (CDS), https://doi.org/10.24381/cds.e2161bac",
     "time zone":"coordinated universal time",
     "start_year": "1950",
     "end_year": "2025",
     "delta_t_in_h":"1",
+    "grid_resolution_deg": 0.1,
     "product_type": "reanalysis",
     "format": "netcdf",
     "variables":[

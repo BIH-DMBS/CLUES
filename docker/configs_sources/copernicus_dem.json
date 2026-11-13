@@ -5,7 +5,7 @@
 
         {
             "name":"Digital_Geospatial_Elevation_Data_90m",
-            "url":"https://prism-dem-open.copernicus.eu/pd-desk-open-access/publicDemURLs",
+            "url":"https://copernicus-dem-90m.s3.amazonaws.com",
             "resolution":"DEM1_SAR_DGE_90",
             "neighborhood":{
                 "mean":[500,1000],

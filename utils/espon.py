@@ -1,241 +1,113 @@
 import requests
 import json
 import os
+import shutil
 import geopandas as gpd
 import pandas as pd
 import zipfile
-import re
-from shapely import wkt
-from filelock import FileLock, Timeout
+from filelock import FileLock
+import cloudscraper
 import utils
+from espon_targets import sanitize_filename, find_target
 
 try:
-    from .config import download_folder, espon_filename_length
-except:
-    from config import download_folder, espon_filename_length
+    from .config import download_folder, tmp_folder, espon_filename_length
+except ImportError:
+    from config import download_folder, tmp_folder, espon_filename_length
 
 
-def sanitize_filename(filename):
-    # Define the valid characters for a filename with whitespace
-    valid_chars = re.compile(r'[^a-zA-Z0-9. _-]')
-    # Remove invalid characters
-    sanitized_filename = valid_chars.sub('', filename)
-    # Define the valid characters for a filename withou whitespace
-    valid_chars = re.compile(r'[^a-zA-Z0-9._-]')
-    # Replace whitespaces with an underscore
-    sanitized_filename = valid_chars.sub('_', sanitized_filename)  
-    return sanitized_filename
+API_INDICATORS = "https://database.espon.eu/api/select/indicators/"
+PACKAGE_CATEGORIES = {'Indicator package (CSV+XLS)': 'csv', 'Indicator package (SHAPE)': 'shape'}
 
 
-def get_feature_id(data, dimension, name):
-    # from the data given in the config espon file get the mapping between group/dimension
-    # and the several features assoiated with the dimension, check the following example:
-    '''
-     {
-            "dimension": [
-                "Deaths by age groups and gender"
-            ],
-            "features": [
-                {
-                    "csv": "https://database.espon.eu/private-media/object/3/ind_3_d_f_0-4_csv.zip",
-                    "shape": "https://database.espon.eu/private-media/object/3/ind_3_d_f_0-4_shp.zip",
-                    "id": 3,
-                    "name": "Deaths - female - age group 0-4"
-                },
-                {
-                    "csv": "https://database.espon.eu/private-media/object/4/ind_4_d_f_5-9_csv_CdWt3ba.zip",
-                    "shape": "https://database.espon.eu/private-media/object/4/ind_4_d_f_5-9_shp_QMUjEgM.zip",
-                    "id": 4,
-                    "name": "Deaths - female - age group 5-9"
-                },
-    '''
-    for variable in data.get("variables", []):
-        if dimension == sanitize_filename(str(variable["dimension"]))[0:espon_filename_length]:
-            for feature in variable.get("features", []):
-                if sanitize_filename(feature["name"])[0:espon_filename_length] == name:
-                    return [ feature.get("id"), variable["dimension"]]
-    return None
-
-
-import cloudscraper
-
-
-def generate_espon_json():
-    # the espon.json should not created by hand
-    # use this fuvtion to generate this file from the data available online
-    # use avaible metadata from espon to create the json that covers data avaible on espon 
-    # can be used and modified as the espon.json given in the config_sources folder
-    
-    # URL of the web source
-    base_url = "https://database.espon.eu/api/select/indicators/"
-    params = {
-        "format": "json",
-        "limit": 50,
-        "offset": 0
-    }
-    scraper = cloudscraper.create_scraper()
-
-    all_results = []
-
+def fetch_espon_indicators(scraper=None, page_size=50):
+    """
+    Read the descriptions of all indicators from the interface of the ESPON database, page by page.
+    Any failed page is an error: an incomplete list must never become a configuration.
+    """
+    if scraper is None:
+        scraper = cloudscraper.create_scraper()
+    indicators = []
+    offset = 0
     while True:
-        # Make an HTTP GET request to the web source with pagination parameters
-        #response = requests.get(base_url, params=params)
-        response = scraper.get(base_url, params=params)
-        # Check if the request was successful
-        if response.status_code == 200:
-            # Parse the JSON response
-            data = response.json()
-
-            # Append current page results to all_results
-            all_results.extend(data.get("results", []))
-
-            # Check if there are more pages
-            next_url = data.get("next")
-            if next_url:
-                # Update offset parameter for the next page
-                params["offset"] += params["limit"]
-            else:
-                break  # Exit loop if there are no more pages
-        else:
-            print(f"Failed to retrieve data: {response.status_code}")
+        response = scraper.get(API_INDICATORS, params={"format": "json", "limit": page_size, "offset": offset}, timeout=120)
+        if response.status_code != 200:
+            raise RuntimeError(f"ESPON interface answered with status code {response.status_code} at offset {offset}")
+        data = response.json()
+        indicators.extend(data.get("results", []))
+        if not data.get("next"):
             break
-        
-    # soret dict by id
-    all_results_sorted = sorted(all_results, key=lambda x: x['id'])
-
-    # remove double entries in the dict
-    seen_ids = {}
-    unique_results_sorted = []
-    for item in all_results_sorted:
-        if item['id'] not in seen_ids:
-            unique_results_sorted.append(item)
-            seen_ids[item['id']] = True
-
-    # unique_dict_list now contains only dictionaries with unique 'id's
-
-    keys = ['id','name', 'years_string'] # add years_string here
-
-    erg = []
-    for d in unique_results_sorted:
-        tmp = {}
-        if d['package']:
-            if len(d['package'])==2:
-                if d['parents']:
-                    tmp['dimension'] = set([p['parent_name'] for p in d['parents']])
-                else: 
-                    tmp['dimension'] = {'no parent'}
-                for x in d['package']: # always two (shape and csv)
-                    if x['category'] == 'Indicator package (CSV+XLS)':
-                        tmp['csv'] = x['url'] 
-                    if x['category'] == 'Indicator package (SHAPE)':
-                        tmp['shape'] = x['url']
-                for k in keys:
-                    tmp[k] = d[k]
-                erg.append(tmp)
-                
-    # Create an empty dictionary to keep track of merged results
-    merged_dict = {}
-
-    # Iterate over the list of dictionaries
-    for item in erg:
-        # Extract the id and the other key-value pairs
-        id_value = frozenset(item['dimension'])  # Convert set to frozenset to make it hashable
-        features = {k: v for k, v in item.items() if k != 'dimension'}
-        
-        # Check if the id is already in the merged_dict
-        if id_value not in merged_dict:
-            # If not, create a new entry with the 'features' list
-            merged_dict[id_value] = {'dimension': list(item['dimension']), 'features': [features]}
-        else:
-            # If it is, append the features to the existing 'features' list
-            merged_dict[id_value]['features'].append(features)
-
-    # Convert the merged_dict to a list of dictionaries
-    result = list(merged_dict.values())
-
-    result = {"type":"espon",
-        "source":"espon",
-        "link": "https://database.espon.eu/api/",
-        "citation":"...",
-        "format": "geopandas dataframe with shape",
-        "variables":result}
-
-    # Save the result to a JSON file
-    with open('espon.json', 'w') as json_file:
-        json.dump(result, json_file, indent=4)   
+        offset += page_size
+    expected = data.get("count")
+    n_ids = len({item['id'] for item in indicators})
+    if expected is not None and n_ids != expected:
+        raise RuntimeError(f"ESPON interface announced {expected} indicators, {n_ids} were delivered")
+    return indicators
 
 
-def clear_folder(folder_path, name, shp_zip_file):
-    # Iterate over all files in the specified folder
-    for filename in os.listdir(folder_path):
-        # Construct full file path
-        file_path = os.path.join(folder_path, filename)
-        
-        # Check if it is a file and has a .zip extension
-        if os.path.isfile(file_path) and not filename.endswith('.csv') and name in file_path:
-            os.remove(file_path)
-    # Iterate over the list and delete each file
-    for file_path in shp_zip_file:
-        try:
-            if os.path.isfile(file_path):
-                os.remove(file_path)
-                print(f"Deleted: {file_path}")
-            else:
-                print(f"File not found: {file_path}")
-        except Exception as e:
-            print(f"Error deleting file {file_path}: {e}")
-    print("Tempoary files removed.")
+def build_espon_config(indicators):
+    """
+    Make the content of espon.json from the indicator descriptions of the ESPON interface.
+
+    An indicator is taken if it offers both packages (shapefiles and csv). Indicators are grouped by
+    the set of their parent indicators ('dimension', this becomes the folder name). The result depends
+    only on the content of the list: indicators are ordered by id and the parents by name.
+    Returns the configuration and the list of the indicators that were left out, as (id, name, reason).
+    """
+    unique = {}
+    for item in indicators:
+        unique.setdefault(item['id'], item)
+
+    groups = {}
+    skipped = []
+    for item_id in sorted(unique):
+        item = unique[item_id]
+        urls = {}
+        for package in item.get('package') or []:
+            key = PACKAGE_CATEGORIES.get(package.get('category'))
+            if key and package.get('url'):
+                urls[key] = package['url']
+        missing = [key for key in ('csv', 'shape') if key not in urls]
+        if missing:
+            skipped.append((item_id, item.get('name'), f"no {' and no '.join(missing)} package"))
+            continue
+        parents = sorted({parent['parent_name'] for parent in item.get('parents') or []}) or ['no parent']
+        feature = {'csv': urls['csv'], 'shape': urls['shape'], 'id': item_id, 'name': item['name'],
+                   'years_string': item.get('years_string')}
+        groups.setdefault(tuple(parents), []).append(feature)
+
+    config = {"type": "espon",
+              "source": "espon",
+              "link": "https://database.espon.eu/api/",
+              "citation": "...",
+              "format": "geopandas dataframe with shape",
+              "variables": [{'dimension': list(parents), 'features': features} for parents, features in groups.items()]}
+    return config, skipped
 
 
-def get_asset_espon(json_file, vOI, dim):
-    # main method tp download data 
-    # stores the the csv of the data in a folder taht is named aftre the dimension in the downloadfolder
-    # im addition a second csv file is create(maintained that stores the shapes of the differnt NUTS areas associated with the data
-    try:
-        parameter = utils.get_parameter(json_file,'bbox.json')
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    try:
-        [id, dimension] = get_feature_id(parameter, dim, vOI)
-    except Exception as e:
-        print(f"An error occurred: {e}")
+def generate_espon_json(target='espon.json'):
+    # The espon.json should not be created by hand. This function makes it from the descriptions that
+    # the ESPON database offers online. The result can be used (or shortened) as espon.json in the
+    # folder configs_sources.
+    # Note: the folder of an indicator is named after its dimension. If ESPON changes the parents of
+    # an indicator, its folder name changes and the workflow downloads it again under the new name.
+    config, skipped = build_espon_config(fetch_espon_indicators())
+    part = target + '.part'
+    with open(part, 'w', encoding='utf-8') as json_file:
+        json.dump(config, json_file, indent=4)
+    os.replace(part, target)
+    n = sum(len(variable['features']) for variable in config['variables'])
+    print(f"{target}: {n} indicators in {len(config['variables'])} dimensions")
+    for item_id, name, reason in skipped:
+        print(f"left out: {item_id} '{name}' ({reason})")
+    return config, skipped
 
-    try:
-        items = next((p for p in parameter['variables'] if p['dimension'] == dimension), None)
-        item = next((i for i in items['features'] if i['id'] == id), None)
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    
-    # use asset information to create filepaths
-    dimension = sanitize_filename(str(items['dimension']))
-    dimension = dimension[0:espon_filename_length] #max folder length names
-    name = sanitize_filename(item['name'])
-    name = name[0:espon_filename_length]
-    
-    file_path_csv = os.path.join(download_folder, 'espon', dimension , name  + '.csv')
-    file_path_shp = os.path.join(download_folder, 'espon', dimension, name  + '.zip')
-    file_path_geometry = os.path.join(download_folder, 'espon', 'geometry.csv')
 
-    # Extract the directory path from the file path
-    directory_path = os.path.dirname(file_path_csv)
-    print(directory_path)
-
-    try:
-        # Check if the directory exists, and create it if it doesn't
-        if not os.path.exists(directory_path):
-            os.makedirs(directory_path)
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    # return if result file already exists
-    if os.path.exists(file_path_csv):
-        print('csv exists')
-        return
-    
-    # URL of the file to be downloaded
-    url = item['shape']
-    # Send a HTTP GET request to the URL
-    #try:
-    #    response = requests.get(url, stream=True)
+def download(url, target):
+    """
+    Download a file of the ESPON database to `target`.
+    The data is written to a temporary file first, only a complete file gets the final name.
+    """
     scraper = cloudscraper.create_scraper(
         browser={
             'browser': 'chrome',
@@ -243,192 +115,183 @@ def get_asset_espon(json_file, vOI, dim):
             'desktop': True
         }
     )
-
-    # Add additional headers
-    headers = {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Referer': 'https://database.espon.eu/',
-        'DNT': '1',
-        'Connection': 'keep-alive',
-        'Upgrade-Insecure-Requests': '1',
-    }
+    part = target + '.part'
     try:
-        response = scraper.get(url, stream=True)
-    except Exception as e:
-        print(f"An error occurred: {e}")
+        response = scraper.get(url, stream=True, timeout=300)
+        if response.status_code != 200:
+            raise RuntimeError(f"Failed to download {url}. Status code: {response.status_code}")
+        with open(part, 'wb') as file:
+            for chunk in response.iter_content(chunk_size=1024 * 1024):
+                file.write(chunk)
+        os.replace(part, target)
+    finally:
+        if os.path.exists(part):
+            os.remove(part)
 
-    # Check if the request was successful
-    if response.status_code == 200:
-        # (1) Save downloaded zipped file with shapes and data with write-binary mode
-        try:
-            with open(file_path_shp, 'wb') as file:
-                # Iterate over the response data (stream)
-                for chunk in response.iter_content(chunk_size=1024):
-                    file.write(chunk)
-        except Exception as e:
-            print(f"An error occurred: {e}")
-        # (2) unzip the downloaded file: it contains 1 or more zipped shape files 
-        try:
-            shp_zip_list = []
-            with zipfile.ZipFile(file_path_shp, 'r') as zip_ref:
-                # find zip files in the zip archive
-                for file in zip_ref.namelist():
-                    if file.endswith('.zip'):
-                        # Extract and keep track of the avaible shape files for the asset of interest
-                        shp_zip_list.append(os.path.join(directory_path,file))
-                        zip_ref.extract(file, directory_path)
-        except Exception as e:
-            print(f"An error occurred: {e}")
-        # (3.1) If shape files exist
-        if shp_zip_list:
-            shp_list = []
-            i = 0
-            # some of the zip files are bad, if use the csv 
-            try: 
-                for shp_zip_file in shp_zip_list:
-                    with zipfile.ZipFile(shp_zip_file, 'r') as zip_ref:
-                        # List all files in the zip archive
-                        for file in zip_ref.namelist():
-                            if file.endswith('.shp'):
-                                print('unzip: ' + file)
-                                print('file_path_shp: ' + file_path_shp)
-                                print('name: ' + name)
-                                with zip_ref.open(file) as source, open(os.path.splitext(file_path_shp)[0]  + '-' + str(i) + '.shp', 'wb') as target:
-                                    target.write(source.read())
-                                    shp_list.append(os.path.splitext(file_path_shp)[0]  + '-' + str(i) + '.shp')
-                                    print(shp_list)
-                            elif file.endswith('.shx'):
-                                with zip_ref.open(file) as source, open(os.path.splitext(file_path_shp)[0]  + '-' + str(i) + '.shx', 'wb') as target:
-                                    target.write(source.read())
-                            elif file.endswith('.dbf'):
-                                with zip_ref.open(file) as source, open(os.path.splitext(file_path_shp)[0]  + '-' + str(i) + '.dbf', 'wb') as target:
-                                    target.write(source.read())
-                            elif file.endswith('.prj'):
-                                with zip_ref.open(file) as source, open(os.path.splitext(file_path_shp)[0]  + '-' + str(i) + '.prj', 'wb') as target:
-                                    target.write(source.read())
-                    i = i+1
-                years_string = item.get('years_string',None)
-                print('shape2csv')
-                shape2csv_lock(shp_list, file_path_csv, file_path_geometry, years_string=years_string)
-            except zipfile.BadZipFile:
-                print('----Bad Zip streamline-----')
-                # URL of the file to be downloaded
-                download_csv(item['csv'], file_path_csv)
 
-        # (3.2) If no shape file download the csv file that does not have geometries
-        # if the geometries are not present that's not a problem tunit_code is given so it can be 
-        # linked to the geomtries of the other assets                      
+def read_shapes_from_package(package_zip, work_dir):
+    """
+    The shape package of an indicator is a zip file that contains one or more zip files, each with
+    one shapefile (the data may come in different resolutions, each in its own shapefile).
+    Returns the list of the shapefiles as GeoDataFrames (empty if the package holds no shapefile).
+    Raises zipfile.BadZipFile if the package or one of the zip files in it is damaged.
+    """
+    frames = []
+    with zipfile.ZipFile(package_zip, 'r') as package:
+        inner_zips = [name for name in package.namelist() if name.endswith('.zip')]
+        for i, inner in enumerate(inner_zips):
+            folder = os.path.join(work_dir, str(i))
+            os.makedirs(folder)
+            inner_path = os.path.join(folder, 'shape.zip')
+            with package.open(inner) as source, open(inner_path, 'wb') as target:
+                shutil.copyfileobj(source, target)
+            with zipfile.ZipFile(inner_path, 'r') as shape_zip:
+                shape_zip.extractall(folder)
+            for root, _, files in os.walk(folder):
+                for file in sorted(files):
+                    if file.endswith('.shp'):
+                        print('read: ' + file)
+                        frames.append(gpd.read_file(os.path.join(root, file)))
+    return frames
+
+
+def get_asset_espon(json_file, vOI, dim):
+    # main method to download the data of one indicator
+    # stores the csv of the data in a folder that is named after the dimension in the download folder
+    # in addition a second csv file is maintained that stores the shapes of the different NUTS areas
+    # Errors are not caught here: a failed download must end the script with an error,
+    # so that snakemake marks the job as failed.
+    parameter = utils.get_parameter(json_file, 'bbox.json')
+    if parameter is None:
+        raise RuntimeError(f"Could not read the configuration '{json_file}' (see message above)")
+
+    # the folder (dim) and file name (vOI) were made by the snakefile with the same function
+    target = find_target(parameter, espon_filename_length, dim, vOI)
+    if target is None:
+        raise ValueError(f"No indicator with the folder '{dim}' and the file name '{vOI}' in '{json_file}'")
+    item = target['feature']
+
+    directory_path = os.path.join(download_folder, 'espon', dim)
+    file_path_csv = os.path.join(directory_path, vOI + '.csv')
+    file_path_geometry = os.path.join(download_folder, 'espon', 'geometry.csv')
+    os.makedirs(directory_path, exist_ok=True)
+
+    # return if result file already exists
+    if os.path.exists(file_path_csv):
+        print('csv exists')
+        return
+
+    # every indicator works in its own temporary folder, so jobs that run at the same time cannot
+    # touch each other's files
+    work_dir = os.path.join(tmp_folder, f"espon_{item['id']}")
+    shutil.rmtree(work_dir, ignore_errors=True)
+    os.makedirs(work_dir)
+    try:
+        package_zip = os.path.join(work_dir, 'package.zip')
+        download(item['shape'], package_zip)
+        try:
+            frames = read_shapes_from_package(package_zip, work_dir)
+        except zipfile.BadZipFile:
+            # some of the shape packages are damaged, then the csv package is used
+            print('----Bad Zip streamline-----')
+            frames = []
+
+        if frames:
+            shape2csv_lock(frames, file_path_csv, file_path_geometry, years_string=item.get('years_string', None))
         else:
-            print('-----only csv, no spape----')
-            # URL of the file to be downloaded
-            download_csv(item['csv'], file_path_csv)
-        clear_folder(directory_path, name, shp_zip_list)
-    else:
-        print(f"Failed to download the shp file. Status code: {response.status_code}")
+            # the csv package has no geometries, that is not a problem: tunit_code is given,
+            # so the data can be linked to the geometries of the other indicators
+            print('-----only csv, no shape----')
+            download_csv(item['csv'], file_path_csv, work_dir)
+    finally:
+        shutil.rmtree(work_dir, ignore_errors=True)
     return 'done'
 
 
-def download_csv(url, file_path_csv):
-    # Send a HTTP GET request to the URL
-    scraper = cloudscraper.create_scraper()
-    response = scraper.get(url, stream=True)
-    #response = requests.get(url, stream=True)
-    fp_csv = file_path_csv + '.zip'
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Open a local file with write-binary mode
-        with open(fp_csv, 'wb') as file:
-            # Iterate over the response data (stream)
-            for chunk in response.iter_content(chunk_size=1024):
-                # Write data to the file
-                file.write(chunk)
-        # Unzip the downloaded file
-        with zipfile.ZipFile(fp_csv, 'r') as zip_ref:
-            # List all files in the zip archive
-            for file in zip_ref.namelist():
-                if file.endswith('.csv'):
-                    # Extract the CSV file
-                    with zip_ref.open(file) as source, open(file_path_csv, 'wb') as target:
-                        target.write(source.read())
-                    # remove the zip file downloaded
-                    return 'result csv written done'
-        # if no csv in zip create emty file
-        with open(file_path_csv, 'w') as file:
-            print('its empty')
-            pass
-    else:
-        print(f"Failed to download the csv file. Status code: {response.status_code}")
+def download_csv(url, file_path_csv, work_dir):
+    # download the csv package of an indicator (a zip file) and store the csv file of it
+    csv_zip = os.path.join(work_dir, 'csv_package.zip')
+    download(url, csv_zip)
+    with zipfile.ZipFile(csv_zip, 'r') as zip_ref:
+        csv_files = [file for file in zip_ref.namelist() if file.endswith('.csv')]
+        if not csv_files:
+            raise RuntimeError(f"No csv file in {url}")
+        part = file_path_csv + '.part'
+        try:
+            with zip_ref.open(csv_files[0]) as source, open(part, 'wb') as target:
+                shutil.copyfileobj(source, target)
+            os.replace(part, file_path_csv)
+        finally:
+            if os.path.exists(part):
+                os.remove(part)
+    return 'result csv written done'
 
 
-def shape2csv_lock(shape_files, file_path, file_path_geometry, years_string=None):
-    # lock guratees that no other parallel snakemake process tries
-    # to use the file with the geometry at the same time
-    lock_path = f"{file_path_geometry}.lock"
-    lock = FileLock(lock_path, timeout=100)  # Wait up to 10 seconds for the lock 
-    try:
-        with lock:
-            shape2csv(shape_files, file_path, file_path_geometry, years_string=years_string)
-    except Timeout:
-        print(f"Could not acquire lock on {file_path} within the timeout period.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+def shape2csv_lock(frames, file_path, file_path_geometry, years_string=None):
+    # the lock guarantees that no other parallel snakemake process
+    # uses the file with the geometries at the same time
+    lock = FileLock(f"{file_path_geometry}.lock", timeout=900)
+    with lock:
+        shape2csv(frames, file_path, file_path_geometry, years_string=years_string)
 
 
-def shape2csv(shape_files, file_path, file_path_geometry, years_string=None):
-    # shapefiles downloaded from espon are splitted up in a csv file that holds specific the data
-    # and one csv file for all assets that contains the geometries. 
-    # The csv file with the geometries and the data csvs can be joined on 'tunit_code'   
-    gdf = []
-    crs_ori = ''
-    # data may come in different resolutions each in a specific shape file.
-    for f in shape_files:
-        tmp = gpd.read_file(f)
-        crs_ori = tmp.crs
-        print(tmp.crs)
-        gdf.append(tmp)
-    print('---------')
-    # Concatenate the GeoDataFrames
-    gdf = gpd.GeoDataFrame(pd.concat(gdf, ignore_index=True))
-    # fix truncated year column name using API metadata
+def shape2csv(frames, file_path, file_path_geometry, years_string=None):
+    # the shapefiles of an indicator are split up into a csv file that holds the data of the indicator
+    # and one csv file for all indicators that contains the geometries.
+    # The csv file with the geometries and the data csvs can be joined on 'tunit_code'
+
+    # geometries in geographic coordinates, each shapefile can have its own coordinate system
+    geometry_frames = []
+    for frame in frames:
+        print(frame.crs)
+        geo = frame[['geometry', 'tunit_code']]
+        if frame.crs is not None:
+            geo = geo.to_crs(epsg=4326)
+        geometry_frames.append(pd.DataFrame({
+            'geometry': geo.geometry.apply(lambda g: None if g is None else g.wkt),
+            'tunit_code': geo['tunit_code'],
+        }))
+    new_geometries = pd.concat(geometry_frames, ignore_index=True).dropna(subset=['geometry'])
+    new_geometries = new_geometries.drop_duplicates(subset=['geometry', 'tunit_code'])
+
+    # the data without the geometries. Every row of the shapefiles is kept: regions of different levels
+    # can have the same geometry (e.g. Berlin is one region at the NUTS levels 1, 2 and 3), these are
+    # different rows of the data.
+    data = pd.concat([pd.DataFrame(frame.drop(columns='geometry')) for frame in frames], ignore_index=True)
+    data = data.drop_duplicates()
+    # fix truncated year column name using API metadata (column names of shapefiles have at most 10 characters)
     if years_string:
         for token in years_string.split(','):
             token = token.strip()
             if '-' in token:
                 full_col = f"y_{token}"   # e.g. y_2014-2016
                 trunc_col = full_col[:10]  # e.g. y_2014-201
-                if len(full_col) > 10 and trunc_col in gdf.columns:
-                    gdf.rename(columns={trunc_col: full_col}, inplace=True)
+                if len(full_col) > 10 and trunc_col in data.columns:
+                    data.rename(columns={trunc_col: full_col}, inplace=True)
                     print(f"renamed: {trunc_col} -> {full_col}")
-    # Drop duplicate geometries, keeping the first occurrence
-    gdf = gdf.drop_duplicates(subset='geometry', keep='first')
-    # Create a new GeoDataFrame with only 'geometry' and 'tunit_code'
-    gdf_geometry_and_tunit = gdf[['geometry', 'tunit_code']]
-    gdf_geometry_and_tunit.set_crs(crs_ori, inplace=True)
-    gdf_geometry_and_tunit.to_crs(epsg=4326, inplace=True)
-    # Create a new GeoDataFrame without 'geometry'
-    gdf = gdf.drop(columns='geometry')
-    # save data csv
-    print(gdf)
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    try:
-        gdf.to_csv(file_path, index=False)
-    except Exception as e:
-        print(f"Error occurred while saving CSV: {e}")
 
-    # update the existing geometry csv
+    # add the geometries that are not in the geometry csv yet. Only new rows are appended,
+    # the existing file is neither parsed as geometries nor written again.
     if os.path.exists(file_path_geometry):
-        # Read the CSV file using pandas
-        df = pd.read_csv(file_path_geometry)
-        # Convert the 'geometry' column from WKT to shapely geometries
-        df['geometry'] = df['geometry'].apply(wkt.loads)
-        # Create a GeoDataFrame
-        gdf_existing = gpd.GeoDataFrame(df, geometry='geometry')
-        gdf_existing.set_crs(epsg=4326, inplace=True)
-        # Concatenate (append) gdf_geometry_and_tunit to gdf_existing
-        gdf_geometry_and_tunit = gpd.GeoDataFrame(pd.concat([gdf_existing, gdf_geometry_and_tunit], ignore_index=True))
-        gdf_geometry_and_tunit = gdf_geometry_and_tunit.drop_duplicates(subset=['geometry', 'tunit_code'])
+        existing = pd.read_csv(file_path_geometry, dtype=str)
+        known = set(zip(existing['tunit_code'], existing['geometry']))
+        is_new = [(code, wkt_text) not in known
+                  for code, wkt_text in zip(new_geometries['tunit_code'].astype(str), new_geometries['geometry'])]
+        new_geometries = new_geometries[is_new]
+        if len(new_geometries) > 0:
+            new_geometries.to_csv(file_path_geometry, mode='a', header=False, index=False)
+    else:
+        os.makedirs(os.path.dirname(file_path_geometry), exist_ok=True)
+        new_geometries.to_csv(file_path_geometry, index=False)
+    print(f"{len(new_geometries)} new geometries")
 
-    print(gdf_geometry_and_tunit.shape[0])
-    gdf_geometry_and_tunit.to_csv(file_path_geometry, index=False)
+    # save the data csv last and under a temporary name first: the csv is the file snakemake waits for,
+    # it only appears when everything else is done
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    part = file_path + '.part'
+    try:
+        data.to_csv(part, index=False)
+        os.replace(part, file_path)
+    finally:
+        if os.path.exists(part):
+            os.remove(part)

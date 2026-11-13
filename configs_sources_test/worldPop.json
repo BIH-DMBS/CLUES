@@ -1,6 +1,10 @@
 {
     "type": "WordPop",
     "format": "geoTIFF",
+    "url": "https://www.worldpop.org/",
+    "link": "https://hub.worldpop.org/project/categories?id=3",
+    "citation": "WorldPop (www.worldpop.org), School of Geography and Environmental Science, University of Southampton: Global2 population counts, release R2025A",
+    "units": "estimated number of people per grid cell, no value outside of the land area of the countries",
     "variables":[
 
     ]

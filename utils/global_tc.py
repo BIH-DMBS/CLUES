@@ -1,212 +1,109 @@
-import requests
-import os
-import json
 import glob
+import json
+import os
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
 
+from copernicusDEM import download_tile
 
 try:
-    from .config import download_folder, configs_assets_folder, area, config_folder, secrets_folder, tmp_folder
-except:
-    from config import download_folder, configs_assets_folder, area, config_folder, secrets_folder, tmp_folder
+    from .config import download_folder, configs_assets_folder, area, config_folder
+except ImportError:
+    from config import download_folder, configs_assets_folder, area, config_folder
 
 
-def get_all_tile_urls_hansen(base_url):
-    urls = []
+# Global tree cover in tiles of 10 degree x 10 degree:
+#   global_tree_cover_hansen_2000   tree cover in the year 2000 in percent, Hansen et al.
+#                                   (Global Forest Change), about 30 m
+#   Global_forest_cover_2020        forest (1) / no forest (0) in 2020, Joint Research Centre (JRC), about 10 m
+#
+# In both products a tile is named after its upper left corner: the tile '60N_010E' (Hansen) or
+# 'N60', 'E10' (JRC) covers 50 N - 60 N and 10 E - 20 E. All tiles that overlap the area of
+# interest are downloaded completely (a few hundred MB each) and stored as they are.
 
-    lat_tiles = list(range(80, -60, -10))  # N80 to S50
-    lon_tiles = list(range(-180, 180, 10)) # W180 to E170
-
-    for lat_deg in lat_tiles:
-        lat_label = f"{abs(lat_deg):02d}{'N' if lat_deg >= 0 else 'S'}"
-
-        for lon_deg in lon_tiles:
-            lon_label = f"{abs(lon_deg):03d}{'W' if lon_deg < 0 else 'E'}"
-
-            url = f"{base_url}Hansen_GFC-2022-v1.10_treecover2000_{lat_label}_{lon_label}.tif"
-
-            tile_bbox = [
-                lat_deg,              # tile north
-                lon_deg,              # tile west
-                lat_deg - 10,         # tile south
-                lon_deg + 10          # tile east
-            ]
-
-            urls.append({
-                'url': url,
-                'bbox': tile_bbox,
-                'lat_label': lat_label,
-                'lon_label': lon_label
-            })
-
-    return urls
-
-# --- 2. Filter URLs intersecting with bbox ---
-def filter_urls_by_bbox_hansen(urls, bbox):
-    lat_max, lon_min, lat_min, lon_max = bbox
-    filtered_urls = []
-
-    for tile in urls:
-        tile_bbox = tile['bbox']
-        tile_north, tile_west, tile_south, tile_east = tile_bbox
-
-        lat_overlap = not (tile_south >= lat_max or tile_north <= lat_min)
-        lon_overlap = not (tile_east <= lon_min or tile_west >= lon_max)
-
-        if lat_overlap and lon_overlap:
-            filtered_urls.append(tile)
-
-    return filtered_urls
-
-# --- 3. Check if URL Exists (HEAD request) ---
-def url_exists(url, timeout=10):
-    try:
-        response = requests.head(url, timeout=timeout)
-        return response.status_code == 200
-    except requests.RequestException:
-        return False
+# number of tiles downloaded at the same time
+N_PARALLEL = 4
 
 
-def download_tile(tile, dest_folder):
-    url = tile['url']
-    filename = f"GFC_{tile['lat_label']}_{tile['lon_label']}.tif"
-    file_path = os.path.join(dest_folder, filename)
-
-    if os.path.exists(file_path):
-        print(f"Already downloaded: {filename}")
-        return
-
-    try:
-        response = requests.get(url, stream=True, timeout=60)
-        if response.status_code == 200:
-            with open(file_path, 'wb') as f:
-                for chunk in response.iter_content(1024*1024):
-                    if chunk:
-                        f.write(chunk)
-            print(f"Downloaded: {filename}")
-        else:
-            print(f"Failed to download {filename} (Status {response.status_code})")
-    except Exception as e:
-        print(f"Error downloading {filename}: {e}")
-
-
-def getHansen(parameters):
-    base_url = parameters['variables'][0]['url']
-    all_tile_data = get_all_tile_urls_hansen(base_url)
-    tilesOI = filter_urls_by_bbox_hansen(all_tile_data, parameters["bbox"])
-    download_path = os.path.join(download_folder, parameters['type'],parameters['variables'][0]['name'])
-    for tile in tilesOI:
-        print(tile)
-        download_tile(tile, download_path)
-    # Flag downloads are complete
-    done_flag_path = os.path.join(download_path, 'done.flag')
-    with open(done_flag_path, 'w') as f:
-        pass  # Just create an empty file
-    
-
-def get_all_tile_urls_2020(base_url):
-    urls = []
-
-    lat_tiles = list(range(80, -60, -10))  # N80 to S50
-    lon_tiles = list(range(-180, 180, 10)) # W180 to E170
-
-    lat_tiles = list(range(80, -60, -10))  # 80N to 50S
-    lon_tiles = list(range(-180, 180, 10)) # 180W to 170E
-
-    for lat_deg in lat_tiles:
-        lat_label = f"{'N' if lat_deg >= 0 else 'S'}{abs(lat_deg):01d}"
-
-        for lon_deg in lon_tiles:
-            lon_label = f"{'W' if lon_deg < 0 else 'E'}{abs(lon_deg):01d}"
-
-            url = f"{base_url}&lat={lat_label}&lon={lon_label}"
-
-            # Include tile bounding box metadata for filtering
-            tile_bbox = [
-                lat_deg,              # tile north
-                lon_deg,              # tile west
-                lat_deg - 10,         # tile south
-                lon_deg + 10          # tile east
-            ]
-
-            urls.append({
-                'url': url,
-                'bbox': tile_bbox,
-                'lat_label': lat_label,
-                'lon_label': lon_label
-            })
-
-    return urls
-
-def filter_urls_by_bbox2020(urls, bbox):
+def tiles_of_bbox(bbox):
     """
-    Filters tile URLs whose bounding boxes intersect with the given bbox.
-    bbox = [north, west, south, east]  # Format: [lat_max, lon_min, lat_min, lon_max]
+    Upper left corners (lat, lon) of all 10 degree tiles that overlap the bbox
+    [lat_max, lon_min, lat_min, lon_max]. The tiles exist between 80 N and 60 S.
     """
     lat_max, lon_min, lat_min, lon_max = bbox
-    filtered_urls = []
-
-    for tile in urls:
-        tile_bbox = tile['bbox']
-        tile_north, tile_west, tile_south, tile_east = tile_bbox
-
-        # Check for bbox intersection
-        lat_overlap = not (tile_south >= lat_max or tile_north <= lat_min)
-        lon_overlap = not (tile_east <= lon_min or tile_west >= lon_max)
-
-        if lat_overlap and lon_overlap:
-            filtered_urls.append(tile)
-
-    return filtered_urls
-
-def filter_existing_tiles(tiles, timeout=10):
-    """
-    Takes a list of URLs and returns only those that actually exist (HTTP 200).
-    Uses HEAD requests for efficiency.
-    """
-    existing_urls = []
-
-    for tile in tiles:
-        try:
-            response = requests.head(tile['url'], timeout=timeout)
-            if response.status_code == 200:
-                existing_urls.append(tile)
-                print(f"Exists: {tile}")
-            else:
-                print(f"Missing ({response.status_code}): {tile}")
-        except requests.RequestException as e:
-            print(f"Error checking {tile}: {e}")
-
-    return existing_urls
+    tiles = []
+    for lat in range(80, -60, -10):            # top edge of the tile: 80 N ... 50 S
+        for lon in range(-180, 180, 10):       # left edge of the tile: 180 W ... 170 E
+            tile_north, tile_west, tile_south, tile_east = lat, lon, lat - 10, lon + 10
+            lat_overlap = not (tile_south >= lat_max or tile_north <= lat_min)
+            lon_overlap = not (tile_east <= lon_min or tile_west >= lon_max)
+            if lat_overlap and lon_overlap:
+                tiles.append((lat, lon))
+    return tiles
 
 
-def getTC2020(parameters):
-    base_url = parameters['variables'][0]['url']
-    all_tile_data = get_all_tile_urls_2020(base_url)
-    tilesOI = filter_urls_by_bbox2020(all_tile_data, parameters["bbox"])
-    tilesOI = filter_existing_tiles(tilesOI)
-    download_path = os.path.join(download_folder, parameters['type'],parameters['variables'][0]['name'])
-    for tile in tilesOI:
-        print(tile)
-        download_tile(tile, download_path)
-    # Flag downloads are complete
-    done_flag_path = os.path.join(download_path, 'done.flag')
-    with open(done_flag_path, 'w') as f:
-        pass  # Just create an empty file
+def tile_url_hansen(base_url, lat, lon):
+    lat_label = f"{abs(lat):02d}{'N' if lat >= 0 else 'S'}"
+    lon_label = f"{abs(lon):03d}{'W' if lon < 0 else 'E'}"
+    return f"{base_url}Hansen_GFC-2022-v1.10_treecover2000_{lat_label}_{lon_label}.tif", f"GFC_{lat_label}_{lon_label}.tif"
+
+
+def tile_url_2020(base_url, lat, lon):
+    lat_label = f"{'N' if lat >= 0 else 'S'}{abs(lat):01d}"
+    lon_label = f"{'W' if lon < 0 else 'E'}{abs(lon):01d}"
+    return f"{base_url}&lat={lat_label}&lon={lon_label}", f"GFC_{lat_label}_{lon_label}.tif"
+
+
+TILE_URL = {
+    'global_tree_cover_hansen_2000': tile_url_hansen,
+    'Global_forest_cover_2020': tile_url_2020,
+}
 
 
 def getTC_global(parameters_jsonfile, vOI):
+    # Errors are not caught here: a failed download must end the script with an error,
+    # so that snakemake marks the job as failed.
     with open(os.path.join(configs_assets_folder, parameters_jsonfile), 'r') as file:
         parameters = json.load(file)
-
     with open(os.path.join(config_folder, 'bbox.json'), 'r') as file:
-        bbox = json.load(file)
+        bbox = json.load(file)[area]
 
-    parameters['variables'] = [y for y in parameters['variables'] if y['name']==vOI] 
-    parameters["bbox"] = bbox[area]
-    print(parameters)
-    if parameters['variables'][0]['name'] == 'global_tree_cover_hansen_2000':
-        getHansen(parameters)
-    elif parameters['variables'][0]['name'] == 'Global_forest_cover_2020':
-        getTC2020(parameters)
+    variable = next((v for v in parameters['variables'] if v['name'] == vOI), None)
+    if variable is None:
+        raise ValueError(f"Variable '{vOI}' is not listed in '{parameters_jsonfile}'")
+    if vOI not in TILE_URL:
+        raise ValueError(f"No download defined for '{vOI}', known: {sorted(TILE_URL)}")
 
+    download_path = os.path.join(download_folder, parameters['type'], variable['name'])
+    os.makedirs(download_path, exist_ok=True)
+
+    jobs = [TILE_URL[vOI](variable['url'], lat, lon) for lat, lon in tiles_of_bbox(bbox)]
+    print(f"{len(jobs)} tiles to check")
+
+    # remove what does not belong to the requested area (tiles of an earlier run for another area,
+    # leftovers of an interrupted download). Complete tiles of the area are kept and not downloaded again.
+    wanted = {file_name for _, file_name in jobs}
+    for old_file in glob.glob(os.path.join(download_path, '*.tif')) + glob.glob(os.path.join(download_path, '*.part')):
+        if os.path.basename(old_file) not in wanted:
+            os.remove(old_file)
+
+    def run(job):
+        url, file_name = job
+        return file_name, download_tile(url, os.path.join(download_path, file_name))
+
+    with ThreadPoolExecutor(max_workers=N_PARALLEL) as executor:
+        results = list(executor.map(run, jobs))
+
+    for file_name, status in results:
+        print(f"{file_name}: {status}")
+    available = sorted(file_name for file_name, status in results if status != 'missing')
+    if not available:
+        raise RuntimeError(f"No tiles of {vOI} available for area '{area}' {bbox}")
+
+    # flag file that tells snakemake the download is complete
+    with open(os.path.join(download_path, 'done.flag'), 'w') as f:
+        f.write(f"Data was downloaded: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write(f"area: {area} {bbox}\n")
+        f.write(f"{len(available)} tiles:\n")
+        f.write('\n'.join(available) + '\n')
     return 0

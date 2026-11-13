@@ -52,7 +52,7 @@ To enable the CLUES framework to access certain geospatial datasets, users must 
 The location of the credential (.sct) files is defined in the general workflow configuration file **config.json** under the key: `configs_assets_folder`. For more details on configuration management, see the section Configuration Management. 
 
 ### Copernicus (ECMWF)
-Data from the Copernicus Climate Data Store (CDS), the Atmosphere Data Store (ADS) and Copernicus DEM - Global and European Digital Elevation Model require a free account with the European Centre for Medium-Range Weather Forecasts (ECMWF). For ADS and CDS you need to create token and save them to the framework. For DEM you need to save your credentials to the secret_folder.
+Data from the Copernicus Climate Data Store (CDS) and the Atmosphere Data Store (ADS) require a free account with the European Centre for Medium-Range Weather Forecasts (ECMWF). For ADS and CDS you need to create token and save them to the framework. The Copernicus DEM (Digital Elevation Model) is downloaded from the public AWS Open Data registry and needs no account.
 
 #### Licence acceptance required to use the CDS API
 
@@ -96,16 +96,6 @@ Save the tokens in two separate files:
     <pre>
     url: https://ads.atmosphere.copernicus.eu/api
     key: place your token here</pre>
-
-4. . Users need to register at https://dataspace.copernicus.eu/ and use those credentials in *copernicus_credential.sct.* to access DEM
-
-    **_Copernicus credential Storage_**  
-    *copernicus_credential.sct*
-    <pre>
-    grant_type : password
-    username : place your username here
-    password : place your password here
-    client_id : cdse-public</pre>
 
 ### NASA EarthData
 Accessing vegetation indices (e.g., NDVI, EVI) from NASA’s via the earthaccess python library also requires registration.
@@ -226,22 +216,36 @@ Neighbourhood zones represent the spatial extent used to calculate local statist
 
 Whether and how this processing is applied is defined in the source-specific configuration files, which specify the filter type and the radius of the neighbourhood zone. Default configurations are provided, but users can easily adapt them to meet specific analytical needs.  
 
-Example of the source-specific configuration file `copenicus_dem.json`  
-```bash
+Example of the source-specific configuration file `copernicus_dem.json`  
+```json
 {
     "type":"DEM",
     "format": "geotTiff",
     "variables":[
-        {   "name":"Digital_Geospatial_Elevation_Data_30m",
-            "url":"https://prism-dem-open.copernicus.eu ...",
-            "resolution":"30",
+        {
+            "name":"Digital_Geospatial_Elevation_Data_30m",
+            "url":"https://copernicus-dem-30m.s3.amazonaws.com",
+            "resolution":"DEM1_SAR_DGE_30",
             "neighborhood":{
                 "mean":[500,1000],
                 "std":[500,1000],
-                "zevenbergen_thorne: "yes"}
-  ]
+                "zevenbergen_thorne":"Any value activates the filter; if missing, the filter won't run."
+            }
+        }
+    ]
 }
 ```
+
+The results are written per DEM tile to `<download_folder>/neigborhoods/DEM/<name>/<filter>/`:
+
+| Filter | Folder | Content | Unit |
+| --- | --- | --- | --- |
+| mean | `mean_radius_<radius>` | mean elevation of all pixels whose centre lies within the radius (in metres) | metres |
+| std | `std_radius_<radius>` | standard deviation of the elevation within the radius | metres |
+| zevenbergen_thorne | `zevenbergen_thorne` | `slope_*.tif`: steepness, 0 (flat) to 90 (vertical) | degrees |
+| | | `aspect_*.tif`: direction the slope faces, clockwise from north (0 = north, 90 = east, 180 = south, 270 = west), no value for flat pixels | degrees |
+
+The DEM tiles are stored in geographic coordinates, so a pixel is not a square in metres and its width changes with latitude. All filters convert pixel sizes to metres for the latitude of the tile. Tiles are processed together with a margin from their neighbouring tiles, so the results have no seams at tile borders. To have complete neighbourhoods at the border of the configured area, the DEM download covers the area widened by the largest configured radius.
 
 ---
 
@@ -251,7 +255,7 @@ Once everything is set up, third-party accounts are configured, and the configur
 <pre>
  snakemake -s workflows/snakefile --cores 6 -p --rerun-incomplete --latency-wait 60 --resources heavy_rule_slots=2
 </pre>
-The *--resources heavy_rule_slots=2* was added as the copernicus climate data store does not allow multiple parallel request for downloading the **ERA5-Land hourly data from 1950 to present** dataset. This caps *get_era5_land* at 4 concurrent instances while every other rule in your workflow keeps scheduling normally against --cores (and any resources they define).
+The *--resources heavy_rule_slots=2* was added as the copernicus climate data store does not allow multiple parallel request for downloading the **ERA5-Land hourly data from 1950 to present** dataset. This caps *get_era5_land* at 2 concurrent instances while every other rule in your workflow keeps scheduling normally against --cores (and any resources they define). Without this option the number of *get_era5_land* jobs is not limited.
 
 
 Command Options Explained:  

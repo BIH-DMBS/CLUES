@@ -1,12 +1,19 @@
 {
     "type": "Night_Time_Lights_(NTL)",
     "start_year": "1992",
-    "end_year": "2021",
+    "end_year": "2024",
     "format": "geoTIFF",
+    "link": "https://figshare.com/articles/dataset/9828827",
+    "doi": "10.6084/m9.figshare.9828827.v10",
+    "citation": "Li, X., Zhou, Y., Zhao, M., Zhao, X. (2020), A harmonized global nighttime light dataset 1992-2018, Scientific Data 7, 168; data: figshare, https://doi.org/10.6084/m9.figshare.9828827.v10",
+    "units": "digital number (DN) of the night time light intensity, 0 (dark) to 63 (bright), no unit",
     "variables":[
         {
             "name":"ntl",
-            "url":"https://figshare.com/ndownloader/articles/9828827/versions/8",
+            "url":"https://figshare.com/articles/dataset/9828827",
+            "article_id": 9828827,
+            "version": 10,
+            "files_oi": "all",
             "flagFile" : "Harmonized_DN_NTL_1992_calDMSP.tif"
         }
     ]

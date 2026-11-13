@@ -12,7 +12,9 @@ import yaml
 import requests
 import zipfile
 import io
+import hashlib
 import math
+import calendar
 
 from time import sleep
 from datetime import datetime, timedelta, time
@@ -21,6 +23,8 @@ from rasterio.transform import from_origin
 from owslib.wms import WebMapService
 from PIL import Image
 from rasterio.merge import merge
+from rasterio.warp import transform_bounds
+from rasterio.windows import Window, from_bounds
 
 
 try:
@@ -211,129 +215,169 @@ def get_parameter(parameters_jsonfile, bbox_jsonfile):
     return parameters
     
 
+def pad_bbox(bbox, margin):
+    """
+    Widen a bounding box [lat_max, lon_min, lat_min, lon_max] by `margin` degrees on every side.
+
+    Gridded sources only deliver the grid cells that lie inside the requested area. Without a margin,
+    a location close to the border of the area is linked to a cell further inside, although its true
+    nearest cell lies just outside. A margin of one grid step avoids this.
+    """
+    lat_max, lon_min, lat_min, lon_max = bbox
+    return [
+        round(min(90.0, lat_max + margin), 4),
+        round(max(-180.0, lon_min - margin), 4),
+        round(max(-90.0, lat_min - margin), 4),
+        round(min(180.0, lon_max + margin), 4),
+    ]
+
+
+def extract_single_netcdf(zip_path, target_path):
+    # the data stores deliver netCDF as a zip archive, here exactly one netCDF file is expected in it
+    with zipfile.ZipFile(zip_path) as z:
+        members = [m for m in z.namelist() if m.endswith('.nc')]
+        if len(members) != 1:
+            raise RuntimeError(f"Expected exactly one netCDF file in {zip_path}, found: {z.namelist()}")
+        with z.open(members[0]) as src, open(target_path, 'wb') as dst:
+            shutil.copyfileobj(src, dst)
+
+
+def check_time_axis(nc_file, year, delta_t_in_h):
+    """
+    Check the time axis of a downloaded yearly netCDF file.
+
+    Raises an error if the file holds no time steps or time steps of another year.
+    Returns (number of time steps found, number of time steps of a complete year).
+    """
+    with xr.open_dataset(nc_file) as ds:
+        valid_time = ds['valid_time'].values
+    if valid_time.size == 0:
+        raise RuntimeError(f"{nc_file} contains no time steps")
+    years_found = sorted(set((valid_time.astype('datetime64[Y]').astype(int) + 1970).tolist()))
+    if years_found != [int(year)]:
+        raise RuntimeError(f"{nc_file} should contain {year} only, but contains {years_found}")
+    n_expected = (366 if calendar.isleap(int(year)) else 365) * 24 // int(delta_t_in_h)
+    return int(valid_time.size), n_expected
+
+
 def get_asset_atmosphere(json_file, year, variable):
-    # use cdsapi to download data
-    # check: https://ads.atmosphere.copernicus.eu/api-how-to
-    print('----')
-    try:
-        parameters = get_parameter(json_file,'bbox.json')
-        file_path = os.path.join(download_folder, parameters['source'], variable, year + '.nc')
-    except Exception as e:        
-        print(f"An error occurred: {e} (get_asset_atmosphere, get_parameter)")
+    # download one variable for one year from the Atmosphere Data Store (ADS) using the cdsapi
+    # check: https://ads.atmosphere.copernicus.eu/how-to-api
+    # Errors are not caught here: a failed download must end the script with an error,
+    # so that snakemake marks the job as failed.
+    parameters = get_parameter(json_file, 'bbox.json')
+    if parameters is None:
+        raise RuntimeError(f"Could not read the configuration '{json_file}' (see message above)")
 
-    # Extract the directory path from the file path
-    directory_path = os.path.dirname(file_path)
+    variable_dict = next((var for var in parameters["variables"] if var["name"] == variable), None)
+    if variable_dict is None:
+        raise ValueError(f"Variable '{variable}' is not listed in '{json_file}'")
 
-    # Check if the directory exists, and create it if it doesn't
-    if not os.path.exists(directory_path):
-        os.makedirs(directory_path)
+    file_path = os.path.join(download_folder, parameters['source'], variable, year + '.nc')
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
     # return if result file already exists
     if os.path.exists(file_path):
+        print('file:' + file_path + ' already exists')
         return
 
-    try:
-        # Create a client for the CDS API
-        file = os.path.join(secrets_folder, 'cdsapirc_atmo.sct')
-        with open(file, 'r') as f:
-                credentials = yaml.safe_load(f)
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    with open(os.path.join(secrets_folder, 'cdsapirc_atmo.sct'), 'r') as f:
+        credentials = yaml.safe_load(f)
+    c = cdsapi.Client(url=credentials['url'], key=credentials['key'])
 
-    try:
-        # get the client
-        c = cdsapi.Client(url=credentials['url'], key=credentials['key'])
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    # widen the area by one grid step, see pad_bbox
+    area = pad_bbox(parameters['bbox'], float(parameters.get('grid_resolution_deg', 0)))
 
-    date = year+'-01-01/'+year+'-12-31'
-    try:
-        variable_dict = next((var for var in parameters["variables"] if var["name"] == variable), None)
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    request = {
+        'data_format': 'netcdf_zip',
+        'variable': [variable],
+        'date': [year + '-01-01/' + year + '-12-31'],
+        'time': parameters['times'],
+        'area': area,
+    }
     # model_level is present for assets that can be monitored at different altitudes
+    if 'model_level' in variable_dict:
+        request['model_level'] = [str(variable_dict['model_level'])]
 
+    # download and unzip under temporary names, the final file only appears once it is complete
+    zip_part = file_path + '.zip.part'
+    nc_part = file_path + '.part'
     try:
-        if 'model_level' in variable_dict:
-            c.retrieve(
-                parameters['source'],
-                {
-                    'format': parameters['format'],
-                    'variable':variable,
-                    'model_level': variable_dict['model_level'],
-                    'date': date,
-                    'time': parameters['times'],
-                    'area': parameters['bbox'],
-                },
-                file_path)
-        else:
-            c.retrieve(
-                parameters['source'],
-                {
-                    'format': parameters['format'],
-                    'variable':variable,
-                    'date': date,
-                    'time': parameters['times'],
-                    'area': parameters['bbox'],
-                },
-                file_path)
-    except Exception as e:
-        # Print the exception
-        print(f"An error occurred: {e}")
+        c.retrieve(parameters['source'], request, zip_part)
+        extract_single_netcdf(zip_part, nc_part)
+        n_found, n_expected = check_time_axis(nc_part, year, parameters['delta_t_in_h'])
+        if n_found != n_expected:
+            # happens for a year that is not completely published yet
+            print(f"WARNING: {variable} {year} has {n_found} of {n_expected} time steps")
+        os.replace(nc_part, file_path)
+    finally:
+        for part in (zip_part, nc_part):
+            if os.path.exists(part):
+                os.remove(part)
 
     print('file:' + file_path + ' saved')
-    
-    # sleep for 10 seconds to ensure that there are no conflicts with another download 
-    sleep(10)
 
 
 
 def get_asset_climate(json_file, year, variable):
-    try:
-        parameters = get_parameter(json_file,'bbox.json')
-        file_path = os.path.join(download_folder, parameters['source'], variable, year + '.nc')
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    # download one variable for one year from the Climate Data Store (CDS) using the cdsapi
+    # check: https://cds.climate.copernicus.eu/how-to-api
+    # Errors are not caught here: a failed download must end the script with an error,
+    # so that snakemake marks the job as failed.
+    parameters = get_parameter(json_file, 'bbox.json')
+    if parameters is None:
+        raise RuntimeError(f"Could not read the configuration '{json_file}' (see message above)")
+    if variable not in [var["name"] for var in parameters["variables"]]:
+        raise ValueError(f"Variable '{variable}' is not listed in '{json_file}'")
 
-    # Extract the directory path from the file path
-    directory_path = os.path.dirname(file_path)
-
-    if not os.path.exists(directory_path):
-        try:
-        # Check if the directory exists, and create it if it doesn't
-            os.makedirs(directory_path)
-        except Exception as e:
-            print(f"An error occurred: {e}")
+    file_path = os.path.join(download_folder, parameters['source'], variable, year + '.nc')
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
     # return if result file already exists
     if os.path.exists(file_path):
+        print('file:' + file_path + ' already exists')
         return
 
-    try:
-        # Create a client for the CDS API
-        file = os.path.join(secrets_folder, 'cdsapirc_climate.sct')
-        with open(file, 'r') as f:
-            credentials = yaml.safe_load(f)
-    except Exception as e:
-            print(f"An error occurred: {e}")
+    with open(os.path.join(secrets_folder, 'cdsapirc_climate.sct'), 'r') as f:
+        credentials = yaml.safe_load(f)
+    c = cdsapi.Client(url=credentials['url'], key=credentials['key'])
 
+    # widen the area by one grid step, see pad_bbox
+    area = pad_bbox(parameters['bbox'], float(parameters.get('grid_resolution_deg', 0)))
+
+    request = {
+        'product_type': [parameters.get('product_type', 'reanalysis')],
+        'variable': [variable],
+        'year': [year],
+        'month': [f'{month:02d}' for month in range(1, 13)],
+        'day': [f'{day:02d}' for day in range(1, 32)],
+        'time': parameters['times'],
+        'area': area,
+        'data_format': 'netcdf',
+        'download_format': 'unarchived',
+    }
+
+    # download under temporary names, the final file only appears once it is complete
+    download_part = file_path + '.download.part'
+    nc_part = file_path + '.part'
     try:
-        c = cdsapi.Client(url=credentials['url'], key=credentials['key'])
-        c.retrieve(
-            parameters['source'],
-            {
-                'product_type': 'reanalysis',
-                'format': parameters['format'],
-                'year': year,
-                'month': parameters['months'],
-                'day': parameters['days'],
-                'time': parameters['times'],
-                'area': parameters['bbox'],
-                'variable': [variable],
-            },
-            file_path)
-    except Exception as e:
-            print(f"An error occurred: {e}")
+        c.retrieve(parameters['source'], request, download_part)
+        if zipfile.is_zipfile(download_part):
+            # the data store packs the result into a zip archive if it consists of several files
+            extract_single_netcdf(download_part, nc_part)
+        else:
+            os.replace(download_part, nc_part)
+        n_found, n_expected = check_time_axis(nc_part, year, parameters['delta_t_in_h'])
+        if n_found != n_expected:
+            # happens for a year that is not completely published yet
+            print(f"WARNING: {variable} {year} has {n_found} of {n_expected} time steps")
+        os.replace(nc_part, file_path)
+    finally:
+        for part in (download_part, nc_part):
+            if os.path.exists(part):
+                os.remove(part)
+
+    print('file:' + file_path + ' saved')
 
 
 def connect_wms(url, version='1.3.0', retries=3, delay=5):
@@ -670,259 +714,179 @@ def get_asset_wms(json_file, vOI):
         print(f"An error occurred while removing temporary directory: {e}")
 
 
-def copenicus_corine(json_file, vOI):
-    # download coperbnicus corine
+def spei_download(json_file, variableOI):
+    # download the SPEI drought index for one time scale (number of months, e.g. 12 for spei12.nc)
+    # The file is global. Its content is stored unchanged, only the names of time, latitude and
+    # longitude are changed to the names used in CLUES (valid_time, latitude, longitude).
+    # The names cannot be changed inside of the downloaded file: renaming coordinates in place
+    # destroys their values (an error of the netCDF library), so the file is written again.
+    # Errors are not caught here: a failed download must end the script with an error,
+    # so that snakemake marks the job as failed.
+    parameter = get_parameter(json_file, 'bbox.json')
+    if parameter is None:
+        raise RuntimeError(f"Could not read the configuration '{json_file}' (see message above)")
+    time_scale = int(variableOI)
+    urls = [url for url in parameter['variables'][0]['urls'] if url.endswith(f"/spei{time_scale:02}.nc")]
+    if len(urls) != 1:
+        raise ValueError(f"Expected exactly one address for the time scale {time_scale} in '{json_file}', found {len(urls)}")
+
+    file_path = os.path.join(download_folder, parameter['type'], str(time_scale) + '.nc')
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    os.makedirs(tmp_folder, exist_ok=True)
+
+    downloaded = os.path.join(tmp_folder, f'spei{time_scale:02}_download.nc')
+    # the final file only appears once it is complete
+    part = file_path + '.part'
     try:
-        parameters = get_parameter(json_file,'bbox.json')
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    # check if vOI is in parameters
-    if vOI not in [v['name'] for v in parameters['variables']]:
-        print(f"Variable {vOI} not found in parameters.")
-        return
-    for v in parameters['variables']:
-        if v['name']==vOI:
-            wms_url = v['url']
-            layer = v['layer']
-            layer_name = v['name']
-            break
-
-    # Define the WMS URL and layer name
-    try:
-        wms = WebMapService(wms_url, version='1.3.0')
-    except Exception as e:
-        print(f"An error occurred while connecting to WMS: {e}")
-        return
-    # the bbox must be reordered for this service
-    bbox = [parameters['bbox'][i] for i in [1,2,3,0]] # copernicus and eoc use a different order of bbox parameters['bbox'],
-    
-    try:
-        bbox_width_degrees, bbox_height_degrees, bbox_width_meters, bbox_height_meters, resolution = get_resolution(wms, layer, bbox)
-    except Exception as e:
-        print(f"An error occurred while getting resolution: {e}")
-        return
-
-    # Calculate the image width and height in pixels
-    width = int(bbox_width_meters / resolution)
-    height = int(bbox_height_meters / resolution)
-
-    # Define the maximum tile size: toDo shift to config source file
-    max_tile_size = 1024
-
-    # Calculate the number of tiles needed
-    num_tiles_x = int(np.ceil(width / max_tile_size))
-    num_tiles_y = int(np.ceil(height / max_tile_size))
-    # **end max resolution download defintion
-
-    # Create an empty image to hold the final result
-    final_image = Image.new('RGB', (width, height))
-    geotiff_files = []
-    max_retries = 20
-    tmp_dir = os.path.join(tmp_folder,f'tmp_{vOI}')
-    png_file = os.path.join(tmp_dir,'result.png')
-    try:
-        os.makedirs(tmp_dir, exist_ok=True)
-    except Exception as e:
-        print(f"An error occurred while creating temporary directory: {e}")
-        return
-    # Download each tile and paste it into the final image
-    for i in range(num_tiles_x):
-        for j in range(num_tiles_y):
-            png_file = os.path.join(tmp_dir,f'result{i,j}.png')
-            tile_bbox = [
-                bbox[0] + i * (bbox_width_degrees / num_tiles_x),
-                bbox[1] + j * (bbox_height_degrees / num_tiles_y),
-                bbox[0] + (i + 1) * (bbox_width_degrees / num_tiles_x),
-                bbox[1] + (j + 1) * (bbox_height_degrees / num_tiles_y)
-            ]
-            # Calculate the bounding box width in meter
-            bbox_width_meters = (tile_bbox[2] - tile_bbox[0]) * 111320 
-            bbox_height_meters = (tile_bbox[3] - tile_bbox[1]) * 111320 
-            tile_width = int(bbox_width_meters / resolution)
-            tile_height =int( bbox_height_meters / resolution)
-            retry_count = 0
-
-            while retry_count < max_retries:
-                map_request = wms.getmap(
-                    layers=[layer],
-                    srs="EPSG:4326",
-                    bbox=tile_bbox,
-                    size=(tile_width, tile_height),
-                    format="image/png",
-                )
-                if map_request._response.status_code != 200:
-                    print('response.status_code')
-                    print(map_request._response.status_code)
-                    retry_count += 1
-                    sleep(1)  # Wait for 1 second before retrying
-                    print('retry')
-                else:
-                    try:
-                        with open(png_file, 'wb') as f:
-                            f.write(map_request.read())
-                    except Exception as e:
-                        print(f"An error occurred while writing PNG file: {e}")
-                        return    
-                    # Open the PNG file
-                    with Image.open(png_file) as img:
-                        img_array = np.array(img)
-                    try:
-                        transform = rasterio.transform.from_bounds(
-                            *tile_bbox, width=tile_width, height=tile_height
-                            )
-                    except Exception as e:
-                        print(f"An error occurred while creating transform: {e}")
-                        return
-                    # Save as GeoTIFF
-                    geotiff_file = os.path.join(tmp_dir, f"{i}_{j}_result.tif")
-                    geotiff_files.append(geotiff_file)
-                    try:
-                        with rasterio.open(
-                            geotiff_file, 'w', driver='GTiff',
-                            height=tile_height, width=tile_width,
-                            count=3, dtype=img_array.dtype,
-                            crs='EPSG:4326', transform=transform
-                        ) as dst:
-                            try:
-                                if img_array.ndim == 2:
-                                    # Write the same band 3 times
-                                    for k in range(1, 4):
-                                        dst.write(img_array, k)
-                                else:
-                                    # RGB image
-                                    for k in range(1, 4):
-                                        dst.write(img_array[:, :, k-1], k)
-                            except Exception as e:
-                                print(f"An error occurred: {e}")
-                    except Exception as e:
-                        print(f"An error occurred while writing GeoTIFF file: {e}")
-                        return
-                    try:
-                        os.remove(png_file)
-                    except Exception as e:
-                        print(f"An error occurred while removing PNG file: {e}")
-                        return
-                break
-
-    # Open all GeoTIFF files
-    try:
-        src_files_to_mosaic = []
-        for fp in geotiff_files:
-            src = rasterio.open(fp)
-            src_files_to_mosaic.append(rasterio.open(fp))
-    except Exception as e:
-        print(f"An error occurred while opening GeoTIFF files: {e}")
-        return
-
-    try:
-        # Merge the GeoTIFF files
-        mosaic, out_trans = merge(src_files_to_mosaic)
-    except Exception as e:
-        print(f"An error occurred while merging GeoTIFF files: {e}")
-        return
-
-    try:
-        # Update the metadata
-        out_meta = src.meta.copy()
-        out_meta.update({
-            "driver": "GTiff",
-            "height": mosaic.shape[1],
-            "width": mosaic.shape[2],
-            "transform": out_trans,
-            "crs": src.crs
-        })
-    except Exception as e:
-        print(f"An error occurred while updating metadata: {e}")
-        return
-
-    try:
-        # Save the merged GeoTIFF
-        file_path = os.path.join(download_folder, parameters['type'], layer_name +'.tif')
-        with rasterio.open(file_path, "w", **out_meta) as dest:
-            dest.write(mosaic)
-            print(f"Merged GeoTIFF saved as {file_path}")
-    except Exception as e:
-        print(f"An error occurred while saving the merged GeoTIFF: {e}")
-        return
-    try:
-        # Close all source files
-        for src in src_files_to_mosaic:
-            src.close()
-    except Exception as e:
-        print(f"An error occurred while closing source files: {e}")
-        return
-    try:   
-        for geotiff_file in geotiff_files:
-            os.remove(geotiff_file)
-            print(f"Temporary file {geotiff_file} removed.")
-    except Exception as e:
-        print(f"An error occurred while removing temporary files: {e}")
-        return
+        download_file(urls[0], downloaded)
+        # read and write in pieces of 120 months, the complete file does not have to fit into memory
+        with xr.open_dataset(downloaded, chunks={'time': 120}) as ds:
+            if 'spei' not in ds.data_vars:
+                raise RuntimeError(f"Unexpected content of {urls[0]}: variables {list(ds.data_vars)}")
+            harmonized = rename_coords(ds)
+            missing = [name for name in ('valid_time', 'latitude', 'longitude') if name not in harmonized.coords]
+            if missing:
+                raise RuntimeError(f"Unexpected content of {urls[0]}: coordinates {list(ds.coords)}")
+            n_lat, n_lon = harmonized.sizes['latitude'], harmonized.sizes['longitude']
+            harmonized.to_netcdf(part, encoding={'spei': {'zlib': True, 'complevel': 4, 'chunksizes': (1, n_lat, n_lon)}})
+            print(f"spei{time_scale:02}: {dict(harmonized.sizes)}, "
+                  f"{str(harmonized['valid_time'].values[0])[:10]} to {str(harmonized['valid_time'].values[-1])[:10]}")
+        os.replace(part, file_path)
+    finally:
+        for leftover in (part, downloaded):
+            if os.path.exists(leftover):
+                os.remove(leftover)
+    print(f"File downloaded and saved as {file_path}")
 
 
-def spei_download(json_file,variableOI):
-    # download drougth data
-    try:
-        parameter = get_parameter(json_file,'bbox.json')
-        variableOI = int(variableOI)
-        urls = parameter['variables'][0]['urls']
-        url = [url for url in urls if f"spei{variableOI:02}.nc" in url]
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return
-    try:
-        response = requests.get(url[0])
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred while downloading the file: {e}")
-        return
-    file_path_tmp = os.path.join(download_folder, parameter['type'], str(variableOI) +'_tmp.nc')
-    file_path = os.path.join(download_folder, parameter['type'], str(variableOI) +'.nc')
-    
-    if response.status_code == 200:
+def download_file(url, target, max_retries=3):
+    """
+    Download a file to `target`.
+
+    The data is written in pieces to a temporary file (never the whole file in memory), the size is
+    compared with the size announced by the server and only a complete file gets the final name.
+    """
+    part = target + '.part'
+    for attempt in range(1, max_retries + 1):
         try:
-            with open(file_path_tmp, 'wb') as file:
-                file.write(response.content)
+            with requests.get(url, stream=True, timeout=120) as response:
+                response.raise_for_status()
+                size = int(response.headers.get('Content-Length', -1))
+                with open(part, 'wb') as f:
+                    for chunk in response.iter_content(chunk_size=4 * 1024 * 1024):
+                        f.write(chunk)
+            if size >= 0 and os.path.getsize(part) != size:
+                raise requests.RequestException(f"incomplete download, {os.path.getsize(part)} of {size} bytes")
+            os.replace(part, target)
+            return
+        except requests.RequestException as e:
+            print(f"{url}: {e} (attempt {attempt}/{max_retries})")
+            if os.path.exists(part):
+                os.remove(part)
+            if attempt == max_retries:
+                raise RuntimeError(f"Failed to download {url}") from e
+            sleep(30)
 
-            # Open, process, and close the dataset using `with` to ensure closure
-            with xr.open_dataset(file_path_tmp) as ds:
-                ds_spei_harmonized = rename_coords(ds)  # Rename coordinates
-                ds_spei_harmonized.to_netcdf(file_path)  # Save final dataset
-            # Save harmonized datasets
-            os.remove(file_path_tmp)
-            print(f"File downloaded and saved as {file_path}")
-        except Exception as e:
-            print(f"An error occurred while processing the file: {e}")
+
+def supports_range_requests(url):
+    # True if the server delivers parts of a file, then only the area of interest has to be read
+    with requests.get(url, headers={'Range': 'bytes=0-1023'}, stream=True, timeout=60) as response:
+        return response.status_code == 206
+
+
+def crop_geotiff_to_bbox(source, target, bbox, margin_in_pixel=10, rows_per_step=2048):
+    """
+    Write the part of a GeoTIFF that covers the bbox [lat_max, lon_min, lat_min, lon_max] to `target`.
+
+    source: a local file or a file on a web server ('/vsicurl/' + url). From a web server only the
+            needed parts of the file are read.
+    The pixels are copied unchanged (same pixel grid, values, data type, nodata value, scale factor),
+    a margin of some pixels is added around the bbox. The data is copied in steps of some rows,
+    so large areas do not have to fit into memory.
+    """
+    lat_max, lon_min, lat_min, lon_max = bbox
+    with rasterio.open(source) as src:
+        left, bottom, right, top = lon_min, lat_min, lon_max, lat_max
+        if src.crs is not None and src.crs.to_epsg() != 4326:
+            left, bottom, right, top = transform_bounds('EPSG:4326', src.crs, left, bottom, right, top, densify_pts=21)
+        window = from_bounds(left, bottom, right, top, src.transform)
+        col_start = max(0, math.floor(window.col_off) - margin_in_pixel)
+        row_start = max(0, math.floor(window.row_off) - margin_in_pixel)
+        col_stop = min(src.width, math.ceil(window.col_off + window.width) + margin_in_pixel)
+        row_stop = min(src.height, math.ceil(window.row_off + window.height) + margin_in_pixel)
+        width, height = col_stop - col_start, row_stop - row_start
+        if width <= 0 or height <= 0:
+            raise RuntimeError(f"The area {bbox} does not overlap with {source}")
+
+        profile = src.profile.copy()
+        profile.update(driver='GTiff', width=width, height=height,
+                       transform=src.window_transform(Window(col_start, row_start, width, height)),
+                       compress='deflate', tiled=True, blockxsize=256, blockysize=256, BIGTIFF='IF_SAFER')
+        with rasterio.open(target, 'w', **profile) as dst:
+            dst.update_tags(**src.tags())
+            dst.scales = src.scales
+            dst.offsets = src.offsets
+            dst.units = src.units
+            for band in src.indexes:
+                dst.update_tags(band, **src.tags(band))
+                if src.descriptions[band - 1]:
+                    dst.set_band_description(band, src.descriptions[band - 1])
+            for row in range(0, height, rows_per_step):
+                rows = min(rows_per_step, height - row)
+                data = src.read(window=Window(col_start, row_start + row, width, rows))
+                dst.write(data, window=Window(0, row, width, rows))
+    print(f"{width} x {height} pixels written to {target}")
 
 
 def get_simple_download_tif(json_file, vOI):
-    # download directly the files of interst from source
-    try:
-        parameters = get_parameter(json_file,'bbox.json')
-        for v in parameters['variables']:
-            if v['name']==vOI:
-                parameters['variables'] = v
-                break
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return
-    try:
-        # Send a HTTP request to the URL
-        url = parameters['variables']['url']
-        response = requests.get(url)
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return
-        
-    # Save the content of the response as a file
-    file_path = os.path.join(download_folder, parameters['type'],parameters['variables']['name']+'.tif')
-    try:
-        with open(file_path, 'wb') as f:
-            f.write(response.content)
-    except Exception as e:
-        print(f"An error occurred while saving the file: {e}")
-        return
+    # get a GeoTIFF file that is offered as one (global) file directly from the source
+    # With "cut_to_area": true in the configuration only the configured area is saved,
+    # otherwise the complete file.
+    # Errors are not caught here: a failed download must end the script with an error,
+    # so that snakemake marks the job as failed.
+    parameters = get_parameter(json_file, 'bbox.json')
+    if parameters is None:
+        raise RuntimeError(f"Could not read the configuration '{json_file}' (see message above)")
+    variable = next((v for v in parameters['variables'] if v['name'] == vOI), None)
+    if variable is None:
+        raise ValueError(f"Variable '{vOI}' is not listed in '{json_file}'")
 
-    print("The GeoTIFF file has been downloaded and saved as '" + parameters['variables']['name']+'.tif' +"'.")
+    url = variable['url']
+    file_path = os.path.join(download_folder, parameters['type'], variable['name'] + '.tif')
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+    if parameters.get('cut_to_area', False):
+        # write under a temporary name, the final file only appears once it is complete
+        part = file_path + '.part'
+        complete_file = os.path.join(tmp_folder, variable['name'] + '_complete.tif')
+        try:
+            if supports_range_requests(url):
+                # read only the area of interest from the server
+                with rasterio.Env(GDAL_DISABLE_READDIR_ON_OPEN='EMPTY_DIR', GDAL_HTTP_TIMEOUT='120',
+                                  GDAL_HTTP_MAX_RETRY='5', GDAL_HTTP_RETRY_DELAY='30'):
+                    crop_geotiff_to_bbox('/vsicurl/' + url, part, parameters['bbox'])
+            else:
+                # the server only delivers complete files: download, cut out the area, remove the complete file
+                os.makedirs(tmp_folder, exist_ok=True)
+                download_file(url, complete_file)
+                crop_geotiff_to_bbox(complete_file, part, parameters['bbox'])
+            os.replace(part, file_path)
+        finally:
+            for leftover in (part, complete_file):
+                if os.path.exists(leftover):
+                    os.remove(leftover)
+    else:
+        download_file(url, file_path)
+
+    # make sure the file really is a GeoTIFF (and not e.g. an error page of the server)
+    try:
+        with rasterio.open(file_path) as src:
+            print(f"{src.width} x {src.height} pixels, {src.count} band(s), {src.dtypes[0]}, {src.crs}")
+    except Exception:
+        os.remove(file_path)
+        raise
+
+    print("The GeoTIFF file has been saved as '" + variable['name'] + '.tif' + "'.")
 
 def get_bbox(bbox_jsonfile):
     parameters = {}
@@ -949,13 +913,21 @@ def get_bbox(bbox_jsonfile):
     return parameters
 
 
-def get_all_files(article_id):
+def get_all_files(article_id, version=None):
+    # list of all files of a Figshare record (name, size, download_url, computed_md5, ...)
+    # version: number of the version of the record, None for the latest version
+    if version is not None:
+        response = requests.get(f"https://api.figshare.com/v2/articles/{article_id}/versions/{version}", timeout=30)
+        response.raise_for_status()
+        return response.json()["files"]
     files = []
     seen = set()
     page = 1
     while True:
         url = f"https://api.figshare.com/v2/articles/{article_id}/files?page={page}&page_size=100"
-        batch = requests.get(url, timeout=30).json()
+        response = requests.get(url, timeout=30)
+        response.raise_for_status()
+        batch = response.json()
         if not batch:
             break
         for f in batch:
@@ -967,54 +939,124 @@ def get_all_files(article_id):
         page += 1
     return files
 
+
+def md5_of_file(path):
+    md5 = hashlib.md5()
+    with open(path, 'rb') as f:
+        for chunk in iter(lambda: f.read(4 * 1024 * 1024), b''):
+            md5.update(chunk)
+    return md5.hexdigest()
+
+
+def download_figshare_file(file_info, target):
+    # download one file of a Figshare record and compare it with the checksum of the record
+    download_file(file_info["download_url"], target)
+    expected = file_info.get("computed_md5") or file_info.get("supplied_md5")
+    if expected and md5_of_file(target) != expected:
+        os.remove(target)
+        raise RuntimeError(f"Checksum of {file_info['name']} does not match the Figshare record")
+
+
 def download_ntl_glwd(json_file):
-    #article_id, out_dir="ntl", files_oi="all"
-    try:
-        parameter = get_parameter(json_file, 'bbox.json')
-        url = parameter['variables'][0]['url']
-        article_id  = parameter['variables'][0]['article_id']
-        files_oi  = parameter['variables'][0]['files_oi']
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return
-    print(article_id)
-    print(files_oi)
-    file_path = os.path.join(download_folder, parameter['type'])
-    try:
-        os.makedirs(file_path, exist_ok=True)
-    except Exception as e:
-        print(f"An error occurred while creating the directory: {e}")
-        return
+    """
+    Download files of a Figshare record (used for the Global Lakes and Wetlands Database and the
+    night time lights).
 
-    files = get_all_files(article_id)
+    Configuration of the variable:
+        article_id   number of the Figshare record
+        version      version of the record (optional, default: the latest version)
+        files_oi     list of the file names to download, or "all"
+        flagFile     one of these files, snakemake waits for it; it is written last
+    Zip files are unpacked. With "cut_to_area": true in the configuration the GeoTIFF files are cut
+    to the configured area (pixels unchanged), otherwise they are stored completely.
+    Errors are not caught here: a failed download must end the script with an error,
+    so that snakemake marks the job as failed.
+    """
+    parameter = get_parameter(json_file, 'bbox.json')
+    if parameter is None:
+        raise RuntimeError(f"Could not read the configuration '{json_file}' (see message above)")
+    variable = parameter['variables'][0]
+    for key in ('article_id', 'files_oi', 'flagFile'):
+        if key not in variable:
+            raise KeyError(f"'{key}' is missing for the variable '{variable.get('name')}' in '{json_file}'")
+    files_oi = variable['files_oi']
+    flag_file = variable['flagFile']
+    cut_to_area = parameter.get('cut_to_area', False)
+
+    folder = os.path.join(download_folder, parameter['type'])
+    os.makedirs(folder, exist_ok=True)
+
+    files = get_all_files(variable['article_id'], variable.get('version'))
     if files_oi != "all":
+        missing = [name for name in files_oi if name not in [f["name"] for f in files]]
+        if missing:
+            raise RuntimeError(f"Not part of the Figshare record {variable['article_id']}: {missing}")
         files = [f for f in files if f["name"] in files_oi]
-
+    # the flag file last: it only appears when everything else is there
+    files.sort(key=lambda f: f["name"] == flag_file)
     print(f"Found {len(files)} file(s) to download")
 
-    for file_info in files:
-        dest = os.path.join(file_path, file_info["name"])
-        if os.path.exists(dest) and os.path.getsize(dest) == file_info["size"]:
-            print(f"  Skip (done): {file_info['name']}")
+    work_dir = os.path.join(tmp_folder, 'figshare_' + str(variable['article_id']))
+    shutil.rmtree(work_dir, ignore_errors=True)
+    os.makedirs(work_dir)
+    try:
+        for file_info in files:
+            name = file_info["name"]
+            # a complete file of an earlier, interrupted run is not downloaded again
+            existing = os.path.join(folder, name)
+            if (not cut_to_area and not name.endswith(".zip") and name != flag_file and os.path.exists(existing)
+                    and os.path.getsize(existing) == file_info["size"]
+                    and md5_of_file(existing) == (file_info.get("computed_md5") or file_info.get("supplied_md5"))):
+                print(f"  Skip (done): {name}")
+                continue
+            print(f"  Downloading: {name} ({file_info['size'] / 1e6:.1f} MB)")
+            downloaded = os.path.join(work_dir, name)
+            download_figshare_file(file_info, downloaded)
+
+            if name.endswith(".zip"):
+                print(f"  Extracting: {name}")
+                extract_dir = os.path.join(work_dir, 'extracted')
+                with zipfile.ZipFile(downloaded) as zf:
+                    zf.extractall(extract_dir)
+                os.remove(downloaded)
+                store_folder(extract_dir, folder, parameter['bbox'] if cut_to_area else None)
+                shutil.rmtree(extract_dir)
+            else:
+                store_file(downloaded, os.path.join(folder, name), parameter['bbox'] if cut_to_area else None)
+    finally:
+        shutil.rmtree(work_dir, ignore_errors=True)
+
+    if not os.path.exists(os.path.join(folder, flag_file)):
+        raise RuntimeError(f"The flag file '{flag_file}' is not among the downloaded files, check 'files_oi' and 'flagFile'")
+    print(f"  Done {folder}")
+
+
+def store_file(source, target, bbox=None):
+    # move a downloaded file to its final place; a GeoTIFF is cut to the bbox if one is given
+    os.makedirs(os.path.dirname(target), exist_ok=True)
+    part = target + '.part'
+    try:
+        if bbox is not None and target.lower().endswith(('.tif', '.tiff')):
+            crop_geotiff_to_bbox(source, part, bbox)
         else:
-            print(f"  Downloading: {file_info['name']}")
-            r = requests.get(file_info["download_url"], stream=True, timeout=120,
-                            headers={"Accept-Encoding": "identity"})
-            r.raise_for_status()
+            shutil.move(source, part)
+        os.replace(part, target)
+    finally:
+        if os.path.exists(part):
+            os.remove(part)
 
-            with open(dest, "wb") as f:
-                downloaded = 0
-                for chunk in r.iter_content(chunk_size=4 * 1024 * 1024):
-                    if chunk:
-                        f.write(chunk)
-                        downloaded += len(chunk)
-                        print(f"    {downloaded * 100 / file_info['size']:.1f}%", end="\r", flush=True)
-            print(f"    Done {dest}")
 
-        if dest.endswith(".zip"):
-            print(f"  Extracting: {file_info['name']}")
-            with zipfile.ZipFile(dest) as zf:
-                zf.extractall(file_path)
-            os.remove(dest)
-            print(f"  Extracted and removed zip")
+# helper files that describe the extent or hold reduced copies of a complete raster (world file,
+# overviews, statistics). Next to a raster that was cut to an area they would be wrong.
+RASTER_HELPER_FILES = ('.tfw', '.tifw', '.ovr', '.aux.xml')
 
+
+def store_folder(source_folder, target_folder, bbox=None):
+    # store all files of an unpacked zip file, the folders inside of the zip file are kept
+    for root, _, names in os.walk(source_folder):
+        for name in sorted(names):
+            if bbox is not None and name.lower().endswith(RASTER_HELPER_FILES):
+                continue
+            source = os.path.join(root, name)
+            relative = os.path.relpath(source, source_folder)
+            store_file(source, os.path.join(target_folder, relative), bbox)

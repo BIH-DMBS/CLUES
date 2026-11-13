@@ -1,35 +1,40 @@
 {
     "type":"land_use",
     "format": "geotTiff",
+    "link": "https://land.copernicus.eu/en/products/corine-land-cover",
+    "source": "map services of the European Environment Agency, https://image.discomap.eea.europa.eu/arcgis/rest/services/Corine",
+    "citation": "European Environment Agency, Copernicus Land Monitoring Service: CORINE Land Cover (status layers)",
+    "units": "CORINE Land Cover class code (level 3, 111-523), 0 = no data, see corine_legend.csv next to the data",
+    "resolution_deg": 0.001,
     "variables":[
         {
             "name":"corine_landcover_2018",
-            "url":"https://image.discomap.eea.europa.eu/arcgis/services/Corine/CLC2018_WM/MapServer/WMSServer",
-            "layer":"12",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/rest/services/Corine/CLC2018_LAEA/MapServer",
+            "layer":"1",
             "year":"2018"
         },
         {
             "name":"corine_landcover_2012",
-            "url":"https://image.discomap.eea.europa.eu/arcgis/services/Corine/CLC2012_WM/MapServer/WMSServer",
-            "layer":"Corine_Land_Cover_2012_raster59601",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/rest/services/Corine/CLC2012/MapServer",
+            "layer":"1",
             "year":"2012"
         },
         {
             "name":"corine_landcover_2006",
-            "url":"https://image.discomap.eea.europa.eu/arcgis/services/Corine/CLC2006_WM/MapServer/WMSServer",
-            "layer":"Corine_Land_Cover_2006_raster43084",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/rest/services/Corine/CLC2006/MapServer",
+            "layer":"1",
             "year":"2006"
         },
         {
             "name":"corine_landcover_2000",
-            "url":"https://land.discomap.eea.europa.eu/arcgis/services/Land/CLC_accounting_layer_2000/ImageServer/WMSServer",
-            "layer":"CLC_accounting_layer_2000",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/rest/services/Corine/CLC2000/MapServer",
+            "layer":"1",
             "year":"2000"
         },
         {
             "name":"corine_landcover_1990",
-            "url":"https://image.discomap.eea.europa.eu/arcgis/services/Corine/CLC1990_WM/MapServer/WMSServer",
-            "layer":"Corine_Land_Cover_1990_raster17001",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/rest/services/Corine/CLC1990/MapServer",
+            "layer":"1",
             "year":"1990"
         }
     ]

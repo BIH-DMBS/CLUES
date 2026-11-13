@@ -22,5 +22,4 @@ docker/secrets/*
 !docker/secrets/readme.md
 !docker/secrets/cdsapirc_atmo.sct
 !docker/secrets/cdsapirc_climate.sct
-!docker/secrets/copernicus_credential.sct
 !docker/secrets/nasa.sct

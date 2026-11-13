@@ -1,6 +1,9 @@
 {
     "type": "WordSettlementFootprint",
     "format": "geoTIFF",
+    "link": "https://geoservice.dlr.de/web/datasets?t=wsf",
+    "citation": "Marconcini et al. (2020), Outlining where humans live, the World Settlement Footprint 2015, Scientific Data 7, 242; WSF 2019 and WSF Evolution: German Aerospace Center (DLR)",
+    "units": "WSF 2015 and 2019: 255 = settlement, 0 = no settlement. WSF Evolution: year (1985-2015) in which the pixel became settlement, 0 = no settlement",
     "variables":[
 
     ]

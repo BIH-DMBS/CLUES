@@ -9,8 +9,9 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 ### Copernicus Atmosphere Monitoring Service (CAMS) Global Reanalysis (EAC4)
 - Description: Global atmospheric composition reanalysis implemented by ECMWF, using data assimilation of satellite and in-situ observations.  
 - Years: 2003–present  
-- Resolution: 0.75°×0.75°, 3-hourly  
+- Resolution: 0.75°×0.75°, 3-hourly (UTC)  
 - Format: NetCDF  
+- Area: the configured bounding box, widened by one grid step (0.75°) on every side, so that locations close to the border are linked to their nearest grid cell  
 - Config: `cams-global-reanalysis-eac4.json`  
 - [More Info](https://ads.atmosphere.copernicus.eu/datasets/cams-global-reanalysis-eac4?tab=overview)
 - DOI: 10.24381/d58bbf47
@@ -19,8 +20,9 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 ### Copernicus Climate Change Service (C3S) Reanalysis ERA5 on single levels
 - Description: Global climate reanalysis (ERA5) implemented by ECMWF, using data assimilation of satellite and in-situ observations.  
 - Years: 1940–present  
-- Resolution: 0.25°×0.25°, hourly  
-- Format: NetCDF  
+- Resolution: 0.25°×0.25°, hourly (UTC)  
+- Format: NetCDF, one file per variable and year  
+- Area: the configured bounding box, widened by one grid step (0.25°) on every side, so that locations close to the border are linked to their nearest grid cell  
 - Config: `reanalysis-era5-single-levels.json`  
 - [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview)
 - DOI: 10.24381/cds.adbb2d47
@@ -31,8 +33,11 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 ### Copernicus Climate Change Service (C3S) reanalysis-land
 - Description: Global climate reanalysis (ERA5) implemented by ECMWF, using data assimilation of satellite and in-situ observations.  
 - Years: 1950–present  
-- Resolution: 0.1°×0.1°, hourly  
-- Format: NetCDF  
+- Resolution: 0.1°×0.1°, hourly (UTC)  
+- Format: NetCDF, one file per variable and year  
+- Area: the configured bounding box, widened by one grid step (0.1°) on every side, so that locations close to the border are linked to their nearest grid cell. Grid cells over the sea have no value.  
+- Download: one request per variable and year. A request for this data set waits about 20 to 30 minutes in the queue of the Climate Data Store, whatever its size.  
+- Accumulated variables (`total_precipitation`, `snowfall`, `surface_net_solar_radiation`, `surface_net_thermal_radiation`): the hourly values are **running totals since 00 UTC of the day**, not amounts per hour. The value at 01 UTC is the amount of the first hour, the value at 00 UTC is the total of the whole previous day. To get the amount of one hour, subtract the value of the hour before (except at 01 UTC); to get daily totals, take the values at 00 UTC of the following day. Adding up all hourly values gives a result that is far too large (example: Berlin, January 2020, 601 mm instead of 45 mm of precipitation). This is how the data is published; CLUES stores it unchanged. In ERA5 on single levels the same variables are amounts per hour.  
 - Config: `reanalysis-era5-land.json`  
 - [More Info](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land)
 - DOI: 10.24381/cds.e2161bac
@@ -44,7 +49,10 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Description: European socioeconomic data at NUTS (Nomenclature of Territorial Units for Statistics) level. NUTS is a hierarchical system developed by the European Union to divide its member states into standardized territorial units for collecting and analyzing regional statistics. It consists of three levels — NUTS 1 (major regions), NUTS 2 (basic regions for policy implementation), and NUTS 3 (small regions for detailed analysis) — with additional subdivisions at the LAU (Local Administrative Unit) level for finer granularity.  
 - Years: Varies by product  
 - Resolution: Varies by product  
-- Format: CSV  
+- Format: CSV, one file per indicator in a folder per theme, plus one `geometry.csv` with the boundaries of the regions  
+- File names: made from the name of the indicator. Where several indicators have the same name, the first keeps the plain name and the others get the id of the indicator appended (for example `Deaths_-_age_group_0-4.csv` and `Deaths_-_age_group_0-4_id97.csv`).  
+- Regions: an indicator file holds one row per region and NUTS level. A region can appear at several levels with the same boundary (Berlin is `DE3`, `DE30` and `DE300`).  
+- Boundaries: `geometry.csv` can hold more than one boundary for a region code, because the boundaries of some regions differ between NUTS versions. Joining an indicator with `geometry.csv` on `tunit_code` then gives more than one row for such a region.  
 - Config: `espon.json`  
 - [More Info](https://database.espon.eu)
 - License: [Custom ESPON Reuse Policy](https://www.espon.eu/legal-notice). Reproduction allowed with mandatory attribution (“© ESPON” and “Origin of information/data: ESPON EGTC”), mandatory disclaimer for results, and restrictions on map design reuse.
@@ -65,16 +73,18 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
     - Description: Global maps outlining the extent of human settlements. Includes static products for specific years and the WSF Evolution (WSF-Evo) dataset showing annual changes.  
     - Years: 2015, 2019 (WSF); 1985–2015 (WSF-Evo)    
     - Resolution: 10m×10m (WSF), yearly; 30m×30m (WSF-Evo), yearly  
-    - Format: GeoTIFF  
+    - Format: GeoTIFF, one file per product, cut to the configured area (the 2°×2° tiles of the source are merged)  
+    - Values: WSF 2015 and 2019: 255 = settlement, 0 = no settlement (WSF 2019 also contains very few pixels with the value 1). WSF-Evo: year (1985–2015) in which the pixel became settlement, 0 = no settlement  
     - Config: `EOC_WSF.json`  
     - [More info](https://www.dlr.de/en/eoc/research-transfer/projects-missions/world-settlement-footprint-wsf-r)
     - DOI: [WSF-2015](https://doi.org/10.15489/rlyibn8gjc58); [WSF-2019](https://doi.org/10.15489/twg5xsnquw84)
     - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - WSF3D:  
     - Description: A global dataset of the average height, total volume, total area and the fraction of buildings, capturing 3D urban structure.  
-    - Years: Static  
+    - Years: Static. The settlement extent is based on data of 2017-2019, the heights on elevation data of 2011-2013; for buildings constructed after 2012 no height information is available.  
     - Resolution: 90m×90m  
-    - Format: GeoTIFF  
+    - Format: GeoTIFF, one file per layer, cut to the configured area (pixels unchanged)  
+    - Values per 90 m cell: `BuildingHeight` average building height, stored value × 0.1 = metres; `BuildingFraction` percent of the cell covered by buildings; `BuildingArea` in m²; `BuildingVolume` in m³. No data is -32767 (255 for `BuildingFraction`). The linking scripts return the stored values, the scale factor and the no data value have to be applied by the user.  
     - Config: `EOC_WSF3D.json`  
     - [More info](https://geoservice.dlr.de/web/datasets/wsf_3d)
     - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
@@ -82,18 +92,20 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 
 ### Copernicus Global Digital Elevation model (DEM) 
 - Description: Global elevation data representing Earth's surface. 
-- Resolution: 30m×30m and 90m×90m, static for years 2011 - 2015  
-- Format: GeoTIFF  
+- Resolution: 30m×30m (GLO-30) and 90m×90m (GLO-90), static for years 2011 - 2015  
+- Format: GeoTIFF, one file per 1°×1° tile, elevation in metres  
+- Source: public [AWS Open Data registry](https://registry.opendata.aws/copernicus-dem/), no account needed. Tiles without land do not exist. A small number of GLO-30 tiles is not publicly released; these are missing in the download and covered by GLO-90 only.  
+- Derived data: mean and standard deviation of the elevation within a radius, slope and aspect (see the User Guide, Neighbourhood-level processing)  
 - Config: `copernicus_dem.json`  
 - [More Info](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM)
 - DOI: 10.5270/ESA-c5d3d65
 - Licence: [Copernicus Data Licence](https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM) Free use permitted with mandatory attribution (“© DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved”) and required notices for adapted data (“produced using Copernicus WorldDEM-30…” / “produced using Copernicus WorldDEM-90…”).
 
 ### Copernicus Global Land Service
-- Description: Global land cover classification with 23 classes aligned with UN-FAO's Land Cover Classification.  
+- Description: Copernicus Global Land Service, Land Cover 100m, collection 3. From this product CLUES downloads the built-up cover fraction layer: the percentage of each pixel that is covered by buildings and other man-made structures (0-100, 255 = no data). The discrete land cover classification with 23 classes and the other cover fraction layers of the product are not downloaded.  
 - Years: 2015-2019
 - Resolution: 100m×100m, yearly  
-- Format: GeoTIFF  
+- Format: GeoTIFF, one global file per year (about 550 MB each)  
 - Config: `copernicus_dynamic_land_cover.json`  
 - [More Info](https://land.copernicus.eu/en/products/global-dynamic-land-cover/copernicus-global-land-service-land-cover-100m-collection-3-epoch-2015-2019-globe)
 - [DOI](https://doi.org/10.2909/c6377c6e-76cc-4d03-8330-628a03693042)
@@ -101,49 +113,55 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 
 ### Copernicus Land Monitoring Service
 - Corine Land Cover dataset  
-    - Description: European land cover classification and monitoring with 44 thematic classes, ranging from broad forested areas to individual vineyards.  
-    - Years: 1990, 2000, 2006, 2012, and 2018  
-    - Resolution: 100m×100m, yearly  
-    - Format: GeoTIFF  
+    - Description: European land cover classification and monitoring with 44 thematic classes, ranging from broad forested areas to individual vineyards. CLUES downloads the status layers. Every pixel holds the class code of the third level of the CORINE nomenclature (111 to 523, 0 = no data). The names of the classes are written to `corine_legend.csv` next to the data.  
+    - Years: 1990, 2000, 2006, 2012, 2018  
+    - Resolution: 100m×100m at the source, stored on a grid of 0.001° in geographic coordinates (EPSG:4326)  
+    - Coverage: Europe (EEA member and cooperating countries). For areas outside of Europe the variables have to be removed from the configuration.  
+    - Format: GeoTIFF, one band  
+    - Comparing years: the status layers were produced with different methods over time, so differences between two years are not only real land cover change. For example, in Brandenburg 20 % of the pixels differ between 2006 and 2012, while 0.4 % differ between 2012 and 2018, because Germany changed its mapping method for 2012. For analyses of change over time the EEA provides harmonised CLC accounting layers (2000-2018), which are not part of the default CLUES configuration.  
     - Config: `corine_copernicus.json`  
     - [More Info](https://land.copernicus.eu/en/products/corine-land-cover)
     - DOI: [1990](https://doi.org/10.2909/c89324ef-7729-4477-9f1b-623f5f88eaa1), [2000](https://doi.org/10.2909/ddacbd5e-068f-4e52-a596-d606e8de7f40), [2006](https://doi.org/10.2909/08560441-2fd5-4eb9-bf4c-9ef16725726a), [2012](https://doi.org/10.2909/a84ae124-c5c5-4577-8e10-511bfe55cc0d), [2018](https://doi.org/10.2909/960998c1-1870-4e82-8051-6485205ebbac)
     - Note: Default CLUES dataset includes years 2000, 2006, 2012, and 2018  
 - Tree Cover Density  
     - Description: European tree cover density.  
-    - Years: 2012, 2015, and annually from 2018 to 2023  
-    - Resolution: 100m×100m, yearly  
-    - Format: GeoTIFF  
+    - Years: 2018 with percent values; 2012 and 2015 in five classes. The layers of 2019 to 2021 are not part of the default configuration, because their server did not answer when the configuration was revised (November 2026).  
+    - Resolution: 10 m (2018) and 20 m (2012, 2015) at the source, stored on a grid of 0.001° in geographic coordinates (EPSG:4326)  
+    - Format: GeoTIFF, one band, 255 = no data  
+    - Values: `HRL_TreeCoverDensity_2018` is the tree cover density in percent (0-100), the mean of the 10 m data within each pixel. `Tree_Cover_Density_classes_2012` and `Tree_Cover_Density_classes_2015` hold classes, because the service offers these years only as a map in five classes: 0 = no trees or outside of the covered area, 1 = 1-20 %, 2 = 21-40 %, 3 = 41-60 %, 4 = 61-80 %, 5 = 81-100 %, 254 = unclassifiable. Classes and percent must not be mixed in one analysis without converting one into the other.  
     - Config: `treecover_copernicus.json`  
     - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
     - DOI: [2012](https://doi.org/10.2909/299ad2d6-f2b8-4716-b169-1d621250fc3c), [2015](https://doi.org/10.2909/264d4e20-de6d-4f88-b1be-b592303452af), [2018](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2019](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2020](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2021](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2022](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27), [2023](https://doi.org/10.2909/4dc35722-09ce-427f-9a1b-775a8640da27)
-    - Note: Default CLUES dataset includes years 2012, 2015, and 2018  
 - Forest type
     - Description: The European Forest Type layers provide information on the presence of forest and its dominant leaf type.  
-    - Years: 2012, 2015, 2018, 2021  
-    - Resolution: 100m×100m, yearly  
-    - Format: GeoTIFF  
+    - Years: 2012, 2015, 2018  
+    - Resolution: 10 m (2018) and 20 m (2012, 2015) at the source, stored on a grid of 0.001° in geographic coordinates (EPSG:4326)  
+    - Format: GeoTIFF, one band, 255 = no data  
+    - Values: 0 = no forest (for 2012 and 2015 also: outside of the covered area), 1 = broadleaved forest, 2 = coniferous forest, 254 = unclassifiable (2012 and 2015). For 2018 the value is the most frequent class of the 10 m data within each pixel.  
     - Config: `treecover_copernicus.json`  
     - [More Info](https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density)
     - DOI: [2012](https://doi.org/10.2909/8367f5f3-5eb1-4d89-ae8d-13a70fc834e0), [2015](https://doi.org/10.2909/8111fc53-934b-4e6a-afc7-d11664c5ebc3), [2018](https://doi.org/10.2909/bcc329c2-0676-40f5-bb62-91d36f956355), [2021](https://doi.org/10.2909/bcc329c2-0676-40f5-bb62-91d36f956355)
-    - Note: Default CLUES dataset includes years 2012, 2015, and 2018
 - Licence: [Copernicus Land Monitoring Service Data Policy](https://land.copernicus.eu/en/data-policy). Free, full, and open access; use permitted with mandatory attribution (“European Union’s Copernicus Land Monitoring Service information”), clear indication when data are modified, and no implied EU endorsement of derived products.
 
 ### Moderate Resolution Imagining Spectroradiometer (MODIS)
-- Description: Global Vegetation Index Products - NDVI (Normalized Difference Vegetation Index) and EVI (Enhanced Vegetation Index).  
-- Years: 2000-2025  
-- Resolution: 250m×250m, 16-day; 1km×1km, monthly  
-- Format: GeoTIFF  
-- Config: `modis_vegetation.json`  
-- [More Info](https://modis.gsfc.nasa.gov/data/dataprod/mod13.php)
-- DOI: [250m×250m](HTTPS://DOI.ORG/10.5067/MODIS/MOD13Q1.061), [1km×1km](HTTPS://DOI.ORG/10.5067/MODIS/MOD13A3.061)
+- Description: Vegetation indices from the MODIS instrument on the Terra satellite, product MOD13A3 (version 6.1): Normalized Difference Vegetation Index (NDVI) and Enhanced Vegetation Index (EVI).
+- Years: 2000 (from February) to present
+- Resolution: 1km×1km, monthly
+- Format: NetCDF, one file per index and year in `MODIS_Vegetation_Index_Products/MOD13A3/<index>/<year>.nc`, cut to the configured area
+- Values: the index as a number between -0.2 and 1, no value (NaN) where the product has none (for example over the sea).
+- Grid: the data is stored on the original MODIS sinusoidal grid with the dimensions `time`, `YDim`, `XDim`. This is not a regular longitude/latitude grid, so the longitude and latitude of every pixel centre are stored as the two-dimensional variables `Longitude` and `Latitude`.
+- Account: a NASA Earthdata login is needed (see the User Guide).
+- Config: `modis_vegetation_indices.json`
+- [More Info](https://lpdaac.usgs.gov/products/mod13a3v061/)
+- DOI: [1km×1km](https://doi.org/10.5067/MODIS/MOD13A3.061)
 - License: [NASA ESDIS Data Use Policy](https://www.earthdata.nasa.gov/engage/open-data-services-software-policies/data-use-guidance). NASA Earth science datasets are generally released under Creative Commons Zero ([CC0](https://creativecommons.org/public-domain/cc0/)), with attribution encouraged and no endorsement permitted.
 
 ### SPEI (Standardized Precipitation-Evapotranspiration Index)
 - Description: Global drought index based on precipitation and evapotranspiration.  
 - Years: 1901–present  
 - Resolution: 0.5°×0.5°, monthly  
-- Format: NetCDF  
+- Format: NetCDF, one global file per time scale (`<time scale>.nc`, about 370 MB each). The default configuration downloads the time scales 1, 2, 3, 6, 12, 18, 24, 30, 36 and 48 months.  
+- Values: variable `spei`, a standardized index without unit; negative values are drier, positive values wetter than normal for the place and month. The time scale is the number of months over which the water balance (precipitation minus potential evapotranspiration) is accumulated.  
 - Config: `spei.json`  
 - [More Info](https://spei.csic.es)
 - [DOI](https://doi.org/10.5281/zenodo.5864391)
@@ -154,7 +172,8 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 - Description: Global inland surface waters distinguished into 33 waterbody and wetland types.  
 - Years: Static  
 - Resolution: 500m×500m  
-- Format: GeoTIFF  
+- Format: GeoTIFF, one file per class (`GLWD_v2_0_class_00_pct.tif` to `..._33_pct.tif`), cut to the configured area (pixels unchanged)  
+- Values: percent of the pixel covered by the class (0-100), 255 = no data. Class 0 is dryland (no wetland), classes 1 to 33 are the waterbody and wetland types; their names are in `GLWD_Legend_v2_0.csv` next to the data. The technical documentation (`GLWD_TechDoc_v2_0.pdf`) is downloaded as well.  
 - Config: `hydrosheds_GLWD.json`  
 - [More Info](https://www.hydrosheds.org/products/glwd)
 - DOI: 10.6084/m9.figshare.28519994
@@ -162,20 +181,32 @@ A summary table with all geospatial datasets is provided below the Geospatial Da
 
 ### DMSP–VIIRS - Harmonized Night-Time Lights
 - Description: Global nighttime light intensity from satellites, harmonized across sensors.  
-- Years: 1992–2021  
+- Years: 1992-2024 (1992-2013 from DMSP, 2014-2024 simulated from VIIRS to match DMSP)  
 - Resolution: 1km×1km, yearly  
-- Format: GeoTIFF  
+- Format: GeoTIFF, one global file per year (`Harmonized_DN_NTL_<year>_calDMSP.tif` or `..._simVIIRS.tif`, 22 to 41 MB each, about 1.1 GB in total). All years are downloaded.  
+- Values: digital number (DN) of the light intensity, 0 (dark) to 63 (bright), no unit. The record also holds `DN_NTL_2013_simVIIRS.tif`, the VIIRS based simulation for 2013 that the authors used to compare with DMSP.  
 - Config: `ntl.json`  
 - [More Info](https://doi.org/10.3390/rs9060637)
 - DOI: 10.6084/m9.figshare.9828827
 - License: Creative Commons Attribution 4.0 International [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - Note: Default CLUES dataset includes years 2000-2020
 
+### Global tree cover (Hansen et al. 2000, JRC 2020)
+- Description: Two global forest maps. `global_tree_cover_hansen_2000` is the tree canopy cover of the year 2000 from the Global Forest Change data set (Hansen et al.), version 1.10. `Global_forest_cover_2020` is the map of forest presence in 2020 of the European Commission's Joint Research Centre (JRC), version 2.
+- Years: 2000 and 2020
+- Resolution: about 30 m (Hansen) and about 10 m (JRC)
+- Format: GeoTIFF, tiles of 10°×10° stored as delivered (a few hundred MB each), in `treecover_global/<name>/`. All tiles that overlap the configured area are downloaded; a file `done.flag` lists them.
+- Values: Hansen: percent of the pixel covered by tree canopy (0-100). JRC: 1 = forest, 0 = no forest.
+- Config: `treecover_global.json`
+- More info: [Global Forest Change](https://glad.earthengine.app/view/global-forest-change), [JRC Global Forest Cover 2020](https://forest-observatory.ec.europa.eu/forest/gfc2020)
+- Citation: Hansen et al. (2013), Science 342, 850-853; Bourgoin et al., JRC Global Forest Cover 2020.
+
 ### WorldPop - Population counts
 - Description: WorldPop provides population distributions and demographic datasets. Here, the configuration file enables downloading and processing of the estimated total number of people per grid cell (People-per-Pixel, PPP) product.
-- Years: 2000-2020
-- Resolution: 1km×1km, yearly
-- Format: GeoTIFF
+- Years: 2015-2030 (release R2025A; the years after the release are projections)  
+- Resolution: 3 arc seconds (about 100 m), yearly  
+- Format: GeoTIFF, one file per year, cut to the configured area. The rasters of all countries that touch the area are downloaded for this and removed afterwards.  
+- Values: estimated number of people per grid cell. Cells without population estimate (water, uninhabited land, outside of the countries) have no value; in the file they hold the no data number -99999.  
 - Config: `worldPop.json`
 - [More info](https://hub.worldpop.org/geodata/summary?id=24777)
 - DOI: 10.5258/SOTON/WP00647
@@ -189,33 +220,39 @@ This table provides an overview of all geospatial datasets integrated into the C
 
 | Source | Feature | Spatial Resolution | Area Covered | Temporal Coverage | Temporal Resolution | Format |
 | --- | --- | --- | --- | --- | --- | --- |
-| **CAMS global reanalysis (EAC4)** | black_carbon_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | organic_matter_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sulphate_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | total_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | total_column_carbon_monoxide | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | total_column_formaldehyde | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | total_column_ozone | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | total_column_methane | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | dust_aerosol_0.03-0.55um_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | dust_aerosol_0.55-0.9um_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | dust_aerosol_0.9-20um_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | hydrophilic_black_carbon_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | hydrophilic_organic_matter_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | hydrophobic_black_carbon_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | hydrophobic_organic_matter_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_0.03-0.5um_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_0.5-5um_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_5-20um_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sulphate_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
-| **CAMS global reanalysis (EAC4)** | sulphur_dioxide | 0.75°x0.75° | Global | 2003-2024 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | black_carbon_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | dust_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | organic_matter_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sulphate_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | total_aerosol_optical_depth_550nm | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | total_column_carbon_monoxide | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | total_column_formaldehyde | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | total_column_ozone | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | total_column_methane | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | particulate_matter_1um | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | particulate_matter_2.5um | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | particulate_matter_10um | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | total_column_nitrogen_dioxide | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | dust_aerosol_0.03-0.55um_mixing_ratio | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | dust_aerosol_0.55-0.9um_mixing_ratio | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | dust_aerosol_0.9-20um_mixing_ratio | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | hydrophilic_black_carbon_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | hydrophilic_organic_matter_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | hydrophobic_black_carbon_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | hydrophobic_organic_matter_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_0.03-0.5um_mixing_ratio | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_0.5-5um_mixing_ratio | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sea_salt_aerosol_5-20um_mixing_ratio | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sulphate_aerosol_mixing_ratio | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
+| **CAMS global reanalysis (EAC4)** | sulphur_dioxide | 0.75°x0.75° | Global | 2003-2025 | 3-hourly | NetCDF |
 | **Copernicus DEM** | Elevation | 30mx30m | Global | Static | NA | GeoTIFF |
 | **Copernicus DEM** | Elevation | 90mx90m | Global | Static | NA | GeoTIFF |
-| **Copernicus Global Land Service** | Landcover | 100mx100m | Global | 2015-2019 | yearly | GeoTIFF |
-| **Copernicus Land Monitoring Service (CLMS)** | Corine landcover | 100mx100m | Europe | 1990, 2000, 2006, 2012, 2018 | yearly | GeoTIFF |
-| **Copernicus Land Monitoring Service (CLMS)** | Tree Cover Density | 100mx100m | Europe | 2012, 2015, 2018-2021 | yearly | GeoTIFF |
-| **Copernicus Land Monitoring Service (CLMS)** | HRL Forest_Type | 100mx100m | Europe | 2012, 2015, 2018 | yearly | GeoTIFF |
+| **Copernicus Global Land Service** | Built-up cover fraction (BuildUp_CoverFraction_2015 to _2019) | 100mx100m | Global | 2015-2019 | yearly | GeoTIFF |
+| **Copernicus Land Monitoring Service (CLMS)** | Corine landcover (class codes, level 3) | 100mx100m | Europe | 1990, 2000, 2006, 2012, 2018 | per reference year | GeoTIFF |
+| **Copernicus Land Monitoring Service (CLMS)** | Tree Cover Density in percent (HRL_TreeCoverDensity_2018) | 100mx100m | Europe | 2018 | per reference year | GeoTIFF |
+| **Copernicus Land Monitoring Service (CLMS)** | Tree Cover Density in five classes (Tree_Cover_Density_classes_2012, _2015) | 100mx100m | Europe | 2012, 2015 | per reference year | GeoTIFF |
+| **Copernicus Land Monitoring Service (CLMS)** | HRL Forest_Type (classes) | 100mx100m | Europe | 2012, 2015, 2018 | per reference year | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | GOME-1 Cloud Fraction (CF) Total Column Composite Layer (ERS-2) |  | Global | 1995-2011 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | GOME-1 Cloud Optical Thickness (COT) Total Column Composite Layer (ERS-2) |  | Global | 1995-2011 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | GOME-1 Cloud Top Pressure (CTP) Total Column Composite Layer (ERS-2) |  | Global | 1995-2011 | daily | GeoTIFF |
@@ -268,11 +305,12 @@ This table provides an overview of all geospatial datasets integrated into the C
 | **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Trop. NO2 column |  | Global | 2018-2020 | daily | GeoTIFF |
 | **EOC-Atmosphere-Coverage-Service** | S-VELD S5P Trop. NO2 column |  | Global | 2018-2020 | monthly | GeoTIFF |
 | **Hydrosheds** | Global_Lakes_and_Wetlands_Database_(GLWD) | 500mx500m | Global | Static | NA | GeoTIFF |
-| **MODIS Vegetation Index Products** | normalized difference vegetation index (NDVI) | 1kmx1km | Global | 2000-2023 | monthly | GeoTIFF |
-| **MODIS Vegetation Index Products** | normalized difference vegetation index (NDVI) | 250mx250m | Global | 2000-2023 | 16-day | GeoTIFF |
-| **MODIS Vegetation Index Products** | enhanced vegetation index (EVI) | 1kmx1km | Global | 2000-2023 | monthly | GeoTIFF |
-| **MODIS Vegetation Index Products** | enhanced vegetation index (EVI) | 250mx250m | Global | 2000-2023 | 16-day | GeoTIFF |
-| **DMSP and VIIRS** | Night_Time_Lights_(NTL) | 1kmx1km | Global | 1992-2021 | yearly | GeoTIFF |
+| **MODIS Vegetation Index Products** | normalized difference vegetation index (NDVI), MOD13A3 | 1kmx1km | Global | 2000-2025 | monthly | NetCDF |
+| **MODIS Vegetation Index Products** | enhanced vegetation index (EVI), MOD13A3 | 1kmx1km | Global | 2000-2025 | monthly | NetCDF |
+| **DMSP and VIIRS** | Night_Time_Lights_(NTL), harmonized digital number 0-63 | 1kmx1km | Global | 1992-2024 | yearly | GeoTIFF |
+| **Global Forest Change (Hansen et al.)** | global_tree_cover_hansen_2000, tree canopy cover in percent | 30mx30m | Global | 2000 | static | GeoTIFF |
+| **JRC Global Forest Cover** | Global_forest_cover_2020, forest / no forest | 10mx10m | Global | 2020 | static | GeoTIFF |
+| **WorldPop** | Est_total_people_per_gridcell_2025_alpha_release, people per grid cell | 100mx100m | Global | 2015-2030 | yearly | GeoTIFF |
 | **Copernicus ERA5 single level** | 2m_dewpoint_temperature | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
 | **Copernicus ERA5 single level** | 2m_temperature | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
 | **Copernicus ERA5 single level** | high_vegetation_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
@@ -289,7 +327,6 @@ This table provides an overview of all geospatial datasets integrated into the C
 | **Copernicus ERA5 single level** | 100m_u_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
 | **Copernicus ERA5 single level** | 100m_v_component_of_wind | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
 | **Copernicus ERA5 single level** | downward_uv_radiation_at_the_surface | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
-| **Copernicus ERA5 single level** | total_cloud_cover | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
 | **Copernicus ERA5 single level** | snow_depth | 0.25°x0.25° | Global | 1940-present | hourly | NetCDF |
 | **Copernicus ERA5 land** | 2m_dewpoint_temperature | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |
 | **Copernicus ERA5 land** | 2m_temperature | 0.1°x0.1° | Global | 1950-present | hourly | NetCDF |

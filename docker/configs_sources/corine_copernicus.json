@@ -1,11 +1,16 @@
 {
     "type":"land_use",
     "format": "geotTiff",
+    "link": "https://land.copernicus.eu/en/products/corine-land-cover",
+    "source": "map services of the European Environment Agency, https://image.discomap.eea.europa.eu/arcgis/rest/services/Corine",
+    "citation": "European Environment Agency, Copernicus Land Monitoring Service: CORINE Land Cover (status layers)",
+    "units": "CORINE Land Cover class code (level 3, 111-523), 0 = no data, see corine_legend.csv next to the data",
+    "resolution_deg": 0.001,
     "variables":[
         {
             "name":"corine_landcover_2018",
-            "url":"https://image.discomap.eea.europa.eu/arcgis/services/Corine/CLC2018_WM/MapServer/WMSServer",
-            "layer":"12",
+            "url":"https://image.discomap.eea.europa.eu/arcgis/rest/services/Corine/CLC2018_LAEA/MapServer",
+            "layer":"1",
             "year":"2018"
         }
     ]

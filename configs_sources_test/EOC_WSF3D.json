@@ -3,6 +3,10 @@
     "start_year": "2019",
     "end_year": "2019",
     "format": "geoTIFF",
+    "link": "https://geoservice.dlr.de/web/datasets/wsf_3d",
+    "citation": "Esch et al. (2022), World Settlement Footprint 3D - A first three-dimensional survey of the global building stock, Remote Sensing of Environment 270, 112877",
+    "units": "per 90 m cell. BuildingHeight: average building height, stored value x 0.1 = metres. BuildingFraction: percent of the cell covered by buildings. BuildingArea: square metres. BuildingVolume: cubic metres. No data: -32767 (BuildingFraction: 255)",
+    "cut_to_area": true,
     "variables":[
 
     ]

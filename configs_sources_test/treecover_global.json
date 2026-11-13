@@ -1,6 +1,8 @@
 {
     "type": "treecover_global",
     "format": "geotTiff",
+    "citation": "Hansen et al. (2013), High-resolution global maps of 21st-century forest cover change, Science 342, 850-853; Bourgoin et al., Global map of forest cover 2020, European Commission, Joint Research Centre (JRC)",
+    "units": "global_tree_cover_hansen_2000: tree canopy cover in the year 2000 in percent (0-100). Global_forest_cover_2020: 1 = forest, 0 = no forest",
     "variables":[
 
     ]

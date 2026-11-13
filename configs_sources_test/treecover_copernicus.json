@@ -1,16 +1,10 @@
 {
     "type": "treecover",
     "format": "geotTiff",
-    "variables":[
-
-    ]
+    "link": "https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density",
+    "source": "services of the European Environment Agency, https://image.discomap.eea.europa.eu/arcgis/rest/services/GioLandPublic",
+    "citation": "European Environment Agency, Copernicus Land Monitoring Service: High Resolution Layers Tree Cover Density and Forest Type",
+    "units": "see 'content' of each variable; 255 = no data",
+    "resolution_deg": 0.001,
+    "variables": []
 }
-
-
-
-
-
-
-
-
-

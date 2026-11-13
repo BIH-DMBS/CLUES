@@ -1,12 +1,15 @@
 {
     "type":"climate",
     "source":"reanalysis-era5-single-levels",
-    "file":"creanalysis-era5-single-levels.json",
-    "link":"https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=form",
+    "file":"reanalysis-era5-single-levels.json",
+    "link":"https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels",
+    "doi": "10.24381/cds.adbb2d47",
+    "citation": "Hersbach et al. (2023), ERA5 hourly data on single levels from 1940 to present, Copernicus Climate Change Service (C3S) Climate Data Store (CDS), https://doi.org/10.24381/cds.adbb2d47",
     "time zone":"coordinated universal time",
     "start_year": "1940",
     "end_year": "2025",
     "delta_t_in_h":"1",
+    "grid_resolution_deg": 0.25,
     "product_type": "reanalysis",
     "format": "netcdf",
     "variables":[

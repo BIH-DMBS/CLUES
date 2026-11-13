@@ -1,33 +1,7 @@
-import requests
 import os
 import yaml
 import cdsapi
 import earthaccess
-
-# to download data access token from copernicus a needed
-def get_copernicus_odata_token(sct_fldr):
-    # The function retrieves an access token from the Copernicus Data Space Ecosystem (CDSE).
-    # It extracts the access token from the response and returns it.
-    url = 'https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token'
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-
-    # Create a client for the CDS API
-    credential_file = os.path.join(sct_fldr, 'copernicus_credential.sct')
-
-    with open(credential_file, 'r') as f:
-            credentials = yaml.safe_load(f)
-
-    response = requests.post(url, headers=headers, data=credentials)
-
-    # Access the generated access token
-    access_token = response.json().get('access_token')
-    
-    if access_token is not None:
-        print("Copernicus DEM: token retrieved successfully.")
-    else:   
-        print("Copernicus DEM: Failed to retrieve access token.")
 
 def check_credential_atmosphere(sct_fldr):
     try:

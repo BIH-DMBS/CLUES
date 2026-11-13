@@ -2,15 +2,17 @@
     "type": "MODIS_Vegetation_Index_Products",
     "start_year": "2000",
     "end_year": "2025",
-    "format": "geoTIFF",
+    "format": "netcdf",
+    "link": "https://lpdaac.usgs.gov/products/mod13a3v061/",
+    "doi": "10.5067/MODIS/MOD13A3.061",
+    "citation": "Didan, K. (2021), MODIS/Terra Vegetation Indices Monthly L3 Global 1km SIN Grid V061, NASA EOSDIS Land Processes DAAC, https://doi.org/10.5067/MODIS/MOD13A3.061",
+    "units": "vegetation index between -0.2 and 1 (no unit), NaN = no value. Grid: MODIS sinusoidal, the longitude and latitude of every pixel are stored in the file",
     "variables":[
         {
             "name":"MOD13A3",
-            "vars": ["1 km monthly NDVI", "1 km monthly EVI"], 
+            "vars": ["1 km monthly NDVI", "1 km monthly EVI"],
             "vars_name": ["1_km_monthly_NDVI", "1_km_monthly_EVI"],
-            "url":"https://opendap.cr.usgs.gov/opendap/hyrax/MOD13A3.061/",
-            "tile_pixels":  1200,
-            "pixel_size_in_m": 926.625
+            "tile_pixels":  1200
         }
     ]
 }

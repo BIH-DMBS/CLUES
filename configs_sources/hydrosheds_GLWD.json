@@ -3,10 +3,16 @@
     "start_year": "1990",
     "end_year": "2020",
     "format": "geoTIFF",
+    "link": "https://www.hydrosheds.org/products/glwd",
+    "doi": "10.6084/m9.figshare.28519994.v1",
+    "citation": "Lehner et al. (2025), Global Lakes and Wetlands Database (GLWD) version 2.0, figshare, https://doi.org/10.6084/m9.figshare.28519994.v1",
+    "cut_to_area": true,
     "variables":[
         {
             "name":"glwd",
-            "url":"https://figshare.com/ndownloader/files/54001775",
+            "url":"https://figshare.com/articles/dataset/28519994",
+            "article_id": 28519994,
+            "files_oi": ["GLWD_v2_0_area_by_class_pct_tif.zip", "GLWD_TechDoc_v2_0.pdf"],
             "flagFile" : "GLWD_TechDoc_v2_0.pdf"
         }
     ]

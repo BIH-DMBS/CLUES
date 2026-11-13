@@ -1,7 +1,10 @@
 {
     "type":"Copernicus_dynamic_land_cover",
     "format": "geotTiff",
-    "lnk": "https://zenodo.org/records/4723924",
+    "link": "https://land.copernicus.eu/en/products/global-dynamic-land-cover/copernicus-global-land-service-land-cover-100m-collection-3-epoch-2015-2019-globe",
+    "documentation": "https://zenodo.org/records/4723924",
+    "citation": "Buchhorn et al. (2020), Copernicus Global Land Service: Land Cover 100m: collection 3, Zenodo, one record per year (see the url of each variable)",
+    "units": "percent of the pixel covered by built-up area (0-100), 255 = no data",
     "variables":[
 
     ]

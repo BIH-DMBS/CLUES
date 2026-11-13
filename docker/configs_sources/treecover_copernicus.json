@@ -1,20 +1,21 @@
 {
     "type": "treecover",
     "format": "geotTiff",
-    "variables":[
+    "link": "https://land.copernicus.eu/en/products/high-resolution-layer-tree-cover-density",
+    "source": "services of the European Environment Agency, https://image.discomap.eea.europa.eu/arcgis/rest/services/GioLandPublic",
+    "citation": "European Environment Agency, Copernicus Land Monitoring Service: High Resolution Layers Tree Cover Density and Forest Type",
+    "units": "see 'content' of each variable; 255 = no data",
+    "resolution_deg": 0.001,
+    "variables": [
         {
-            "name":"Tree_Cover_Density_2012",
-            "url":"https://image.discomap.eea.europa.eu/arcgis/services/GioLandPublic/HRL_Tree_Cover_Density_2012/MapServer/WMSServer",
-            "layer":"Tree_Cover_Density_2012_100m46139",
-            "year":"2012"
+            "name": "HRL_TreeCoverDensity_2018",
+            "url": "https://image.discomap.eea.europa.eu/arcgis/rest/services/GioLandPublic/HRL_TreeCoverDensity_2018/ImageServer",
+            "service_type": "ImageServer",
+            "aggregation": "mean",
+            "oversampling": 10,
+            "max_valid": 100,
+            "year": "2018",
+            "content": "tree cover density in percent (0-100), mean of the 10 m data within the pixel, 255 = no data"
         }
     ]
 }
-
-
-
-
-
-
-
-

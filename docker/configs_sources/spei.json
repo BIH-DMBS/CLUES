@@ -3,6 +3,10 @@
     "start_year": "1901",
     "end_year": "2023",
     "format": "netcdf",
+    "link": "https://spei.csic.es/database.html",
+    "doi": "10.20350/digitalCSIC/16497",
+    "citation": "Begueria, S., Vicente Serrano, S. M., Reig-Gracia, F., Latorre Garces, B. (2024), SPEIbase v.2.10 [Dataset]: A comprehensive tool for global drought analysis, DIGITAL.CSIC, https://doi.org/10.20350/digitalCSIC/16497",
+    "units": "standardized index without unit (about -3 = extremely dry to +3 = extremely wet), monthly, global on a 0.5 degree grid; time_scales: number of months over which the water balance is accumulated",
     "time_scales": [1,2],
     "variables":[
         {
