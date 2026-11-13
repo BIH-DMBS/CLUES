@@ -17,3 +17,10 @@ configs_sources_copy/
 *.pdf
 *.tar
 *.parquet
+# docker/secrets: only the placeholder templates are tracked, nothing else
+docker/secrets/*
+!docker/secrets/readme.md
+!docker/secrets/cdsapirc_atmo.sct
+!docker/secrets/cdsapirc_climate.sct
+!docker/secrets/copernicus_credential.sct
+!docker/secrets/nasa.sct
